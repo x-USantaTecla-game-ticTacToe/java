@@ -1,0 +1,10 @@
+@startuml
+    package tictactoe #DDDDDD { }
+    package java.util{ }
+    tictactoe .down.> java.util
+    tictactoe .down.> utils
+
+    package utils #DDDDDD { }
+    package java.io{ }
+    utils .down.> java.io
+@enduml

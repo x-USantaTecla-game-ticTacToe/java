@@ -1,0 +1,290 @@
+= Master Mind. Solución 1.1. *domainModel*
+Santa Tecla <parqueNaturalSantaTecla@gmail.com>
+:toc-title: Índice
+:toc: left
+
+:idprefix:
+:idseparator: -
+:imagesdir: images
+
+== Requisitos 1. *Básica*
+
+[cols="50,50"]
+|===
+
+a|
+- link:https://en.wikipedia.org/wiki/Mastermind_(board_game)[*Wiki*] - link:https://www.youtube.com/watch?v=2-hTeg2M6GQ[*Youtube*]
+* _Funcionalidad: **Básica**_
+* _Interfaz: **Texto**_
+* _Distribución: **Standalone**_
+* _Persistencia: **No**_
+
+a|
+
+image::Dibujo.jpg[]
+
+|===
+
+== Vista de Lógica/Diseño
+
+- Aplicación del *Modelo del Dominio* mediante Estrategias de *Análisis Formal*, *Análisis Clásico*, *Experto del Dominio*, *Reparto de Responsabilidades*, ...
+
+=== Arquitectura
+
+[plantuml,version1Arquitectura,svg]
+....
+
+package tictactoe #DDDDDD { } 
+package java.util{ }
+tictactoe .down.> java.util
+tictactoe .down.> utils
+
+package utils #DDDDDD { } 
+package java.io{ }
+utils .down.> java.io
+
+....
+
+=== Paquete _tictactoe_
+
+[plantuml,version1TicTacToe,svg]
+....
+
+class  tictactoe.Board{
++ {static} EMPTY: char
+- coordinates: Coordinate[][]
++ Board()
+~ write(): void
+- getToken(Coordinate): Token
+~ move(Coordinate, Coordinate): void
+~ put(Coordinate, Token): void
+- remove(Coordinate): void
+~ isTicTacToe(Token): boolean
+- numberOfCoordinates(Coordinate[]): int
+~ isCompleted(): boolean
+~ isEmpty(Coordinate): boolean
+~ isOccupied(Coordinate, Token): boolean
+}
+utils.WithConsoleModel <|-down- tictactoe.Board
+tictactoe.Board *-down-> tictactoe.Coordinate
+tictactoe.Board ..> tictactoe.Token
+tictactoe.Board ..> tictactoe.Turn
+tictactoe.Board ..> utils.Direction
+
+class  tictactoe.Coordinate{
++ {static} DIMENSION: char
++ Coordinate()
++ Coordinate(int, int)
+~ inDirection(Coordinate): boolean
+~ getDirection(Coordinate): Direction
+- inInverseDiagonal(): boolean
+- isValid(): boolean
+# read(String): void
+~ random(): void
+}
+utils.Coordinate <|-down- tictactoe.Coordinate
+tictactoe.Coordinate ..> utils.Direction
+
+enum  tictactoe.Error{
+NOT_EMPTY
+NOT_OWNER
+SAME_COORDINATES
+- message: String
++ Error(String)
+~ writeln(): void
+}
+
+class  tictactoe.MachinePlayer{
++ MachinePlayer(Token, Board)
+~ put(): void
+~ move(): void
+}
+tictactoe.Player <|-down- tictactoe.MachinePlayer
+tictactoe.MachinePlayer ..> tictactoe.Coordinate
+tictactoe.MachinePlayer ..> tictactoe.Error
+tictactoe.MachinePlayer ..> java.util.Random
+
+class  tictactoe.Player{
+# token: Token
+# board: Board
++ Player(Token, Board)
+~ {abstract} put(): void
+~ {abstract} move(): void
+~ writeWin(Token): void
+~ getToken(): Token
+}
+utils.WithConsoleModel <|-down- tictactoe.Player
+tictactoe.Player *-down-> tictactoe.Token
+tictactoe.Player *-down-> tictactoe.Board
+
+class  tictactoe.TicTacToe{
+- board: Board
+- players: Players
+- turn: Turn
++ TicTacToe()
+- play(): void
++ main(String[]): void
+}
+utils.WithConsoleModel <|-down- tictactoe.TicTacToe
+tictactoe.TicTacToe *-down-> tictactoe.Board
+tictactoe.TicTacToe *-down-> tictactoe.Player
+tictactoe.TicTacToe *-down-> tictactoe.Turn
+
+enum  tictactoe.Token{
+TOKEN_X
+TOKEN_O
+- character: char
++ Token(char)
+~ write(): void
+}
+
+class  tictactoe.Turn{
++ {static} PLAYERS: int
+- value: int
+- players: Player[]
++ Turn(Player[])
+~ change(): void
+~ getPlayer(): Player
+~ getOtherValue(): int
+~ getOtherPlayer(): Player
+}
+
+class  tictactoe.UserPlayer{
++ {static} PLAYERS: int
+- value: int
+- players: Player[]
++ UserPlayer(Token, Board)
+~ put(): void
+~ move(): void
+}
+tictactoe.Player <|-down- tictactoe.UserPlayer
+tictactoe.UserPlayer ..> tictactoe.Coordinate
+tictactoe.UserPlayer ..> tictactoe.Error
+
+....
+
+=== Paquete _utils_
+
+[plantuml,utils1,svg]
+
+....
+
+class  utils.Console{
+- bufferedReader: BufferedReader
++ Console()
++ write(char): void
++ write(String): void
++ readInt(String): int
++ readChar(String): char
++ readString(String): String
++ writeln(int): void
++ writeln(String): void
++ writeln(): void
+- writeError(String): void
+}
+utils.Console *-down-> java.io.BufferedReader
+
+class  utils.Coordinate{
+# row: int
+# column: int
+# Coordinate()
+# Coordinate(int, int)
+# getDirection(Coordinate): Direction
+- inMainDiagonal(): boolean
+- inVertical(Coordinate): boolean
+- inHorizontal(Coordinate): boolean
+# read(String): void
++ getRow(): int
++ getColumn(): int
++ equals(Coordinate): boolean
+}
+utils.WithConsoleModel <|-down- utils.Coordinate
+utils.Coordinate ..> utils.Direction
+
+enum  utils.Direction{
+  VERTICAL
+  HORIZONTAL
+  MAIN_DIAGONAL
+  INVERSE_DIAGONAL
+}
+
+class  utils.WithConsoleModel{
+# console: Console
+# WithConsoleModel()
+}
+utils.WithConsoleModel *-down-> utils.Console
+
+....
+
+== Calidad del Software
+
+=== Diseño
+
+- [red]#_**Método largo**: Método "play" de Mastermind,..._#
+
+=== Rediseño
+
+- _Nueva interfaz: Gráfica_
+* [red]#_**Clases Grandes**: los Modelos asumen la responsabilidad y crecen en líneas, métodos, atributos, ... con cada nueva tecnología_#
+* [red]#_**Alto acoplamiento**: los Modelos con cada nueva tecnología de interfaz (consola, gráficos, web, ...)_#
+* [red]#_**Baja cohesión**: cada Modelo está gestionando sus atributos y las tecnologías de interfaz_#
+* [red]#_**Open/Close**: hay que modificar los modelos que estaban funcionando previamente para escoger una tecnología de vista u otra (if's anidados)_#
+
+- _Nuevas funcionalidades: undo/redo, demo, estadísiticas,..._
+* [red]#_**Clases Grandes**: los Modelos asumen la responsabilidad y crecen en líneas, métodos, atributos, ... con las nuevas funcionalidades_#
+* [red]#_**Open/Close**: hay que modificar los modelos que estaban funcionando previamente para incorporar nuevas funcionalidades_#
+
+== Vista de Desarrollo/Implementación
+
+[plantuml,diagramaImplementacion,svg]
+....
+
+package "  "  as tictactoe {
+}
+package "  "  as utils {
+}
+package "  "  as java.io {
+}
+package "  "  as java.util {
+}
+
+[mastermind.jar] as jar
+
+jar *--> tictactoe
+jar *--> utils
+jar *--> java.io
+jar *--> java.util
+....
+
+
+== Vista de Despliegue/Física
+
+[plantuml,diagramaDespliegue,svg]
+....
+
+node node #DDDDDD [
+<b>Personal Computer</b>
+----
+memory : xxx Mb
+cpu : xxx GHz
+]
+
+[ tictactoe.jar ] as component
+
+node *--> component
+....
+
+== Vista de Procesos
+
+- No hay concurrencia
+
+
+
+
+
+
+
+
+
+
+

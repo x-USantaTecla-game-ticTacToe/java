@@ -1,0 +1,26 @@
+
+build:
+ image: openjdk:8-jdk
+ stage: build
+ script:
+   - apt-get update
+   - apt-get -y install graphviz
+   - ./gradlew build
+ artifacts:
+   paths:
+   - build/docs
+
+pages:
+ stage: deploy
+ script:
+ - mkdir -p public
+ - mkdir -p public
+ - cp -R build/docs/asciidoc/* public
+ - cp -R build/docs/asciidocPdf/*.pdf public/
+ - cp -R build/docs/asciidocEpub/*.mobi public/
+ artifacts:
+   paths:
+    - public
+ dependencies:
+  - build
+ when: manual

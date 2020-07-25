@@ -1,0 +1,181 @@
+plugins {
+    id 'org.asciidoctor.jvm.convert' version '2.2.0'
+    id 'org.asciidoctor.jvm.epub' version '2.2.0'
+    id 'org.asciidoctor.jvm.pdf' version '2.2.0'
+}
+
+repositories {
+    mavenLocal()
+    jcenter()
+    mavenCentral()
+}
+
+configurations {
+    asciidoctorExt
+}
+
+dependencies {
+    asciidoctorExt group: 'com.puravida.asciidoctor', name: 'asciidoctor-barcode', version:'2.2.1'
+    asciidoctorExt group: 'net.sourceforge.plantuml', name: 'plantuml', version: '1.2020.15'
+    asciidoctorExt group: 'org.scilab.forge', name: 'jlatexmath', version: '1.0.7'
+
+}
+
+ext{
+    documentVersion = '0.0.1'
+}
+
+asciidoctorj {
+
+    version '2.0.0'
+
+    modules{
+        epub{
+            version '1.5.0-alpha.9'
+        }
+        diagram{
+            version '1.5.16'
+        }
+    }
+
+    options doctype: 'book', ruby:'erubis'
+
+    attributes 'source-highlighter': 'coderay',
+            toc: '',
+            idprefix: '',
+            idseparator: '-',
+            'icons': 'font',
+            'setanchors': '',
+            'listing-caption':'',
+            version: documentVersion,
+            revnumber: documentVersion
+
+    docExtensions {
+        block_macro (name: 'starts') { parent, target, attributes ->
+            String content = "_${attributes.get("text")}_"
+            int up = (attributes.get("up") ?: 10) as int
+            int votes = target as int
+            (1..votes).each{ content ="$content icon:star[] "}
+            (votes..up-1).each{ content ="$content icon:star-o[] "}
+            content = "$content $votes/$up"
+            createBlock(parent, "paragraph", [content], [:], [:])
+        }
+    }
+}
+
+asciidoctor{
+    baseDirFollowsSourceDir()
+    logDocuments true
+    configurations 'asciidoctorExt'
+    sources {
+        include 'index.adoc'
+    }
+    asciidoctorj{
+        docExtensions {
+            block('typewriter') {
+                parent, reader, attributes ->
+                def lines = reader.readLines()
+                def attr = [role:'typewriter']
+                return createBlock(parent, 'paragraph', lines, attr, [:])
+            }
+
+            postprocessor {
+                document, output ->
+                    
+                output.replace("</body>","""<script>
+                let speed = 50;
+                
+                function typeWriter(v) {
+                  let i = v.getAttribute("typewriter-index")
+                  let txt = v.getAttribute("typewriter-original")
+                  
+                  if (i < txt.length) {
+                    v.getElementsByTagName("P")[0].innerHTML += txt.charAt(i);
+                    i++;
+                    v.setAttribute("typewriter-index", i)                        
+                  }else{
+                    if( ++i > txt.length+30 ){
+                        v.setAttribute("typewriter-index", 0)
+                        v.getElementsByTagName("P")[0].innerHTML = ''
+                    }
+                  }
+                }
+                
+                function typeWriterAll(){
+                    [].forEach.call(document.getElementsByClassName('typewriter'), function(v,i,a) {
+                        typeWriter(v)
+                    })
+                    setTimeout(typeWriterAll, speed);
+                }
+                                    
+                [].forEach.call(document.getElementsByClassName('typewriter'), function(v,i,a) {
+                    v.setAttribute("typewriter-original", v.innerText)
+                    v.setAttribute("typewriter-index", 0)
+                    v.getElementsByTagName("P")[0].innerHTML = ''
+                })
+                
+                setTimeout(typeWriterAll, speed);
+                
+                </script>""")
+            }
+        }
+    }
+}
+
+pdfThemes {
+    local 'personal', {
+        styleDir = file('src/docs/asciidoc/themePdf')
+        styleName = 'personal'
+    }
+}
+
+asciidoctorPdf{
+    useIntermediateWorkDir()
+    baseDirFollowsSourceDir()
+    logDocuments true
+    resources{
+        from(sourceDir) {
+            include '**'
+        }
+    }
+    configurations 'asciidoctorExt'
+    asciidoctorj{
+        attributes imagesdir: file("build/tmp/asciidoctorPdf.intermediate/images"),
+                imagesoutdir: file("build/tmp/asciidoctorPdf.intermediate/images")
+    }
+    sources {
+        include 'index.adoc'
+    }
+
+    theme 'personal'
+}
+
+kindlegen {
+    agreeToTermsOfUse = true
+}
+
+asciidoctorEpub{
+    useIntermediateWorkDir()
+    baseDirFollowsSourceDir()
+    logDocuments true
+    resources{
+        from(sourceDir) {
+            include '**'
+        }
+    }
+    configurations 'asciidoctorExt'
+    asciidoctorj{
+        options to_dir : "../tmp/asciidoctorEpub.intermediate"
+
+        attributes imagesdir: file("build/tmp/asciidoctorEpub.intermediate/images"),
+                imagesoutdir: file("build/tmp/asciidoctorEpub.intermediate/images"),
+                'epub3-stylesdir':'epubStyle'
+    }
+    sources {
+        include 'index.adoc'
+    }
+
+    ebookFormats KF8
+}
+
+build.dependsOn asciidoctor
