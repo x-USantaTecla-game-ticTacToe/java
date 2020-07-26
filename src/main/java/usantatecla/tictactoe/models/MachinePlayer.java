@@ -1,4 +1,4 @@
-package usantatecla.tictactoe;
+package usantatecla.tictactoe.models;
 
 class MachinePlayer extends Player {
 
@@ -11,7 +11,7 @@ class MachinePlayer extends Player {
 		Coordinate coordinate = new Coordinate();
 		Error error;
 		do {
-			error = null;
+			coordinate.random();
 			error = controlErrorsPutCoordinate(coordinate);
 		} while (error != null);
 		board.put(coordinate, this.token);
@@ -22,10 +22,12 @@ class MachinePlayer extends Player {
 		Coordinate originCoordinate = new Coordinate();
 		Error error;
 		do {
+			originCoordinate.random();
 			error = controlErrorsMoveOriginCoordinate(originCoordinate);
 		} while (error != null);
 		Coordinate targetCoordinate = new Coordinate();
 		do {
+			targetCoordinate.random();
 			error = controlErrorsMoveTargetCoordinate(originCoordinate, targetCoordinate);
 		} while (error != null);
 		board.move(originCoordinate, targetCoordinate);

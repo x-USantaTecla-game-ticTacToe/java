@@ -1,12 +1,14 @@
-package usantatecla.tictactoe;
+package usantatecla.tictactoe.models;
 
-abstract class Player {
+import usantatecla.utils.WithConsoleModel;
+
+public abstract class Player extends WithConsoleModel {
 
 	protected Token token;
 
 	protected Board board;
 
-	Player(Token token, Board board) {
+	public Player(Token token, Board board) {
 		this.token = token;
 		this.board = board;
 	}
@@ -14,11 +16,6 @@ abstract class Player {
 	abstract void put();
 
 	abstract void move();
-
-	void writeWin(Token token) {
-		token.write();
-		Message.PLAYER_WIN.writeln();
-	}
 
 	Token getToken() {
 		return this.token;

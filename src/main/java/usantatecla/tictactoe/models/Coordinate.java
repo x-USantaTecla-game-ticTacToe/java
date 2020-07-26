@@ -1,18 +1,18 @@
-package usantatecla.tictactoe;
+package usantatecla.tictactoe.models;
 
 import java.util.Random;
 
 import usantatecla.utils.Direction;
 
-class Coordinate extends usantatecla.utils.Coordinate {
+public class Coordinate extends usantatecla.utils.Coordinate {
 
-	static final int DIMENSION = 3;
+	public static final int DIMENSION = 3;
 
-	Coordinate() {
+	public Coordinate() {
 		super();
 	}
 
-	Coordinate(int row, int column) {
+	public Coordinate(int row, int column) {
 		super(row, column);
 	}
 

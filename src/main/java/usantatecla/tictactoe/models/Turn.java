@@ -1,14 +1,14 @@
-package usantatecla.tictactoe;
+package usantatecla.tictactoe.models;
 
-class Turn {
+public class Turn {
 
-	static final int PLAYERS = 2;
+	public static final int PLAYERS = 2;
 
 	private int value;
 
 	private Player[] players;
 
-	Turn(Player[] players) {
+	public Turn(Player[] players) {
 		this.value = 0;
 		this.players = players;
 	}

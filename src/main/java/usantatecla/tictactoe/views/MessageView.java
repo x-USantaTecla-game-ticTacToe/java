@@ -1,9 +1,9 @@
-package usantatecla.tictactoe;
+package usantatecla.tictactoe.views;
 
 import usantatecla.utils.Console;
 
-enum Message {
-    LINE_BREAK(""),
+enum MessageView {
+	LINE_BREAK(""),
     EMPTY("-"), 
     SEPARATOR("-----------------------------------------------------"),
     VERTICAL_LINE_CENTERED(" | "),
@@ -15,7 +15,8 @@ enum Message {
 	
 	private Console console;
 
-	private Message(String message) {
+	private MessageView(String message) {
+		this.console = new Console();
 		this.message = message;
 	}
 
@@ -26,5 +27,5 @@ enum Message {
 	void writeln() {
 		this.console.writeln(this.message);
 	}
-    
+
 }

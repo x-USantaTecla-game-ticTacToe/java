@@ -1,12 +1,15 @@
-package usantatecla.tictactoe;
+package usantatecla.tictactoe.models;
 
 import usantatecla.utils.Direction;
+import usantatecla.utils.WithConsoleModel;
 
-class Board {
+public class Board extends WithConsoleModel {
+
+	static final char EMPTY = '-';
 
 	private Coordinate[][] coordinates;
 
-	Board() {
+	public Board() {
 		this.coordinates = new Coordinate[Turn.PLAYERS][Coordinate.DIMENSION];
 		for (int i = 0; i < Turn.PLAYERS; i++) {
 			for (int j = 0; j < Coordinate.DIMENSION; j++) {
@@ -15,24 +18,7 @@ class Board {
 		}
 	}
 
-	void write() {
-		Message.SEPARATOR.writeln();
-		for (int i = 0; i < Coordinate.DIMENSION; i++) {
-			Message.VERTICAL_LINE_LEFT.write();
-			for (int j = 0; j < Coordinate.DIMENSION; j++) {
-				if (this.getToken(new Coordinate(i, j)) == null) {
-					Message.EMPTY.write();
-				} else {
-					this.getToken(new Coordinate(i, j)).write();
-				}
-				Message.VERTICAL_LINE_CENTERED.write();
-			}
-			Message.LINE_BREAK.writeln();
-		}
-		Message.SEPARATOR.writeln();
-	}
-
-	private Token getToken(Coordinate coordinate) {
+	public Token getToken(Coordinate coordinate) {
 		for (int i = 0; i < Turn.PLAYERS; i++) {
 			for (int j = 0; j < Coordinate.DIMENSION; j++) {
 				if (this.coordinates[i][j] != null && this.coordinates[i][j].getRow() == coordinate.getRow()

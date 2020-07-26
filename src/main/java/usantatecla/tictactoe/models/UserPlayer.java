@@ -1,4 +1,4 @@
-package usantatecla.tictactoe;
+package usantatecla.tictactoe.models;
 
 class UserPlayer extends Player {
 

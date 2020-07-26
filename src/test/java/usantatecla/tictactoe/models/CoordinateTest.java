@@ -1,4 +1,4 @@
-package usantatecla.tictactoe;
+package usantatecla.tictactoe.models;
 
 import static org.junit.Assert.assertEquals;
 
