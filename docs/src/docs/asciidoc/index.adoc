@@ -100,8 +100,6 @@ class  tictactoe.MachinePlayer{
 ~ move(): void
 }
 tictactoe.Player <|-down- tictactoe.MachinePlayer
-tictactoe.MachinePlayer ..> tictactoe.Coordinate
-tictactoe.MachinePlayer ..> tictactoe.Error
 tictactoe.MachinePlayer ..> java.util.Random
 
 class  tictactoe.Player{
@@ -112,10 +110,15 @@ class  tictactoe.Player{
 ~ {abstract} move(): void
 ~ writeWin(Token): void
 ~ getToken(): Token
+~ controlErrorsPutCoordinate(Coordinate): Error
+~ controlErrorsMoveOriginCoordinate(Coordinate): Error
+~ controlErrorsMoveTargetCoordinate(Coordinate, Coordinate): Error
 }
 utils.WithConsoleModel <|-down- tictactoe.Player
 tictactoe.Player *-down-> tictactoe.Token
 tictactoe.Player *-down-> tictactoe.Board
+tictactoe.Player ..> tictactoe.Coordinate
+tictactoe.Player ..> tictactoe.Error
 
 class  tictactoe.TicTacToe{
 - board: Board
@@ -158,8 +161,6 @@ class  tictactoe.UserPlayer{
 ~ move(): void
 }
 tictactoe.Player <|-down- tictactoe.UserPlayer
-tictactoe.UserPlayer ..> tictactoe.Coordinate
-tictactoe.UserPlayer ..> tictactoe.Error
 
 ....
 

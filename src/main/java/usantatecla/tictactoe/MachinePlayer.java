@@ -12,10 +12,7 @@ class MachinePlayer extends Player {
 		Error error;
 		do {
 			error = null;
-			coordinate.random();
-			if (!board.isEmpty(coordinate)) {
-				error = Error.NOT_EMPTY;
-			}
+			error = controlErrorsPutCoordinate(coordinate);
 		} while (error != null);
 		board.put(coordinate, this.token);
 	}
@@ -26,22 +23,13 @@ class MachinePlayer extends Player {
 		Error error;
 		do {
 			error = null;
-			originCoordinate.random();
-			if (!board.isOccupied(originCoordinate, this.token)) {
-				error = Error.NOT_OWNER;
-			}
+			error = controlErrorsMoveOriginCoordinate(originCoordinate);
 		} while (error != null);
 		Coordinate targetCoordinate = new Coordinate();
 		do {
 			error = null;
-			targetCoordinate.random();
-			if (originCoordinate.equals(targetCoordinate)) {
-				error = Error.SAME_COORDINATES;
-			} else if (!board.isEmpty(targetCoordinate)) {
-				error = Error.NOT_EMPTY;
-			}
+			error = controlErrorsMoveTargetCoordinate(originCoordinate, targetCoordinate);
 		} while (error != null);
 		board.move(originCoordinate, targetCoordinate);
 	}
-
 }
