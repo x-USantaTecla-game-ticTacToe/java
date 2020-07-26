@@ -18,14 +18,14 @@ class TicTacToe extends WithConsoleModel{
 
 	private void play() {
 		this.console.writeln("-------------------- TIC TAC TOE --------------------");
-		int users = this.console.readInt("Number of users [0-" + Turn.PLAYERS + "] ");
-		for (int i = 0; i < users; i++) {
-			this.players[i] = new UserPlayer(Token.values()[i], this.board);
-		}
-		for (int i = users; i < Turn.PLAYERS; i++) {
-			this.players[i] = new MachinePlayer(Token.values()[i], this.board);
-		}
+		this.createPlayers();
 		this.board.write();
+		this.playUntilTicTacToe();
+		int otherValue = this.turn.getOtherValue();
+		this.turn.getOtherPlayer().writeWin(Token.values()[otherValue]);
+	}
+
+	private void playUntilTicTacToe() {
 		do {
 			if (!this.board.isCompleted()) {
 				this.turn.getPlayer().put();
@@ -35,8 +35,16 @@ class TicTacToe extends WithConsoleModel{
 			this.turn.change();
 			this.board.write();
 		} while (!this.board.isTicTacToe(this.turn.getOtherPlayer().getToken()));
-		int otherValue = this.turn.getOtherValue();
-		this.turn.getOtherPlayer().writeWin(Token.values()[otherValue]);
+	}
+
+	private void createPlayers() {
+		int users = this.console.readInt("Number of users [0-" + Turn.PLAYERS + "] ");
+		for (int i = 0; i < users; i++) {
+			this.players[i] = new UserPlayer(Token.values()[i], this.board);
+		}
+		for (int i = users; i < Turn.PLAYERS; i++) {
+			this.players[i] = new MachinePlayer(Token.values()[i], this.board);
+		}
 	}
 
 	public static void main(String[] args) {

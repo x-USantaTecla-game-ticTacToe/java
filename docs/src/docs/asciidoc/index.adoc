@@ -126,6 +126,8 @@ class  tictactoe.TicTacToe{
 - turn: Turn
 + TicTacToe()
 - play(): void
+- playUntilTicTacToe(): void
+- createPlayers(): void
 + main(String[]): void
 }
 utils.WithConsoleModel <|-down- tictactoe.TicTacToe
