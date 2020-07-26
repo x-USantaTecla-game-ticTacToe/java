@@ -14,7 +14,6 @@ class UserPlayer extends Player {
 		Coordinate coordinate = new Coordinate();
 		Error error;
 		do {
-			error = null;
 			coordinate.read(ENTER_COORDINATE_TO_PUT);
 			error = controlErrorsPutCoordinate(coordinate);
 			if (error != null) {
@@ -29,12 +28,7 @@ class UserPlayer extends Player {
 		Coordinate originCoordinate = new Coordinate();
 		Error error;
 		do {
-			error = null;
 			originCoordinate.read(ENTER_COORDINATE_TO_REMOVE);
-			if (!this.board.isOccupied(originCoordinate, this.token)) {
-				error = Error.NOT_OWNER;
-				error.writeln();
-			}
 			error = controlErrorsMoveOriginCoordinate(originCoordinate);
 			if (error != null) {
 				error.writeln();
@@ -42,15 +36,7 @@ class UserPlayer extends Player {
 		} while (error != null);
 		Coordinate targetCoordinate = new Coordinate();
 		do {
-			error = null;
 			targetCoordinate.read(ENTER_COORDINATE_TO_PUT);
-			if (originCoordinate.equals(targetCoordinate)) {
-				error = Error.SAME_COORDINATES;
-				error.writeln();
-			} else if (!this.board.isEmpty(targetCoordinate)) {
-				error = Error.NOT_EMPTY;
-				error.writeln();
-			}
 			error = controlErrorsMoveTargetCoordinate(originCoordinate, targetCoordinate);
 			if (error != null) {
 				error.writeln();

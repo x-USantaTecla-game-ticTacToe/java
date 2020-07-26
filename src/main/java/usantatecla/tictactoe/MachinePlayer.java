@@ -22,12 +22,10 @@ class MachinePlayer extends Player {
 		Coordinate originCoordinate = new Coordinate();
 		Error error;
 		do {
-			error = null;
 			error = controlErrorsMoveOriginCoordinate(originCoordinate);
 		} while (error != null);
 		Coordinate targetCoordinate = new Coordinate();
 		do {
-			error = null;
 			error = controlErrorsMoveTargetCoordinate(originCoordinate, targetCoordinate);
 		} while (error != null);
 		board.move(originCoordinate, targetCoordinate);
