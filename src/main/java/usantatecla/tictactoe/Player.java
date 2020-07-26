@@ -1,8 +1,6 @@
 package usantatecla.tictactoe;
 
-import usantatecla.utils.WithConsoleModel;
-
-abstract class Player extends WithConsoleModel {
+abstract class Player {
 
 	protected Token token;
 
@@ -19,7 +17,7 @@ abstract class Player extends WithConsoleModel {
 
 	void writeWin(Token token) {
 		token.write();
-		this.console.writeln(" Player: You win!!! :-)");
+		Message.PLAYER_WIN.writeln();
 	}
 
 	Token getToken() {

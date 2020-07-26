@@ -17,7 +17,7 @@ class TicTacToe extends WithConsoleModel{
 	}
 
 	private void play() {
-		this.console.writeln("-------------------- TIC TAC TOE --------------------");
+		Message.START_GAME.writeln();
 		this.createPlayers();
 		this.board.write();
 		this.playUntilTicTacToe();

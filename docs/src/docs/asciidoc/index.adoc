@@ -65,11 +65,11 @@ class  tictactoe.Board{
 ~ isEmpty(Coordinate): boolean
 ~ isOccupied(Coordinate, Token): boolean
 }
-utils.WithConsoleModel <|-down- tictactoe.Board
 tictactoe.Board *-down-> tictactoe.Coordinate
 tictactoe.Board ..> tictactoe.Token
 tictactoe.Board ..> tictactoe.Turn
 tictactoe.Board ..> utils.Direction
+tictactoe.Board ..> tictactoe.Message
 
 class  tictactoe.Coordinate{
 + {static} DIMENSION: char
@@ -93,6 +93,7 @@ SAME_COORDINATES
 + Error(String)
 ~ writeln(): void
 }
+tictactoe.Error ..> utils.Console
 
 class  tictactoe.MachinePlayer{
 + MachinePlayer(Token, Board)
@@ -101,6 +102,15 @@ class  tictactoe.MachinePlayer{
 }
 tictactoe.Player <|-down- tictactoe.MachinePlayer
 tictactoe.MachinePlayer ..> java.util.Random
+
+enum  tictactoe.Message{
+- message: String
+- console: Console
++ Message(String)
+~ write(): void
+~ writeln(): void
+}
+tictactoe.Message ..> utils.Console
 
 class  tictactoe.Player{
 # token: Token
@@ -114,11 +124,11 @@ class  tictactoe.Player{
 ~ controlErrorsMoveOriginCoordinate(Coordinate): Error
 ~ controlErrorsMoveTargetCoordinate(Coordinate, Coordinate): Error
 }
-utils.WithConsoleModel <|-down- tictactoe.Player
 tictactoe.Player *-down-> tictactoe.Token
 tictactoe.Player *-down-> tictactoe.Board
 tictactoe.Player ..> tictactoe.Coordinate
 tictactoe.Player ..> tictactoe.Error
+tictactoe.Player ..> tictactoe.Message
 
 class  tictactoe.TicTacToe{
 - board: Board
@@ -142,6 +152,7 @@ TOKEN_O
 + Token(char)
 ~ write(): void
 }
+tictactoe.Token..> utils.Console
 
 class  tictactoe.Turn{
 + {static} PLAYERS: int

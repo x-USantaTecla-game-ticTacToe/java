@@ -1,11 +1,8 @@
 package usantatecla.tictactoe;
 
 import usantatecla.utils.Direction;
-import usantatecla.utils.WithConsoleModel;
 
-class Board extends WithConsoleModel {
-
-	static final char EMPTY = '-';
+class Board {
 
 	private Coordinate[][] coordinates;
 
@@ -19,20 +16,20 @@ class Board extends WithConsoleModel {
 	}
 
 	void write() {
-		this.console.writeln("-----------------------------------------------------");
+		Message.SEPARATOR.writeln();
 		for (int i = 0; i < Coordinate.DIMENSION; i++) {
-			this.console.write("| ");
+			Message.VERTICAL_LINE_LEFT.write();
 			for (int j = 0; j < Coordinate.DIMENSION; j++) {
 				if (this.getToken(new Coordinate(i, j)) == null) {
-					this.console.write(Board.EMPTY);
+					Message.EMPTY.write();
 				} else {
 					this.getToken(new Coordinate(i, j)).write();
 				}
-				this.console.write(" | ");
+				Message.VERTICAL_LINE_CENTERED.write();
 			}
-			this.console.writeln();
+			Message.LINE_BREAK.writeln();
 		}
-		this.console.writeln("-----------------------------------------------------");
+		Message.SEPARATOR.writeln();
 	}
 
 	private Token getToken(Coordinate coordinate) {
