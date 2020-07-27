@@ -3,7 +3,7 @@ package usantatecla.tictactoe.views;
 import usantatecla.tictactoe.models.Game;
 import usantatecla.tictactoe.models.Token;
 
-public class ResultView {
+class ResultView {
     
     Game game;
     

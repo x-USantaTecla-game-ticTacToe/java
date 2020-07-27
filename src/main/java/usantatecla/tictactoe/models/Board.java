@@ -1,9 +1,8 @@
 package usantatecla.tictactoe.models;
 
 import usantatecla.utils.Direction;
-import usantatecla.utils.WithConsoleModel;
 
-public class Board extends WithConsoleModel {
+public class Board {
 
 	static final char EMPTY = '-';
 
@@ -93,7 +92,7 @@ public class Board extends WithConsoleModel {
 		return true;
 	}
 
-	boolean isEmpty(Coordinate coordinate) {
+	public boolean isEmpty(Coordinate coordinate) {
 		return this.isOccupied(coordinate, null);
 	}
 

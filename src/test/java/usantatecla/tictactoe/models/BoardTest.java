@@ -1,5 +1,6 @@
 package usantatecla.tictactoe.models;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -60,5 +61,13 @@ public class BoardTest {
         this.board.put(coordinate23, tokenX);
         this.board.put(coordinate33, tokenO);
         assertTrue(this.board.isCompleted());
+    }
+
+    @Test
+    public void testGivenNewBoardThenPutNewTokenAndGetToken() {
+        Token token = Token.values()[0];
+        Coordinate coordinate = new Coordinate(1, 1);
+        this.board.put(coordinate, token);
+        assertEquals(token, this.board.getToken(coordinate));
     }
 }

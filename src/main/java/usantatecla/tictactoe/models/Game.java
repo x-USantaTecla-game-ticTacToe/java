@@ -16,10 +16,10 @@ public class Game {
 
     public void createPlayers(int numberOfUsers) {
 		for (int i = 0; i < numberOfUsers; i++) {
-			this.players[i] = new UserPlayer(Token.values()[i], this.board);
+			this.players[i] = new Player(Token.values()[i], this.board, PlayerType.USER_PLAYER);
 		}
 		for (int i = numberOfUsers; i < Turn.PLAYERS; i++) {
-			this.players[i] = new MachinePlayer(Token.values()[i], this.board);
+			this.players[i] = new Player(Token.values()[i], this.board, PlayerType.MACHINE_PLAYER);
 		}
     }
 
@@ -31,12 +31,16 @@ public class Game {
         return this.board.isCompleted();
     }
 
-    public void putTokenPlayerFromTurn() {
-        this.turn.getPlayer().put();
+    public void putTokenPlayerFromTurn(Coordinate coordinate) {
+        this.turn.getPlayer().put(coordinate);
     }
 
-    public void moveTokenPlayerFromTurn() {
-        this.turn.getPlayer().move();
+    public void moveTokenPlayerFromTurn(Coordinate[] coordinates) {
+        this.turn.getPlayer().move(coordinates);
+    }
+
+    public Player getTokenPlayerFromTurn() {
+        return this.turn.getPlayer();
     }
 
     public void changeTurn() {

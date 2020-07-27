@@ -1,41 +1,50 @@
 package usantatecla.tictactoe.models;
 
-import usantatecla.utils.WithConsoleModel;
+public class Player {
 
-public abstract class Player extends WithConsoleModel {
+	private Token token;
 
-	protected Token token;
+	private Board board;
 
-	protected Board board;
+	private PlayerType type;
 
-	public Player(Token token, Board board) {
+	public Player(Token token, Board board, PlayerType type) {
 		this.token = token;
 		this.board = board;
+		this.type = type;
 	}
 
-	abstract void put();
+	public PlayerType getType() {
+		return this.type;
+	}
 
-	abstract void move();
+	void put(Coordinate coordinate) {
+		this.board.put(coordinate, this.token);
+	};
+
+	void move(Coordinate[] coordinates) {
+		this.board.move(coordinates[0], coordinates[1]);
+	};
 
 	Token getToken() {
 		return this.token;
 	}
 
-	Error controlErrorsPutCoordinate(Coordinate coordinate) {
+	public Error controlErrorsPutCoordinate(Coordinate coordinate) {
 		if (!board.isEmpty(coordinate)) {
 			return Error.NOT_OWNER;
 		}
 		return null;
 	}
 
-	Error controlErrorsMoveOriginCoordinate(Coordinate originCoordinate) {
+	public Error controlErrorsMoveOriginCoordinate(Coordinate originCoordinate) {
 		if (!board.isOccupied(originCoordinate, this.token)) {
 			return Error.NOT_OWNER;
 		}
 		return null;
 	}
 
-	Error controlErrorsMoveTargetCoordinate(Coordinate originCoordinate, Coordinate targetCoordinate) {
+	public Error controlErrorsMoveTargetCoordinate(Coordinate originCoordinate, Coordinate targetCoordinate) {
 		if (originCoordinate.equals(targetCoordinate)) {
 			return Error.SAME_COORDINATES;
 		} else if (!board.isEmpty(targetCoordinate)) {

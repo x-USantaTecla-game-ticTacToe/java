@@ -1,6 +1,6 @@
 package usantatecla.utils;
 
-public class Coordinate extends WithConsoleModel {
+public class Coordinate {
 
 	protected int row;
 
@@ -37,12 +37,6 @@ public class Coordinate extends WithConsoleModel {
 
 	private boolean inHorizontal(Coordinate coordinate) {
 		return this.row == coordinate.row;
-	}
-
-	protected void read(String title) {
-		this.console.writeln(title);
-		this.row = this.console.readInt("Row: ") - 1;
-		this.column = this.console.readInt("Column: ") - 1;
 	}
 
 	public int getRow() {

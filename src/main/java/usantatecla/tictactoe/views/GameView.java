@@ -5,7 +5,7 @@ import usantatecla.tictactoe.models.Token;
 import usantatecla.tictactoe.models.Turn;
 import usantatecla.utils.WithConsoleModel;
 
-public class GameView extends WithConsoleModel {
+class GameView extends WithConsoleModel {
 
     Game game;
 

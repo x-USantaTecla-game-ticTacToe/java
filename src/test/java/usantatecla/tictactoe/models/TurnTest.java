@@ -12,8 +12,8 @@ public class TurnTest {
     public TurnTest() {
         Board board = new Board();
         this.players = new Player[2];
-        this.players[0] = new UserPlayer(Token.values()[0], board);
-        this.players[1] = new UserPlayer(Token.values()[1], board);
+        this.players[0] = new Player(Token.values()[0], board, PlayerType.USER_PLAYER);
+        this.players[1] = new Player(Token.values()[1], board, PlayerType.MACHINE_PLAYER);
         this.turn = new Turn(this.players);
     }
 

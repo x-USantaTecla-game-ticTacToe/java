@@ -35,18 +35,12 @@ public class Coordinate extends usantatecla.utils.Coordinate {
 		return this.row + this.column == Coordinate.DIMENSION + 1;
 	}
 
-	private boolean isValid() {
+	public boolean isValid() {
 		return this.row >= 0 && this.row < Coordinate.DIMENSION && this.column >= 0
 				&& this.column < Coordinate.DIMENSION;
 	}
 
-	 protected void read(String title) {
-		do {
-			super.read(title);
-		} while (!this.isValid());
-	}
-
-	void random() {
+	public void random() {
 		Random random = new Random(System.currentTimeMillis());
 		this.row = random.nextInt(Coordinate.DIMENSION);
 		this.column = random.nextInt(Coordinate.DIMENSION);

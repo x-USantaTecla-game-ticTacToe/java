@@ -4,7 +4,7 @@ import usantatecla.tictactoe.models.Board;
 import usantatecla.tictactoe.models.Coordinate;
 import usantatecla.tictactoe.models.Token;
 
-public class BoardView {
+class BoardView {
     
     Board board;
 

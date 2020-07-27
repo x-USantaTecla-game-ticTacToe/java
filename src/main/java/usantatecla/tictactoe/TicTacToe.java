@@ -2,13 +2,12 @@ package usantatecla.tictactoe;
 
 import usantatecla.tictactoe.models.Game;
 import usantatecla.tictactoe.views.View;
-import usantatecla.utils.WithConsoleModel;
 
-class TicTacToe extends WithConsoleModel{
+class TicTacToe{
 
-	Game game;
+	private Game game;
 
-	View view;
+	private View view;
 
 	TicTacToe() {
 		this.game = new Game();
