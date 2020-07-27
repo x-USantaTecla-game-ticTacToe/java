@@ -51,9 +51,8 @@ utils .down.> java.io
 ....
 
 class  tictactoe.Board{
-+ {static} EMPTY: char
 - coordinates: Coordinate[][]
-+ Board()
+~ Board()
 ~ write(): void
 - getToken(Coordinate): Token
 ~ move(Coordinate, Coordinate): void
@@ -72,9 +71,9 @@ tictactoe.Board ..> utils.Direction
 tictactoe.Board ..> tictactoe.Message
 
 class  tictactoe.Coordinate{
-+ {static} DIMENSION: char
-+ Coordinate()
-+ Coordinate(int, int)
+~ {static} DIMENSION: char
+~ Coordinate()
+~ Coordinate(int, int)
 ~ inDirection(Coordinate): boolean
 ~ getDirection(Coordinate): Direction
 - inInverseDiagonal(): boolean
@@ -84,29 +83,29 @@ class  tictactoe.Coordinate{
 }
 utils.Coordinate <|-down- tictactoe.Coordinate
 tictactoe.Coordinate ..> utils.Direction
+tictactoe.Coordinate ..> java.util.Random
 
 enum  tictactoe.Error{
 NOT_EMPTY
 NOT_OWNER
 SAME_COORDINATES
 - message: String
-+ Error(String)
+~ Error(String)
 ~ writeln(): void
 }
 tictactoe.Error ..> utils.Console
 
 class  tictactoe.MachinePlayer{
-+ MachinePlayer(Token, Board)
+~ MachinePlayer(Token, Board)
 ~ put(): void
 ~ move(): void
 }
 tictactoe.Player <|-down- tictactoe.MachinePlayer
-tictactoe.MachinePlayer ..> java.util.Random
 
 enum  tictactoe.Message{
 - message: String
 - console: Console
-+ Message(String)
+- Message(String)
 ~ write(): void
 ~ writeln(): void
 }
@@ -115,7 +114,7 @@ tictactoe.Message ..> utils.Console
 class  tictactoe.Player{
 # token: Token
 # board: Board
-+ Player(Token, Board)
+~ Player(Token, Board)
 ~ {abstract} put(): void
 ~ {abstract} move(): void
 ~ writeWin(Token): void
@@ -134,7 +133,7 @@ class  tictactoe.TicTacToe{
 - board: Board
 - players: Players
 - turn: Turn
-+ TicTacToe()
+~ TicTacToe()
 - play(): void
 - playUntilTicTacToe(): void
 - createPlayers(): void
@@ -149,16 +148,16 @@ enum  tictactoe.Token{
 TOKEN_X
 TOKEN_O
 - character: char
-+ Token(char)
+~ Token(char)
 ~ write(): void
 }
 tictactoe.Token..> utils.Console
 
 class  tictactoe.Turn{
-+ {static} PLAYERS: int
+~ {static} PLAYERS: int
 - value: int
 - players: Player[]
-+ Turn(Player[])
+~ Turn(Player[])
 ~ change(): void
 ~ getPlayer(): Player
 ~ getOtherValue(): int
@@ -166,10 +165,9 @@ class  tictactoe.Turn{
 }
 
 class  tictactoe.UserPlayer{
-+ {static} PLAYERS: int
-- value: int
-- players: Player[]
-+ UserPlayer(Token, Board)
+~ {static} ENTER_COORDINATE_TO_PUT: String
+~ {static} ENTER_COORDINATE_TO_REMOVE: String
+~ UserPlayer(Token, Board)
 ~ put(): void
 ~ move(): void
 }

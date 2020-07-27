@@ -40,7 +40,7 @@ class Coordinate extends usantatecla.utils.Coordinate {
 				&& this.column < Coordinate.DIMENSION;
 	}
 
-	 protected void read(String title) {
+	protected void read(String title) {
 		do {
 			super.read(title);
 		} while (!this.isValid());
