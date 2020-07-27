@@ -31,13 +31,19 @@ image::Dibujo.jpg[]
 
 === Arquitectura
 
-[plantuml,version1Arquitectura,svg]
+[plantuml,version2Arquitectura,svg]
 ....
 
-package tictactoe #DDDDDD { } 
+package tictactoe #DDDDDD { }
+package tictactoe.models #DDDDDD { }
+package tictactoe.views #DDDDDD { } 
 package java.util{ }
-tictactoe .down.> java.util
-tictactoe .down.> utils
+tictactoe .down.> tictactoe.models
+tictactoe .down.> tictactoe.views
+tictactoe.models .down.> java.util
+tictactoe.models .down.> utils
+tictactoe.views .down.> utils
+tictactoe.views .down.> tictactoe.models
 
 package utils #DDDDDD { } 
 package java.io{ }
@@ -47,114 +53,119 @@ utils .down.> java.io
 
 === Paquete _tictactoe_
 
-[plantuml,version1TicTacToe,svg]
+[plantuml,version2TicTacToe,svg]
 ....
 
-class  tictactoe.Board{
+class  tictactoe.TicTacToe{
+- game: Game
+- view: View
+~ TicTacToe()
+- play(): void
++ main(String[]): void
+}
+tictactoe.TicTacToe *-down-> tictactoe.models.Game
+tictactoe.TicTacToe *-down-> tictactoe.views.View
+
+....
+
+=== Paquete _tictactoe.models_
+
+[plantuml,tictactoeModels,svg]
+....
+
+class  tictactoe.models.Board{
 + {static} EMPTY: char
 - coordinates: Coordinate[][]
 + Board()
-~ write(): void
-- getToken(Coordinate): Token
++ getToken(Coordinate): Token
 ~ move(Coordinate, Coordinate): void
 ~ put(Coordinate, Token): void
 - remove(Coordinate): void
 ~ isTicTacToe(Token): boolean
 - numberOfCoordinates(Coordinate[]): int
 ~ isCompleted(): boolean
-~ isEmpty(Coordinate): boolean
++ isEmpty(Coordinate): boolean
 ~ isOccupied(Coordinate, Token): boolean
 }
-tictactoe.Board *-down-> tictactoe.Coordinate
-tictactoe.Board ..> tictactoe.Token
-tictactoe.Board ..> tictactoe.Turn
-tictactoe.Board ..> utils.Direction
-tictactoe.Board ..> tictactoe.Message
+tictactoe.models.Board *-down-> tictactoe.models.Coordinate
+tictactoe.models.Board ..> tictactoe.models.Token
+tictactoe.models.Board ..> tictactoe.models.Turn
+tictactoe.models.Board ..> utils.Direction
 
-class  tictactoe.Coordinate{
+class  tictactoe.models.Coordinate{
 + {static} DIMENSION: char
 + Coordinate()
 + Coordinate(int, int)
 ~ inDirection(Coordinate): boolean
 ~ getDirection(Coordinate): Direction
 - inInverseDiagonal(): boolean
-- isValid(): boolean
-# read(String): void
-~ random(): void
++ isValid(): boolean
++ random(): void
 }
-utils.Coordinate <|-down- tictactoe.Coordinate
-tictactoe.Coordinate ..> utils.Direction
+utils.Coordinate <|-down- tictactoe.models.Coordinate
+tictactoe.models.Coordinate ..> utils.Direction
+tictactoe.models.Coordinate ..> java.util.Random
 
-enum  tictactoe.Error{
+enum  tictactoe.models.Error{
 NOT_EMPTY
 NOT_OWNER
 SAME_COORDINATES
-- message: String
-+ Error(String)
-~ writeln(): void
 }
-tictactoe.Error ..> utils.Console
 
-class  tictactoe.MachinePlayer{
-+ MachinePlayer(Token, Board)
-~ put(): void
-~ move(): void
-}
-tictactoe.Player <|-down- tictactoe.MachinePlayer
-tictactoe.MachinePlayer ..> java.util.Random
-
-enum  tictactoe.Message{
-- message: String
-- console: Console
-+ Message(String)
-~ write(): void
-~ writeln(): void
-}
-tictactoe.Message ..> utils.Console
-
-class  tictactoe.Player{
-# token: Token
-# board: Board
-+ Player(Token, Board)
-~ {abstract} put(): void
-~ {abstract} move(): void
-~ writeWin(Token): void
-~ getToken(): Token
-~ controlErrorsPutCoordinate(Coordinate): Error
-~ controlErrorsMoveOriginCoordinate(Coordinate): Error
-~ controlErrorsMoveTargetCoordinate(Coordinate, Coordinate): Error
-}
-tictactoe.Player *-down-> tictactoe.Token
-tictactoe.Player *-down-> tictactoe.Board
-tictactoe.Player ..> tictactoe.Coordinate
-tictactoe.Player ..> tictactoe.Error
-tictactoe.Player ..> tictactoe.Message
-
-class  tictactoe.TicTacToe{
+class  tictactoe.models.Game{
 - board: Board
-- players: Players
+- players: Player[][]
 - turn: Turn
-+ TicTacToe()
-- play(): void
-- playUntilTicTacToe(): void
-- createPlayers(): void
-+ main(String[]): void
++ Game()
++ createPlayers(int): void
++ getBoard(): Board
++ isBoardComplete(): boolean
++ putTokenPlayerFromTurn(Coordinate): void
++ moveTokenPlayerFromTurn(Coordinate[]): void
++ getTokenPlayerFromTurn(int): Player
++ changeTurn(): void
++ isTicTacToe(): boolean
++ getOtherValueFromTurn(): int
 }
-utils.WithConsoleModel <|-down- tictactoe.TicTacToe
-tictactoe.TicTacToe *-down-> tictactoe.Board
-tictactoe.TicTacToe *-down-> tictactoe.Player
-tictactoe.TicTacToe *-down-> tictactoe.Turn
+tictactoe.models.Game *-down-> tictactoe.models.Board
+tictactoe.models.Game *-down-> tictactoe.models.Player
+tictactoe.models.Game *-down-> tictactoe.models.Turn
+tictactoe.models.Game ..> tictactoe.models.Token
+tictactoe.models.Game ..> tictactoe.models.PlayerType
 
-enum  tictactoe.Token{
+class  tictactoe.models.Player{
+- token: Token
+- board: Board
+- type: PlayerType
++ Player(Token, Board, PlayerType)
++ getType(): PlayerType
+~ getToken(): Token
+~ put(Coordinate): void
+~ move(Coordinate[]): void
++ controlErrorsPutCoordinate(Coordinate): Error
++ controlErrorsMoveOriginCoordinate(Coordinate): Error
++ controlErrorsMoveTargetCoordinate(Coordinate, Coordinate): Error
+}
+tictactoe.models.Player *-down-> tictactoe.models.Token
+tictactoe.models.Player *-down-> tictactoe.models.Board
+tictactoe.models.Player *-down-> tictactoe.models.PlayerType 
+tictactoe.models.Player ..> tictactoe.models.Coordinate
+tictactoe.models.Player ..> tictactoe.models.Error
+
+enum  tictactoe.models.PlayerType{
+USER_PLAYER
+MACHINE_PLAYER
+}
+
+enum  tictactoe.models.Token{
 TOKEN_X
 TOKEN_O
 - character: char
-+ Token(char)
-~ write(): void
+~ Token(char)
++ getChar(): char
 }
-tictactoe.Token..> utils.Console
 
-class  tictactoe.Turn{
+class  tictactoe.models.Turn{
 + {static} PLAYERS: int
 - value: int
 - players: Player[]
@@ -164,22 +175,129 @@ class  tictactoe.Turn{
 ~ getOtherValue(): int
 ~ getOtherPlayer(): Player
 }
+tictactoe.models.Turn *-down-> tictactoe.models.Player
 
-class  tictactoe.UserPlayer{
-+ {static} PLAYERS: int
-- value: int
-- players: Player[]
-+ UserPlayer(Token, Board)
-~ put(): void
-~ move(): void
+....
+
+=== Paquete _tictactoe.views_
+
+[plantuml,tictactoeViews,svg]
+
+....
+
+class  tictactoe.views.BoardView{
+~ board: Board
+~ BoardView(Board)
+~ write(): void
 }
-tictactoe.Player <|-down- tictactoe.UserPlayer
+
+class  tictactoe.views.CoordinateView{
+~ read(String): Coordinate
+}
+utils.WithConsoleModel <|-down- tictactoe.views.CoordinateView
+
+class  tictactoe.views.ErrorView{
+- {static} MESSAGES: String[]
+- error: Error
+~ ErrorView(Error)
+~ read(String): Coordinate
+}
+utils.WithConsoleModel <|-down- tictactoe.views.ErrorView
+
+class  tictactoe.views.GameView{
+- game: Game
+~ GameView(Game)
+~ readAndCreateUsers(): void
+~ writeWin(Token): void
+}
+utils.WithConsoleModel <|-down- tictactoe.views.GameView
+tictactoe.views.GameView *-down-> tictactoe.views.TokenView
+
+class  tictactoe.views.MachinePlayerView{
+~ MachinePlayerView(Player)
+~ readCoordinateToPut(): Coordinate
+~ readCoordinatesToMove(): Coordinate[]
+}
+tictactoe.views.PlayerView <|-down- tictactoe.views.MachinePlayerView
+tictactoe.views.MachinePlayerView ..> tictactoe.views.ErrorView
+
+class  tictactoe.views.MessageView{
+- message: String
+- console: Console
+- MessageView(String)
+~ write(): void
+~ writeln(): void
+}
+tictactoe.views.MessageView ..> utils.Console
+
+class  tictactoe.views.PlayerView{
+# player: Player
+~ PlayerView(Player)
+~ {abstract} readCoordinateToPut(): Coordinate
+~ {abstract} readCoordinatesToMove(): Coordinate[]
+~ controlErrorsPutCoordinate(Coordinate): Error
+~ controlErrorsMoveOriginCoordinate(Coordinate): Error
+~ controlErrorsMoveTargetCoordinate(Coordinate, Coordinate): Error
+}
+
+class  tictactoe.views.PlayView{
+~ game: Game
+~ PlayView(Game)
+~ interact(): boolean
+}
+tictactoe.views.PlayView ..> tictactoe.views.PlayerView
+
+class tictactoe.views.ResultView{
+~ game: Game
+~ ResultView(Game)
+~ interact(): void
+}
+tictactoe.views.ResultView ..> tictactoe.views.GameView
+
+class tictactoe.views.StartView{
+~ game: Game
+~ StartView(Game)
+~ interact(): void
+}
+tictactoe.views.StartView..> tictactoe.views.GameView
+tictactoe.views.StartView..> tictactoe.views.BoardView
+tictactoe.views.StartView..> tictactoe.views.MessageView
+
+class tictactoe.views.TokenView{
+~ token: Token
+~ TokenView(Token)
+~ write(): void
+}
+utils.WithConsoleModel<|-down- tictactoe.views.TokenView
+
+class  tictactoe.views.UserPlayerView{
+~ {static} ENTER_COORDINATE_TO_PUT: String
+~ {static} ENTER_COORDINATE_TO_REMOVE: String
+~ UserPlayerView(Player)
+~ readCoordinateToPut(): Coordinate
+~ readCoordinatesToMove(): Coordinate[]
+}
+tictactoe.views.PlayerView <|-down- tictactoe.views.UserPlayerView
+tictactoe.views.UserPlayerView ..> tictactoe.views.CoordinateView
+tictactoe.views.UserPlayerView ..> tictactoe.views.ErrorView
+
+class  tictactoe.views.View{
+# game: Game
+- startView: StartView
+- playView: PlayView
+- ResultView: ResultView
++ View(Game)
++ interact(): void
+}
+tictactoe.views.View *-down-> tictactoe.views.StartView
+tictactoe.views.View *-down-> tictactoe.views.PlayView
+tictactoe.views.View *-down-> tictactoe.views.ResultView
 
 ....
 
 === Paquete _utils_
 
-[plantuml,utils1,svg]
+[plantuml,utils2,svg]
 
 ....
 
@@ -194,7 +312,7 @@ class  utils.Console{
 + writeln(int): void
 + writeln(String): void
 + writeln(): void
-- writeError(String): void
++ writeError(String): void
 }
 utils.Console *-down-> java.io.BufferedReader
 
@@ -207,12 +325,10 @@ class  utils.Coordinate{
 - inMainDiagonal(): boolean
 - inVertical(Coordinate): boolean
 - inHorizontal(Coordinate): boolean
-# read(String): void
 + getRow(): int
 + getColumn(): int
 + equals(Coordinate): boolean
 }
-utils.WithConsoleModel <|-down- utils.Coordinate
 utils.Coordinate ..> utils.Direction
 
 enum  utils.Direction{
@@ -255,6 +371,10 @@ utils.WithConsoleModel *-down-> utils.Console
 
 package "  "  as tictactoe {
 }
+package "  "  as tictactoe.models {
+}
+package "  "  as tictactoe.views {
+}
 package "  "  as utils {
 }
 package "  "  as java.io {
@@ -265,6 +385,8 @@ package "  "  as java.util {
 [mastermind.jar] as jar
 
 jar *--> tictactoe
+jar *--> tictactoe.models
+jar *--> tictactoe.views
 jar *--> utils
 jar *--> java.io
 jar *--> java.util

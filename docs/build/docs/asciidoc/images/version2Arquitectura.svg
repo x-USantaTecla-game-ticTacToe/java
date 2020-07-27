@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="533px" preserveAspectRatio="none" style="width:285px;height:533px;" version="1.1" viewBox="0 0 285 533" width="285px" zoomAndPan="magnify"><defs><filter height="300%" id="fl69ehw2zm8pw" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><polygon fill="#DDDDDD" filter="url(#fl69ehw2zm8pw)" points="101.5,6,168.5,6,175.5,29.6094,182.5,29.6094,182.5,61.2188,101.5,61.2188,101.5,6" style="stroke: #000000; stroke-width: 1.5;"/><line style="stroke: #000000; stroke-width: 1.5;" x1="101.5" x2="175.5" y1="29.6094" y2="29.6094"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="61" x="105.5" y="22.5332">tictactoe</text><polygon fill="#DDDDDD" filter="url(#fl69ehw2zm8pw)" points="16,236,138,236,145,259.6094,152,259.6094,152,291.2188,16,291.2188,16,236" style="stroke: #000000; stroke-width: 1.5;"/><line style="stroke: #000000; stroke-width: 1.5;" x1="16" x2="145" y1="259.6094" y2="259.6094"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="116" x="20" y="252.5332">tictactoe.models</text><polygon fill="#DDDDDD" filter="url(#fl69ehw2zm8pw)" points="137,121,249,121,256,144.6094,263,144.6094,263,176.2188,137,176.2188,137,121" style="stroke: #000000; stroke-width: 1.5;"/><line style="stroke: #000000; stroke-width: 1.5;" x1="137" x2="256" y1="144.6094" y2="144.6094"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="106" x="141" y="137.5332">tictactoe.views</text><polygon fill="#FFFFFF" filter="url(#fl69ehw2zm8pw)" points="46.5,351,107.5,351,114.5,374.6094,121.5,374.6094,121.5,406.2188,46.5,406.2188,46.5,351" style="stroke: #000000; stroke-width: 1.5;"/><line style="stroke: #000000; stroke-width: 1.5;" x1="46.5" x2="114.5" y1="374.6094" y2="374.6094"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="55" x="50.5" y="367.5332">java.util</text><polygon fill="#DDDDDD" filter="url(#fl69ehw2zm8pw)" points="168,351,204,351,211,374.6094,218,374.6094,218,406.2188,168,406.2188,168,351" style="stroke: #000000; stroke-width: 1.5;"/><line style="stroke: #000000; stroke-width: 1.5;" x1="168" x2="211" y1="374.6094" y2="374.6094"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="30" x="172" y="367.5332">utils</text><polygon fill="#FFFFFF" filter="url(#fl69ehw2zm8pw)" points="160,466,212,466,219,489.6094,226,489.6094,226,521.2188,160,521.2188,160,466" style="stroke: #000000; stroke-width: 1.5;"/><line style="stroke: #000000; stroke-width: 1.5;" x1="160" x2="219" y1="489.6094" y2="489.6094"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="46" x="164" y="482.5332">java.io</text><!--MD5=[a65998a409184a650758a5d227ee8afa]
+link tictactoe to tictactoe.models--><path d="M134.731,61.353 C130.144,78.416 124.137,100.981 119,121 C109.3482,158.614 98.6919,201.975 91.7032,230.68 " fill="none" id="tictactoe-&gt;tictactoe.models" style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#A80036" points="90.442,235.864,96.4575,228.0657,91.6248,231.0059,88.6846,226.1732,90.442,235.864" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[8fe1157dabbcf20ee852fc992046f19b]
+link tictactoe to tictactoe.views--><path d="M155.745,61.279 C164.196,77.745 175.064,98.917 183.914,116.161 " fill="none" id="tictactoe-&gt;tictactoe.views" style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#A80036" points="186.353,120.913,185.8002,111.0797,184.0691,116.4651,178.6836,114.734,186.353,120.913" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[e6c0f23e74b5161a168046a341518387]
+link tictactoe.models to java.util--><path d="M84,291.279 C84,307.604 84,328.556 84,345.718 " fill="none" id="tictactoe.models-&gt;java.util" style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#A80036" points="84,350.913,88,341.913,84,345.913,80,341.913,84,350.913" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[592d3e5213f5052c5b4a8146f8a66fb9]
+link tictactoe.models to utils--><path d="M109.8315,291.279 C126.102,308.147 147.139,329.956 163.984,347.419 " fill="none" id="tictactoe.models-&gt;utils" style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#A80036" points="167.73,351.303,164.3603,342.0485,164.2586,347.7045,158.6027,347.6028,167.73,351.303" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[cd646adb6bbab9424d87d89ba9c34900]
+link tictactoe.views to utils--><path d="M199.183,176.101 C197.888,218.291 195.367,300.393 193.978,345.652 " fill="none" id="tictactoe.views-&gt;utils" style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#A80036" points="193.822,350.716,198.0953,341.8425,193.9749,345.7183,190.099,341.5979,193.822,350.716" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[a8e8bb12a36f69c578c87cb37fa844dd]
+link tictactoe.views to tictactoe.models--><path d="M172.51,176.279 C155.318,193.026 133.128,214.642 115.2672,232.041 " fill="none" id="tictactoe.views-&gt;tictactoe.models" style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#A80036" points="111.2931,235.913,120.5308,232.4975,114.8744,232.4238,114.9481,226.7675,111.2931,235.913" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[e79504c030c2940e8dd8427e90ad9823]
+link utils to java.io--><path d="M193,406.279 C193,422.6038 193,443.5556 193,460.7176 " fill="none" id="utils-&gt;java.io" style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#A80036" points="193,465.9128,197,456.9128,193,460.9128,189,456.9128,193,465.9128" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[43debb922fdd06a812edb99ccb3d1582]
+@startuml
+
+package tictactoe #DDDDDD { }
+package tictactoe.models #DDDDDD { }
+package tictactoe.views #DDDDDD { }
+package java.util{ }
+tictactoe .down.> tictactoe.models
+tictactoe .down.> tictactoe.views
+tictactoe.models .down.> java.util
+tictactoe.models .down.> utils
+tictactoe.views .down.> utils
+tictactoe.views .down.> tictactoe.models
+
+package utils #DDDDDD { }
+package java.io{ }
+utils .down.> java.io
+
+@enduml
+
+PlantUML version 1.2020.15(Sun Jun 28 13:39:45 CEST 2020)
+(GPL source distribution)
+Java Runtime: Java(TM) SE Runtime Environment
+JVM: Java HotSpot(TM) 64-Bit Server VM
+Default Encoding: windows-1252
+Language: es
+Country: ES
+--></g></svg>
