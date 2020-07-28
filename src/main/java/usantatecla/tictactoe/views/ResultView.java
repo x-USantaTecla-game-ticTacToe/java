@@ -2,8 +2,9 @@ package usantatecla.tictactoe.views;
 
 import usantatecla.tictactoe.models.Game;
 import usantatecla.tictactoe.models.Token;
+import usantatecla.utils.WithConsoleModel;
 
-class ResultView {
+class ResultView extends WithConsoleModel {
     
     Game game;
     
@@ -13,6 +14,7 @@ class ResultView {
 
     void interact() {
         int otherValue = this.game.getOtherValueFromTurn();
-        new GameView(this.game).writeWin(Token.values()[otherValue]);
+        new TokenView(Token.values()[otherValue]).write();
+		MessageView.PLAYER_WIN.writeln();
     }
 }

@@ -204,14 +204,13 @@ class  tictactoe.views.ErrorView{
 }
 utils.WithConsoleModel <|-down- tictactoe.views.ErrorView
 
-class  tictactoe.views.GameView{
+class  tictactoe.views.ChoosePlayerView{
 - game: Game
-~ GameView(Game)
+~ ChoosePlayerView(Game)
 ~ readAndCreateUsers(): void
-~ writeWin(Token): void
 }
-utils.WithConsoleModel <|-down- tictactoe.views.GameView
-tictactoe.views.GameView *-down-> tictactoe.views.TokenView
+utils.WithConsoleModel <|-down- tictactoe.views.ChoosePlayerView
+tictactoe.views.ChoosePlayerView ..> tictactoe.views.MessageView
 
 class  tictactoe.views.MachinePlayerView{
 ~ MachinePlayerView(Player)
@@ -222,9 +221,18 @@ tictactoe.views.PlayerView <|-down- tictactoe.views.MachinePlayerView
 tictactoe.views.MachinePlayerView ..> tictactoe.views.ErrorView
 
 class  tictactoe.views.MessageView{
++ LINE_BREAK: MessageView
++ EMPTY: MessageView 
++ SEPARATOR: MessageView
++ VERTICAL_LINE_CENTERED: MessageView
++ VERTICAL_LINE_LEFT: MessageView
++	PLAYER_WIN: MessageView
++	START_GAME: MessageView
++	CHOOSE_PLAYER: MessageView
 - message: String
 - console: Console
 - MessageView(String)
+~ getMessage(): String
 ~ write(): void
 ~ writeln(): void
 }
@@ -252,14 +260,15 @@ class tictactoe.views.ResultView{
 ~ ResultView(Game)
 ~ interact(): void
 }
-tictactoe.views.ResultView ..> tictactoe.views.GameView
+tictactoe.views.ResultView ..> tictactoe.views.TokenView
+tictactoe.views.ResultView ..> tictactoe.views.MessageView
 
 class tictactoe.views.StartView{
 ~ game: Game
 ~ StartView(Game)
 ~ interact(): void
 }
-tictactoe.views.StartView..> tictactoe.views.GameView
+tictactoe.views.StartView..> tictactoe.views.ChoosePlayerView
 tictactoe.views.StartView..> tictactoe.views.BoardView
 tictactoe.views.StartView..> tictactoe.views.MessageView
 

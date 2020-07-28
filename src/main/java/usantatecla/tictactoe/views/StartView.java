@@ -12,7 +12,7 @@ class StartView {
 
     void interact() {
 		MessageView.START_GAME.writeln();
-		new GameView(this.game).readAndCreateUsers();
+		new ChoosePlayerView(this.game).readAndCreateUsers();
 		new BoardView(this.game.getBoard()).write();
 	}
 }
