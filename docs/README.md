@@ -11,11 +11,11 @@
 </head>
 <body class="book">
 <div id="header">
-<h1>TicTacToe. Solución 1.1. <strong>domainModel</strong></h1>
+<h1>TicTacToe. Solucion 2.1. <strong>documentView</strong></h1>
 <div class="details">
 <span id="author" class="author">Santa Tecla</span><br>
 <span id="email" class="email"><a href="mailto:parqueNaturalSantaTecla@gmail.com">parqueNaturalSantaTecla@gmail.com</a></span><br>
-<span id="revnumber">version 0.1.1</span>
+<span id="revnumber">version 0.1.2</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Índice</div>
@@ -24,8 +24,10 @@
 <li><a href="#vista-de-lógicadiseño">Vista de Lógica/Diseño</a>
 <ul class="sectlevel2">
 <li><a href="#arquitectura">Arquitectura</a></li>
-<li><a href="#paquete-mastermind">Paquete <em>tictactoe</em></a></li>
-<li><a href="#paquete-mastermind-utils">Paquete <em>utils</em></a></li>
+<li><a href="#paquete-tictactoe">Paquete <em>tictactoe</em></a></li>
+<li><a href="#paquete-tictactoe-views">Paquete <em>tictactoe.views</em></a></li>
+<li><a href="#paquete-tictactoe-models">Paquete <em>tictactoe.models</em></a></li>
+<li><a href="#paquete-utils">Paquete <em>utils</em></a></li>
 </ul>
 </li>
 <li><a href="#calidad-del-software">Calidad del Software</a>
@@ -76,7 +78,7 @@
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/Dibujo.jpg" alt="Dibujo">
+<img src="build/docs/asciidoc/images/Dibujo.jpg" alt="Dibujo" width="300" height="300">
 </div>
 </div></div></td>
 </tr>
@@ -98,7 +100,7 @@
 <h3 id="arquitectura">Arquitectura</h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/version2Arquitectura.svg" alt="version1Arquitectura" width="274" height="305">
+<img src="build/docs/asciidoc/images/version2Arquitectura.svg" alt="version2Arquitectura" width="400" height="400">
 </div>
 </div>
 </div>
@@ -106,15 +108,7 @@
 <h3 id="paquete-tictactoe">Paquete <em>tictactoe</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/version2TicTacToe.svg" alt="version2TicTacToe" width="767" height="1221">
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="paquete-tictactoe-models">Paquete <em>tictactoe.models</em></h3>
-<div class="imageblock">
-<div class="content">
-<img src="build/docs/asciidoc/images/tictactoeModels.svg" alt="tictactoeModels" width="456" height="548">
+<img src="build/docs/asciidoc/images/version2TicTacToe.svg" alt="version2TicTacToe" width="300" height="300">
 </div>
 </div>
 </div>
@@ -122,7 +116,15 @@
 <h3 id="paquete-tictactoe-views">Paquete <em>tictactoe.views</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/tictactoeViews.svg" alt="tictactoeViews" width="456" height="548">
+<img src="build/docs/asciidoc/images/tictactoeViews.svg" alt="tictactoeViews" width="800" height="800">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="paquete-tictactoe-models">Paquete <em>tictactoe.models</em></h3>
+<div class="imageblock">
+<div class="content">
+<img src="build/docs/asciidoc/images/tictactoeModels.svg" alt="tictactoeModels" width="900" height="900">
 </div>
 </div>
 </div>
@@ -225,8 +227,8 @@
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 0.1.1<br>
-Last updated 2020-07-28 11:40:00 +0200
+Version 0.1.2<br>
+Last updated 2020-07-28 16:20:00 +0200
 </div>
 </div>
 </html>

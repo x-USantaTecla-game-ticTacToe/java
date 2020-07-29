@@ -1,4 +1,4 @@
-= Master Mind. Solución 1.1. *domainModel*
+= Master Mind. Solucion 2.1. *documentView*
 Santa Tecla <parqueNaturalSantaTecla@gmail.com>
 :toc-title: Índice
 :toc: left
@@ -13,7 +13,7 @@ Santa Tecla <parqueNaturalSantaTecla@gmail.com>
 |===
 
 a|
-- link:https://en.wikipedia.org/wiki/Mastermind_(board_game)[*Wiki*] - link:https://www.youtube.com/watch?v=2-hTeg2M6GQ[*Youtube*]
+- link:https://en.wikipedia.org/wiki/Tic-tac-toe[*Wiki*]
 * _Funcionalidad: **Básica**_
 * _Interfaz: **Texto**_
 * _Distribución: **Standalone**_
@@ -27,7 +27,7 @@ image::Dibujo.jpg[]
 
 == Vista de Lógica/Diseño
 
-- Aplicación del *Modelo del Dominio* mediante Estrategias de *Análisis Formal*, *Análisis Clásico*, *Experto del Dominio*, *Reparto de Responsabilidades*, ...
+- Arquitectura Documento/Vista mediante *Patrón de Vista Separada*
 
 === Arquitectura
 
@@ -65,117 +65,6 @@ class  tictactoe.TicTacToe{
 }
 tictactoe.TicTacToe *-down-> tictactoe.models.Game
 tictactoe.TicTacToe *-down-> tictactoe.views.View
-
-....
-
-=== Paquete _tictactoe.models_
-
-[plantuml,tictactoeModels,svg]
-....
-
-class  tictactoe.models.Board{
-+ {static} EMPTY: char
-- coordinates: Coordinate[][]
-+ Board()
-+ getToken(Coordinate): Token
-~ move(Coordinate, Coordinate): void
-~ put(Coordinate, Token): void
-- remove(Coordinate): void
-~ isTicTacToe(Token): boolean
-- numberOfCoordinates(Coordinate[]): int
-~ isCompleted(): boolean
-+ isEmpty(Coordinate): boolean
-~ isOccupied(Coordinate, Token): boolean
-}
-tictactoe.models.Board *-down-> tictactoe.models.Coordinate
-tictactoe.models.Board ..> tictactoe.models.Token
-tictactoe.models.Board ..> tictactoe.models.Turn
-tictactoe.models.Board ..> utils.Direction
-
-class  tictactoe.models.Coordinate{
-+ {static} DIMENSION: char
-+ Coordinate()
-+ Coordinate(int, int)
-~ inDirection(Coordinate): boolean
-~ getDirection(Coordinate): Direction
-- inInverseDiagonal(): boolean
-+ isValid(): boolean
-+ random(): void
-}
-utils.Coordinate <|-down- tictactoe.models.Coordinate
-tictactoe.models.Coordinate ..> utils.Direction
-tictactoe.models.Coordinate ..> java.util.Random
-
-enum  tictactoe.models.Error{
-NOT_EMPTY
-NOT_OWNER
-SAME_COORDINATES
-}
-
-class  tictactoe.models.Game{
-- board: Board
-- players: Player[][]
-- turn: Turn
-+ Game()
-+ createPlayers(int): void
-+ getBoard(): Board
-+ isBoardComplete(): boolean
-+ putTokenPlayerFromTurn(Coordinate): void
-+ moveTokenPlayerFromTurn(Coordinate[]): void
-+ getTokenPlayerFromTurn(int): Player
-+ changeTurn(): void
-+ isTicTacToe(): boolean
-+ getOtherValueFromTurn(): int
-}
-tictactoe.models.Game *-down-> tictactoe.models.Board
-tictactoe.models.Game *-down-> tictactoe.models.Player
-tictactoe.models.Game *-down-> tictactoe.models.Turn
-tictactoe.models.Game ..> tictactoe.models.Token
-tictactoe.models.Game ..> tictactoe.models.PlayerType
-
-class  tictactoe.models.Player{
-- token: Token
-- board: Board
-- type: PlayerType
-+ Player(Token, Board, PlayerType)
-+ getType(): PlayerType
-~ getToken(): Token
-~ put(Coordinate): void
-~ move(Coordinate[]): void
-+ controlErrorsPutCoordinate(Coordinate): Error
-+ controlErrorsMoveOriginCoordinate(Coordinate): Error
-+ controlErrorsMoveTargetCoordinate(Coordinate, Coordinate): Error
-}
-tictactoe.models.Player *-down-> tictactoe.models.Token
-tictactoe.models.Player *-down-> tictactoe.models.Board
-tictactoe.models.Player *-down-> tictactoe.models.PlayerType 
-tictactoe.models.Player ..> tictactoe.models.Coordinate
-tictactoe.models.Player ..> tictactoe.models.Error
-
-enum  tictactoe.models.PlayerType{
-USER_PLAYER
-MACHINE_PLAYER
-}
-
-enum  tictactoe.models.Token{
-TOKEN_X
-TOKEN_O
-- character: char
-~ Token(char)
-+ getChar(): char
-}
-
-class  tictactoe.models.Turn{
-+ {static} PLAYERS: int
-- value: int
-- players: Player[]
-+ Turn(Player[])
-~ change(): void
-~ getPlayer(): Player
-~ getOtherValue(): int
-~ getOtherPlayer(): Player
-}
-tictactoe.models.Turn *-down-> tictactoe.models.Player
 
 ....
 
@@ -301,6 +190,117 @@ class  tictactoe.views.View{
 tictactoe.views.View *-down-> tictactoe.views.StartView
 tictactoe.views.View *-down-> tictactoe.views.PlayView
 tictactoe.views.View *-down-> tictactoe.views.ResultView
+
+....
+
+=== Paquete _tictactoe.models_
+
+[plantuml,tictactoeModels,svg]
+....
+
+class  tictactoe.models.Board{
++ {static} EMPTY: char
+- coordinates: Coordinate[][]
++ Board()
++ getToken(Coordinate): Token
+~ move(Coordinate, Coordinate): void
+~ put(Coordinate, Token): void
+- remove(Coordinate): void
+~ isTicTacToe(Token): boolean
+- numberOfCoordinates(Coordinate[]): int
+~ isCompleted(): boolean
++ isEmpty(Coordinate): boolean
+~ isOccupied(Coordinate, Token): boolean
+}
+tictactoe.models.Board *-down-> tictactoe.models.Coordinate
+tictactoe.models.Board ..> tictactoe.models.Token
+tictactoe.models.Board ..> tictactoe.models.Turn
+tictactoe.models.Board ..> utils.Direction
+
+class  tictactoe.models.Coordinate{
++ {static} DIMENSION: char
++ Coordinate()
++ Coordinate(int, int)
+~ inDirection(Coordinate): boolean
+~ getDirection(Coordinate): Direction
+- inInverseDiagonal(): boolean
++ isValid(): boolean
++ random(): void
+}
+utils.Coordinate <|-down- tictactoe.models.Coordinate
+tictactoe.models.Coordinate ..> utils.Direction
+tictactoe.models.Coordinate ..> java.util.Random
+
+enum  tictactoe.models.Error{
+NOT_EMPTY
+NOT_OWNER
+SAME_COORDINATES
+}
+
+class  tictactoe.models.Game{
+- board: Board
+- players: Player[][]
+- turn: Turn
++ Game()
++ createPlayers(int): void
++ getBoard(): Board
++ isBoardComplete(): boolean
++ putTokenPlayerFromTurn(Coordinate): void
++ moveTokenPlayerFromTurn(Coordinate[]): void
++ getTokenPlayerFromTurn(int): Player
++ changeTurn(): void
++ isTicTacToe(): boolean
++ getOtherValueFromTurn(): int
+}
+tictactoe.models.Game *-down-> tictactoe.models.Board
+tictactoe.models.Game *-down-> tictactoe.models.Player
+tictactoe.models.Game *-down-> tictactoe.models.Turn
+tictactoe.models.Game ..> tictactoe.models.Token
+tictactoe.models.Game ..> tictactoe.models.PlayerType
+
+class  tictactoe.models.Player{
+- token: Token
+- board: Board
+- type: PlayerType
++ Player(Token, Board, PlayerType)
++ getType(): PlayerType
+~ getToken(): Token
+~ put(Coordinate): void
+~ move(Coordinate[]): void
++ controlErrorsPutCoordinate(Coordinate): Error
++ controlErrorsMoveOriginCoordinate(Coordinate): Error
++ controlErrorsMoveTargetCoordinate(Coordinate, Coordinate): Error
+}
+tictactoe.models.Player *-down-> tictactoe.models.Token
+tictactoe.models.Player *-down-> tictactoe.models.Board
+tictactoe.models.Player *-down-> tictactoe.models.PlayerType 
+tictactoe.models.Player ..> tictactoe.models.Coordinate
+tictactoe.models.Player ..> tictactoe.models.Error
+
+enum  tictactoe.models.PlayerType{
+USER_PLAYER
+MACHINE_PLAYER
+}
+
+enum  tictactoe.models.Token{
+TOKEN_X
+TOKEN_O
+- character: char
+~ Token(char)
++ getChar(): char
+}
+
+class  tictactoe.models.Turn{
++ {static} PLAYERS: int
+- value: int
+- players: Player[]
++ Turn(Player[])
+~ change(): void
+~ getPlayer(): Player
+~ getOtherValue(): int
+~ getOtherPlayer(): Player
+}
+tictactoe.models.Turn *-down-> tictactoe.models.Player
 
 ....
 

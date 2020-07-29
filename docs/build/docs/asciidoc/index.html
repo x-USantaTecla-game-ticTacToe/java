@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.8">
 <meta name="author" content="Santa Tecla">
-<title>Master Mind. Solución 1.1. domainModel</title>
+<title>Master Mind. Solucion 2.1. documentView</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -439,7 +439,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="book">
 <div id="header">
-<h1>Master Mind. Solución 1.1. <strong>domainModel</strong></h1>
+<h1>Master Mind. Solucion 2.1. <strong>documentView</strong></h1>
 <div class="details">
 <span id="author" class="author">Santa Tecla</span><br>
 <span id="email" class="email"><a href="mailto:parqueNaturalSantaTecla@gmail.com">parqueNaturalSantaTecla@gmail.com</a></span><br>
@@ -453,8 +453,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel2">
 <li><a href="#arquitectura">Arquitectura</a></li>
 <li><a href="#paquete-tictactoe">Paquete <em>tictactoe</em></a></li>
-<li><a href="#paquete-tictactoe-models">Paquete <em>tictactoe.models</em></a></li>
 <li><a href="#paquete-tictactoe-views">Paquete <em>tictactoe.views</em></a></li>
+<li><a href="#paquete-tictactoe-models">Paquete <em>tictactoe.models</em></a></li>
 <li><a href="#paquete-utils">Paquete <em>utils</em></a></li>
 </ul>
 </li>
@@ -484,7 +484,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <td class="tableblock halign-left valign-top"><div class="content"><div class="ulist">
 <ul>
 <li>
-<p><a href="https://en.wikipedia.org/wiki/Mastermind_(board_game)"><strong>Wiki</strong></a> - <a href="https://www.youtube.com/watch?v=2-hTeg2M6GQ"><strong>Youtube</strong></a></p>
+<p><a href="https://en.wikipedia.org/wiki/Tic-tac-toe"><strong>Wiki</strong></a></p>
 <div class="ulist">
 <ul>
 <li>
@@ -520,7 +520,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="ulist">
 <ul>
 <li>
-<p>Aplicación del <strong>Modelo del Dominio</strong> mediante Estrategias de <strong>Análisis Formal</strong>, <strong>Análisis Clásico</strong>, <strong>Experto del Dominio</strong>, <strong>Reparto de Responsabilidades</strong>, &#8230;&#8203;</p>
+<p>Arquitectura Documento/Vista mediante <strong>Patrón de Vista Separada</strong></p>
 </li>
 </ul>
 </div>
@@ -541,18 +541,18 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect2">
-<h3 id="paquete-tictactoe-models">Paquete <em>tictactoe.models</em></h3>
-<div class="imageblock">
-<div class="content">
-<img src="images/tictactoeModels.svg" alt="tictactoeModels" width="959" height="1394">
-</div>
-</div>
-</div>
-<div class="sect2">
 <h3 id="paquete-tictactoe-views">Paquete <em>tictactoe.views</em></h3>
 <div class="imageblock">
 <div class="content">
 <img src="images/tictactoeViews.svg" alt="tictactoeViews" width="1302" height="1021">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="paquete-tictactoe-models">Paquete <em>tictactoe.models</em></h3>
+<div class="imageblock">
+<div class="content">
+<img src="images/tictactoeModels.svg" alt="tictactoeModels" width="959" height="1394">
 </div>
 </div>
 </div>
@@ -656,7 +656,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1<br>
-Last updated 2020-07-28 11:28:05 +0200
+Last updated 2020-07-29 16:16:25 +0200
 </div>
 </div>
 <script>
