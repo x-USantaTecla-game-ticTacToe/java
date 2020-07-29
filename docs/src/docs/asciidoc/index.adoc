@@ -13,7 +13,7 @@ Santa Tecla <parqueNaturalSantaTecla@gmail.com>
 |===
 
 a|
-- link:https://en.wikipedia.org/wiki/Mastermind_(board_game)[*Wiki*] - link:https://www.youtube.com/watch?v=2-hTeg2M6GQ[*Youtube*]
+- link:https://en.wikipedia.org/wiki/Tic-tac-toe[*Wiki*]
 * _Funcionalidad: **Básica**_
 * _Interfaz: **Texto**_
 * _Distribución: **Standalone**_
@@ -232,7 +232,7 @@ utils.WithConsoleModel *-down-> utils.Console
 
 === Diseño
 
-- [red]#_**Método largo**: Método "play" de Mastermind,..._#
+- [red]#_**Método largo**: Método "play" de TicTacToe,..._#
 
 === Rediseño
 
