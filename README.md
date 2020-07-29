@@ -1,4 +1,4 @@
-<h1 align="center">Welcome to TicTacToe. Solución 1.1. **domainModel** 👋</h1>
+<h1 align="center">Welcome to TicTacToe. Solución 3.2. ** dv.-factoryMethod 👋</h1>
 <p>
   <a href="/docs" target="_blank">
     <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
@@ -8,7 +8,7 @@
   </a>
 </p>
 
-> TicTacToe. Solución Modelo de Dominio
+> TicTacToe. Solución dv.withoutFactoryMethod
 
 ## Install
 
@@ -18,7 +18,32 @@ mvn install
 
 ## Usage
 
+For Console edition:
+
+Edit pom.xml line 59 for this:
+
 ```sh
+<mainClass>usantatecla.tictactoe.ConsoleTicTacToe</mainClass>
+```
+And then:
+
+```sh
+mvn clean
+mvn package
+java -jar target/tictactoe-1.0-SNAPSHOT.jar
+```
+
+For Graphics edition:
+
+Edit pom.xml line 59 for this:
+
+```sh
+<mainClass>usantatecla.tictactoe.GraphicsTicTacToe</mainClass>
+```
+And then:
+
+```sh
+mvn clean
 mvn package
 java -jar target/tictactoe-1.0-SNAPSHOT.jar
 ```
