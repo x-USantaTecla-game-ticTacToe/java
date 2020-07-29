@@ -1,4 +1,4 @@
-<h1 align="center">Welcome to TicTacToe. Solución 1.1. **domainModel** 👋</h1>
+<h1 align="center">Welcome to TicTacToe. Solución 2.1. **documentView** 👋</h1>
 <p>
   <a href="/docs" target="_blank">
     <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
