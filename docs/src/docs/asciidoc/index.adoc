@@ -94,9 +94,7 @@ class  tictactoe.views.ErrorView{
 utils.WithConsoleModel <|-down- tictactoe.views.ErrorView
 
 class  tictactoe.views.ChoosePlayerView{
-- game: Game
-~ ChoosePlayerView(Game)
-~ readAndCreateUsers(): void
+~ readPlayers(): void
 }
 utils.WithConsoleModel <|-down- tictactoe.views.ChoosePlayerView
 tictactoe.views.ChoosePlayerView ..> tictactoe.views.MessageView
@@ -142,6 +140,7 @@ class  tictactoe.views.PlayView{
 ~ PlayView(Game)
 ~ interact(): boolean
 }
+tictactoe.views.PlayView ..> tictactoe.models.Game
 tictactoe.views.PlayView ..> tictactoe.views.PlayerView
 
 class tictactoe.views.ResultView{
@@ -149,6 +148,7 @@ class tictactoe.views.ResultView{
 ~ ResultView(Game)
 ~ interact(): void
 }
+tictactoe.views.ResultView ..> tictactoe.models.Game
 tictactoe.views.ResultView ..> tictactoe.views.TokenView
 tictactoe.views.ResultView ..> tictactoe.views.MessageView
 
@@ -157,16 +157,17 @@ class tictactoe.views.StartView{
 ~ StartView(Game)
 ~ interact(): void
 }
-tictactoe.views.StartView..> tictactoe.views.ChoosePlayerView
-tictactoe.views.StartView..> tictactoe.views.BoardView
-tictactoe.views.StartView..> tictactoe.views.MessageView
+tictactoe.views.StartView ..> tictactoe.models.Game
+tictactoe.views.StartView ..> tictactoe.views.ChoosePlayerView
+tictactoe.views.StartView ..> tictactoe.views.BoardView
+tictactoe.views.StartView ..> tictactoe.views.MessageView
 
 class tictactoe.views.TokenView{
 ~ token: Token
 ~ TokenView(Token)
 ~ write(): void
 }
-utils.WithConsoleModel<|-down- tictactoe.views.TokenView
+utils.WithConsoleModel <|-down- tictactoe.views.TokenView
 
 class  tictactoe.views.UserPlayerView{
 ~ {static} ENTER_COORDINATE_TO_PUT: String
@@ -187,6 +188,7 @@ class  tictactoe.views.View{
 + View(Game)
 + interact(): void
 }
+tictactoe.views.View *-down-> tictactoe.models.Game
 tictactoe.views.View *-down-> tictactoe.views.StartView
 tictactoe.views.View *-down-> tictactoe.views.PlayView
 tictactoe.views.View *-down-> tictactoe.views.ResultView

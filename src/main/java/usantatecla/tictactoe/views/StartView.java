@@ -12,7 +12,8 @@ class StartView {
 
     void interact() {
 		MessageView.START_GAME.writeln();
-		new ChoosePlayerView(this.game).readAndCreateUsers();
+		int numberOfPlayers = new ChoosePlayerView().readPlayers();
+		this.game.createPlayers(numberOfPlayers);
 		new BoardView(this.game.getBoard()).write();
 	}
 }
