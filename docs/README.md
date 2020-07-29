@@ -11,11 +11,11 @@
 </head>
 <body class="book">
 <div id="header">
-<h1>TicTacToe. Solución 3.2. <strong>dv.withoutFactoryMethod</strong></h1>
+<h1>TicTacToe. Solución 4.2. <strong>dv.withFactoryMethod</strong></h1>
 <div class="details">
 <span id="author" class="author">Santa Tecla</span><br>
 <span id="email" class="email"><a href="mailto:parqueNaturalSantaTecla@gmail.com">parqueNaturalSantaTecla@gmail.com</a></span><br>
-<span id="revnumber">version 0.2.1</span>
+<span id="revnumber">version 0.3.0</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Índice</div>
@@ -95,6 +95,13 @@
 <ul>
 <li>
 <p>Arquitectura Documento/Vista mediante <strong>Patrón de Vista Separada</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong class="lime-background">Patrón Template Method (Factory Method)</strong>, <em>para clases principales</em></p>
+</li>
+</ul>
+</div>
 </li>
 </ul>
 </div>
@@ -102,7 +109,7 @@
 <h3 id="arquitectura">Arquitectura</h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/version3Arquitectura.svg" alt="version3Arquitectura" width="400" height="600">
+<img src="build/docs/asciidoc/images/arquitecturaVersion4.svg" alt="arquitecturaVersion4" width="400" height="600">
 </div>
 </div>
 </div>
@@ -110,7 +117,7 @@
 <h3 id="paquete-tictactoe">Paquete <em>tictactoe</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/version3TicTacToe.svg" alt="version3TicTacToe" width="400" height="400">
+<img src="build/docs/asciidoc/images/tictactoeVersion4.svg" alt="tictactoeVersion4" width="400" height="400">
 </div>
 </div>
 </div>
@@ -118,7 +125,7 @@
 <h3 id="paquete-tictactoe-views">Paquete <em>tictactoe.views</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/tictactoeViewsVersion3.svg" alt="tictactoeViewsVersion3" width="600" height="548">
+<img src="build/docs/asciidoc/images/tictactoeViewsVersion4.svg" alt="tictactoeViewsVersion4" width="600" height="548">
 </div>
 </div>
 </div>
@@ -126,7 +133,7 @@
 <h3 id="paquete-tictactoe-views-console">Paquete <em>tictactoe.views.console</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/tictactoeViewsConsoleVersion3.svg" alt="tictactoeViewsConsoleVersion3" width="800" height="800">
+<img src="build/docs/asciidoc/images/tictactoeViewsConsoleVersion4.svg" alt="tictactoeViewsConsoleVersion4" width="800" height="800">
 </div>
 </div>
 </div>
@@ -134,7 +141,7 @@
 <h3 id="paquete-tictactoe-views-graphics">Paquete <em>tictactoe.views.graphics</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/tictactoeViewsGraphicsVersion3.svg" alt="tictactoeViewsGraphicsVersion3" width="1200" height="1100">
+<img src="build/docs/asciidoc/images/tictactoeViewsGraphicsVersion4.svg" alt="tictactoeViewsGraphicsVersion4" width="1200" height="1100">
 </div>
 </div>
 </div>
@@ -142,7 +149,7 @@
 <h3 id="paquete-tictactoe-models">Paquete <em>tictactoe.models</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/tictactoeModelsVersion3.svg" alt="tictactoeModelsVersion3" width="1000" height="1000">
+<img src="build/docs/asciidoc/images/tictactoeModelsVersion4.svg" alt="tictactoeModelsVersion4" width="1000" height="1000">
 </div>
 </div>
 </div>
@@ -150,7 +157,7 @@
 <h3 id="paquete-utils">Paquete <em>utils</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/utilsVersion3.svg" alt="utilsVersion3" width="456" height="548">
+<img src="build/docs/asciidoc/images/utilsVersion4.svg" alt="utilsVersion4" width="456" height="548">
 </div>
 </div>
 </div>
@@ -164,7 +171,7 @@
 <div class="ulist">
 <ul>
 <li>
-<p><span class="red"><em><strong>DRY</strong>: clases principales</em></span></p>
+<p><strong class="red line-through"><em><span class="red">DRY: clases principales</span></em></strong></p>
 </li>
 </ul>
 </div>
@@ -226,7 +233,7 @@
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 0.2.1<br>
+Version 0.3.0<br>
 Last updated 2020-07-29 15:40:00 +0200
 </div>
 </div>

@@ -1,4 +1,4 @@
-<h1 align="center">Welcome to TicTacToe. Solución 3.2. ** dv.-factoryMethod 👋</h1>
+<h1 align="center">Welcome to TicTacToe. Solución 4.2. ** dv.withFactoryMethod ** 👋</h1>
 <p>
   <a href="/docs" target="_blank">
     <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
@@ -8,7 +8,7 @@
   </a>
 </p>
 
-> TicTacToe. Solución dv.withoutFactoryMethod
+> TicTacToe. Solución dv.withFactoryMethod
 
 ## Install
 
