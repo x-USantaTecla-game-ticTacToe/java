@@ -164,9 +164,7 @@ class  tictactoe.views.console.BoardView{
 utils.WithConsoleModel <|-down- tictactoe.views.console.BoardView
 
 class  tictactoe.views.console.ChoosePlayerView{
-~ game: Game
-~ ChoosePlayerView(Game)
-~ readAndCreateUsers(): void
+~ readPlayers(): void
 }
 utils.WithConsoleModel <|-down- tictactoe.views.console.ChoosePlayerView
 

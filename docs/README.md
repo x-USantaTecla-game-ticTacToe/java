@@ -15,7 +15,7 @@
 <div class="details">
 <span id="author" class="author">Santa Tecla</span><br>
 <span id="email" class="email"><a href="mailto:parqueNaturalSantaTecla@gmail.com">parqueNaturalSantaTecla@gmail.com</a></span><br>
-<span id="revnumber">version 0.2.0</span>
+<span id="revnumber">version 0.2.1</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Índice</div>
@@ -80,7 +80,7 @@
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/Dibujo.jpg" alt="Dibujo" width="400" height="400">
+<img src="build/docs/asciidoc/images/Dibujo.jpg" alt="Dibujo" width="300" height="300">
 </div>
 </div></div></td>
 </tr>
@@ -226,7 +226,7 @@
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 0.2.0<br>
+Version 0.2.1<br>
 Last updated 2020-07-29 15:40:00 +0200
 </div>
 </div>
