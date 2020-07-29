@@ -1,6 +1,7 @@
-package usantatecla.tictactoe.views;
+package usantatecla.tictactoe.views.console;
 
 import usantatecla.tictactoe.models.Game;
+import usantatecla.tictactoe.views.MessageView;
 import usantatecla.utils.WithConsoleModel;
 
 class ChoosePlayerView extends WithConsoleModel {
@@ -12,7 +13,7 @@ class ChoosePlayerView extends WithConsoleModel {
     }
     
     void readAndCreateUsers() {
-        int numberOfUsers = this.console.readInt(MessageView.CHOOSE_PLAYER.getMessage());
+        int numberOfUsers = this.console.readInt(MessageView.CHOOSE_PLAYERS.getMessage());
         this.game.createPlayers(numberOfUsers);
     }
 }

@@ -1,4 +1,4 @@
-package usantatecla.tictactoe.views;
+package usantatecla.tictactoe.views.console;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;

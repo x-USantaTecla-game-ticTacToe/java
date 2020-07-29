@@ -1,9 +1,10 @@
-package usantatecla.tictactoe.views;
+package usantatecla.tictactoe.views.console;
 
 import usantatecla.tictactoe.models.Coordinate;
 import usantatecla.tictactoe.models.Game;
 import usantatecla.tictactoe.models.Player;
 import usantatecla.tictactoe.models.PlayerType;
+import usantatecla.tictactoe.views.PlayerView;
 
 class PlayView {
 

@@ -1,37 +1,27 @@
 package usantatecla.tictactoe.views;
 
-import usantatecla.utils.Console;
 import usantatecla.tictactoe.models.Turn;
 
-enum MessageView {
-	LINE_BREAK(""),
+public enum MessageView {
     EMPTY("-"), 
     SEPARATOR("-----------------------------------------------------"),
     VERTICAL_LINE_CENTERED(" | "),
 	VERTICAL_LINE_LEFT("| "),
 	PLAYER_WIN(" Player: You win!!! :-)"),
 	START_GAME("-------------------- TIC TAC TOE --------------------"),
-	CHOOSE_PLAYER("Number of users [0-" + Turn.PLAYERS + "] ");
+	CHOOSE_PLAYERS("Number of users [0-" + Turn.PLAYERS + "] "),
+	READ_ROW("Row: "),
+	READ_COLUMN("Column: "),
+	ERROR("ERROR");
 
 	private String message;
-	
-	private Console console;
 
 	private MessageView(String message) {
-		this.console = new Console();
 		this.message = message;
 	}
 
-	String getMessage() {
+	public String getMessage() {
 		return this.message;
-	}
-
-	void write() {
-		this.console.write(this.message);
-	}
-
-	void writeln() {
-		this.console.writeln(this.message);
 	}
 
 }

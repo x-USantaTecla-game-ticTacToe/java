@@ -1,8 +1,9 @@
-package usantatecla.tictactoe.views;
+package usantatecla.tictactoe.views.console;
 
 import usantatecla.tictactoe.models.Coordinate;
 import usantatecla.tictactoe.models.Error;
 import usantatecla.tictactoe.models.Player;
+import usantatecla.tictactoe.views.PlayerView;
 
 class MachinePlayerView extends PlayerView {
 
@@ -11,7 +12,7 @@ class MachinePlayerView extends PlayerView {
 	}
 
 	@Override
-	Coordinate readCoordinateToPut() {
+	public Coordinate readCoordinateToPut() {
         Coordinate coordinate = new Coordinate();
 		Error error;
 		do {
@@ -22,7 +23,7 @@ class MachinePlayerView extends PlayerView {
     }
 
 	@Override
-    Coordinate[] readCoordinatesToMove() {
+    public Coordinate[] readCoordinatesToMove() {
         Coordinate originCoordinate = new Coordinate();
 		Error error;
 		do {

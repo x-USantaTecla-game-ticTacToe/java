@@ -1,8 +1,9 @@
-package usantatecla.tictactoe.views;
+package usantatecla.tictactoe.views.console;
 
 import usantatecla.tictactoe.models.Coordinate;
 import usantatecla.tictactoe.models.Error;
 import usantatecla.tictactoe.models.Player;
+import usantatecla.tictactoe.views.PlayerView;
 
 class UserPlayerView extends PlayerView {
     static final String ENTER_COORDINATE_TO_PUT = "Enter a coordinate to put a token:";
@@ -13,7 +14,7 @@ class UserPlayerView extends PlayerView {
 	}
     
     @Override
-    Coordinate readCoordinateToPut() {
+    public Coordinate readCoordinateToPut() {
         Coordinate coordinate;
 		Error error;
 		do {
@@ -27,7 +28,7 @@ class UserPlayerView extends PlayerView {
     }
 
     @Override
-    Coordinate[] readCoordinatesToMove() {
+    public Coordinate[] readCoordinatesToMove() {
         Coordinate originCoordinate;
 		Error error;
 		do {

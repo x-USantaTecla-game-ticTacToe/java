@@ -1,4 +1,4 @@
-package usantatecla.tictactoe.views;
+package usantatecla.tictactoe.views.console;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;

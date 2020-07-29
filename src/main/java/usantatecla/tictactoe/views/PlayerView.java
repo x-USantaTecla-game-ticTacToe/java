@@ -4,26 +4,26 @@ import usantatecla.tictactoe.models.Coordinate;
 import usantatecla.tictactoe.models.Error;
 import usantatecla.tictactoe.models.Player;
 
-abstract class PlayerView {
+public abstract class PlayerView {
 
     protected Player player;
 
-    PlayerView(Player player) {
+    public PlayerView(Player player) {
         this.player = player;
     }
   
-    abstract Coordinate readCoordinateToPut();
-    abstract Coordinate[] readCoordinatesToMove();
+    public abstract Coordinate readCoordinateToPut();
+    public abstract Coordinate[] readCoordinatesToMove();
 
-    Error controlErrorsPutCoordinate(Coordinate coordinate) {
+    public Error controlErrorsPutCoordinate(Coordinate coordinate) {
         return this.player.controlErrorsPutCoordinate(coordinate);
 	}
 
-	Error controlErrorsMoveOriginCoordinate(Coordinate originCoordinate) {
+	public Error controlErrorsMoveOriginCoordinate(Coordinate originCoordinate) {
 		return this.player.controlErrorsMoveOriginCoordinate(originCoordinate);
 	}
 
-	Error controlErrorsMoveTargetCoordinate(Coordinate originCoordinate, Coordinate targetCoordinate) {
+	public Error controlErrorsMoveTargetCoordinate(Coordinate originCoordinate, Coordinate targetCoordinate) {
 		return this.player.controlErrorsMoveTargetCoordinate(originCoordinate, targetCoordinate);
 	}
 }

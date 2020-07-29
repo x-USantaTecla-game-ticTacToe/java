@@ -7,15 +7,15 @@ Santa Tecla <parqueNaturalSantaTecla@gmail.com>
 :idseparator: -
 :imagesdir: images
 
-== Requisitos 1. *Básica*
+== Requisitos 2. *Gráficos*
 
 [cols="50,50"]
 |===
 
 a|
-- link:https://en.wikipedia.org/wiki/Mastermind_(board_game)[*Wiki*] - link:https://www.youtube.com/watch?v=2-hTeg2M6GQ[*Youtube*]
+- link:https://en.wikipedia.org/wiki/Tic-tac-toe[*Wiki*]
 * _Funcionalidad: **Básica**_
-* _Interfaz: **Texto**_
+* _Interfaz: [lime-background]*Gráfica* y **Texto**_
 * _Distribución: **Standalone**_
 * _Persistencia: **No**_
 
@@ -27,50 +27,350 @@ image::Dibujo.jpg[]
 
 == Vista de Lógica/Diseño
 
-- Aplicación del *Modelo del Dominio* mediante Estrategias de *Análisis Formal*, *Análisis Clásico*, *Experto del Dominio*, *Reparto de Responsabilidades*, ...
+- Arquitectura Documento/Vista mediante *Patrón de Vista Separada*
 
 === Arquitectura
 
-[plantuml,version2Arquitectura,svg]
+[plantuml,version3Arquitectura,svg]
 ....
 
-package tictactoe #DDDDDD { }
-package tictactoe.models #DDDDDD { }
-package tictactoe.views #DDDDDD { } 
-package java.util{ }
+package tictactoe #DDDDDD { } 
+tictactoe .down.> tictactoe.views.graphics
 tictactoe .down.> tictactoe.models
-tictactoe .down.> tictactoe.views
+tictactoe .down.> tictactoe.views.console
+
+package tictactoe.models #DDDDDD { } 
+package java.util{ }
 tictactoe.models .down.> java.util
-tictactoe.models .down.> utils
-tictactoe.views .down.> utils
-tictactoe.views .down.> tictactoe.models
 
 package utils #DDDDDD { } 
 package java.io{ }
 utils .down.> java.io
 
+package tictactoe.views #DDDDDD { } 
+tictactoe.views .down.> tictactoe.models
+
+package tictactoe.views.console #DDDDDD { } 
+tictactoe.views.console .down.> tictactoe.views
+tictactoe.views.console .down.> tictactoe.models
+tictactoe.views.console .down.> utils
+
+package tictactoe.views.graphics #DDDDDD { } 
+package java.awt{ }
+tictactoe.views.graphics .down.> java.awt
+package java.awt.event{ }
+tictactoe.views.graphics .down.> java.awt.event
+tictactoe.views.graphics .down.> tictactoe.views
+tictactoe.views.graphics .down.> tictactoe.models
+package javax.swing{ }
+tictactoe.views.graphics .down.> javax.swing
+
 ....
 
 === Paquete _tictactoe_
 
-[plantuml,version2TicTacToe,svg]
+[plantuml,version3TicTacToe,svg]
 ....
 
-class  tictactoe.TicTacToe{
+class  tictactoe.ConsoleTicTacToe{
 - game: Game
-- view: View
-~ TicTacToe()
+- consoleView: ConsoleView
+~ ConsoleTicTacToe()
 - play(): void
 + main(String[]): void
 }
-tictactoe.TicTacToe *-down-> tictactoe.models.Game
-tictactoe.TicTacToe *-down-> tictactoe.views.View
+tictactoe.ConsoleTicTacToe *-down-> tictactoe.models.Game
+tictactoe.ConsoleTicTacToe *-down-> tictactoe.views.ConsoleView
+
+class  tictactoe.GraphicsTicTacToe{
+- game: Game
+- graphicsView: GraphicsView
+~ GraphicsTicTacToe()
+- play(): void
++ main(String[]): void
+}
+tictactoe.GraphicsTicTacToe *-down-> tictactoe.models.Game
+tictactoe.GraphicsTicTacToe *-down-> tictactoe.views.GraphicsView
+
+....
+
+=== Paquete _tictactoe.views_
+
+[plantuml,tictactoeViewsVersion3,svg]
+
+....
+
+class  tictactoe.views.ErrorView{
++ {static} MESSAGES: String[]
+# error: Error
++ ErrorView(Error)
+}
+
+enum  tictactoe.views.MessageView{
++ EMPTY: MessageView 
++ SEPARATOR: MessageView
++ VERTICAL_LINE_CENTERED: MessageView
++ VERTICAL_LINE_LEFT: MessageView
++	PLAYER_WIN: MessageView
++	START_GAME: MessageView
++	CHOOSE_PLAYER: MessageView
++	READ_ROW: MessageView
++	READ_COLUMN: MessageView
++	ERROR: MessageView
+- message: String
+- MessageView(String)
++ getMessage(): String
+}
+
+class  tictactoe.views.PlayerView{
+# player: Player
++ PlayerView(Player)
++ {abstract} readCoordinateToPut(): Coordinate
++ {abstract} readCoordinatesToMove(): Coordinate[]
++ controlErrorsPutCoordinate(Coordinate): Error
++ controlErrorsMoveOriginCoordinate(Coordinate): Error
++ controlErrorsMoveTargetCoordinate(Coordinate, Coordinate): Error
+}
+
+class tictactoe.views.TokenView{
+- token: Token
++ TokenView(Token)
++ getToken(): char
+}
+
+class  tictactoe.views.View{
+# game: Game
++ View(Game)
++ interact(): void
+# {abstract} start(): void
+# {abstract} play(): boolean
+# {abstract} result(): void
+}
+tictactoe.views.View *-down-> tictactoe.models.Game
+
+....
+
+=== Paquete _tictactoe.views.console_
+
+[plantuml,tictactoeViewsConsoleVersion3,svg]
+
+....
+
+class  tictactoe.views.console.BoardView{
+~ board: Board
+~ BoardView(Board)
+~ write(): void
+}
+utils.WithConsoleModel <|-down- tictactoe.views.console.BoardView
+
+class  tictactoe.views.console.ChoosePlayerView{
+~ game: Game
+~ ChoosePlayerView(Game)
+~ readAndCreateUsers(): void
+}
+utils.WithConsoleModel <|-down- tictactoe.views.console.ChoosePlayerView
+
+class  tictactoe.views.console.ConsoleView{
+- startView: StartView
+- playView: PlayView
+- resultView: ResultView
++ ConsoleView(Game)
+# start(): void
+# play(): boolean
+# result(): void
+}
+tictactoe.views.View <|-down- tictactoe.views.console.ConsoleView
+tictactoe.views.console.ConsoleView *-down-> tictactoe.views.console.StartView
+tictactoe.views.console.ConsoleView *-down-> tictactoe.views.console.PlayView
+tictactoe.views.console.ConsoleView *-down-> tictactoe.views.console.ResultView
+
+class  tictactoe.views.console.CoordinateView{
+~ read(String): Coordinate
+}
+utils.WithConsoleModel <|-down- tictactoe.views.console.CoordinateView
+
+class  tictactoe.views.console.ErrorView{
+~ ErrorView(Error)
+~ writeln(): void
+}
+tictactoe.views.ErrorView <|-down- tictactoe.views.console.ErrorView
+
+class  tictactoe.views.console.MachinePlayerView{
+~ MachinePlayerView(Player)
+~ readCoordinateToPut(): Coordinate
+~ readCoordinatesToMove(): Coordinate[]
+}
+tictactoe.views.PlayerView <|-down- tictactoe.views.console.MachinePlayerView
+
+class  tictactoe.views.console.PlayView{
+~ game: Game
+~ PlayView(Game)
+~ interact(): boolean
+}
+tictactoe.views.console.PlayView ..> tictactoe.views.console.BoardView
+tictactoe.views.console.PlayView ..> tictactoe.views.PlayerView
+
+class tictactoe.views.console.ResultView{
+~ game: Game
+~ ResultView(Game)
+~ interact(): void
+}
+
+class tictactoe.views.console.StartView{
+~ game: Game
+~ StartView(Game)
+~ interact(): void
+}
+tictactoe.views.console.StartView ..> tictactoe.views.console.ChoosePlayerView
+
+class  tictactoe.views.console.UserPlayerView{
+~ {static} ENTER_COORDINATE_TO_PUT: String
+~ {static} ENTER_COORDINATE_TO_REMOVE: String
+~ UserPlayerView(Player)
+~ readCoordinateToPut(): Coordinate
+~ readCoordinatesToMove(): Coordinate[]
+}
+tictactoe.views.PlayerView <|-down- tictactoe.views.console.UserPlayerView
+tictactoe.views.console.UserPlayerView ..> tictactoe.views.console.ErrorView
+tictactoe.views.console.UserPlayerView ..> tictactoe.views.console.CoordinateView
+
+....
+
+=== Paquete _tictactoe.views.graphics_
+
+[plantuml,tictactoeViewsGraphicsVersion3,svg]
+
+....
+
+class  tictactoe.views.graphics.BoardView{
+~ BoardView(Board)
+}
+javax.swing.JPanel <|-down- tictactoe.views.graphics.BoardView
+tictactoe.views.graphics.BoardView *-down-> javax.swing.JLabel
+tictactoe.views.graphics.ChoosePlayersView ..> tictactoe.views.graphics.BoardView
+
+class  tictactoe.views.graphics.ChoosePlayersView{
+- {static} ACCEPT: String
+- label: JLabel
+- textField: JTextField
+- button: JButton
+- playersNumber: String
+~ ChoosePlayersView(JRootPane)
+~ resetPlayersNumber(): void
+~ getPlayersNumber(): String
++ actionPerformed(ActionEvent): void
+}
+javax.swing.JPanel <|-down- tictactoe.views.graphics.ChoosePlayersView
+java.awt.event.ActionListener <|-down- tictactoe.views.graphics.ChoosePlayersView
+java.awt.event.KeyListener <|-down- tictactoe.views.graphics.ChoosePlayersView
+tictactoe.views.graphics.ChoosePlayersView *-down-> javax.swing.JLabel
+tictactoe.views.graphics.ChoosePlayersView *-down-> javax.swing.JTextField
+tictactoe.views.graphics.ChoosePlayersView *-down-> javax.swing.JButton
+tictactoe.views.graphics.ChoosePlayersView ..> javax.swing.JRootPane
+tictactoe.views.graphics.ChoosePlayersView ..> java.awt.event.ActionEvent
+tictactoe.views.graphics.ChoosePlayersView ..> tictactoe.views.graphics.Constraints
+
+class  tictactoe.views.graphics.Constraints{
+~ Constraints(int, int, int, int)
+}
+java.awt.GridBagConstraints <|-down- tictactoe.views.graphics.Constraints
+
+class  tictactoe.views.graphics.CoordinateMoveView{
+- {static} ENTER_COORDINATE_TO_REMOVE: String
+- labelRowToMove: JLabel
+- labelColumnToMove: JLabel
+- titleLabelToMove: JLabel
+- textFieldRowToMove: JTextField
+- textFieldColumnToMove: JTextField
+- coordinates: Coordinate[]
+~ CoordinateMoveView()
+~ resetCoordinates(): void
+~ getCoordinates(): Coordinate[]
++ actionPerformed(ActionEvent): void
+}
+tictactoe.views.graphics.CoordinateView <|-down- tictactoe.views.graphics.CoordinateMoveView
+
+class  tictactoe.views.graphics.CoordinatePutView{
+- coordinates: Coordinate[]
+~ CoordinatePutView()
+~ resetCoordinate(): void
+~ getCoordinate(): Coordinate
++ actionPerformed(ActionEvent): void
+}
+tictactoe.views.graphics.CoordinateView <|-down- tictactoe.views.graphics.CoordinatePutView
+
+class  tictactoe.views.graphics.CoordinateView{
+# {static} ENTER_COORDINATE_TO_PUT: String
+# {static} ACCEPT: String
+# labelRow: JLabel
+# labelColumn: JLabel
+# titleLabel: JLabel
+# textFieldRow: JTextField
+# textFieldColumn: JTextField
+# button: JButton
+~ CoordinateView()
+}
+javax.swing.JPanel <|-down- tictactoe.views.graphics.CoordinateView
+java.awt.event.ActionListener <|-down- tictactoe.views.graphics.CoordinateView
+java.awt.event.KeyListener <|-down- tictactoe.views.graphics.CoordinateView
+tictactoe.views.graphics.CoordinateView *-down-> javax.swing.JLabel
+tictactoe.views.graphics.CoordinateView *-down-> javax.swing.JTextField
+tictactoe.views.graphics.CoordinateView *-down-> javax.swing.JButton
+tictactoe.views.graphics.CoordinateView ..> tictactoe.views.graphics.Constraints
+tictactoe.views.graphics.CoordinateView ..> java.awt.event.ActionEvent
+
+class  tictactoe.views.graphics.GameView{
+- {static} GAME_OVER: String
+- game: Game
+- choosePlayersView: ChoosePlayersView
+~ GameView(Game)
+~ start(): void
+~ play(): boolean
+~ result(): void
+}
+javax.swing.JFrame <|-down- tictactoe.views.graphics.GameView
+tictactoe.views.graphics.GameView ..> tictactoe.views.graphics.ChoosePlayersView
+tictactoe.views.graphics.GameView ..> tictactoe.views.PlayerView
+tictactoe.views.graphics.GameView ..> tictactoe.views.graphics.BoardView
+tictactoe.views.graphics.GameView ..> tictactoe.views.graphics.Constraints
+
+class  tictactoe.views.graphics.GraphicsView{
+- gameView: GameView
++ GraphicsView(Game)
+# start(): void
+# play(): boolean
+# result(): void
+}
+tictactoe.views.View <|-down- tictactoe.views.graphics.GraphicsView
+tictactoe.views.graphics.GraphicsView *-down-> tictactoe.views.graphics.GameView
+
+class  tictactoe.views.graphics.MachinePlayerView{
+~ MachinePlayerView(Player)
++ readCoordinateToPut(): Coordinate
++ readCoordinatesToMove(): Coordinate[]
+}
+tictactoe.views.PlayerView <|-down- tictactoe.views.graphics.MachinePlayerView
+
+class  tictactoe.views.graphics.UserPlayerView{
+~ {static} ENTER_COORDINATE_TO_PUT: String
+~ {static} ENTER_COORDINATE_TO_REMOVE: String
+~ coordinatePutView: CoordinatePutView
+~ coordinateMoveView: CoordinateMoveView
+~ UserPlayerView(Player)
++ readCoordinateToPut(): Coordinate
++ readCoordinatesToMove(): Coordinate[]
+}
+tictactoe.views.PlayerView <|-down- tictactoe.views.graphics.UserPlayerView
+tictactoe.views.graphics.UserPlayerView *-down-> tictactoe.views.graphics.CoordinatePutView
+tictactoe.views.graphics.UserPlayerView *-down-> tictactoe.views.graphics.CoordinateMoveView
+tictactoe.views.graphics.UserPlayerView ..> tictactoe.views.graphics.Constraints
 
 ....
 
 === Paquete _tictactoe.models_
 
-[plantuml,tictactoeModels,svg]
+[plantuml,tictactoeModelsVersion3,svg]
+
 ....
 
 class  tictactoe.models.Board{
@@ -110,6 +410,7 @@ enum  tictactoe.models.Error{
 NOT_EMPTY
 NOT_OWNER
 SAME_COORDINATES
+WRONG_COORDINATES
 }
 
 class  tictactoe.models.Game{
@@ -179,134 +480,9 @@ tictactoe.models.Turn *-down-> tictactoe.models.Player
 
 ....
 
-=== Paquete _tictactoe.views_
-
-[plantuml,tictactoeViews,svg]
-
-....
-
-class  tictactoe.views.BoardView{
-~ board: Board
-~ BoardView(Board)
-~ write(): void
-}
-
-class  tictactoe.views.CoordinateView{
-~ read(String): Coordinate
-}
-utils.WithConsoleModel <|-down- tictactoe.views.CoordinateView
-
-class  tictactoe.views.ErrorView{
-- {static} MESSAGES: String[]
-- error: Error
-~ ErrorView(Error)
-~ read(String): Coordinate
-}
-utils.WithConsoleModel <|-down- tictactoe.views.ErrorView
-
-class  tictactoe.views.ChoosePlayerView{
-- game: Game
-~ ChoosePlayerView(Game)
-~ readAndCreateUsers(): void
-}
-utils.WithConsoleModel <|-down- tictactoe.views.ChoosePlayerView
-tictactoe.views.ChoosePlayerView ..> tictactoe.views.MessageView
-
-class  tictactoe.views.MachinePlayerView{
-~ MachinePlayerView(Player)
-~ readCoordinateToPut(): Coordinate
-~ readCoordinatesToMove(): Coordinate[]
-}
-tictactoe.views.PlayerView <|-down- tictactoe.views.MachinePlayerView
-tictactoe.views.MachinePlayerView ..> tictactoe.views.ErrorView
-
-class  tictactoe.views.MessageView{
-+ LINE_BREAK: MessageView
-+ EMPTY: MessageView 
-+ SEPARATOR: MessageView
-+ VERTICAL_LINE_CENTERED: MessageView
-+ VERTICAL_LINE_LEFT: MessageView
-+	PLAYER_WIN: MessageView
-+	START_GAME: MessageView
-+	CHOOSE_PLAYER: MessageView
-- message: String
-- console: Console
-- MessageView(String)
-~ getMessage(): String
-~ write(): void
-~ writeln(): void
-}
-tictactoe.views.MessageView ..> utils.Console
-
-class  tictactoe.views.PlayerView{
-# player: Player
-~ PlayerView(Player)
-~ {abstract} readCoordinateToPut(): Coordinate
-~ {abstract} readCoordinatesToMove(): Coordinate[]
-~ controlErrorsPutCoordinate(Coordinate): Error
-~ controlErrorsMoveOriginCoordinate(Coordinate): Error
-~ controlErrorsMoveTargetCoordinate(Coordinate, Coordinate): Error
-}
-
-class  tictactoe.views.PlayView{
-~ game: Game
-~ PlayView(Game)
-~ interact(): boolean
-}
-tictactoe.views.PlayView ..> tictactoe.views.PlayerView
-
-class tictactoe.views.ResultView{
-~ game: Game
-~ ResultView(Game)
-~ interact(): void
-}
-tictactoe.views.ResultView ..> tictactoe.views.TokenView
-tictactoe.views.ResultView ..> tictactoe.views.MessageView
-
-class tictactoe.views.StartView{
-~ game: Game
-~ StartView(Game)
-~ interact(): void
-}
-tictactoe.views.StartView..> tictactoe.views.ChoosePlayerView
-tictactoe.views.StartView..> tictactoe.views.BoardView
-tictactoe.views.StartView..> tictactoe.views.MessageView
-
-class tictactoe.views.TokenView{
-~ token: Token
-~ TokenView(Token)
-~ write(): void
-}
-utils.WithConsoleModel<|-down- tictactoe.views.TokenView
-
-class  tictactoe.views.UserPlayerView{
-~ {static} ENTER_COORDINATE_TO_PUT: String
-~ {static} ENTER_COORDINATE_TO_REMOVE: String
-~ UserPlayerView(Player)
-~ readCoordinateToPut(): Coordinate
-~ readCoordinatesToMove(): Coordinate[]
-}
-tictactoe.views.PlayerView <|-down- tictactoe.views.UserPlayerView
-tictactoe.views.UserPlayerView ..> tictactoe.views.CoordinateView
-tictactoe.views.UserPlayerView ..> tictactoe.views.ErrorView
-
-class  tictactoe.views.View{
-# game: Game
-- startView: StartView
-- playView: PlayView
-- ResultView: ResultView
-+ View(Game)
-+ interact(): void
-}
-tictactoe.views.View *-down-> tictactoe.views.StartView
-tictactoe.views.View *-down-> tictactoe.views.PlayView
-tictactoe.views.View *-down-> tictactoe.views.ResultView
-
-....
-
 === Paquete _utils_
 
-[plantuml,utils2,svg]
+[plantuml,utilsVersion3,svg]
 
 ....
 
@@ -359,15 +535,9 @@ utils.WithConsoleModel *-down-> utils.Console
 
 === Diseño
 
-- [red]#_**Método largo**: Método "play" de Mastermind,..._#
+- [red]#_**DRY**: clases principales_#
 
 === Rediseño
-
-- _Nueva interfaz: Gráfica_
-* [red]#_**Clases Grandes**: los Modelos asumen la responsabilidad y crecen en líneas, métodos, atributos, ... con cada nueva tecnología_#
-* [red]#_**Alto acoplamiento**: los Modelos con cada nueva tecnología de interfaz (consola, gráficos, web, ...)_#
-* [red]#_**Baja cohesión**: cada Modelo está gestionando sus atributos y las tecnologías de interfaz_#
-* [red]#_**Open/Close**: hay que modificar los modelos que estaban funcionando previamente para escoger una tecnología de vista u otra (if's anidados)_#
 
 - _Nuevas funcionalidades: undo/redo, demo, estadísiticas,..._
 * [red]#_**Clases Grandes**: los Modelos asumen la responsabilidad y crecen en líneas, métodos, atributos, ... con las nuevas funcionalidades_#
@@ -384,21 +554,36 @@ package "  "  as tictactoe.models {
 }
 package "  "  as tictactoe.views {
 }
+package "  "  as tictactoe.views.console {
+}
+package "  "  as tictactoe.views.graphics {
+}
 package "  "  as utils {
 }
 package "  "  as java.io {
 }
 package "  "  as java.util {
 }
+package "  "  as java.awt {
+}
+package "  "  as java.awt.event {
+}
+package "  "  as javax.swing {
+}
 
-[mastermind.jar] as jar
+[tictactoe.jar] as jar
 
 jar *--> tictactoe
 jar *--> tictactoe.models
 jar *--> tictactoe.views
+jar *--> tictactoe.views.console
+jar *--> tictactoe.views.graphics
 jar *--> utils
 jar *--> java.io
 jar *--> java.util
+jar *--> java.awt
+jar *--> java.awt.event
+jar *--> javax.swing
 ....
 
 

@@ -1,17 +1,16 @@
 package usantatecla.tictactoe.views;
 
 import usantatecla.tictactoe.models.Token;
-import usantatecla.utils.WithConsoleModel;
 
-class TokenView extends WithConsoleModel {
+public class TokenView {
 
 	private Token token;
 
-	TokenView(Token token){
+	public TokenView(Token token){
 		this.token = token;
 	}
 
-	void write() {
-		this.console.write(this.token.getChar());
+	public char getToken() {
+		return this.token.getChar();
 	}
 }

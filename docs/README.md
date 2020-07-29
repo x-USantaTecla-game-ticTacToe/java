@@ -11,21 +11,25 @@
 </head>
 <body class="book">
 <div id="header">
-<h1>TicTacToe. Solución 1.1. <strong>domainModel</strong></h1>
+<h1>TicTacToe. Solución 3.2. <strong>dv.withoutFactoryMethod</strong></h1>
 <div class="details">
 <span id="author" class="author">Santa Tecla</span><br>
 <span id="email" class="email"><a href="mailto:parqueNaturalSantaTecla@gmail.com">parqueNaturalSantaTecla@gmail.com</a></span><br>
-<span id="revnumber">version 0.1.1</span>
+<span id="revnumber">version 0.2.0</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Índice</div>
 <ul class="sectlevel1">
-<li><a href="#requisitos-1-básica">Requisitos 1. <strong>Básica</strong></a></li>
+<li><a href="#requisitos-1-básica">Requisitos 2. <strong>Gráficos</strong></a></li>
 <li><a href="#vista-de-lógicadiseño">Vista de Lógica/Diseño</a>
 <ul class="sectlevel2">
 <li><a href="#arquitectura">Arquitectura</a></li>
-<li><a href="#paquete-mastermind">Paquete <em>tictactoe</em></a></li>
-<li><a href="#paquete-mastermind-utils">Paquete <em>utils</em></a></li>
+<li><a href="#paquete-tictactoe">Paquete <em>tictactoe</em></a></li>
+<li><a href="#paquete-tictactoe-views">Paquete <em>tictactoe.views</em></a></li>
+<li><a href="#paquete-tictactoe-views-console">Paquete <em>tictactoe.views.console</em></a></li>
+<li><a href="#paquete-tictactoe-views-graphics">Paquete <em>tictactoe.views.graphics</em></a></li>
+<li><a href="#paquete-tictactoe-models">Paquete <em>tictactoe.models</em></a></li>
+<li><a href="#paquete-utils">Paquete <em>utils</em></a></li>
 </ul>
 </li>
 <li><a href="#calidad-del-software">Calidad del Software</a>
@@ -42,7 +46,7 @@
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="requisitos-1-básica">Requisitos 1. <strong>Básica</strong></h2>
+<h2 id="requisitos-1-básica">Requisitos 2. <strong>Gráficos</strong></h2>
 <div class="sectionbody">
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -61,7 +65,7 @@
 <p><em>Funcionalidad: <strong>Básica</strong></em></p>
 </li>
 <li>
-<p><em>Interfaz: <strong>Texto</strong></em></p>
+<p><em>Interfaz: <strong class="lime-background">Gráfica</strong> y <strong>Texto</strong></em></p>
 </li>
 <li>
 <p><em>Distribución: <strong>Standalone</strong></em></p>
@@ -76,7 +80,7 @@
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/Dibujo.jpg" alt="Dibujo">
+<img src="build/docs/asciidoc/images/Dibujo.jpg" alt="Dibujo" width="400" height="400">
 </div>
 </div></div></td>
 </tr>
@@ -98,7 +102,7 @@
 <h3 id="arquitectura">Arquitectura</h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/version2Arquitectura.svg" alt="version1Arquitectura" width="274" height="305">
+<img src="build/docs/asciidoc/images/version3Arquitectura.svg" alt="version3Arquitectura" width="400" height="600">
 </div>
 </div>
 </div>
@@ -106,15 +110,7 @@
 <h3 id="paquete-tictactoe">Paquete <em>tictactoe</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/version2TicTacToe.svg" alt="version2TicTacToe" width="767" height="1221">
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="paquete-tictactoe-models">Paquete <em>tictactoe.models</em></h3>
-<div class="imageblock">
-<div class="content">
-<img src="build/docs/asciidoc/images/tictactoeModels.svg" alt="tictactoeModels" width="456" height="548">
+<img src="build/docs/asciidoc/images/version3TicTacToe.svg" alt="version3TicTacToe" width="400" height="400">
 </div>
 </div>
 </div>
@@ -122,7 +118,31 @@
 <h3 id="paquete-tictactoe-views">Paquete <em>tictactoe.views</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/tictactoeViews.svg" alt="tictactoeViews" width="456" height="548">
+<img src="build/docs/asciidoc/images/tictactoeViewsVersion3.svg" alt="tictactoeViewsVersion3" width="600" height="548">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="paquete-tictactoe-views-console">Paquete <em>tictactoe.views.console</em></h3>
+<div class="imageblock">
+<div class="content">
+<img src="build/docs/asciidoc/images/tictactoeViewsConsoleVersion3.svg" alt="tictactoeViewsConsoleVersion3" width="800" height="800">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="paquete-tictactoe-views-graphics">Paquete <em>tictactoe.views.graphics</em></h3>
+<div class="imageblock">
+<div class="content">
+<img src="build/docs/asciidoc/images/tictactoeViewsGraphicsVersion3.svg" alt="tictactoeViewsGraphicsVersion3" width="1200" height="1100">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="paquete-tictactoe-models">Paquete <em>tictactoe.models</em></h3>
+<div class="imageblock">
+<div class="content">
+<img src="build/docs/asciidoc/images/tictactoeModelsVersion3.svg" alt="tictactoeModelsVersion3" width="1000" height="1000">
 </div>
 </div>
 </div>
@@ -130,7 +150,7 @@
 <h3 id="paquete-utils">Paquete <em>utils</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/utils2.svg" alt="utils2" width="456" height="548">
+<img src="build/docs/asciidoc/images/utilsVersion3.svg" alt="utilsVersion3" width="456" height="548">
 </div>
 </div>
 </div>
@@ -144,7 +164,7 @@
 <div class="ulist">
 <ul>
 <li>
-<p><span class="red"><em><strong>Método largo</strong>: Método "play" de TicTacToe,&#8230;&#8203;</em></span></p>
+<p><span class="red"><em><strong>DRY</strong>: clases principales</em></span></p>
 </li>
 </ul>
 </div>
@@ -153,25 +173,6 @@
 <h3 id="rediseño">Rediseño</h3>
 <div class="ulist">
 <ul>
-<li>
-<p><em>Nueva interfaz: Gráfica</em></p>
-<div class="ulist">
-<ul>
-<li>
-<p><span class="red"><em><strong>Clases Grandes</strong>: los Modelos asumen la responsabilidad y crecen en líneas, métodos, atributos, &#8230;&#8203; con cada nueva tecnología</em></span></p>
-</li>
-<li>
-<p><span class="red"><em><strong>Alto acoplamiento</strong>: los Modelos con cada nueva tecnología de interfaz (consola, gráficos, web, &#8230;&#8203;)</em></span></p>
-</li>
-<li>
-<p><span class="red"><em><strong>Baja cohesión</strong>: cada Modelo está gestionando sus atributos y las tecnologías de interfaz</em></span></p>
-</li>
-<li>
-<p><span class="red"><em><strong>Open/Close</strong>: hay que modificar los modelos que estaban funcionando previamente para escoger una tecnología de vista u otra (if&#8217;s anidados)</em></span></p>
-</li>
-</ul>
-</div>
-</li>
 <li>
 <p><em>Nuevas funcionalidades: undo/redo, demo, estadísiticas,&#8230;&#8203;</em></p>
 <div class="ulist">
@@ -195,7 +196,7 @@
 <div class="sectionbody">
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/diagramaImplementacion.svg" alt="diagramaImplementacion" width="518" height="158">
+<img src="build/docs/asciidoc/images/diagramaImplementacion.svg" alt="diagramaImplementacion" width="800" height="200">
 </div>
 </div>
 </div>
@@ -225,8 +226,8 @@
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 0.1.1<br>
-Last updated 2020-07-28 11:40:00 +0200
+Version 0.2.0<br>
+Last updated 2020-07-29 15:40:00 +0200
 </div>
 </div>
 </html>

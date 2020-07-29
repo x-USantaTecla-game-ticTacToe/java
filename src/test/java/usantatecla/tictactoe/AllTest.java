@@ -4,7 +4,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 import usantatecla.tictactoe.models.AllModelTest;
-import usantatecla.tictactoe.views.AllViewTest;
+import usantatecla.tictactoe.views.console.AllViewTest;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({ 
