@@ -1,4 +1,4 @@
-= Master Mind. Solución 1.1. *domainModel*
+= Master Mind. Solución 3.2. *dv.withoutFactoryMethod*
 Santa Tecla <parqueNaturalSantaTecla@gmail.com>
 :toc-title: Índice
 :toc: left
