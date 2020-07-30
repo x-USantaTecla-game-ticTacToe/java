@@ -9,40 +9,33 @@ class UserPlayer extends Player {
 		super(token, board);
 	}
 
-	@Override
-	void put() {
-		Coordinate coordinate = new Coordinate();
-		Error error;
-		do {
-			coordinate.read(ENTER_COORDINATE_TO_PUT);
-			error = controlErrorsPutCoordinate(coordinate);
-			if (error != null) {
-				error.writeln();
-			}
-		} while (error != null);
-		this.board.put(coordinate, this.token);
+	Error readCoordinateToPut(Coordinate coordinate) {
+		coordinate.read(ENTER_COORDINATE_TO_PUT);
+		Error error = controlErrorsPutCoordinate(coordinate);
+		this.writeErrorWhenNotNull(error);
+		return error;
 	}
 
 	@Override
-	void move() {
-		Coordinate originCoordinate = new Coordinate();
-		Error error;
-		do {
-			originCoordinate.read(ENTER_COORDINATE_TO_REMOVE);
-			error = controlErrorsMoveOriginCoordinate(originCoordinate);
-			if (error != null) {
-				error.writeln();
-			}
-		} while (error != null);
-		Coordinate targetCoordinate = new Coordinate();
-		do {
-			targetCoordinate.read(ENTER_COORDINATE_TO_PUT);
-			error = controlErrorsMoveTargetCoordinate(originCoordinate, targetCoordinate);
-			if (error != null) {
-				error.writeln();
-			}
-		} while (error != null);
-		this.board.move(originCoordinate, targetCoordinate);
+	Error readCoordinateOriginToRemove(Coordinate coordinate) {
+		coordinate.read(ENTER_COORDINATE_TO_REMOVE);
+		Error error = controlErrorsMoveOriginCoordinate(coordinate);
+		this.writeErrorWhenNotNull(error);
+		return error;
+	}
+
+	@Override
+	Error readCoordinateTargetToMove(Coordinate originCoordinate, Coordinate targetCoordinate) {
+		targetCoordinate.read(ENTER_COORDINATE_TO_PUT);
+		Error error = controlErrorsMoveTargetCoordinate(originCoordinate, targetCoordinate);
+		this.writeErrorWhenNotNull(error);
+		return error;
+	}
+
+	private void writeErrorWhenNotNull(Error error) {
+		if (error != null) {
+			error.writeln();
+		}
 	}
 
 }

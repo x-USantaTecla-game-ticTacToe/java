@@ -11,9 +11,33 @@ abstract class Player {
 		this.board = board;
 	}
 
-	abstract void put();
+	void put() {
+		Coordinate coordinate = new Coordinate();
+		Error error;
+		do {
+			error = this.readCoordinateToPut(coordinate);
+		} while (error != null);
+		this.board.put(coordinate, this.token);
+	}
 
-	abstract void move();
+	abstract Error readCoordinateToPut(Coordinate coordinate);
+
+	void move() {
+		Coordinate originCoordinate = new Coordinate();
+		Error error;
+		do {
+			error = this.readCoordinateOriginToRemove(originCoordinate);
+		} while (error != null);
+		Coordinate targetCoordinate = new Coordinate();
+		do {
+			error = this.readCoordinateTargetToMove(originCoordinate, targetCoordinate);
+		} while (error != null);
+		this.board.move(originCoordinate, targetCoordinate);
+	}
+	
+	abstract Error readCoordinateOriginToRemove(Coordinate coordinate);
+
+	abstract Error readCoordinateTargetToMove(Coordinate originCoordinate, Coordinate targetCoordinate);
 
 	void writeWin(Token token) {
 		token.write();

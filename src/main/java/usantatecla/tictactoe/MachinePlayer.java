@@ -7,29 +7,20 @@ class MachinePlayer extends Player {
 	}
 
 	@Override
-	void put() {
-		Coordinate coordinate = new Coordinate();
-		Error error;
-		do {
-			coordinate.random();
-			error = controlErrorsPutCoordinate(coordinate);
-		} while (error != null);
-		board.put(coordinate, this.token);
+	Error readCoordinateToPut(Coordinate coordinate) {
+		coordinate.random();
+		return controlErrorsPutCoordinate(coordinate);
 	}
 
 	@Override
-	void move() {
-		Coordinate originCoordinate = new Coordinate();
-		Error error;
-		do {
-			originCoordinate.random();
-			error = controlErrorsMoveOriginCoordinate(originCoordinate);
-		} while (error != null);
-		Coordinate targetCoordinate = new Coordinate();
-		do {
-			targetCoordinate.random();
-			error = controlErrorsMoveTargetCoordinate(originCoordinate, targetCoordinate);
-		} while (error != null);
-		board.move(originCoordinate, targetCoordinate);
+	Error readCoordinateOriginToRemove(Coordinate coordinate) {
+		coordinate.random();
+		return controlErrorsMoveOriginCoordinate(coordinate);
+	}
+
+	@Override
+	Error readCoordinateTargetToMove(Coordinate originCoordinate, Coordinate targetCoordinate) {
+		targetCoordinate.random();
+		return controlErrorsMoveTargetCoordinate(originCoordinate, targetCoordinate);
 	}
 }
