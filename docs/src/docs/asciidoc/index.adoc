@@ -63,6 +63,11 @@ class  tictactoe.Board{
 ~ isCompleted(): boolean
 ~ isEmpty(Coordinate): boolean
 ~ isOccupied(Coordinate, Token): boolean
+- printRowBoard(int): void
+- printSquareValueBoard(int, int): void
+- checkNumberOfCoordinates(Coordinate[]): boolean
+- checkDirectionOfFirstCoordinates(Coordinate[]): boolean
+- checkDirectionOfAllCoordinates(Coordinate[]): boolean
 }
 tictactoe.Board *-down-> tictactoe.Coordinate
 tictactoe.Board ..> tictactoe.Token
@@ -97,8 +102,9 @@ tictactoe.Error ..> utils.Console
 
 class  tictactoe.MachinePlayer{
 ~ MachinePlayer(Token, Board)
-~ put(): void
-~ move(): void
+~ readCoordinateToPut(Coordinate): Error
+~ readCoordinateOriginToRemove(Coordinate): Error
+~ readCoordinateTargetToMove(Coordinate, Coordinate): Error
 }
 tictactoe.Player <|-down- tictactoe.MachinePlayer
 
@@ -115,8 +121,11 @@ class  tictactoe.Player{
 # token: Token
 # board: Board
 ~ Player(Token, Board)
-~ {abstract} put(): void
-~ {abstract} move(): void
+~ put(): void
+~ move(): void
+~ {abstract} readCoordinateToPut(Coordinate): Error
+~ {abstract} readCoordinateOriginToRemove(Coordinate): Error
+~ {abstract} readCoordinateTargetToMove(Coordinate, Coordinate): Error
 ~ writeWin(Token): void
 ~ getToken(): Token
 ~ controlErrorsPutCoordinate(Coordinate): Error
@@ -168,8 +177,10 @@ class  tictactoe.UserPlayer{
 ~ {static} ENTER_COORDINATE_TO_PUT: String
 ~ {static} ENTER_COORDINATE_TO_REMOVE: String
 ~ UserPlayer(Token, Board)
-~ put(): void
-~ move(): void
+~ readCoordinateToPut(Coordinate): Error
+~ readCoordinateOriginToRemove(Coordinate): Error
+~ readCoordinateTargetToMove(Coordinate, Coordinate): Error
+- writeErrorWhenNotNull(Error): void
 }
 tictactoe.Player <|-down- tictactoe.UserPlayer
 
@@ -289,14 +300,3 @@ node *--> component
 == Vista de Procesos
 
 - No hay concurrencia
-
-
-
-
-
-
-
-
-
-
-
