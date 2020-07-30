@@ -76,6 +76,9 @@ class GameView extends JFrame {
 	}
 
 	void result() {
+		this.getContentPane().removeAll();
+		this.getContentPane().add(new BoardView(this.resultController.getBoard()), new Constraints(0, 0, 1, 1));
+		this.setVisible(true);
 		int otherValue = this.resultController.getOtherValueFromTurn();
 		String message = new TokenView(Token.values()[otherValue]).getToken() + " "
 				+ MessageView.PLAYER_WIN.getMessage();
