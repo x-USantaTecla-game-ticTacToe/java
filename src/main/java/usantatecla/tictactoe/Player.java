@@ -20,8 +20,6 @@ abstract class Player {
 		this.board.put(coordinate, this.token);
 	}
 
-	abstract Error readCoordinateToPut(Coordinate coordinate);
-
 	void move() {
 		Coordinate originCoordinate = new Coordinate();
 		Error error;
@@ -34,7 +32,9 @@ abstract class Player {
 		} while (error != null);
 		this.board.move(originCoordinate, targetCoordinate);
 	}
-	
+
+	abstract Error readCoordinateToPut(Coordinate coordinate);
+
 	abstract Error readCoordinateOriginToRemove(Coordinate coordinate);
 
 	abstract Error readCoordinateTargetToMove(Coordinate originCoordinate, Coordinate targetCoordinate);

@@ -23,6 +23,45 @@ class Board {
 		Message.SEPARATOR.writeln();
 	}
 
+	void move(Coordinate originCoordinate, Coordinate coordinate) {
+		Token token = this.getToken(originCoordinate);
+		this.remove(originCoordinate);
+		this.put(coordinate, token);
+	}
+
+	void put(Coordinate coordinate, Token token) {
+		int i = 0;
+		while (this.coordinates[token.ordinal()][i] != null) {
+			i++;
+		}
+		this.coordinates[token.ordinal()][i] = coordinate;
+	}
+
+	boolean isTicTacToe(Token token) {
+		Coordinate[] coordinates = this.coordinates[token.ordinal()];
+		return this.checkNumberOfCoordinates(coordinates) && this.checkDirectionOfFirstCoordinates(coordinates)
+				&& this.checkDirectionOfAllCoordinates(coordinates);
+	}
+
+	boolean isCompleted() {
+		for (int i = 0; i < Turn.PLAYERS; i++) {
+			for (int j = 0; j < Coordinate.DIMENSION; j++) {
+				if (this.coordinates[i][j] == null) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
+	boolean isEmpty(Coordinate coordinate) {
+		return this.isOccupied(coordinate, null);
+	}
+
+	boolean isOccupied(Coordinate coordinate, Token token) {
+		return this.getToken(coordinate) == token;
+	}
+
 	private void printRowBoard(int row) {
 		Message.VERTICAL_LINE_LEFT.write();
 		for (int j = 0; j < Coordinate.DIMENSION; j++) {
@@ -53,20 +92,6 @@ class Board {
 		return null;
 	}
 
-	void move(Coordinate originCoordinate, Coordinate coordinate) {
-		Token token = this.getToken(originCoordinate);
-		this.remove(originCoordinate);
-		this.put(coordinate, token);
-	}
-
-	void put(Coordinate coordinate, Token token) {
-		int i = 0;
-		while (this.coordinates[token.ordinal()][i] != null) {
-			i++;
-		}
-		this.coordinates[token.ordinal()][i] = coordinate;
-	}
-
 	private void remove(Coordinate coordinate) {
 		for (int i = 0; i < Turn.PLAYERS; i++) {
 			for (int j = 0; j < Coordinate.DIMENSION; j++) {
@@ -76,12 +101,6 @@ class Board {
 				}
 			}
 		}
-	}
-
-	boolean isTicTacToe(Token token) {
-		Coordinate[] coordinates = this.coordinates[token.ordinal()];
-		return this.checkNumberOfCoordinates(coordinates) && this.checkDirectionOfFirstCoordinates(coordinates)
-				&& this.checkDirectionOfAllCoordinates(coordinates);
 	}
 
 	private boolean checkNumberOfCoordinates(Coordinate[] coordinates) {
@@ -110,25 +129,6 @@ class Board {
 			}
 		}
 		return count;
-	}
-
-	boolean isCompleted() {
-		for (int i = 0; i < Turn.PLAYERS; i++) {
-			for (int j = 0; j < Coordinate.DIMENSION; j++) {
-				if (this.coordinates[i][j] == null) {
-					return false;
-				}
-			}
-		}
-		return true;
-	}
-
-	boolean isEmpty(Coordinate coordinate) {
-		return this.isOccupied(coordinate, null);
-	}
-
-	boolean isOccupied(Coordinate coordinate, Token token) {
-		return this.getToken(coordinate) == token;
 	}
 
 }
