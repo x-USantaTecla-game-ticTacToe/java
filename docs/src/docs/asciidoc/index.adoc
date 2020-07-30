@@ -78,6 +78,8 @@ class  tictactoe.views.BoardView{
 ~ board: Board
 ~ BoardView(Board)
 ~ write(): void
+- printRowBoard(int): void
+- printSquareValueBoard(int, int): void
 }
 
 class  tictactoe.views.CoordinateView{
@@ -213,6 +215,9 @@ class  tictactoe.models.Board{
 ~ isCompleted(): boolean
 + isEmpty(Coordinate): boolean
 ~ isOccupied(Coordinate, Token): boolean
+- checkNumberOfCoordinates(Coordinate[]): boolean
+- checkDirectionOfFirstCoordinates(Coordinate[]): boolean
+- checkDirectionOfAllCoordinates(Coordinate[]): boolean
 }
 tictactoe.models.Board *-down-> tictactoe.models.Coordinate
 tictactoe.models.Board ..> tictactoe.models.Token
