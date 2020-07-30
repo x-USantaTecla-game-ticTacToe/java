@@ -28,7 +28,7 @@ class BoardView {
 		MessageView.LINE_BREAK.writeln();
 	}
 
-	private void printColumnBoard(int row, int column) {
+	private void printSquareBoard(int row, int column) {
 		Token tokenToWrite = this.board.getToken(new Coordinate(row, column));
 		if (tokenToWrite == null) {
 			MessageView.EMPTY.write();
