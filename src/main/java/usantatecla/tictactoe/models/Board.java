@@ -56,12 +56,19 @@ public class Board {
 
 	boolean isTicTacToe(Token token) {
 		Coordinate[] coordinates = this.coordinates[token.ordinal()];
-		if (this.numberOfCoordinates(coordinates) < Coordinate.DIMENSION) {
-			return false;
-		}
-		if (!coordinates[0].inDirection(coordinates[1])) {
-			return false;
-		}
+		return this.checkNumberOfCoordinates(coordinates) && this.checkDirectionOfFirstCoordinates(coordinates)
+				&& this.checkDirectionOfAllCoordinates(coordinates);
+	}
+
+	private boolean checkNumberOfCoordinates(Coordinate[] coordinates) {
+		return this.numberOfCoordinates(coordinates) == Coordinate.DIMENSION;
+	}
+
+	private boolean checkDirectionOfFirstCoordinates(Coordinate[] coordinates) {
+		return coordinates[0].inDirection(coordinates[1]);
+	}
+
+	private boolean checkDirectionOfAllCoordinates(Coordinate[] coordinates) {
 		Direction direction = coordinates[0].getDirection(coordinates[1]);
 		for (int i = 1; i < coordinates.length - 1; i++) {
 			if (direction != coordinates[i].getDirection(coordinates[i + 1])) {

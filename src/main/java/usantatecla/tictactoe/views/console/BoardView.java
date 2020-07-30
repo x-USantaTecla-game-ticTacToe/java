@@ -16,20 +16,28 @@ class BoardView extends WithConsoleModel {
     }
 
     void write() {
-		this.console.writeln(MessageView.SEPARATOR.getMessage());
+        this.console.writeln(MessageView.SEPARATOR.getMessage());
 		for (int i = 0; i < Coordinate.DIMENSION; i++) {
-            this.console.write(MessageView.VERTICAL_LINE_LEFT.getMessage());
-			for (int j = 0; j < Coordinate.DIMENSION; j++) {
-				if (this.board.getToken(new Coordinate(i, j)) == null) {
-                    this.console.write(MessageView.EMPTY.getMessage());
-				} else {
-                    Token token = this.board.getToken(new Coordinate(i, j));
-                    this.console.write(new TokenView(token).getToken());
-				}
-                this.console.write(MessageView.VERTICAL_LINE_CENTERED.getMessage());
-			}
-            this.console.writeln();
+			this.printRowBoard(i);
         }
         this.console.writeln(MessageView.SEPARATOR.getMessage());
+	}
+
+	private void printRowBoard(int row) {
+        this.console.write(MessageView.VERTICAL_LINE_LEFT.getMessage());
+		for (int j = 0; j < Coordinate.DIMENSION; j++) {
+			this.printSquareBoard(row, j);
+		}
+		this.console.writeln();
+	}
+
+	private void printSquareBoard(int row, int column) {
+		Token tokenToWrite = this.board.getToken(new Coordinate(row, column));
+		if (tokenToWrite == null) {
+            this.console.write(MessageView.EMPTY.getMessage());
+		} else {
+			this.console.write(new TokenView(tokenToWrite).getToken());
+        }
+        this.console.write(MessageView.VERTICAL_LINE_CENTERED.getMessage());
 	}
 }
