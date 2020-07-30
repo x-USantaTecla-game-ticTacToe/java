@@ -28,7 +28,7 @@ class BoardView extends JPanel {
         String boardToPresent = "";
         boardToPresent += MessageView.VERTICAL_LINE_LEFT.getMessage();
         for (int j = 0; j < Coordinate.DIMENSION; j++) {
-            this.getSquareBoardText(board, row, j);
+            boardToPresent += this.getSquareBoardText(board, row, j);
         }
         JLabel label = new JLabel(boardToPresent);
         label.setHorizontalAlignment(SwingConstants.CENTER);
