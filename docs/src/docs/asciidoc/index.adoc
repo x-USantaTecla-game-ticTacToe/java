@@ -160,6 +160,8 @@ class  tictactoe.views.console.BoardView{
 ~ board: Board
 ~ BoardView(Board)
 ~ write(): void
+- printRowBoard(int): void
+- printSquareValueBoard(int, int): void
 }
 utils.WithConsoleModel <|-down- tictactoe.views.console.BoardView
 
@@ -242,6 +244,8 @@ tictactoe.views.console.UserPlayerView ..> tictactoe.views.console.CoordinateVie
 
 class  tictactoe.views.graphics.BoardView{
 ~ BoardView(Board)
+- printRowBoard(Board, int): void
+- printSquareValueBoard(Board, int, int): String
 }
 javax.swing.JPanel <|-down- tictactoe.views.graphics.BoardView
 tictactoe.views.graphics.BoardView *-down-> javax.swing.JLabel
@@ -384,6 +388,9 @@ class  tictactoe.models.Board{
 ~ isCompleted(): boolean
 + isEmpty(Coordinate): boolean
 ~ isOccupied(Coordinate, Token): boolean
+- checkNumberOfCoordinates(Coordinate[]): boolean
+- checkDirectionOfFirstCoordinates(Coordinate[]): boolean
+- checkDirectionOfAllCoordinates(Coordinate[]): boolean
 }
 tictactoe.models.Board *-down-> tictactoe.models.Coordinate
 tictactoe.models.Board ..> tictactoe.models.Token
