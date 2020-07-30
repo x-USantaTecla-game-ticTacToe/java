@@ -172,6 +172,7 @@ utils.WithConsoleModel <|-down- tictactoe.views.console.BoardView
 
 class  tictactoe.views.console.ChoosePlayerView{
 ~ readPlayers(): void
+- readUsersNumber(): int
 }
 utils.WithConsoleModel <|-down- tictactoe.views.console.ChoosePlayerView
 
