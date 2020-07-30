@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.8">
 <meta name="author" content="Santa Tecla">
-<title>Master Mind. Solución 4.2. dv.withFactoryMethod</title>
+<title>Master Mind. Solución 5.2. modelViewPresenter.presentationModel</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -439,7 +439,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="book">
 <div id="header">
-<h1>Master Mind. Solución 4.2. <strong>dv.withFactoryMethod</strong></h1>
+<h1>Master Mind. Solución 5.2. <strong>modelViewPresenter.presentationModel</strong></h1>
 <div class="details">
 <span id="author" class="author">Santa Tecla</span><br>
 <span id="email" class="email"><a href="mailto:parqueNaturalSantaTecla@gmail.com">parqueNaturalSantaTecla@gmail.com</a></span><br>
@@ -457,6 +457,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#paquete-tictactoe-views-console">Paquete <em>tictactoe.views.console</em></a></li>
 <li><a href="#paquete-tictactoe-views-graphics">Paquete <em>tictactoe.views.graphics</em></a></li>
 <li><a href="#paquete-tictactoe-models">Paquete <em>tictactoe.models</em></a></li>
+<li><a href="#paquete-tictactoe-controllers">Paquete <em>tictactoe.controllers</em></a></li>
 <li><a href="#paquete-utils">Paquete <em>utils</em></a></li>
 </ul>
 </li>
@@ -528,6 +529,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li>
 <p><strong class="lime-background">Patrón Template Method (Factory Method)</strong>, <em>para clases principales</em></p>
 </li>
+<li>
+<p><strong class="lime-background">Patrón Model View Presenter</strong>, <em>para incluir controllers</em></p>
+</li>
 </ul>
 </div>
 </li>
@@ -537,7 +541,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h3 id="arquitectura">Arquitectura</h3>
 <div class="imageblock">
 <div class="content">
-<img src="images/arquitecturaVersion4.svg" alt="arquitecturaVersion4" width="848" height="533">
+<img src="images/arquitecturaVersion5.svg" alt="arquitecturaVersion5" width="1007" height="648">
 </div>
 </div>
 </div>
@@ -545,7 +549,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h3 id="paquete-tictactoe">Paquete <em>tictactoe</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="images/tictactoeVersion4.svg" alt="tictactoeVersion4" width="710" height="337">
+<img src="images/tictactoeVersion5.svg" alt="tictactoeVersion5" width="1568" height="365">
 </div>
 </div>
 </div>
@@ -553,7 +557,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h3 id="paquete-tictactoe-views">Paquete <em>tictactoe.views</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="images/tictactoeViewsVersion4.svg" alt="tictactoeViewsVersion4" width="758" height="503">
+<img src="images/tictactoeViewsVersion5.svg" alt="tictactoeViewsVersion5" width="1253" height="503">
 </div>
 </div>
 </div>
@@ -561,7 +565,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h3 id="paquete-tictactoe-views-console">Paquete <em>tictactoe.views.console</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="images/tictactoeViewsConsoleVersion4.svg" alt="tictactoeViewsConsoleVersion4" width="1029" height="639">
+<img src="images/tictactoeViewsConsoleVersion5.svg" alt="tictactoeViewsConsoleVersion5" width="1637" height="639">
 </div>
 </div>
 </div>
@@ -569,7 +573,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h3 id="paquete-tictactoe-views-graphics">Paquete <em>tictactoe.views.graphics</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="images/tictactoeViewsGraphicsVersion4.svg" alt="tictactoeViewsGraphicsVersion4" width="2036" height="1009">
+<img src="images/tictactoeViewsGraphicsVersion5.svg" alt="tictactoeViewsGraphicsVersion5" width="2004" height="1037">
 </div>
 </div>
 </div>
@@ -577,7 +581,15 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h3 id="paquete-tictactoe-models">Paquete <em>tictactoe.models</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="images/tictactoeModelsVersion4.svg" alt="tictactoeModelsVersion4" width="970" height="1394">
+<img src="images/tictactoeModelsVersion5.svg" alt="tictactoeModelsVersion5" width="970" height="1394">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="paquete-tictactoe-controllers">Paquete <em>tictactoe.controllers</em></h3>
+<div class="imageblock">
+<div class="content">
+<img src="images/tictactoeControllersVersion5.svg" alt="tictactoeControllersVersion5" width="844" height="365">
 </div>
 </div>
 </div>
@@ -585,7 +597,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h3 id="paquete-utils">Paquete <em>utils</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="images/utilsVersion4.svg" alt="utilsVersion4" width="433" height="654">
+<img src="images/utilsVersion5.svg" alt="utilsVersion5" width="433" height="654">
 </div>
 </div>
 </div>
@@ -631,7 +643,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sectionbody">
 <div class="imageblock">
 <div class="content">
-<img src="images/diagramaImplementacion.svg" alt="diagramaImplementacion" width="1712" height="167">
+<img src="images/diagramaImplementacion.svg" alt="diagramaImplementacion" width="1919" height="167">
 </div>
 </div>
 </div>
@@ -662,7 +674,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1<br>
-Last updated 2020-07-29 17:39:19 +0200
+Last updated 2020-07-30 10:49:53 +0200
 </div>
 </div>
 <script>

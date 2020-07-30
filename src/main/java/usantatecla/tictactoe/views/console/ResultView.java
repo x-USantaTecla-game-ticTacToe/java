@@ -1,6 +1,6 @@
 package usantatecla.tictactoe.views.console;
 
-import usantatecla.tictactoe.models.Game;
+import usantatecla.tictactoe.controllers.ResultController;
 import usantatecla.tictactoe.models.Token;
 import usantatecla.tictactoe.views.MessageView;
 import usantatecla.tictactoe.views.TokenView;
@@ -8,14 +8,14 @@ import usantatecla.utils.WithConsoleModel;
 
 class ResultView extends WithConsoleModel {
     
-    Game game;
+    ResultController resultController;
     
-    ResultView(Game game) {
-        this.game = game;
+    ResultView(ResultController resultController) {
+        this.resultController = resultController;
     }
 
     void interact() {
-        int otherValue = this.game.getOtherValueFromTurn();
+        int otherValue = this.resultController.getOtherValueFromTurn();
         this.console.write(new TokenView(Token.values()[otherValue]).getToken());
 		this.console.writeln(MessageView.PLAYER_WIN.getMessage());
     }

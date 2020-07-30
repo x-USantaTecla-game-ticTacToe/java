@@ -1,12 +1,22 @@
 package usantatecla.tictactoe.views;
 
-import usantatecla.tictactoe.models.Game;
+import usantatecla.tictactoe.controllers.PlayController;
+import usantatecla.tictactoe.controllers.ResultController;
+import usantatecla.tictactoe.controllers.StartController;
 
 public abstract class View {
-    protected Game game;
 
-	public View(Game game) {
-		this.game = game;
+    protected StartController startController;
+
+    protected PlayController playController;
+
+    protected ResultController resultController;
+
+	public View(StartController startController, PlayController playController,
+	ResultController resultController) {
+		this.startController = startController;
+        this.playController = playController;
+        this.resultController = resultController;
 	}
 
 	public void interact() {

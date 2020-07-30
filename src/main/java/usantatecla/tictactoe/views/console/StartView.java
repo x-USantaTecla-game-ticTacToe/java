@@ -1,21 +1,21 @@
 package usantatecla.tictactoe.views.console;
 
-import usantatecla.tictactoe.models.Game;
+import usantatecla.tictactoe.controllers.StartController;
 import usantatecla.tictactoe.views.MessageView;
 import usantatecla.utils.WithConsoleModel;
 
 class StartView extends WithConsoleModel {
 
-	Game game;
+	private StartController startController;
 
-	StartView(Game game) {
-		this.game = game;
+	StartView(StartController startController) {
+		this.startController = startController;
 	}
 
     void interact() {
 		this.console.writeln(MessageView.START_GAME.getMessage());
 		int numberOfUsers = new ChoosePlayerView().readPlayers();
-		this.game.createPlayers(numberOfUsers);
-		new BoardView(this.game.getBoard()).write();
+		this.startController.createPlayers(numberOfUsers);
+		new BoardView(this.startController.getBoard()).write();
 	}
 }

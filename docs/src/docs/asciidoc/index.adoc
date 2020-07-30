@@ -1,4 +1,4 @@
-= Master Mind. Solución 4.2. *dv.withFactoryMethod*
+= Master Mind. Solución 5.2. *modelViewPresenter.presentationModel*
 Santa Tecla <parqueNaturalSantaTecla@gmail.com>
 :toc-title: Índice
 :toc: left
@@ -29,16 +29,21 @@ image::Dibujo.jpg[]
 
 - Arquitectura Documento/Vista mediante *Patrón de Vista Separada*
 * [lime-background]*Patrón Template Method (Factory Method)*, _para clases principales_
+* [lime-background]*Patrón Model View Presenter*, _para incluir controllers_
 
 === Arquitectura
 
-[plantuml,arquitecturaVersion4,svg]
+[plantuml,arquitecturaVersion5,svg]
 ....
 
 package tictactoe #DDDDDD { } 
 tictactoe .down.> tictactoe.views.graphics
 tictactoe .down.> tictactoe.models
 tictactoe .down.> tictactoe.views.console
+tictactoe .down.> tictactoe.controllers
+
+package tictactoe.controllers #DDDDDD { } 
+tictactoe.controllers .down.> tictactoe.models
 
 package tictactoe.models #DDDDDD { } 
 package java.util{ }
@@ -49,11 +54,11 @@ package java.io{ }
 utils .down.> java.io
 
 package tictactoe.views #DDDDDD { } 
-tictactoe.views .down.> tictactoe.models
+tictactoe.views .down.> tictactoe.controllers
 
 package tictactoe.views.console #DDDDDD { } 
 tictactoe.views.console .down.> tictactoe.views
-tictactoe.views.console .down.> tictactoe.models
+tictactoe.views.console .down.> tictactoe.controllers 
 tictactoe.views.console .down.> utils
 
 package tictactoe.views.graphics #DDDDDD { } 
@@ -62,7 +67,7 @@ tictactoe.views.graphics .down.> java.awt
 package java.awt.event{ }
 tictactoe.views.graphics .down.> java.awt.event
 tictactoe.views.graphics .down.> tictactoe.views
-tictactoe.views.graphics .down.> tictactoe.models
+tictactoe.views.graphics .down.> tictactoe.controllers 
 package javax.swing{ }
 tictactoe.views.graphics .down.> javax.swing
 
@@ -70,38 +75,42 @@ tictactoe.views.graphics .down.> javax.swing
 
 === Paquete _tictactoe_
 
-[plantuml,tictactoeVersion4,svg]
+[plantuml,tictactoeVersion5,svg]
 ....
 
 class  tictactoe.ConsoleTicTacToe{
-+ ConsoleTicTacToe()
 + {static} main(String[]): void
-# createView(Game): View
+# createView(StartController, PlayController, ResultController): View
 }
 tictactoe.TicTacToe <|-down- tictactoe.ConsoleTicTacToe
 
 class  tictactoe.GraphicsTicTacToe{
-+ GraphicsTicTacToe()
 + {static} main(String[]): void
-# createView(Game): View
+# createView(StartController, PlayController, ResultController): View
 }
 tictactoe.TicTacToe <|-down- tictactoe.GraphicsTicTacToe
 
 class  tictactoe.TicTacToe{
 - game: Game
+- startController: StartController
+- playController: PlayController
+- resultController: ResultController
 - view: View
 # TicTacToe()
-# {abstract} createView(Game): View
+# {abstract} createView(StartController, PlayController, ResultController): View
 # play(): void
 }
 tictactoe.TicTacToe --> tictactoe.views.View
 tictactoe.TicTacToe --> tictactoe.models.Game
+tictactoe.TicTacToe --> tictactoe.controllers.StartController
+tictactoe.TicTacToe --> tictactoe.controllers.PlayController
+tictactoe.TicTacToe --> tictactoe.controllers.ResultController
 
 ....
 
 === Paquete _tictactoe.views_
 
-[plantuml,tictactoeViewsVersion4,svg]
+[plantuml,tictactoeViewsVersion5,svg]
 
 ....
 
@@ -144,20 +153,24 @@ class tictactoe.views.TokenView{
 }
 
 class  tictactoe.views.View{
-# game: Game
-+ View(Game)
+# startController: StartController
+# playController: PlayController
+# resultController: ResultController
++ View(StartController, PlayController, ResultController)
 + interact(): void
 # {abstract} start(): void
 # {abstract} play(): boolean
 # {abstract} result(): void
 }
-tictactoe.views.View *-down-> tictactoe.models.Game
+tictactoe.views.View *-down-> tictactoe.controllers.StartController
+tictactoe.views.View *-down-> tictactoe.controllers.PlayController
+tictactoe.views.View *-down-> tictactoe.controllers.ResultController
 
 ....
 
 === Paquete _tictactoe.views.console_
 
-[plantuml,tictactoeViewsConsoleVersion4,svg]
+[plantuml,tictactoeViewsConsoleVersion5,svg]
 
 ....
 
@@ -177,7 +190,7 @@ class  tictactoe.views.console.ConsoleView{
 - startView: StartView
 - playView: PlayView
 - resultView: ResultView
-+ ConsoleView(Game)
++ ConsoleView(StartController, PlayController, ResultController)
 # start(): void
 # play(): boolean
 # result(): void
@@ -206,25 +219,28 @@ class  tictactoe.views.console.MachinePlayerView{
 tictactoe.views.PlayerView <|-down- tictactoe.views.console.MachinePlayerView
 
 class  tictactoe.views.console.PlayView{
-~ game: Game
-~ PlayView(Game)
+~ playController: PlayController
+~ PlayView(PlayController)
 ~ interact(): boolean
 }
 tictactoe.views.console.PlayView ..> tictactoe.views.console.BoardView
 tictactoe.views.console.PlayView ..> tictactoe.views.PlayerView
+tictactoe.views.console.PlayView ..> tictactoe.controllers.PlayController
 
 class tictactoe.views.console.ResultView{
-~ game: Game
-~ ResultView(Game)
+~ resultController: ResultController
+~ ResultView(ResultController)
 ~ interact(): void
 }
+tictactoe.views.console.ResultView..> tictactoe.controllers.ResultController
 
 class tictactoe.views.console.StartView{
-~ game: Game
-~ StartView(Game)
+~ startController: StartController
+~ StartView(StartController)
 ~ interact(): void
 }
 tictactoe.views.console.StartView ..> tictactoe.views.console.ChoosePlayerView
+tictactoe.views.console.StartView ..> tictactoe.controllers.StartController
 
 class  tictactoe.views.console.UserPlayerView{
 ~ {static} ENTER_COORDINATE_TO_PUT: String
@@ -241,7 +257,7 @@ tictactoe.views.console.UserPlayerView ..> tictactoe.views.console.CoordinateVie
 
 === Paquete _tictactoe.views.graphics_
 
-[plantuml,tictactoeViewsGraphicsVersion4,svg]
+[plantuml,tictactoeViewsGraphicsVersion5,svg]
 
 ....
 
@@ -324,14 +340,19 @@ tictactoe.views.graphics.CoordinateView ..> java.awt.event.ActionEvent
 
 class  tictactoe.views.graphics.GameView{
 - {static} GAME_OVER: String
-- game: Game
+- startController: StartController
+- playController: PlayController
+- resultController: ResultController
 - choosePlayersView: ChoosePlayersView
-~ GameView(Game)
+~ GameView(StartController, PlayController, ResultController)
 ~ start(): void
 ~ play(): boolean
 ~ result(): void
 }
 javax.swing.JFrame <|-down- tictactoe.views.graphics.GameView
+tictactoe.views.graphics.GameView ..> tictactoe.controllers.StartController
+tictactoe.views.graphics.GameView ..> tictactoe.controllers.PlayController
+tictactoe.views.graphics.GameView ..> tictactoe.controllers.ResultController
 tictactoe.views.graphics.GameView ..> tictactoe.views.graphics.ChoosePlayersView
 tictactoe.views.graphics.GameView ..> tictactoe.views.PlayerView
 tictactoe.views.graphics.GameView ..> tictactoe.views.graphics.BoardView
@@ -339,7 +360,7 @@ tictactoe.views.graphics.GameView ..> tictactoe.views.graphics.Constraints
 
 class  tictactoe.views.graphics.GraphicsView{
 - gameView: GameView
-+ GraphicsView(Game)
++ GraphicsView(StartController, PlayController, ResultController)
 # start(): void
 # play(): boolean
 # result(): void
@@ -372,7 +393,7 @@ tictactoe.views.graphics.UserPlayerView ..> tictactoe.views.graphics.Constraints
 
 === Paquete _tictactoe.models_
 
-[plantuml,tictactoeModelsVersion4,svg]
+[plantuml,tictactoeModelsVersion5,svg]
 
 ....
 
@@ -483,9 +504,47 @@ tictactoe.models.Turn *-down-> tictactoe.models.Player
 
 ....
 
+=== Paquete _tictactoe.controllers_
+
+[plantuml,tictactoeControllersVersion5,svg]
+
+....
+
+class  tictactoe.controllers.Controller{
+# game: Game
+~ Controller(Game)
++ getBoard(): Board
+}
+tictactoe.controllers.Controller ..> tictactoe.models.Game
+
+class  tictactoe.controllers.PlayController{
++ PlayController(Game)
++ getTokenPlayerFromTurn(): Player
++ isBoardComplete(): boolean
++ putTokenPlayerFromTurn(Coordinate): void
++ moveTokenPlayerFromTurn(Coordinate[]): void
++ changeTurn(): void
++ isTicTacToe(): boolean
+}
+tictactoe.controllers.Controller <|-down- tictactoe.controllers.PlayController
+
+class  tictactoe.controllers.ResultController{
++ ResultController(Game)
++ getOtherValueFromTurn(): int
+}
+tictactoe.controllers.Controller <|-down- tictactoe.controllers.ResultController
+
+class  tictactoe.controllers.StartController{
++ StartController(Game)
++ createPlayers(): void
+}
+tictactoe.controllers.Controller <|-down- tictactoe.controllers.StartController
+
+....
+
 === Paquete _utils_
 
-[plantuml,utilsVersion4,svg]
+[plantuml,utilsVersion5,svg]
 
 ....
 
@@ -555,6 +614,8 @@ package "  "  as tictactoe {
 }
 package "  "  as tictactoe.models {
 }
+package "  "  as tictactoe.controllers {
+}
 package "  "  as tictactoe.views {
 }
 package "  "  as tictactoe.views.console {
@@ -578,6 +639,7 @@ package "  "  as javax.swing {
 
 jar *--> tictactoe
 jar *--> tictactoe.models
+jar *--> tictactoe.controllers
 jar *--> tictactoe.views
 jar *--> tictactoe.views.console
 jar *--> tictactoe.views.graphics
