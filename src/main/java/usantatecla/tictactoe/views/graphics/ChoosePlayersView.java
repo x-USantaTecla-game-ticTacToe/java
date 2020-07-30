@@ -8,11 +8,14 @@ import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRootPane;
 import javax.swing.JTextField;
 
+import usantatecla.tictactoe.views.ErrorView;
 import usantatecla.tictactoe.views.MessageView;
+import usantatecla.tictactoe.models.Error;
 
 @SuppressWarnings("serial")
 class ChoosePlayersView extends JPanel implements ActionListener, KeyListener {
@@ -50,7 +53,14 @@ class ChoosePlayersView extends JPanel implements ActionListener, KeyListener {
 	}
 
 	public void actionPerformed(final ActionEvent event) {
-		this.playersNumber = this.textField.getText();
+		String usersInsertedText = this.textField.getText();
+		int usersInserted = Integer.parseInt(usersInsertedText);
+		if (usersInserted >= 0 && usersInserted < 3) {
+			this.playersNumber = usersInsertedText;
+		} else {
+			JOptionPane.showMessageDialog(null, ErrorView.MESSAGES[Error.USERS_ERROR.ordinal()],
+					MessageView.ERROR.getMessage(), JOptionPane.WARNING_MESSAGE);
+		}
 		this.textField.setText("");
 	}
 
