@@ -1,8 +1,6 @@
 package usantatecla.tictactoe.views.console;
 
-import usantatecla.tictactoe.controllers.PlayController;
-import usantatecla.tictactoe.controllers.ResultController;
-import usantatecla.tictactoe.controllers.StartController;
+import usantatecla.tictactoe.controllers.Logic;
 import usantatecla.tictactoe.views.View;
 
 public class ConsoleView extends View {
@@ -13,12 +11,11 @@ public class ConsoleView extends View {
 
 	private ResultView resultView;
 
-	public ConsoleView(StartController startController, PlayController playController,
-			ResultController resultController) {
-		super(startController, playController, resultController);
-		this.startView = new StartView(this.startController);
-		this.playView = new PlayView(this.playController);
-		this.resultView = new ResultView(this.resultController);
+	public ConsoleView(Logic logic) {
+		super(logic);
+		this.startView = new StartView(this.logic);
+		this.playView = new PlayView(this.logic);
+		this.resultView = new ResultView(this.logic);
 	}
 
 	@Override

@@ -1,4 +1,4 @@
-<h1 align="center">Welcome to TicTacToe. Solución 5.2. ** modelViewPresenter.presentationModel ** 👋</h1>
+<h1 align="center">Welcome to TicTacToe. Versión 6.2. ** mvp.pm.withFacade ** 👋</h1>
 <p>
   <a href="/docs" target="_blank">
     <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />

@@ -1,6 +1,6 @@
 package usantatecla.tictactoe.views.console;
 
-import usantatecla.tictactoe.controllers.PlayController;
+import usantatecla.tictactoe.controllers.Logic;
 import usantatecla.tictactoe.models.Coordinate;
 import usantatecla.tictactoe.models.Player;
 import usantatecla.tictactoe.models.PlayerType;
@@ -8,25 +8,25 @@ import usantatecla.tictactoe.views.PlayerView;
 
 class PlayView {
 
-    PlayController playController;
+    Logic logic;
     
-    PlayView(PlayController playController) {
-        this.playController = playController;
+    PlayView(Logic logic) {
+        this.logic = logic;
     }
 
     boolean interact() {
-        Player player = this.playController.getTokenPlayerFromTurn();
+        Player player = this.logic.getTokenPlayerFromTurn();
         PlayerView playerView = player.getType() == PlayerType.USER_PLAYER ? new UserPlayerView(player) : 
                                                                              new MachinePlayerView(player);
-        if (!this.playController.isBoardComplete()) {
+        if (!this.logic.isBoardComplete()) {
             Coordinate coordinate = playerView.readCoordinateToPut();
-            this.playController.putTokenPlayerFromTurn(coordinate);
+            this.logic.putTokenPlayerFromTurn(coordinate);
         } else {
             Coordinate[] coordinates = playerView.readCoordinatesToMove();
-            this.playController.moveTokenPlayerFromTurn(coordinates);
+            this.logic.moveTokenPlayerFromTurn(coordinates);
         }
-        this.playController.changeTurn();
-        new BoardView(this.playController.getBoard()).write();
-        return this.playController.isTicTacToe();
+        this.logic.changeTurn();
+        new BoardView(this.logic.getBoard()).write();
+        return this.logic.isTicTacToe();
     }
 }
