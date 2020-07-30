@@ -25,12 +25,12 @@ class BoardView extends JPanel {
     }
 
 	private void printRowBoard(Board board, int row) {
-        String boardToPresent = "";
-        boardToPresent += MessageView.VERTICAL_LINE_LEFT.getMessage();
+        String boardRowToPresent = "";
+        boardRowToPresent += MessageView.VERTICAL_LINE_LEFT.getMessage();
         for (int j = 0; j < Coordinate.DIMENSION; j++) {
-            boardToPresent += this.getSquareBoardText(board, row, j);
+            boardRowToPresent += this.getSquareBoardText(board, row, j);
         }
-        JLabel label = new JLabel(boardToPresent);
+        JLabel label = new JLabel(boardRowToPresent);
         label.setHorizontalAlignment(SwingConstants.CENTER);
         this.add(label, new Constraints(0, row + 1, 10, 1));
 }
