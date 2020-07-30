@@ -18,18 +18,27 @@ class Board {
 	void write() {
 		Message.SEPARATOR.writeln();
 		for (int i = 0; i < Coordinate.DIMENSION; i++) {
-			Message.VERTICAL_LINE_LEFT.write();
-			for (int j = 0; j < Coordinate.DIMENSION; j++) {
-				if (this.getToken(new Coordinate(i, j)) == null) {
-					Message.EMPTY.write();
-				} else {
-					this.getToken(new Coordinate(i, j)).write();
-				}
-				Message.VERTICAL_LINE_CENTERED.write();
-			}
-			Message.LINE_BREAK.writeln();
+			this.printRowBoard(i);
 		}
 		Message.SEPARATOR.writeln();
+	}
+
+	private void printRowBoard(int row) {
+		Message.VERTICAL_LINE_LEFT.write();
+		for (int j = 0; j < Coordinate.DIMENSION; j++) {
+			this.printSquareValueBoard(row, j);
+		}
+		Message.LINE_BREAK.writeln();
+	}
+
+	private void printSquareValueBoard(int row, int column) {
+		Token tokenToWrite = this.getToken(new Coordinate(row, column));
+		if (tokenToWrite == null) {
+			Message.EMPTY.write();
+		} else {
+			tokenToWrite.write();
+		}
+		Message.VERTICAL_LINE_CENTERED.write();
 	}
 
 	private Token getToken(Coordinate coordinate) {
@@ -71,12 +80,19 @@ class Board {
 
 	boolean isTicTacToe(Token token) {
 		Coordinate[] coordinates = this.coordinates[token.ordinal()];
-		if (this.numberOfCoordinates(coordinates) < Coordinate.DIMENSION) {
-			return false;
-		}
-		if (!coordinates[0].inDirection(coordinates[1])) {
-			return false;
-		}
+		return this.checkNumberOfCoordinates(coordinates) && this.checkDirectionOfFirstCoordinates(coordinates)
+				&& this.checkDirectionOfAllCoordinates(coordinates);
+	}
+
+	private boolean checkNumberOfCoordinates(Coordinate[] coordinates) {
+		return this.numberOfCoordinates(coordinates) == Coordinate.DIMENSION;
+	}
+
+	private boolean checkDirectionOfFirstCoordinates(Coordinate[] coordinates) {
+		return coordinates[0].inDirection(coordinates[1]);
+	}
+
+	private boolean checkDirectionOfAllCoordinates(Coordinate[] coordinates) {
 		Direction direction = coordinates[0].getDirection(coordinates[1]);
 		for (int i = 1; i < coordinates.length - 1; i++) {
 			if (direction != coordinates[i].getDirection(coordinates[i + 1])) {
