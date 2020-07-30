@@ -23,7 +23,7 @@ class BoardView {
 	private void printRowBoard(int row) {
 		MessageView.VERTICAL_LINE_LEFT.write();
 		for (int j = 0; j < Coordinate.DIMENSION; j++) {
-			this.printColumnBoard(row, j);
+			this.printSquareBoard(row, j);
 		}
 		MessageView.LINE_BREAK.writeln();
 	}
