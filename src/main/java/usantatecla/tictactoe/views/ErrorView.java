@@ -8,7 +8,9 @@ class ErrorView extends WithConsoleModel {
 	private static final String[] MESSAGES = { 
 		"The square is not empty",
 		"There is not a token of yours", 
-		"The origin and target squares are the same" };
+		"The origin and target squares are the same",
+		"Wrong number of users",
+		"The coordinates are wrong" };
 
 	private Error error;
 

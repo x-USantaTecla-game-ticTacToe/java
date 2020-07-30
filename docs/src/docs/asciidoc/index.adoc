@@ -86,6 +86,7 @@ class  tictactoe.views.CoordinateView{
 ~ read(String): Coordinate
 }
 utils.WithConsoleModel <|-down- tictactoe.views.CoordinateView
+tictactoe.views.CoordinateView ..> tictactoe.views.ErrorView
 
 class  tictactoe.views.ErrorView{
 - {static} MESSAGES: String[]
@@ -100,6 +101,7 @@ class  tictactoe.views.ChoosePlayerView{
 }
 utils.WithConsoleModel <|-down- tictactoe.views.ChoosePlayerView
 tictactoe.views.ChoosePlayerView ..> tictactoe.views.MessageView
+tictactoe.views.ChoosePlayerView ..> tictactoe.views.ErrorView
 
 class  tictactoe.views.MachinePlayerView{
 ~ MachinePlayerView(Player)
