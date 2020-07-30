@@ -87,6 +87,7 @@ class  tictactoe.Coordinate{
 ~ random(): void
 }
 utils.Coordinate <|-down- tictactoe.Coordinate
+tictactoe.Coordinate ..> tictactoe.Error
 tictactoe.Coordinate ..> utils.Direction
 tictactoe.Coordinate ..> java.util.Random
 
@@ -150,6 +151,7 @@ class  tictactoe.TicTacToe{
 + main(String[]): void
 }
 utils.WithConsoleModel <|-down- tictactoe.TicTacToe
+tictactoe.TicTacToe ..> tictactoe.Error
 tictactoe.TicTacToe *-down-> tictactoe.Board
 tictactoe.TicTacToe *-down-> tictactoe.Player
 tictactoe.TicTacToe *-down-> tictactoe.Turn
