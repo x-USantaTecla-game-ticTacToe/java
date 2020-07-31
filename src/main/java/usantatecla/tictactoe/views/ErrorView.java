@@ -1,6 +1,6 @@
 package usantatecla.tictactoe.views;
 
-import usantatecla.tictactoe.models.Error;
+import usantatecla.tictactoe.types.Error;
 
 public class ErrorView {
 

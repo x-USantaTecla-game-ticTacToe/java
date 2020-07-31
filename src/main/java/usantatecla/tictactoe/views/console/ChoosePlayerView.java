@@ -2,7 +2,7 @@ package usantatecla.tictactoe.views.console;
 
 import usantatecla.tictactoe.views.MessageView;
 import usantatecla.utils.WithConsoleView;
-import usantatecla.tictactoe.models.Error;
+import usantatecla.tictactoe.types.Error;
 
 class ChoosePlayerView extends WithConsoleView {
     

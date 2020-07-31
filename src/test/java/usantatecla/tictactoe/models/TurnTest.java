@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import usantatecla.tictactoe.types.Token;
+
 public class TurnTest {
 
     private Turn turn;
