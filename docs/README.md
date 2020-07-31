@@ -158,6 +158,14 @@
 </div>
 </div>
 <div class="sect2">
+<h3 id="paquete-tictactoe-types">Paquete <em>tictactoe.types</em></h3>
+<div class="imageblock">
+<div class="content">
+<img src="build/docs/asciidoc/images/tictactoeTypesVersion5.svg" alt="tictactoeTypesVersion5" width="400" height="300">
+</div>
+</div>
+</div>
+<div class="sect2">
 <h3 id="paquete-tictactoe-controllers">Paquete <em>tictactoe.controllers</em></h3>
 <div class="imageblock">
 <div class="content">
