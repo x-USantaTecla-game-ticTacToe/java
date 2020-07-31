@@ -1,4 +1,4 @@
-<h1 align="center">Welcome to TicTacToe. Versión 7.2. ** mvp.pm.withoutDoubleDispatching ** 👋</h1>
+<h1 align="center">Welcome to TicTacToe. Versión 8.2. ** mvp.pm.withDoubleDispatching ** 👋</h1>
 <p>
   <a href="/docs" target="_blank">
     <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
@@ -8,7 +8,7 @@
   </a>
 </p>
 
-> TicTacToe. Solución dv.withoutDoubleDispatching
+> TicTacToe. Solución mvp.pm.withDoubleDispatching
 
 ## Install
 
