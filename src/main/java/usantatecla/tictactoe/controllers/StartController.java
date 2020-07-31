@@ -1,13 +1,19 @@
 package usantatecla.tictactoe.controllers;
 
 import usantatecla.tictactoe.models.Game;
-class StartController extends Controller {
+import usantatecla.tictactoe.models.State;
+
+public class StartController extends Controller {
     
-    StartController(Game game) {
-		super(game);
+    public StartController(Game game, State state) {
+		super(game, state);
 	}
 
-	void createPlayers(int numberOfUsers) {
+	public void start() {
+		this.state.next();
+	}
+
+	public void createPlayers(int numberOfUsers) {
 		this.game.createPlayers(numberOfUsers);
 	}
 }

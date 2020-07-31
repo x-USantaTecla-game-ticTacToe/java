@@ -3,34 +3,37 @@ package usantatecla.tictactoe.controllers;
 import usantatecla.tictactoe.models.Coordinate;
 import usantatecla.tictactoe.models.Game;
 import usantatecla.tictactoe.models.Player;
+import usantatecla.tictactoe.models.State;
 
-class PlayController extends Controller {
+public class PlayController extends Controller {
     
-    PlayController(Game game) {
-		super(game);
+    public PlayController(Game game, State state) {
+		super(game, state);
 	}
 
-	Player getTokenPlayerFromTurn() {
+	public Player getTokenPlayerFromTurn() {
 		return this.game.getTokenPlayerFromTurn();
 	}
 
-	boolean isBoardComplete() {
+	public boolean isBoardComplete() {
 		return this.game.isBoardComplete();
 	}
 
-	void putTokenPlayerFromTurn(Coordinate coordinate) {
+	public void putTokenPlayerFromTurn(Coordinate coordinate) {
 		this.game.putTokenPlayerFromTurn(coordinate);
 	}
 
-	void moveTokenPlayerFromTurn(Coordinate[] coordinates) {
+	public void moveTokenPlayerFromTurn(Coordinate[] coordinates) {
 		this.game.moveTokenPlayerFromTurn(coordinates);
 	}
 
-	void changeTurn() {
+	public void changeTurn() {
 		this.game.changeTurn();
 	}
 
-	boolean isTicTacToe() {
-		return this.game.isTicTacToe();
+	public void isTicTacToe() {
+		if (this.game.isTicTacToe()) {
+			this.state.next();
+		};
 	}
 }

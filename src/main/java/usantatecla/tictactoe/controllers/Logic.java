@@ -1,61 +1,32 @@
 package usantatecla.tictactoe.controllers;
 
-import usantatecla.tictactoe.models.Board;
-import usantatecla.tictactoe.models.Coordinate;
+import java.util.HashMap;
+import java.util.Map;
+
 import usantatecla.tictactoe.models.Game;
-import usantatecla.tictactoe.models.Player;
+import usantatecla.tictactoe.models.State;
+import usantatecla.tictactoe.models.StateValue;
 
 public class Logic {
+
+	private State state;
     
     private Game game;
 	
-	private StartController startController;
-
-	private PlayController playController;
-
-	private ResultController resultController;
+	private Map<StateValue, Controller> controllers;
 
 	public Logic() {
+		this.state = new State();
 		this.game = new Game();
-		this.startController = new StartController(this.game);
-		this.playController = new PlayController(this.game);
-		this.resultController = new ResultController(this.game);
-    }
-
-    public void createPlayers(int numberOfUsers) {
-		this.startController.createPlayers(numberOfUsers);
-	}
-    
-    public Player getTokenPlayerFromTurn() {
-		return this.playController.getTokenPlayerFromTurn();
-	}
-
-	public boolean isBoardComplete() {
-		return this.playController.isBoardComplete();
-	}
-
-	public void putTokenPlayerFromTurn(Coordinate coordinate) {
-		this.playController.putTokenPlayerFromTurn(coordinate);
-	}
-
-	public void moveTokenPlayerFromTurn(Coordinate[] coordinates) {
-		this.playController.moveTokenPlayerFromTurn(coordinates);
-	}
-
-	public void changeTurn() {
-		this.playController.changeTurn();
-	}
-
-	public boolean isTicTacToe() {
-		return this.playController.isTicTacToe();
-    }
-    
-    public int getOtherValueFromTurn() {
-		return this.resultController.getOtherValueFromTurn();
+		this.controllers = new HashMap<StateValue, Controller>();
+		this.controllers.put(StateValue.INITIAL, new StartController(this.game, this.state));
+		this.controllers.put(StateValue.IN_GAME, new PlayController(this.game, this.state));
+		this.controllers.put(StateValue.RESULT, new ResultController(this.game, this.state));
+		this.controllers.put(StateValue.EXIT, null);
 	}
 	
-	public Board getBoard() {
-        return this.startController.getBoard();
-    }
+	public Controller getController() {
+		return this.controllers.get(this.state.getValueState());
+	}
     
 }
