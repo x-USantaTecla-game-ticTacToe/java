@@ -485,9 +485,9 @@ tictactoe.models.Turn *-down-> tictactoe.models.Player
 
 ....
 
-=== Paquete _tictactoe.models_
+=== Paquete _tictactoe.types_
 
-[plantuml,tictactoeModelsVersion5,svg]
+[plantuml,tictactoeTypesVersion5,svg]
 
 ....
 
