@@ -1,7 +1,7 @@
 package usantatecla.tictactoe.views.console;
 
 import usantatecla.tictactoe.controllers.ResultController;
-import usantatecla.tictactoe.models.Token;
+import usantatecla.tictactoe.types.Token;
 import usantatecla.tictactoe.views.MessageView;
 import usantatecla.tictactoe.views.TokenView;
 import usantatecla.utils.WithConsoleView;

@@ -11,7 +11,7 @@ import usantatecla.tictactoe.controllers.StartController;
 import usantatecla.tictactoe.models.Coordinate;
 import usantatecla.tictactoe.models.Player;
 import usantatecla.tictactoe.models.PlayerType;
-import usantatecla.tictactoe.models.Token;
+import usantatecla.tictactoe.types.Token;
 import usantatecla.tictactoe.views.MessageView;
 import usantatecla.tictactoe.views.PlayerView;
 import usantatecla.tictactoe.views.TokenView;

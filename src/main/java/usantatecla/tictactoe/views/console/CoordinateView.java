@@ -3,7 +3,7 @@ package usantatecla.tictactoe.views.console;
 import usantatecla.tictactoe.models.Coordinate;
 import usantatecla.tictactoe.views.MessageView;
 import usantatecla.utils.WithConsoleView;
-import usantatecla.tictactoe.models.Error;
+import usantatecla.tictactoe.types.Error;
 
 class CoordinateView extends WithConsoleView {
 

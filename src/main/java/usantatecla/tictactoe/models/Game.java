@@ -1,5 +1,7 @@
 package usantatecla.tictactoe.models;
 
+import usantatecla.tictactoe.types.Token;
+
 public class Game {
     
     private Board board;

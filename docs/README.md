@@ -15,7 +15,7 @@
 <div class="details">
 <span id="author" class="author">Santa Tecla</span><br>
 <span id="email" class="email"><a href="mailto:parqueNaturalSantaTecla@gmail.com">parqueNaturalSantaTecla@gmail.com</a></span><br>
-<span id="revnumber">version 0.4.2</span>
+<span id="revnumber">version 0.4.3</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Índice</div>
@@ -245,8 +245,8 @@
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 0.4.2<br>
-Last updated 2020-07-31 12:05:00 +0200
+Version 0.4.3<br>
+Last updated 2020-07-31 18:05:00 +0200
 </div>
 </div>
 </html>
