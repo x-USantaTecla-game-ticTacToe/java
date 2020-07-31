@@ -8,7 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import usantatecla.tictactoe.models.Coordinate;
-import usantatecla.tictactoe.models.Error;
+import usantatecla.tictactoe.types.Error;
 import usantatecla.tictactoe.views.ErrorView;
 import usantatecla.tictactoe.views.MessageView;
 

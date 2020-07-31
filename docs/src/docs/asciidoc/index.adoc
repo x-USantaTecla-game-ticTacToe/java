@@ -401,7 +401,7 @@ class  tictactoe.models.Board{
 - checkDirectionOfAllCoordinates(Coordinate[]): boolean
 }
 tictactoe.models.Board *-down-> tictactoe.models.Coordinate
-tictactoe.models.Board ..> tictactoe.models.Token
+tictactoe.models.Board ..> tictactoe.types.Token
 tictactoe.models.Board ..> tictactoe.models.Turn
 tictactoe.models.Board ..> utils.Direction
 
@@ -418,13 +418,6 @@ class  tictactoe.models.Coordinate{
 utils.Coordinate <|-down- tictactoe.models.Coordinate
 tictactoe.models.Coordinate ..> utils.Direction
 tictactoe.models.Coordinate ..> java.util.Random
-
-enum  tictactoe.models.Error{
-NOT_EMPTY
-NOT_OWNER
-SAME_COORDINATES
-WRONG_COORDINATES
-}
 
 class  tictactoe.models.Game{
 - board: Board
@@ -444,7 +437,7 @@ class  tictactoe.models.Game{
 tictactoe.models.Game *-down-> tictactoe.models.Board
 tictactoe.models.Game *-down-> tictactoe.models.Player
 tictactoe.models.Game *-down-> tictactoe.models.Turn
-tictactoe.models.Game ..> tictactoe.models.Token
+tictactoe.models.Game ..> tictactoe.types.Token
 tictactoe.models.Game ..> tictactoe.models.PlayerType
 
 class  tictactoe.models.Player{
@@ -460,38 +453,15 @@ class  tictactoe.models.Player{
 + controlErrorsMoveOriginCoordinate(Coordinate): Error
 + controlErrorsMoveTargetCoordinate(Coordinate, Coordinate): Error
 }
-tictactoe.models.Player *-down-> tictactoe.models.Token
+tictactoe.models.Player *-down-> tictactoe.types.Token
 tictactoe.models.Player *-down-> tictactoe.models.Board
 tictactoe.models.Player *-down-> tictactoe.models.PlayerType 
 tictactoe.models.Player ..> tictactoe.models.Coordinate
-tictactoe.models.Player ..> tictactoe.models.Error
+tictactoe.models.Player ..> tictactoe.types.Error
 
 enum  tictactoe.models.PlayerType{
 USER_PLAYER
 MACHINE_PLAYER
-}
-
-class  tictactoe.models.State{
-- stateValue: StateValue
-+ State()
-+ next(): void
-+ getValueState(): StateValue
-}
-tictactoe.models.State *-down-> tictactoe.models.StateValue
-
-enum  tictactoe.models.StateValue{
-INITIAL
-IN_GAME
-RESULT
-EXIT
-}
-
-enum  tictactoe.models.Token{
-TOKEN_X
-TOKEN_O
-- character: char
-~ Token(char)
-+ getChar(): char
 }
 
 class  tictactoe.models.Turn{
@@ -505,6 +475,29 @@ class  tictactoe.models.Turn{
 ~ getOtherPlayer(): Player
 }
 tictactoe.models.Turn *-down-> tictactoe.models.Player
+
+....
+
+=== Paquete _tictactoe.types_
+
+[plantuml,tictactoeTypesVersion5,svg]
+
+....
+
+enum  tictactoe.types.Error{
+NOT_EMPTY
+NOT_OWNER
+SAME_COORDINATES
+WRONG_COORDINATES
+}
+
+enum  tictactoe.types.Token{
+TOKEN_X
+TOKEN_O
+- character: char
+~ Token(char)
++ getChar(): char
+}
 
 ....
 
