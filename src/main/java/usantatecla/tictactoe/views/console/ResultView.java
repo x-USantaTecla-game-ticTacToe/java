@@ -4,9 +4,9 @@ import usantatecla.tictactoe.controllers.Logic;
 import usantatecla.tictactoe.models.Token;
 import usantatecla.tictactoe.views.MessageView;
 import usantatecla.tictactoe.views.TokenView;
-import usantatecla.utils.WithConsoleModel;
+import usantatecla.utils.WithConsoleView;
 
-class ResultView extends WithConsoleModel {
+class ResultView extends WithConsoleView {
     
     Logic logic;
     

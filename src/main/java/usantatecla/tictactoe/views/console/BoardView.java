@@ -5,9 +5,9 @@ import usantatecla.tictactoe.models.Coordinate;
 import usantatecla.tictactoe.models.Token;
 import usantatecla.tictactoe.views.MessageView;
 import usantatecla.tictactoe.views.TokenView;
-import usantatecla.utils.WithConsoleModel;
+import usantatecla.utils.WithConsoleView;
 
-class BoardView extends WithConsoleModel {
+class BoardView extends WithConsoleView {
     
     Board board;
 
