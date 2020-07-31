@@ -15,7 +15,7 @@ import javax.swing.JTextField;
 
 import usantatecla.tictactoe.views.ErrorView;
 import usantatecla.tictactoe.views.MessageView;
-import usantatecla.tictactoe.models.Error;
+import usantatecla.tictactoe.types.Error;
 
 @SuppressWarnings("serial")
 class ChoosePlayersView extends JPanel implements ActionListener, KeyListener {

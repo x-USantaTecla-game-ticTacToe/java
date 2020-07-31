@@ -5,6 +5,9 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import usantatecla.tictactoe.types.Error;
+import usantatecla.tictactoe.types.Token;
+
 public class PlayerTest {
     
     private Board board;

@@ -5,7 +5,7 @@ import javax.swing.JOptionPane;
 import java.awt.Container;
 
 import usantatecla.tictactoe.models.Coordinate;
-import usantatecla.tictactoe.models.Error;
+import usantatecla.tictactoe.types.Error;
 import usantatecla.tictactoe.models.Player;
 import usantatecla.tictactoe.views.ErrorView;
 import usantatecla.tictactoe.views.MessageView;
