@@ -15,7 +15,7 @@
 <div class="details">
 <span id="author" class="author">Santa Tecla</span><br>
 <span id="email" class="email"><a href="mailto:parqueNaturalSantaTecla@gmail.com">parqueNaturalSantaTecla@gmail.com</a></span><br>
-<span id="revnumber">version 0.6.0</span>
+<span id="revnumber">version 0.6.1</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Índice</div>
@@ -156,7 +156,7 @@
 <h3 id="paquete-tictactoe-models">Paquete <em>tictactoe.models</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/tictactoeModelsVersion7.svg" alt="tictactoeModelsVersion7" width="1000" height="1000">
+<img src="build/docs/asciidoc/images/tictactoeModelsVersion7.svg" alt="tictactoeModelsVersion7" width="1000" height="1100">
 </div>
 </div>
 </div>
@@ -248,8 +248,8 @@
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 0.6.0<br>
-Last updated 2020-07-31 13:25:00 +0200
+Version 0.6.1<br>
+Last updated 2020-07-31 16:15:00 +0200
 </div>
 </div>
 </html>

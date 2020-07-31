@@ -82,13 +82,13 @@ tictactoe.views.graphics .down.> javax.swing
 
 class  tictactoe.ConsoleTicTacToe{
 + {static} main(String[]): void
-# createView(Logic): View
+# createView(): View
 }
 tictactoe.TicTacToe <|-down- tictactoe.ConsoleTicTacToe
 
 class  tictactoe.GraphicsTicTacToe{
 + {static} main(String[]): void
-# createView(Logic): View
+# createView(): View
 }
 tictactoe.TicTacToe <|-down- tictactoe.GraphicsTicTacToe
 
@@ -96,7 +96,7 @@ class  tictactoe.TicTacToe{
 - logic: Logic
 - view: View
 # TicTacToe()
-# {abstract} createView(Logic): View
+# {abstract} createView(): View
 # play(): void
 }
 tictactoe.TicTacToe --> tictactoe.views.View
@@ -150,12 +150,7 @@ class tictactoe.views.TokenView{
 }
 
 class  tictactoe.views.View{
-# logic: Logic
-+ View(Logic)
-+ interact(): void
-# {abstract} start(): void
-# {abstract} play(): boolean
-# {abstract} result(): void
++ {abstract} interact(Controller): void
 }
 
 ....
@@ -185,10 +180,8 @@ class  tictactoe.views.console.ConsoleView{
 - startView: StartView
 - playView: PlayView
 - resultView: ResultView
-+ ConsoleView(Logic)
-# start(): void
-# play(): boolean
-# result(): void
++ ConsoleView()
+# interact(Controller): void
 }
 tictactoe.views.View <|-down- tictactoe.views.console.ConsoleView
 tictactoe.views.console.ConsoleView *-down-> tictactoe.views.console.StartView
@@ -214,25 +207,19 @@ class  tictactoe.views.console.MachinePlayerView{
 tictactoe.views.PlayerView <|-down- tictactoe.views.console.MachinePlayerView
 
 class  tictactoe.views.console.PlayView{
-~ logic: Logic
-~ PlayView(Logic)
-~ interact(): boolean
+~ interact(PlayController): void
 }
 tictactoe.views.console.PlayView ..> tictactoe.views.console.BoardView
 tictactoe.views.console.PlayView ..> tictactoe.views.PlayerView
 tictactoe.views.console.PlayView ..> tictactoe.controllers.PlayController
 
 class tictactoe.views.console.ResultView{
-~ logic: Logic
-~ ResultView(Logic)
-~ interact(): void
+~ interact(ResultController): void
 }
 tictactoe.views.console.ResultView ..> tictactoe.controllers.ResultController
 
 class tictactoe.views.console.StartView{
-~ logic: Logic
-~ StartView(Logic)
-~ interact(): void
+~ interact(StartController): void
 }
 tictactoe.views.console.StartView ..> tictactoe.views.console.ChoosePlayerView
 tictactoe.views.console.StartView ..> tictactoe.controllers.StartController
@@ -337,12 +324,10 @@ tictactoe.views.graphics.CoordinateView ..> java.awt.event.ActionEvent
 
 class  tictactoe.views.graphics.GameView{
 - {static} GAME_OVER: String
-- logic: Logic
-- choosePlayersView: ChoosePlayersView
-~ GameView(Logic)
-~ start(): void
-~ play(): boolean
-~ result(): void
+~ GameView()
+~ interact(StartController): void
+~ interact(PlayController): void
+~ interact(ResultController): void
 }
 javax.swing.JFrame <|-down- tictactoe.views.graphics.GameView
 tictactoe.views.graphics.GameView ..> tictactoe.controllers.StartController
@@ -355,10 +340,8 @@ tictactoe.views.graphics.GameView ..> tictactoe.views.graphics.Constraints
 
 class  tictactoe.views.graphics.GraphicsView{
 - gameView: GameView
-+ GraphicsView(Logic)
-# start(): void
-# play(): boolean
-# result(): void
++ GraphicsView()
++ interact(Controller): void
 }
 tictactoe.views.View <|-down- tictactoe.views.graphics.GraphicsView
 tictactoe.views.graphics.GraphicsView *-down-> tictactoe.views.graphics.GameView
@@ -538,15 +521,7 @@ class  tictactoe.controllers.Logic{
 - game: Game
 - controllers: Map<StateValue, Controller>
 + Logic()
-+ createPlayers(): void
-+ getTokenPlayerFromTurn(): Player
-+ isBoardComplete(): boolean
-+ putTokenPlayerFromTurn(): void
-+ moveTokenPlayerFromTurn(): void
-+ changeTurn(): void
-+ isTicTacToe(): boolean
-+ getOtherValueFromTurn(): int
-+ getBoard(): Board
++ getController(): Controller
 }
 tictactoe.controllers.Logic *-down-> tictactoe.models.Game
 tictactoe.controllers.Logic *-down-> tictactoe.models.State
@@ -554,25 +529,27 @@ tictactoe.controllers.Logic *-down-> tictactoe.controllers.Controller
 tictactoe.controllers.Logic *-down-> tictactoe.models.StateValue
 
 class  tictactoe.controllers.PlayController{
-+ PlayController(Game)
++ PlayController(Game, State)
 + getTokenPlayerFromTurn(): Player
 + isBoardComplete(): boolean
 + putTokenPlayerFromTurn(Coordinate): void
 + moveTokenPlayerFromTurn(Coordinate[]): void
 + changeTurn(): void
-+ isTicTacToe(): boolean
++ isTicTacToe(): void
 }
 tictactoe.controllers.Controller <|-down- tictactoe.controllers.PlayController
 
 class  tictactoe.controllers.ResultController{
-+ ResultController(Game)
++ ResultController(Game, State)
++ finish(): void
 + getOtherValueFromTurn(): int
 }
 tictactoe.controllers.Controller <|-down- tictactoe.controllers.ResultController
 
 class  tictactoe.controllers.StartController{
-+ StartController(Game)
-+ createPlayers(): void
++ StartController(Game, State)
++ start(): void
++ createPlayers(int): void
 }
 tictactoe.controllers.Controller <|-down- tictactoe.controllers.StartController
 
