@@ -1,5 +1,6 @@
 package usantatecla.tictactoe.views.graphics;
 
+import java.awt.Container;
 import java.awt.GridBagLayout;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -76,9 +77,11 @@ class GameView extends JFrame {
 	}
 
 	void result() {
-		this.getContentPane().removeAll();
-		this.getContentPane().add(new BoardView(this.resultController.getBoard()), new Constraints(0, 0, 1, 1));
-		this.setVisible(true);
+		Container container = this.getContentPane();
+		container.removeAll();
+		container.add(new BoardView(resultController.getBoard()), new Constraints(0, 0, 1, 1));
+		container.revalidate();
+		container.repaint();
 		int otherValue = this.resultController.getOtherValueFromTurn();
 		String message = new TokenView(Token.values()[otherValue]).getToken() + " "
 				+ MessageView.PLAYER_WIN.getMessage();
