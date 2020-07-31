@@ -2,9 +2,9 @@ package usantatecla.tictactoe.views;
 
 import usantatecla.tictactoe.models.Game;
 import usantatecla.tictactoe.models.Token;
-import usantatecla.utils.WithConsoleModel;
+import usantatecla.utils.WithConsoleView;
 
-class ResultView extends WithConsoleModel {
+class ResultView extends WithConsoleView {
     
     Game game;
     

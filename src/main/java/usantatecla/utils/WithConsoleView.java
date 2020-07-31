@@ -1,10 +1,10 @@
 package usantatecla.utils;
 
-public abstract class WithConsoleModel {
+public abstract class WithConsoleView {
 
 	protected Console console;
 
-	protected WithConsoleModel() {
+	protected WithConsoleView() {
 		this.console = new Console();
 	}
 

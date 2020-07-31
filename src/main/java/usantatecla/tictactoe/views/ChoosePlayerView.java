@@ -1,9 +1,9 @@
 package usantatecla.tictactoe.views;
 
-import usantatecla.utils.WithConsoleModel;
+import usantatecla.utils.WithConsoleView;
 import usantatecla.tictactoe.models.Error;
 
-class ChoosePlayerView extends WithConsoleModel {
+class ChoosePlayerView extends WithConsoleView {
     
     int readPlayers() {
         return this.readUsersNumber();

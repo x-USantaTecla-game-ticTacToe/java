@@ -1,9 +1,9 @@
 package usantatecla.tictactoe.views;
 
 import usantatecla.tictactoe.models.Token;
-import usantatecla.utils.WithConsoleModel;
+import usantatecla.utils.WithConsoleView;
 
-class TokenView extends WithConsoleModel {
+class TokenView extends WithConsoleView {
 
 	private Token token;
 

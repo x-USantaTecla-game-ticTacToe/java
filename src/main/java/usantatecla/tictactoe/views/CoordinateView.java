@@ -1,10 +1,10 @@
 package usantatecla.tictactoe.views;
 
 import usantatecla.tictactoe.models.Coordinate;
-import usantatecla.utils.WithConsoleModel;
+import usantatecla.utils.WithConsoleView;
 import usantatecla.tictactoe.models.Error;
 
-class CoordinateView extends WithConsoleModel {
+class CoordinateView extends WithConsoleView {
 
     Coordinate read(String title) {
         Coordinate coordinate;

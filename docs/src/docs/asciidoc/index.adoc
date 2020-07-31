@@ -85,7 +85,7 @@ class  tictactoe.views.BoardView{
 class  tictactoe.views.CoordinateView{
 ~ read(String): Coordinate
 }
-utils.WithConsoleModel <|-down- tictactoe.views.CoordinateView
+utils.WithConsoleView <|-down- tictactoe.views.CoordinateView
 tictactoe.views.CoordinateView ..> tictactoe.views.ErrorView
 
 class  tictactoe.views.ErrorView{
@@ -94,12 +94,12 @@ class  tictactoe.views.ErrorView{
 ~ ErrorView(Error)
 ~ read(String): Coordinate
 }
-utils.WithConsoleModel <|-down- tictactoe.views.ErrorView
+utils.WithConsoleView <|-down- tictactoe.views.ErrorView
 
 class  tictactoe.views.ChoosePlayerView{
 ~ readPlayers(): void
 }
-utils.WithConsoleModel <|-down- tictactoe.views.ChoosePlayerView
+utils.WithConsoleView <|-down- tictactoe.views.ChoosePlayerView
 tictactoe.views.ChoosePlayerView ..> tictactoe.views.MessageView
 tictactoe.views.ChoosePlayerView ..> tictactoe.views.ErrorView
 
@@ -171,7 +171,7 @@ class tictactoe.views.TokenView{
 ~ TokenView(Token)
 ~ write(): void
 }
-utils.WithConsoleModel <|-down- tictactoe.views.TokenView
+utils.WithConsoleView <|-down- tictactoe.views.TokenView
 
 class  tictactoe.views.UserPlayerView{
 ~ {static} ENTER_COORDINATE_TO_PUT: String
@@ -356,11 +356,11 @@ enum  utils.Direction{
   INVERSE_DIAGONAL
 }
 
-class  utils.WithConsoleModel{
+class  utils.WithConsoleView{
 # console: Console
-# WithConsoleModel()
+# WithConsoleView()
 }
-utils.WithConsoleModel *-down-> utils.Console
+utils.WithConsoleView *-down-> utils.Console
 
 ....
 
