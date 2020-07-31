@@ -339,7 +339,6 @@ tictactoe.views.graphics.CoordinateView ..> java.awt.event.ActionEvent
 class  tictactoe.views.graphics.GameView{
 - {static} GAME_OVER: String
 - logic: Logic
-- choosePlayersView: ChoosePlayersView
 ~ GameView(Logic)
 ~ start(): void
 ~ play(): boolean
