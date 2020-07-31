@@ -16,4 +16,9 @@ public class ResultController extends Controller {
 	public int getOtherValueFromTurn() {
 		return this.game.getOtherValueFromTurn();
 	}
+
+	@Override
+	public void accept(ControllersVisitor controllersVisitor) {
+		controllersVisitor.visit(this);
+	}
 }

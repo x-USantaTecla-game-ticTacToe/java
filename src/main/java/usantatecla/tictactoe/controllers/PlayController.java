@@ -36,4 +36,9 @@ public class PlayController extends Controller {
 			this.state.next();
 		};
 	}
+
+	@Override
+	public void accept(ControllersVisitor controllersVisitor) {
+		controllersVisitor.visit(this);
+	}
 }

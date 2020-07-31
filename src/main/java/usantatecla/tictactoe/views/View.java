@@ -1,8 +1,11 @@
 package usantatecla.tictactoe.views;
 
 import usantatecla.tictactoe.controllers.Controller;
+import usantatecla.tictactoe.controllers.ControllersVisitor;
 
-public abstract class View {
+public abstract class View implements ControllersVisitor {
 
-    public abstract void interact(Controller controller);
+    public void interact(Controller controller) {
+		controller.accept(this);
+	}
 }

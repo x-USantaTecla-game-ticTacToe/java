@@ -1,6 +1,5 @@
 package usantatecla.tictactoe.views.graphics;
 
-import usantatecla.tictactoe.controllers.Controller;
 import usantatecla.tictactoe.controllers.PlayController;
 import usantatecla.tictactoe.controllers.ResultController;
 import usantatecla.tictactoe.controllers.StartController;
@@ -14,17 +13,18 @@ public class GraphicsView extends View {
 		this.gameView = new GameView();
 	}
 
-	@Override
-	public void interact(Controller controller) {
-		if (controller instanceof StartController) {
-			this.gameView.interact((StartController) controller);
-		} else {
-			if (controller instanceof PlayController) {
-				this.gameView.interact((PlayController) controller);
-			} else {
-				this.gameView.interact((ResultController) controller);
-			}
-		}
+	public void visit(StartController startController) {
+		this.gameView.interact(startController);
+	}
+
+	
+	public void visit(PlayController playController) {
+		this.gameView.interact(playController);
+	}
+
+	
+	public void visit(ResultController resultController) {
+		this.gameView.interact(resultController);
 	}
 
 }

@@ -1,6 +1,5 @@
 package usantatecla.tictactoe.views.console;
 
-import usantatecla.tictactoe.controllers.Controller;
 import usantatecla.tictactoe.controllers.PlayController;
 import usantatecla.tictactoe.controllers.ResultController;
 import usantatecla.tictactoe.controllers.StartController;
@@ -20,16 +19,15 @@ public class ConsoleView extends View {
 		this.resultView = new ResultView();
 	}
 
-	@Override
-	public void interact(Controller controller) {
-		if (controller instanceof StartController) {
-			this.startView.interact((StartController) controller);
-		} else {
-			if (controller instanceof PlayController) {
-				this.playView.interact((PlayController) controller);
-			} else {
-				this.resultView.interact((ResultController) controller);
-			}
-		}
+	public void visit(StartController startController) {
+		this.startView.interact(startController);		
+	}
+	
+	public void visit(PlayController playController) {
+		this.playView.interact(playController);
+	}
+	
+	public void visit(ResultController resultController) {
+		this.resultView.interact(resultController);
 	}
 }

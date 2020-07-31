@@ -16,4 +16,9 @@ public class StartController extends Controller {
 	public void createPlayers(int numberOfUsers) {
 		this.game.createPlayers(numberOfUsers);
 	}
+
+	@Override
+	public void accept(ControllersVisitor controllersVisitor) {
+		controllersVisitor.visit(this);
+	}
 }

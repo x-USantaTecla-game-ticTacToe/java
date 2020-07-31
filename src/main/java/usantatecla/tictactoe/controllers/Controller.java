@@ -17,5 +17,7 @@ public abstract class Controller {
 
 	public Board getBoard() {
         return this.game.getBoard();
-    }
+	}
+	
+	public abstract void accept(ControllersVisitor controllersVisitor);
 }
