@@ -8,7 +8,7 @@
   </a>
 </p>
 
-> TicTacToe. Solución dv.withoutDoubleDispatching
+> TicTacToe. mvp.pm.withoutDoubleDispatching
 
 ## Install
 
