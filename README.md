@@ -8,7 +8,7 @@
   </a>
 </p>
 
-> TicTacToe. Solución dv.withFactoryMethod
+> TicTacToe. Solución mvp.pm.withFacade
 
 ## Install
 
