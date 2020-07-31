@@ -39,6 +39,7 @@ package tictactoe #DDDDDD { }
 tictactoe .down.> tictactoe.views.graphics
 tictactoe .down.> tictactoe.models
 tictactoe .down.> tictactoe.views.console
+tictactoe .down.> tictactoe.views
 
 package tictactoe.models #DDDDDD { } 
 package java.util{ }
