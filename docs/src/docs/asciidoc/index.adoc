@@ -42,6 +42,7 @@ tictactoe .down.> tictactoe.views.graphics
 tictactoe .down.> tictactoe.models
 tictactoe .down.> tictactoe.views.console
 tictactoe .down.> tictactoe.controllers
+tictactoe .down.> tictactoe.views
 
 package tictactoe.controllers #DDDDDD { } 
 tictactoe.controllers .down.> tictactoe.models
