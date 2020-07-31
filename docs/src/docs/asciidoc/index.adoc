@@ -163,13 +163,13 @@ class  tictactoe.views.console.BoardView{
 - printRowBoard(int): void
 - printSquareValueBoard(int, int): void
 }
-utils.WithConsoleModel <|-down- tictactoe.views.console.BoardView
+utils.WithConsoleView <|-down- tictactoe.views.console.BoardView
 
 class  tictactoe.views.console.ChoosePlayerView{
 ~ readPlayers(): void
 - readUsersNumber(): int
 }
-utils.WithConsoleModel <|-down- tictactoe.views.console.ChoosePlayerView
+utils.WithConsoleView <|-down- tictactoe.views.console.ChoosePlayerView
 
 class  tictactoe.views.console.ConsoleView{
 - startView: StartView
@@ -188,7 +188,7 @@ tictactoe.views.console.ConsoleView *-down-> tictactoe.views.console.ResultView
 class  tictactoe.views.console.CoordinateView{
 ~ read(String): Coordinate
 }
-utils.WithConsoleModel <|-down- tictactoe.views.console.CoordinateView
+utils.WithConsoleView <|-down- tictactoe.views.console.CoordinateView
 
 class  tictactoe.views.console.ErrorView{
 ~ ErrorView(Error)
@@ -529,11 +529,11 @@ enum  utils.Direction{
   INVERSE_DIAGONAL
 }
 
-class  utils.WithConsoleModel{
+class  utils.WithConsoleView{
 # console: Console
-# WithConsoleModel()
+# WithConsoleView()
 }
-utils.WithConsoleModel *-down-> utils.Console
+utils.WithConsoleView *-down-> utils.Console
 
 ....
 
