@@ -46,6 +46,10 @@ public class Game {
         return this.turn.getPlayer();
     }
 
+    public Token getToken(int row, int column) {
+        return this.board.getToken(new Coordinate(row, column));
+    }
+
     public void changeTurn() {
         this.turn.change();
     }

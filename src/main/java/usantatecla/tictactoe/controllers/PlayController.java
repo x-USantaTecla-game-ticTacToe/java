@@ -4,6 +4,7 @@ import usantatecla.tictactoe.models.Coordinate;
 import usantatecla.tictactoe.models.Game;
 import usantatecla.tictactoe.models.Player;
 import usantatecla.tictactoe.models.State;
+import usantatecla.tictactoe.types.Token;
 
 public class PlayController extends Controller {
     
@@ -31,9 +32,19 @@ public class PlayController extends Controller {
 		this.game.changeTurn();
 	}
 
-	public void isTicTacToe() {
-		if (this.game.isTicTacToe()) {
-			this.state.next();
-		};
+	public void continueState() {
+		this.state.next();
+	}
+
+	public Token getToken(int row, int column) {
+		return this.game.getToken(row, column);
+	}
+
+	public int getCoordinateDimension() {
+		return Coordinate.DIMENSION;
+	}
+
+	public boolean isTicTacToe() {
+		return this.game.isTicTacToe();
 	}
 }
