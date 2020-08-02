@@ -47,7 +47,7 @@ class GameView extends JFrame {
 	boolean play() {
 		this.getContentPane().removeAll();
 		Player player = this.logic.getTokenPlayerFromTurn();
-		this.getContentPane().add(new BoardView(this.logic.getBoard()), new Constraints(0, 0, 1, 1));
+		this.getContentPane().add(new BoardView(this.logic), new Constraints(0, 0, 1, 1));
 		if (!this.logic.isBoardComplete()) {
 			PlayerView playerView = player.getType() == PlayerType.USER_PLAYER
 					? new UserPlayerView(player, false, this.getContentPane())
@@ -64,15 +64,17 @@ class GameView extends JFrame {
 			this.logic.moveTokenPlayerFromTurn(coordinates);
 		}
 		this.logic.changeTurn();
+		if (this.logic.isTicTacToe()) {
+			Container container = this.getContentPane();
+			container.removeAll();
+			container.add(new BoardView(this.logic), new Constraints(0, 0, 1, 1));
+			container.revalidate();
+			container.repaint();
+		}
 		return this.logic.isTicTacToe();
 	}
 
 	void result() {
-		Container container = this.getContentPane();
-		container.removeAll();
-		container.add(new BoardView(logic.getBoard()), new Constraints(0, 0, 1, 1));
-		container.revalidate();
-		container.repaint();
 		int otherValue = this.logic.getOtherValueFromTurn();
 		String message = new TokenView(Token.values()[otherValue]).getToken() + " "
 				+ MessageView.PLAYER_WIN.getMessage();

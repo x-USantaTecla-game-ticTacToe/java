@@ -4,6 +4,7 @@ import usantatecla.tictactoe.models.Board;
 import usantatecla.tictactoe.models.Coordinate;
 import usantatecla.tictactoe.models.Game;
 import usantatecla.tictactoe.models.Player;
+import usantatecla.tictactoe.types.Token;
 
 public class Logic {
     
@@ -44,6 +45,14 @@ public class Logic {
 
 	public void changeTurn() {
 		this.playController.changeTurn();
+	}
+
+	public Token getToken(int row, int column) {
+		return this.playController.getToken(row, column);
+	}
+
+	public int getCoordinateDimension() {
+		return this.playController.getCoordinateDimension();
 	}
 
 	public boolean isTicTacToe() {

@@ -15,6 +15,7 @@ class PlayView {
     }
 
     boolean interact() {
+        new BoardView(this.logic).write();
         Player player = this.logic.getTokenPlayerFromTurn();
         PlayerView playerView = player.getType() == PlayerType.USER_PLAYER ? new UserPlayerView(player) : 
                                                                              new MachinePlayerView(player);
@@ -26,7 +27,10 @@ class PlayView {
             this.logic.moveTokenPlayerFromTurn(coordinates);
         }
         this.logic.changeTurn();
-        new BoardView(this.logic.getBoard()).write();
-        return this.logic.isTicTacToe();
+        boolean isTicTacToe = this.logic.isTicTacToe();
+        if (isTicTacToe) {
+            new BoardView(this.logic).write();
+        }
+        return isTicTacToe;
     }
 }
