@@ -655,6 +655,8 @@ package "  "  as tictactoe {
 }
 package "  "  as tictactoe.models {
 }
+package "  "  as tictactoe.types {
+}
 package "  "  as tictactoe.controllers {
 }
 package "  "  as tictactoe.views {
@@ -680,6 +682,7 @@ package "  "  as javax.swing {
 
 jar *--> tictactoe
 jar *--> tictactoe.models
+jar *--> tictactoe.types
 jar *--> tictactoe.controllers
 jar *--> tictactoe.views
 jar *--> tictactoe.views.console
