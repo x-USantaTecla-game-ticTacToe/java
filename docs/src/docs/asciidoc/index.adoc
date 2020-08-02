@@ -555,7 +555,7 @@ class  tictactoe.controllers.PlayController{
 + isTicTacToe(): boolean
 }
 tictactoe.controllers.Controller <|-down- tictactoe.controllers.PlayController
-tictactoe.controllers.Controller ..> tictactoe.models.Coordinate
+tictactoe.controllers.PlayController ..> tictactoe.models.Coordinate
 
 class  tictactoe.controllers.ResultController{
 + ResultController(Game)
