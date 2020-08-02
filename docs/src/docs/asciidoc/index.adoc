@@ -458,7 +458,7 @@ tictactoe.models.Game *-down-> tictactoe.models.Board
 tictactoe.models.Game *-down-> tictactoe.models.Player
 tictactoe.models.Game *-down-> tictactoe.models.Turn
 tictactoe.models.Game ..> tictactoe.types.Token
-tictactoe.models.Game ..> tictactoe.models.PlayerType
+tictactoe.models.Game ..> tictactoe.types.PlayerType
 
 class  tictactoe.models.Player{
 - token: Token
@@ -475,14 +475,9 @@ class  tictactoe.models.Player{
 }
 tictactoe.models.Player *-down-> tictactoe.types.Token
 tictactoe.models.Player *-down-> tictactoe.models.Board
-tictactoe.models.Player *-down-> tictactoe.models.PlayerType 
+tictactoe.models.Player *-down-> tictactoe.types.PlayerType 
 tictactoe.models.Player ..> tictactoe.models.Coordinate
 tictactoe.models.Player ..> tictactoe.types.Error
-
-enum  tictactoe.models.PlayerType{
-USER_PLAYER
-MACHINE_PLAYER
-}
 
 class  tictactoe.models.Turn{
 + {static} PLAYERS: int
@@ -509,6 +504,11 @@ NOT_EMPTY
 NOT_OWNER
 SAME_COORDINATES
 WRONG_COORDINATES
+}
+
+enum  tictactoe.types.PlayerType{
+USER_PLAYER
+MACHINE_PLAYER
 }
 
 enum  tictactoe.types.Token{
