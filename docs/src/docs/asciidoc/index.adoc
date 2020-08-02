@@ -45,10 +45,13 @@ tictactoe .down.> tictactoe.views
 
 package tictactoe.controllers #DDDDDD { } 
 tictactoe.controllers .down.> tictactoe.models
+tictactoe.controllers .down.> tictactoe.types
 
-package tictactoe.models #DDDDDD { } 
+package tictactoe.models #DDDDDD { }
+package tictactoe.types #DDDDDD { }  
 package java.util{ }
 tictactoe.models .down.> java.util
+tictactoe.models .down.> tictactoe.types
 
 package utils #DDDDDD { } 
 package java.io{ }
@@ -56,11 +59,13 @@ utils .down.> java.io
 
 package tictactoe.views #DDDDDD { } 
 tictactoe.views .down.> tictactoe.controllers
+tictactoe.views .down.> tictactoe.types
 
 package tictactoe.views.console #DDDDDD { } 
 tictactoe.views.console .down.> tictactoe.views
 tictactoe.views.console .down.> tictactoe.controllers 
 tictactoe.views.console .down.> utils
+tictactoe.views.console .down.> tictactoe.types
 
 package tictactoe.views.graphics #DDDDDD { } 
 package java.awt{ }
@@ -69,6 +74,7 @@ package java.awt.event{ }
 tictactoe.views.graphics .down.> java.awt.event
 tictactoe.views.graphics .down.> tictactoe.views
 tictactoe.views.graphics .down.> tictactoe.controllers 
+tictactoe.views.graphics .down.> tictactoe.types
 package javax.swing{ }
 tictactoe.views.graphics .down.> javax.swing
 
@@ -176,13 +182,14 @@ tictactoe.views.View *-down-> tictactoe.controllers.ResultController
 ....
 
 class  tictactoe.views.console.BoardView{
-~ board: Board
-~ BoardView(Board)
+- playController: PlayController
+~ BoardView(PlayController)
 ~ write(): void
 - printRowBoard(int): void
 - printSquareValueBoard(int, int): void
 }
 utils.WithConsoleView <|-down- tictactoe.views.console.BoardView
+tictactoe.views.console.BoardView ..> tictactoe.controllers.PlayController
 
 class  tictactoe.views.console.ChoosePlayerView{
 ~ readPlayers(): void
@@ -266,13 +273,13 @@ tictactoe.views.console.UserPlayerView ..> tictactoe.views.console.CoordinateVie
 ....
 
 class  tictactoe.views.graphics.BoardView{
-~ BoardView(Board)
-- printRowBoard(Board, int): void
-- getSquareBoardText(Board, int, int): String
+~ BoardView(PlayController)
+- printRowBoard(PlayController, int): void
+- getSquareBoardText(PlayController, int, int): String
 }
 javax.swing.JPanel <|-down- tictactoe.views.graphics.BoardView
 tictactoe.views.graphics.BoardView *-down-> javax.swing.JLabel
-tictactoe.views.graphics.ChoosePlayersView ..> tictactoe.views.graphics.BoardView
+tictactoe.views.graphics.BoardView ..> tictactoe.controllers.PlayController
 
 class  tictactoe.views.graphics.ChoosePlayersView{
 - {static} ACCEPT: String
@@ -294,6 +301,7 @@ tictactoe.views.graphics.ChoosePlayersView *-down-> javax.swing.JButton
 tictactoe.views.graphics.ChoosePlayersView ..> javax.swing.JRootPane
 tictactoe.views.graphics.ChoosePlayersView ..> java.awt.event.ActionEvent
 tictactoe.views.graphics.ChoosePlayersView ..> tictactoe.views.graphics.Constraints
+tictactoe.views.graphics.ChoosePlayersView ..> tictactoe.views.graphics.BoardView
 
 class  tictactoe.views.graphics.Constraints{
 ~ Constraints(int, int, int, int)
@@ -450,6 +458,7 @@ class  tictactoe.models.Game{
 + putTokenPlayerFromTurn(Coordinate): void
 + moveTokenPlayerFromTurn(Coordinate[]): void
 + getTokenPlayerFromTurn(int): Player
++ getToken(int, int): Token
 + changeTurn(): void
 + isTicTacToe(): boolean
 + getOtherValueFromTurn(): int
@@ -541,9 +550,12 @@ class  tictactoe.controllers.PlayController{
 + putTokenPlayerFromTurn(Coordinate): void
 + moveTokenPlayerFromTurn(Coordinate[]): void
 + changeTurn(): void
++ getToken(int, int): Token
++ getCoordinateDimension(): int
 + isTicTacToe(): boolean
 }
 tictactoe.controllers.Controller <|-down- tictactoe.controllers.PlayController
+tictactoe.controllers.Controller ..> tictactoe.models.Coordinate
 
 class  tictactoe.controllers.ResultController{
 + ResultController(Game)

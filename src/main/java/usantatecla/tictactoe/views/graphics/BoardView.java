@@ -6,42 +6,39 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import usantatecla.tictactoe.models.Board;
-import usantatecla.tictactoe.models.Coordinate;
-import usantatecla.tictactoe.types.Token;
+import usantatecla.tictactoe.controllers.PlayController;
 import usantatecla.tictactoe.views.MessageView;
 import usantatecla.tictactoe.views.TokenView;
 
 @SuppressWarnings("serial")
 class BoardView extends JPanel {
 
-    BoardView(Board board) {
+    BoardView(PlayController playController) {
         this.setLayout(new GridBagLayout());
         this.add(new JLabel(MessageView.SEPARATOR.getMessage()), new Constraints(0, 0, 1, 1));
-        for (int i = 0; i < Coordinate.DIMENSION; i++) {
-            this.printRowBoard(board, i);
+        for (int i = 0; i < playController.getCoordinateDimension(); i++) {
+            this.printRowBoard(playController, i);
         }
         this.add(new JLabel(MessageView.SEPARATOR.getMessage()), new Constraints(0, 4, 1, 1));
     }
 
-	private void printRowBoard(Board board, int row) {
+	private void printRowBoard(PlayController playController, int row) {
         String boardRowToPresent = "";
         boardRowToPresent += MessageView.VERTICAL_LINE_LEFT.getMessage();
-        for (int j = 0; j < Coordinate.DIMENSION; j++) {
-            boardRowToPresent += this.getSquareBoardText(board, row, j);
+        for (int j = 0; j < playController.getCoordinateDimension(); j++) {
+            boardRowToPresent += this.getSquareBoardText(playController, row, j);
         }
         JLabel label = new JLabel(boardRowToPresent);
         label.setHorizontalAlignment(SwingConstants.CENTER);
         this.add(label, new Constraints(0, row + 1, 10, 1));
 }
 
-	private String getSquareBoardText(Board board, int row, int column) {
+	private String getSquareBoardText(PlayController playController, int row, int column) {
         String squareBoardToPresent = "";
-		if (board.getToken(new Coordinate(row, column)) == null) {
+		if (playController.getToken(row, column) == null) {
             squareBoardToPresent += MessageView.EMPTY.getMessage();
         } else {
-            Token token = board.getToken(new Coordinate(row, column));
-            squareBoardToPresent += new TokenView(token).getToken();
+            squareBoardToPresent += new TokenView(playController.getToken(row, column)).getToken();
         }
         squareBoardToPresent += MessageView.VERTICAL_LINE_CENTERED.getMessage();
         return squareBoardToPresent;
