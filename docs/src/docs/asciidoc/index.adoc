@@ -459,6 +459,14 @@ tictactoe.models.Player *-down-> tictactoe.types.PlayerType
 tictactoe.models.Player ..> tictactoe.models.Coordinate
 tictactoe.models.Player ..> tictactoe.types.Error
 
+class  tictactoe.models.State{
+- stateValue: StateValue
++ State()
++ next(): void
++ getValueState(): StateValue
+}
+tictactoe.models.State *-down-> tictactoe.types.StateValue
+
 class  tictactoe.models.Turn{
 + {static} PLAYERS: int
 - value: int
@@ -489,6 +497,13 @@ WRONG_COORDINATES
 enum  tictactoe.types.PlayerType{
 USER_PLAYER
 MACHINE_PLAYER
+}
+
+enum  tictactoe.types.StateValue{
+INITIAL
+IN_GAME
+RESULT
+EXIT
 }
 
 enum  tictactoe.types.Token{
