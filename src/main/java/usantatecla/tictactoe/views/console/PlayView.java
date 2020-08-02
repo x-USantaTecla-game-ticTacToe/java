@@ -9,6 +9,7 @@ import usantatecla.tictactoe.views.PlayerView;
 class PlayView {
 
     void interact(PlayController playController) {
+        new BoardView(playController).write();
         Player player = playController.getTokenPlayerFromTurn();
         PlayerView playerView = player.getType() == PlayerType.USER_PLAYER ? new UserPlayerView(player) : 
                                                                              new MachinePlayerView(player);
@@ -20,7 +21,9 @@ class PlayView {
             playController.moveTokenPlayerFromTurn(coordinates);
         }
         playController.changeTurn();
-        new BoardView(playController.getBoard()).write();
-        playController.isTicTacToe();
+        if (playController.isTicTacToe()) {
+            new BoardView(playController).write();
+            playController.continueState();
+        }
     }
 }
