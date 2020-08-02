@@ -8,7 +8,7 @@ import javax.swing.JOptionPane;
 import usantatecla.tictactoe.controllers.Logic;
 import usantatecla.tictactoe.models.Coordinate;
 import usantatecla.tictactoe.models.Player;
-import usantatecla.tictactoe.models.PlayerType;
+import usantatecla.tictactoe.types.PlayerType;
 import usantatecla.tictactoe.types.Token;
 import usantatecla.tictactoe.views.MessageView;
 import usantatecla.tictactoe.views.PlayerView;

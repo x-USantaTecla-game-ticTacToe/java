@@ -1,5 +1,6 @@
 package usantatecla.tictactoe.models;
 
+import usantatecla.tictactoe.types.PlayerType;
 import usantatecla.tictactoe.types.Token;
 
 public class Game {
