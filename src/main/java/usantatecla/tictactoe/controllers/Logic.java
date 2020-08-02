@@ -5,7 +5,7 @@ import java.util.Map;
 
 import usantatecla.tictactoe.models.Game;
 import usantatecla.tictactoe.models.State;
-import usantatecla.tictactoe.models.StateValue;
+import usantatecla.tictactoe.types.StateValue;
 
 public class Logic {
 
