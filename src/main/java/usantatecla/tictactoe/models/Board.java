@@ -1,6 +1,6 @@
 package usantatecla.tictactoe.models;
 
-import usantatecla.tictactoe.types.Direction;
+import usantatecla.utils.Direction;
 import usantatecla.tictactoe.types.Token;
 
 public class Board {
