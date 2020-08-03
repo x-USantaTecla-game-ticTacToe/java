@@ -8,7 +8,6 @@ import javax.swing.SwingConstants;
 
 import usantatecla.tictactoe.controllers.PlayController;
 import usantatecla.tictactoe.views.MessageView;
-import usantatecla.tictactoe.views.TokenView;
 
 @SuppressWarnings("serial")
 class BoardView extends JPanel {
@@ -35,10 +34,10 @@ class BoardView extends JPanel {
 
 	private String getSquareBoardText(PlayController playController, int row, int column) {
         String squareBoardToPresent = "";
-		if (playController.getToken(row, column) == null) {
+		if (playController.isEmptyToken(row, column)) {
             squareBoardToPresent += MessageView.EMPTY.getMessage();
         } else {
-            squareBoardToPresent += new TokenView(playController.getToken(row, column)).getToken();
+            squareBoardToPresent += playController.getTokenChar(row, column);
         }
         squareBoardToPresent += MessageView.VERTICAL_LINE_CENTERED.getMessage();
         return squareBoardToPresent;
