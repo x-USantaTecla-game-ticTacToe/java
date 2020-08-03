@@ -132,12 +132,6 @@ class  tictactoe.views.PlayerView{
 + controlErrorsMoveTargetCoordinate(Coordinate, Coordinate): Error
 }
 
-class tictactoe.views.TokenView{
-- token: Token
-+ TokenView(Token)
-+ getToken(): char
-}
-
 class  tictactoe.views.View{
 # game: Game
 + View(Game)

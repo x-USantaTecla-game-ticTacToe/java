@@ -12,7 +12,6 @@ import usantatecla.tictactoe.models.PlayerType;
 import usantatecla.tictactoe.models.Token;
 import usantatecla.tictactoe.views.MessageView;
 import usantatecla.tictactoe.views.PlayerView;
-import usantatecla.tictactoe.views.TokenView;
 
 @SuppressWarnings("serial")
 class GameView extends JFrame {
@@ -74,7 +73,7 @@ class GameView extends JFrame {
 		container.revalidate();
 		container.repaint();
 		int otherValue = this.game.getOtherValueFromTurn();
-		String message = new TokenView(Token.values()[otherValue]).getToken() + " "
+		String message = Token.values()[otherValue].getChar() + " "
 				+ MessageView.PLAYER_WIN.getMessage();
 		JOptionPane.showMessageDialog(null, message, GameView.GAME_OVER, JOptionPane.WARNING_MESSAGE);
 	}

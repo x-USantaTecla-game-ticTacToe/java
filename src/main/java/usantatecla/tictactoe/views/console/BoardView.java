@@ -4,7 +4,6 @@ import usantatecla.tictactoe.models.Board;
 import usantatecla.tictactoe.models.Coordinate;
 import usantatecla.tictactoe.models.Token;
 import usantatecla.tictactoe.views.MessageView;
-import usantatecla.tictactoe.views.TokenView;
 import usantatecla.utils.WithConsoleView;
 
 class BoardView extends WithConsoleView {
@@ -36,7 +35,7 @@ class BoardView extends WithConsoleView {
 		if (tokenToWrite == null) {
             this.console.write(MessageView.EMPTY.getMessage());
 		} else {
-			this.console.write(new TokenView(tokenToWrite).getToken());
+			this.console.write(tokenToWrite.getChar());
         }
         this.console.write(MessageView.VERTICAL_LINE_CENTERED.getMessage());
 	}

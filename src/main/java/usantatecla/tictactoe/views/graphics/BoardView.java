@@ -10,7 +10,6 @@ import usantatecla.tictactoe.models.Board;
 import usantatecla.tictactoe.models.Coordinate;
 import usantatecla.tictactoe.models.Token;
 import usantatecla.tictactoe.views.MessageView;
-import usantatecla.tictactoe.views.TokenView;
 
 @SuppressWarnings("serial")
 class BoardView extends JPanel {
@@ -41,7 +40,7 @@ class BoardView extends JPanel {
             squareBoardToPresent += MessageView.EMPTY.getMessage();
         } else {
             Token token = board.getToken(new Coordinate(row, column));
-            squareBoardToPresent += new TokenView(token).getToken();
+            squareBoardToPresent += token.getChar();
         }
         squareBoardToPresent += MessageView.VERTICAL_LINE_CENTERED.getMessage();
         return squareBoardToPresent;
