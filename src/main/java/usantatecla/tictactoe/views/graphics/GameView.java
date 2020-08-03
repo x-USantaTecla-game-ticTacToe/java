@@ -8,8 +8,6 @@ import javax.swing.JOptionPane;
 import usantatecla.tictactoe.controllers.PlayController;
 import usantatecla.tictactoe.controllers.ResultController;
 import usantatecla.tictactoe.controllers.StartController;
-import usantatecla.tictactoe.models.Coordinate;
-import usantatecla.tictactoe.models.Player;
 import usantatecla.tictactoe.types.PlayerType;
 import usantatecla.tictactoe.types.Token;
 import usantatecla.tictactoe.views.MessageView;
@@ -46,22 +44,22 @@ class GameView extends JFrame {
 
 	void interact(PlayController playController) {
 		this.getContentPane().removeAll();
-		Player player = playController.getTokenPlayerFromTurn();
 		this.getContentPane().add(new BoardView(playController), new Constraints(0, 0, 1, 1));
 		if (!playController.isBoardComplete()) {
-			PlayerView playerView = player.getType() == PlayerType.USER_PLAYER
-					? new UserPlayerView(player, false, this.getContentPane())
-					: new MachinePlayerView(player);
+			PlayerView playerView = playController.getTypeOfTokenPlayerFromTurn() == PlayerType.USER_PLAYER
+					? new UserPlayerView(playController, false, this.getContentPane())
+					: new MachinePlayerView(playController);
 			this.setVisible(true);
-			Coordinate coordinate = playerView.readCoordinateToPut();
-			playController.putTokenPlayerFromTurn(coordinate);
+			int[] coordinate = playerView.readCoordinateToPut();
+			playController.putTokenPlayerFromTurn(coordinate[0], coordinate[1]);
 		} else {
-			PlayerView playerView = player.getType() == PlayerType.USER_PLAYER
-					? new UserPlayerView(player, true, this.getContentPane())
-					: new MachinePlayerView(player);
+			PlayerView playerView = playController.getTypeOfTokenPlayerFromTurn() == PlayerType.USER_PLAYER
+					? new UserPlayerView(playController, true, this.getContentPane())
+					: new MachinePlayerView(playController);
 			this.setVisible(true);
-			Coordinate[] coordinates = playerView.readCoordinatesToMove();
-			playController.moveTokenPlayerFromTurn(coordinates);
+			int[][] coordinates = playerView.readCoordinatesToMove();
+			playController.moveTokenPlayerFromTurn(coordinates[0][0], coordinates[0][1], coordinates[1][0],
+					coordinates[1][1]);
 		}
 		playController.changeTurn();
 		if (playController.isTicTacToe()) {
