@@ -1,11 +1,9 @@
 package usantatecla.tictactoe.controllers;
 
 import usantatecla.tictactoe.models.Coordinate;
-import usantatecla.tictactoe.models.Player;
 import usantatecla.tictactoe.models.Session;
 import usantatecla.tictactoe.types.Error;
 import usantatecla.tictactoe.types.PlayerType;
-import usantatecla.tictactoe.types.Token;
 
 public class PlayController extends AcceptorController {
 
@@ -36,10 +34,6 @@ public class PlayController extends AcceptorController {
 
 	public boolean redoable() {
 		return this.redoController.redoable();
-	}
-
-	public Player getTokenPlayerFromTurn() {
-		return this.movementController.getTokenPlayerFromTurn();
 	}
 
 	public PlayerType getTypeOfTokenPlayerFromTurn() {
@@ -82,8 +76,12 @@ public class PlayController extends AcceptorController {
 		this.movementController.changeTurn();
 	}
 
-	public Token getToken(int row, int column) {
-		return this.movementController.getToken(row, column);
+	public char getTokenChar(int row, int column) {
+		return this.movementController.getTokenChar(row, column);
+	}
+
+	public boolean isEmptyToken(int row, int column) {
+		return this.movementController.isEmptyToken(row, column);
 	}
 
 	public int getCoordinateDimension() {

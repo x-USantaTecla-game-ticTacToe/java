@@ -62,10 +62,6 @@ public class Game {
         this.turn.getPlayer().move(coordinates);
     }
 
-    public Player getTokenPlayerFromTurn() {
-        return this.turn.getPlayer();
-    }
-
     public PlayerType getTypeOfTokenPlayerFromTurn() {
         return this.turn.getPlayer().getType();
     }

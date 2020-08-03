@@ -9,7 +9,7 @@ class ResultView extends WithConsoleView {
     void interact(ResultController resultController) {
         resultController.finish();
         int otherValue = resultController.getOtherValueFromTurn();
-        this.console.write(new TokenView(Token.values()[otherValue]).getToken());
+        this.console.write(Token.values()[otherValue].getChar());
 		this.console.writeln(MessageView.PLAYER_WIN.getMessage());
     }
 }

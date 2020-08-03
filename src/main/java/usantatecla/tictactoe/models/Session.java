@@ -77,10 +77,6 @@ public class Session {
         this.registry.registry();
     }
 
-    public Player getTokenPlayerFromTurn() {
-        return this.game.getTokenPlayerFromTurn();
-    }
-
     public void changeTurn() {
         this.game.changeTurn();
     }

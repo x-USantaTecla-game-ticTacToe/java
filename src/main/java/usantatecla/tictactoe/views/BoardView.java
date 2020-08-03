@@ -28,10 +28,10 @@ class BoardView extends WithConsoleView {
 	}
 
 	private void printSquareBoard(int row, int column) {
-		if (this.playController.getToken(row, column) == null) {
+		if (this.playController.isEmptyToken(row, column)) {
             this.console.write(MessageView.EMPTY.getMessage());
 		} else {
-			this.console.write(new TokenView(this.playController.getToken(row, column)).getToken());
+			this.console.write(this.playController.getTokenChar(row, column));
         }
         this.console.write(MessageView.VERTICAL_LINE_CENTERED.getMessage());
 	}

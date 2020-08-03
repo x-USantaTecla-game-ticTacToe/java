@@ -1,20 +1,14 @@
 package usantatecla.tictactoe.controllers;
 
 import usantatecla.tictactoe.models.Coordinate;
-import usantatecla.tictactoe.models.Player;
 import usantatecla.tictactoe.models.Session;
 import usantatecla.tictactoe.types.Error;
 import usantatecla.tictactoe.types.PlayerType;
-import usantatecla.tictactoe.types.Token;
 
 public class MovementController extends Controller {
     
     public MovementController(Session session) {
 		super(session);
-	}
-
-	public Player getTokenPlayerFromTurn() {
-		return this.session.getTokenPlayerFromTurn();
 	}
 
 	public PlayerType getTypeOfTokenPlayerFromTurn() {
@@ -66,8 +60,12 @@ public class MovementController extends Controller {
 		this.session.changeTurn();
 	}
 
-	public Token getToken(int row, int column) {
-		return this.session.getToken(row, column);
+	public char getTokenChar(int row, int column) {
+		return this.session.getToken(row, column).getChar();
+	}
+
+	public boolean isEmptyToken(int row, int column) {
+		return this.session.getToken(row, column) == null;
 	}
 
 	public int getCoordinateDimension() {
