@@ -7,7 +7,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-import usantatecla.tictactoe.models.Coordinate;
+import usantatecla.tictactoe.controllers.Logic;
 import usantatecla.tictactoe.types.Error;
 import usantatecla.tictactoe.views.ErrorView;
 import usantatecla.tictactoe.views.MessageView;
@@ -23,10 +23,10 @@ public class CoordinateMoveView extends CoordinateView {
     private final JTextField textFieldRowToMove;
     private final JTextField textFieldColumnToMove;
 
-    private Coordinate[] coordinates;
+    private int[][] coordinates;
 
-    CoordinateMoveView() {
-        super();
+    CoordinateMoveView(Logic logic) {
+        super(logic);
         this.resetCoordinates();
         this.titleLabel = new JLabel(ENTER_COORDINATE_TO_REMOVE);
         this.titleLabelToMove = new JLabel(ENTER_COORDINATE_TO_PUT);
@@ -51,17 +51,20 @@ public class CoordinateMoveView extends CoordinateView {
         this.coordinates = null;
     }
 
-    Coordinate[] getCoordinates() {
+    int[][] getCoordinates() {
         return this.coordinates;
     }
 
     public void actionPerformed(final ActionEvent event) {
-        Coordinate originCoordinate = new Coordinate(Integer.parseInt(this.textFieldRow.getText()) - 1,
-                Integer.parseInt(this.textFieldColumn.getText()) - 1);
-        Coordinate targetCoordinate = new Coordinate(Integer.parseInt(this.textFieldRowToMove.getText()) - 1,
-                Integer.parseInt(this.textFieldColumnToMove.getText()) - 1);
-        if (originCoordinate.isValid() && targetCoordinate.isValid()) {
-            this.coordinates = new Coordinate[2];
+        int[] originCoordinate = new int[2];
+        originCoordinate[0] = Integer.parseInt(this.textFieldRow.getText()) - 1;
+        originCoordinate[1] = Integer.parseInt(this.textFieldColumn.getText()) - 1;
+        int[] targetCoordinate = new int[2];
+        targetCoordinate[0] = Integer.parseInt(this.textFieldRowToMove.getText()) - 1;
+        targetCoordinate[1] = Integer.parseInt(this.textFieldColumnToMove.getText()) - 1;
+        if (this.logic.isCoordinateValid(originCoordinate[0], originCoordinate[1])
+                && this.logic.isCoordinateValid(targetCoordinate[0], targetCoordinate[1])) {
+            this.coordinates = new int[2][2];
             this.coordinates[0] = originCoordinate;
             this.coordinates[1] = targetCoordinate;
         } else {

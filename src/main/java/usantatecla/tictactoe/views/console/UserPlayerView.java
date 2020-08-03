@@ -1,52 +1,52 @@
 package usantatecla.tictactoe.views.console;
 
-import usantatecla.tictactoe.models.Coordinate;
+import usantatecla.tictactoe.controllers.Logic;
 import usantatecla.tictactoe.types.Error;
-import usantatecla.tictactoe.models.Player;
 import usantatecla.tictactoe.views.PlayerView;
 
 class UserPlayerView extends PlayerView {
     static final String ENTER_COORDINATE_TO_PUT = "Enter a coordinate to put a token:";
     static final String ENTER_COORDINATE_TO_REMOVE = "Enter a coordinate to remove a token:";
 
-    UserPlayerView(Player player) {
-		super(player);
-	}
-    
+    UserPlayerView(Logic logic) {
+        super(logic);
+    }
+
     @Override
-    public Coordinate readCoordinateToPut() {
-        Coordinate coordinate;
-		Error error;
-		do {
-			coordinate = new CoordinateView().read(ENTER_COORDINATE_TO_PUT);
-			error = controlErrorsPutCoordinate(coordinate);
-			if (error != null) {
-				new ErrorView(error).writeln();
-			}
+    public int[] readCoordinateToPut() {
+        int[] coordinate = new int[2];
+        Error error;
+        do {
+            coordinate = new CoordinateView(this.logic).read(ENTER_COORDINATE_TO_PUT);
+            error = controlErrorsPutCoordinate(coordinate[0], coordinate[1]);
+            if (error != null) {
+                new ErrorView(error).writeln();
+            }
         } while (error != null);
         return coordinate;
     }
 
     @Override
-    public Coordinate[] readCoordinatesToMove() {
-        Coordinate originCoordinate;
-		Error error;
-		do {
-			originCoordinate = new CoordinateView().read(ENTER_COORDINATE_TO_REMOVE);
-			error = controlErrorsMoveOriginCoordinate(originCoordinate);
-			if (error != null) {
-				new ErrorView(error).writeln();
-			}
-        } while (error != null);
-        Coordinate targetCoordinate;
+    public int[][] readCoordinatesToMove() {
+        int[] originCoordinate = new int[2];
+        Error error;
         do {
-			targetCoordinate = new CoordinateView().read(ENTER_COORDINATE_TO_PUT);
-			error = controlErrorsMoveTargetCoordinate(originCoordinate, targetCoordinate);
-			if (error != null) {
-				new ErrorView(error).writeln();
-			}
+            originCoordinate = new CoordinateView(this.logic).read(ENTER_COORDINATE_TO_REMOVE);
+            error = controlErrorsMoveOriginCoordinate(originCoordinate[0], originCoordinate[1]);
+            if (error != null) {
+                new ErrorView(error).writeln();
+            }
         } while (error != null);
-        Coordinate[] coordinates = new Coordinate[2];
+        int[] targetCoordinate = new int[2];
+        do {
+            targetCoordinate = new CoordinateView(this.logic).read(ENTER_COORDINATE_TO_PUT);
+            error = controlErrorsMoveTargetCoordinate(originCoordinate[0], originCoordinate[1], targetCoordinate[0],
+                    targetCoordinate[1]);
+            if (error != null) {
+                new ErrorView(error).writeln();
+            }
+        } while (error != null);
+        int[][] coordinates = new int[2][2];
         coordinates[0] = originCoordinate;
         coordinates[1] = targetCoordinate;
         return coordinates;

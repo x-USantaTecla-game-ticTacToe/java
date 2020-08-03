@@ -1,29 +1,28 @@
 package usantatecla.tictactoe.views;
 
-import usantatecla.tictactoe.models.Coordinate;
+import usantatecla.tictactoe.controllers.Logic;
 import usantatecla.tictactoe.types.Error;
-import usantatecla.tictactoe.models.Player;
 
 public abstract class PlayerView {
 
-    protected Player player;
+    protected Logic logic;
 
-    public PlayerView(Player player) {
-        this.player = player;
+    public PlayerView(Logic logic) {
+        this.logic = logic;
     }
   
-    public abstract Coordinate readCoordinateToPut();
-    public abstract Coordinate[] readCoordinatesToMove();
+    public abstract int[] readCoordinateToPut();
+    public abstract int[][] readCoordinatesToMove();
 
-    public Error controlErrorsPutCoordinate(Coordinate coordinate) {
-        return this.player.controlErrorsPutCoordinate(coordinate);
+    public Error controlErrorsPutCoordinate(int row, int column) {
+        return this.logic.controlErrorsPutCoordinate(row, column);
 	}
 
-	public Error controlErrorsMoveOriginCoordinate(Coordinate originCoordinate) {
-		return this.player.controlErrorsMoveOriginCoordinate(originCoordinate);
+	public Error controlErrorsMoveOriginCoordinate(int originRow, int originColumn) {
+		return this.logic.controlErrorsMoveOriginCoordinate(originRow, originColumn);
 	}
 
-	public Error controlErrorsMoveTargetCoordinate(Coordinate originCoordinate, Coordinate targetCoordinate) {
-		return this.player.controlErrorsMoveTargetCoordinate(originCoordinate, targetCoordinate);
+	public Error controlErrorsMoveTargetCoordinate(int originRow, int originColumn, int targetRow, int targetColumn) {
+		return this.logic.controlErrorsMoveTargetCoordinate(originRow, originColumn, targetRow, targetColumn);
 	}
 }

@@ -1,9 +1,10 @@
 package usantatecla.tictactoe.controllers;
 
 import usantatecla.tictactoe.models.Board;
-import usantatecla.tictactoe.models.Coordinate;
 import usantatecla.tictactoe.models.Game;
 import usantatecla.tictactoe.models.Player;
+import usantatecla.tictactoe.types.Error;
+import usantatecla.tictactoe.types.PlayerType;
 import usantatecla.tictactoe.types.Token;
 
 public class Logic {
@@ -35,12 +36,36 @@ public class Logic {
 		return this.playController.isBoardComplete();
 	}
 
-	public void putTokenPlayerFromTurn(Coordinate coordinate) {
-		this.playController.putTokenPlayerFromTurn(coordinate);
+	public PlayerType getTypeOfTokenPlayerFromTurn() {
+		return this.playController.getTypeOfTokenPlayerFromTurn();
 	}
 
-	public void moveTokenPlayerFromTurn(Coordinate[] coordinates) {
-		this.playController.moveTokenPlayerFromTurn(coordinates);
+	public Error controlErrorsPutCoordinate(int row, int column) {
+		return this.playController.controlErrorsPutCoordinate(row, column);
+	}
+
+	public Error controlErrorsMoveOriginCoordinate(int originRow, int originColumn) {
+		return this.playController.controlErrorsMoveOriginCoordinate(originRow, originColumn);
+	}
+
+	public Error controlErrorsMoveTargetCoordinate(int originRow, int originColumn, int targetRow, int targetColumn) {
+		return this.playController.controlErrorsMoveTargetCoordinate(originRow, originColumn, targetRow, targetColumn);
+	}
+
+	public boolean isCoordinateValid(int row, int column) {
+		return this.playController.isCoordinateValid(row, column);
+	}
+
+	public int[] generateRandomCoordinate() {
+		return this.playController.generateRandomCoordinate();
+	}
+
+	public void putTokenPlayerFromTurn(int originRow, int originColumn) {
+		this.playController.putTokenPlayerFromTurn(originRow, originColumn);
+	}
+
+	public void moveTokenPlayerFromTurn(int originRow, int originColumn, int targetRow, int targetColumn) {
+		this.playController.moveTokenPlayerFromTurn(originRow, originColumn, targetRow, targetColumn);
 	}
 
 	public void changeTurn() {
