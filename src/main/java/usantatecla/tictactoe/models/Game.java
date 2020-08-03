@@ -1,5 +1,6 @@
 package usantatecla.tictactoe.models;
 
+import usantatecla.tictactoe.types.Error;
 import usantatecla.tictactoe.types.PlayerType;
 import usantatecla.tictactoe.types.Token;
 
@@ -44,6 +45,33 @@ public class Game {
 
     public Player getTokenPlayerFromTurn() {
         return this.turn.getPlayer();
+    }
+
+    public PlayerType getTypeOfTokenPlayerFromTurn() {
+        return this.turn.getPlayer().getType();
+    }
+
+    public Error controlErrorsPutCoordinate(Coordinate coordinate) {
+        if (!board.isEmpty(coordinate)) {
+			return Error.NOT_OWNER;
+		}
+		return null;
+    }
+
+    public Error controlErrorsMoveOriginCoordinate(Coordinate originCoordinate) {
+        if (!board.isOccupied(originCoordinate, this.turn.getPlayer().getToken())) {
+			return Error.NOT_OWNER;
+		}
+		return null;
+    }
+
+    public Error controlErrorsMoveTargetCoordinate(Coordinate originCoordinate, Coordinate targetCoordinate) {
+        if (originCoordinate.equals(targetCoordinate)) {
+			return Error.SAME_COORDINATES;
+		} else if (!board.isEmpty(targetCoordinate)) {
+			return Error.NOT_EMPTY;
+		}
+		return null;
     }
 
     public Token getToken(int row, int column) {

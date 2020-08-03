@@ -144,14 +144,15 @@ enum  tictactoe.views.MessageView{
 }
 
 class  tictactoe.views.PlayerView{
-# player: Player
-+ PlayerView(Player)
-+ {abstract} readCoordinateToPut(): Coordinate
-+ {abstract} readCoordinatesToMove(): Coordinate[]
-+ controlErrorsPutCoordinate(Coordinate): Error
-+ controlErrorsMoveOriginCoordinate(Coordinate): Error
-+ controlErrorsMoveTargetCoordinate(Coordinate, Coordinate): Error
+# playController: PlayController
++ PlayerView(PlayController)
++ {abstract} readCoordinateToPut(): int[]
++ {abstract} readCoordinatesToMove(): int[][]
++ controlErrorsPutCoordinate(int, int): Error
++ controlErrorsMoveOriginCoordinate(int, int): Error
++ controlErrorsMoveTargetCoordinate(int, int, int, int): Error
 }
+tictactoe.views.PlayerView ..> tictactoe.controllers.PlayController
 
 class tictactoe.views.TokenView{
 - token: Token
@@ -212,9 +213,12 @@ tictactoe.views.console.ConsoleView *-down-> tictactoe.views.console.PlayView
 tictactoe.views.console.ConsoleView *-down-> tictactoe.views.console.ResultView
 
 class  tictactoe.views.console.CoordinateView{
-~ read(String): Coordinate
+~ playController: PlayController
+~ CoordinateView(PlayController)
+~ read(String): int[]
 }
 utils.WithConsoleView <|-down- tictactoe.views.console.CoordinateView
+tictactoe.views.console.CoordinateView ..> tictactoe.types.Error
 
 class  tictactoe.views.console.ErrorView{
 ~ ErrorView(Error)
@@ -223,9 +227,9 @@ class  tictactoe.views.console.ErrorView{
 tictactoe.views.ErrorView <|-down- tictactoe.views.console.ErrorView
 
 class  tictactoe.views.console.MachinePlayerView{
-~ MachinePlayerView(Player)
-~ readCoordinateToPut(): Coordinate
-~ readCoordinatesToMove(): Coordinate[]
+~ MachinePlayerView(PlayController)
+~ readCoordinateToPut(): int[]
+~ readCoordinatesToMove(): int[][]
 }
 tictactoe.views.PlayerView <|-down- tictactoe.views.console.MachinePlayerView
 
@@ -237,6 +241,7 @@ class  tictactoe.views.console.PlayView{
 tictactoe.views.console.PlayView ..> tictactoe.views.console.BoardView
 tictactoe.views.console.PlayView ..> tictactoe.views.PlayerView
 tictactoe.views.console.PlayView ..> tictactoe.controllers.PlayController
+tictactoe.views.console.PlayView ..> tictactoe.types.PlayerType
 
 class tictactoe.views.console.ResultView{
 ~ resultController: ResultController
@@ -256,9 +261,9 @@ tictactoe.views.console.StartView ..> tictactoe.controllers.StartController
 class  tictactoe.views.console.UserPlayerView{
 ~ {static} ENTER_COORDINATE_TO_PUT: String
 ~ {static} ENTER_COORDINATE_TO_REMOVE: String
-~ UserPlayerView(Player)
-~ readCoordinateToPut(): Coordinate
-~ readCoordinatesToMove(): Coordinate[]
+~ UserPlayerView(PlayController)
+~ readCoordinateToPut(): int[]
+~ readCoordinatesToMove(): int[][]
 }
 tictactoe.views.PlayerView <|-down- tictactoe.views.console.UserPlayerView
 tictactoe.views.console.UserPlayerView ..> tictactoe.views.console.ErrorView
@@ -315,22 +320,24 @@ class  tictactoe.views.graphics.CoordinateMoveView{
 - titleLabelToMove: JLabel
 - textFieldRowToMove: JTextField
 - textFieldColumnToMove: JTextField
-- coordinates: Coordinate[]
-~ CoordinateMoveView()
+- coordinates: int[][]
+~ CoordinateMoveView(PlayController)
 ~ resetCoordinates(): void
-~ getCoordinates(): Coordinate[]
+~ getCoordinates(): int[][]
 + actionPerformed(ActionEvent): void
 }
 tictactoe.views.graphics.CoordinateView <|-down- tictactoe.views.graphics.CoordinateMoveView
+tictactoe.views.graphics.CoordinateMoveView ..> tictactoe.controllers.PlayController
 
 class  tictactoe.views.graphics.CoordinatePutView{
-- coordinates: Coordinate[]
-~ CoordinatePutView()
+- coordinates: int[]
+~ CoordinatePutView(PlayController)
 ~ resetCoordinate(): void
-~ getCoordinate(): Coordinate
+~ getCoordinate(): int[]
 + actionPerformed(ActionEvent): void
 }
 tictactoe.views.graphics.CoordinateView <|-down- tictactoe.views.graphics.CoordinatePutView
+tictactoe.views.graphics.CoordinatePutView ..> tictactoe.controllers.PlayController
 
 class  tictactoe.views.graphics.CoordinateView{
 # {static} ENTER_COORDINATE_TO_PUT: String
@@ -341,7 +348,8 @@ class  tictactoe.views.graphics.CoordinateView{
 # textFieldRow: JTextField
 # textFieldColumn: JTextField
 # button: JButton
-~ CoordinateView()
+# playController: PlayController
+~ CoordinateView(PlayController)
 }
 javax.swing.JPanel <|-down- tictactoe.views.graphics.CoordinateView
 java.awt.event.ActionListener <|-down- tictactoe.views.graphics.CoordinateView
@@ -371,6 +379,7 @@ tictactoe.views.graphics.GameView ..> tictactoe.views.graphics.ChoosePlayersView
 tictactoe.views.graphics.GameView ..> tictactoe.views.PlayerView
 tictactoe.views.graphics.GameView ..> tictactoe.views.graphics.BoardView
 tictactoe.views.graphics.GameView ..> tictactoe.views.graphics.Constraints
+tictactoe.views.graphics.GameView ..> tictactoe.types.PlayerType
 
 class  tictactoe.views.graphics.GraphicsView{
 - gameView: GameView
@@ -383,9 +392,9 @@ tictactoe.views.View <|-down- tictactoe.views.graphics.GraphicsView
 tictactoe.views.graphics.GraphicsView *-down-> tictactoe.views.graphics.GameView
 
 class  tictactoe.views.graphics.MachinePlayerView{
-~ MachinePlayerView(Player)
-+ readCoordinateToPut(): Coordinate
-+ readCoordinatesToMove(): Coordinate[]
+~ MachinePlayerView(PlayController)
++ readCoordinateToPut(): int[]
++ readCoordinatesToMove(): int[][]
 }
 tictactoe.views.PlayerView <|-down- tictactoe.views.graphics.MachinePlayerView
 
@@ -394,14 +403,15 @@ class  tictactoe.views.graphics.UserPlayerView{
 ~ {static} ENTER_COORDINATE_TO_REMOVE: String
 ~ coordinatePutView: CoordinatePutView
 ~ coordinateMoveView: CoordinateMoveView
-~ UserPlayerView(Player)
-+ readCoordinateToPut(): Coordinate
-+ readCoordinatesToMove(): Coordinate[]
+~ UserPlayerView(PlayController, boolean, Container)
++ readCoordinateToPut(): int[]
++ readCoordinatesToMove(): int[][]
 }
 tictactoe.views.PlayerView <|-down- tictactoe.views.graphics.UserPlayerView
 tictactoe.views.graphics.UserPlayerView *-down-> tictactoe.views.graphics.CoordinatePutView
 tictactoe.views.graphics.UserPlayerView *-down-> tictactoe.views.graphics.CoordinateMoveView
 tictactoe.views.graphics.UserPlayerView ..> tictactoe.views.graphics.Constraints
+tictactoe.views.graphics.UserPlayerView ..> tictactoe.views.ErrorView
 
 ....
 
@@ -458,6 +468,10 @@ class  tictactoe.models.Game{
 + putTokenPlayerFromTurn(Coordinate): void
 + moveTokenPlayerFromTurn(Coordinate[]): void
 + getTokenPlayerFromTurn(int): Player
++ getTypeOfTokenPlayerFromTurn(): PlayerType
++ controlErrorsPutCoordinate(Coordinate): Error
++ controlErrorsMoveOriginCoordinate(Coordinate): Error
++ controlErrorsMoveTargetCoordinate(Coordinate, Coordinate): Error
 + getToken(int, int): Token
 + changeTurn(): void
 + isTicTacToe(): boolean
@@ -546,9 +560,15 @@ tictactoe.controllers.Controller ..> tictactoe.models.Game
 class  tictactoe.controllers.PlayController{
 + PlayController(Game)
 + getTokenPlayerFromTurn(): Player
++ getTypeOfTokenPlayerFromTurn(): PlayerType
++ controlErrorsPutCoordinate(int, int): Error
++ controlErrorsMoveOriginCoordinate(int, int): Error
++ controlErrorsMoveTargetCoordinate(int, int, int, int): Error
++ isCoordinateValid(int, int): boolean
++ generateRandomCoordinate(): int[]
 + isBoardComplete(): boolean
-+ putTokenPlayerFromTurn(Coordinate): void
-+ moveTokenPlayerFromTurn(Coordinate[]): void
++ putTokenPlayerFromTurn(int, int): void
++ moveTokenPlayerFromTurn(int, int, int, int): void
 + changeTurn(): void
 + getToken(int, int): Token
 + getCoordinateDimension(): int

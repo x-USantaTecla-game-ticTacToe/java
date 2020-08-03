@@ -8,8 +8,6 @@ import javax.swing.JOptionPane;
 import usantatecla.tictactoe.controllers.PlayController;
 import usantatecla.tictactoe.controllers.ResultController;
 import usantatecla.tictactoe.controllers.StartController;
-import usantatecla.tictactoe.models.Coordinate;
-import usantatecla.tictactoe.models.Player;
 import usantatecla.tictactoe.types.PlayerType;
 import usantatecla.tictactoe.types.Token;
 import usantatecla.tictactoe.views.MessageView;
@@ -23,16 +21,15 @@ class GameView extends JFrame {
 
 	private StartController startController;
 
-    private PlayController playController;
+	private PlayController playController;
 
-    private ResultController resultController;
+	private ResultController resultController;
 
-	GameView(StartController startController, PlayController playController,
-	ResultController resultController) {
+	GameView(StartController startController, PlayController playController, ResultController resultController) {
 		super(MessageView.START_GAME.getMessage());
 		this.startController = startController;
-        this.playController = playController;
-        this.resultController = resultController;
+		this.playController = playController;
+		this.resultController = resultController;
 		this.getContentPane().setLayout(new GridBagLayout());
 		this.setSize(400, 500);
 		this.setLocationRelativeTo(null);
@@ -55,22 +52,22 @@ class GameView extends JFrame {
 
 	boolean play() {
 		this.getContentPane().removeAll();
-		Player player = this.playController.getTokenPlayerFromTurn();
 		this.getContentPane().add(new BoardView(this.playController), new Constraints(0, 0, 1, 1));
 		if (!this.playController.isBoardComplete()) {
-			PlayerView playerView = player.getType() == PlayerType.USER_PLAYER
-					? new UserPlayerView(player, false, this.getContentPane())
-					: new MachinePlayerView(player);
+			PlayerView playerView = this.playController.getTypeOfTokenPlayerFromTurn() == PlayerType.USER_PLAYER
+					? new UserPlayerView(this.playController, false, this.getContentPane())
+					: new MachinePlayerView(this.playController);
 			this.setVisible(true);
-			Coordinate coordinate = playerView.readCoordinateToPut();
-			this.playController.putTokenPlayerFromTurn(coordinate);
+			int[] coordinate = playerView.readCoordinateToPut();
+			this.playController.putTokenPlayerFromTurn(coordinate[0], coordinate[1]);
 		} else {
-			PlayerView playerView = player.getType() == PlayerType.USER_PLAYER
-					? new UserPlayerView(player, true, this.getContentPane())
-					: new MachinePlayerView(player);
+			PlayerView playerView = this.playController.getTypeOfTokenPlayerFromTurn() == PlayerType.USER_PLAYER
+					? new UserPlayerView(this.playController, true, this.getContentPane())
+					: new MachinePlayerView(this.playController);
 			this.setVisible(true);
-			Coordinate[] coordinates = playerView.readCoordinatesToMove();
-			this.playController.moveTokenPlayerFromTurn(coordinates);
+			int[][] coordinates = playerView.readCoordinatesToMove();
+			this.playController.moveTokenPlayerFromTurn(coordinates[0][0], coordinates[0][1], coordinates[1][0],
+					coordinates[1][1]);
 		}
 		this.playController.changeTurn();
 		if (this.playController.isTicTacToe()) {

@@ -1,23 +1,32 @@
 package usantatecla.tictactoe.views.console;
 
-import usantatecla.tictactoe.models.Coordinate;
+import usantatecla.tictactoe.controllers.PlayController;
 import usantatecla.tictactoe.views.MessageView;
 import usantatecla.utils.WithConsoleView;
 import usantatecla.tictactoe.types.Error;
 
 class CoordinateView extends WithConsoleView {
 
-    Coordinate read(String title) {
-        Coordinate coordinate;
+    PlayController playController;
+
+    CoordinateView(PlayController playController) {
+        this.playController = playController;
+    }
+
+    int[] read(String title) {
+        int[] coordinate = new int[2];
+        int row = 0;
+        int column = 0;
         do {
 			this.console.writeln(title);
-            int row = this.console.readInt(MessageView.READ_ROW.getMessage()) - 1;
-            int column = this.console.readInt(MessageView.READ_COLUMN.getMessage()) - 1;
-            coordinate = new Coordinate(row, column);
-            if (!coordinate.isValid()) {
+            row = this.console.readInt(MessageView.READ_ROW.getMessage()) - 1;
+            column = this.console.readInt(MessageView.READ_COLUMN.getMessage()) - 1;
+            if (!this.playController.isCoordinateValid(row, column)) {
                 new ErrorView(Error.WRONG_COORDINATES).writeln();
             }
-        } while (!coordinate.isValid());
+        } while (!this.playController.isCoordinateValid(row, column));
+        coordinate[0] = row;
+        coordinate[1] = column;
         return coordinate;
     }
 }
