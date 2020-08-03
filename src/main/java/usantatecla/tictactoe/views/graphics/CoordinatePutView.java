@@ -7,7 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-import usantatecla.tictactoe.models.Coordinate;
+import usantatecla.tictactoe.controllers.PlayController;
 import usantatecla.tictactoe.types.Error;
 import usantatecla.tictactoe.views.ErrorView;
 import usantatecla.tictactoe.views.MessageView;
@@ -15,10 +15,10 @@ import usantatecla.tictactoe.views.MessageView;
 @SuppressWarnings("serial")
 public class CoordinatePutView extends CoordinateView {
 
-	private Coordinate coordinate;
+	private int[] coordinate;
 
-	CoordinatePutView() {
-		super();
+	CoordinatePutView(PlayController playController) {
+		super(playController);
 		this.resetCoordinate();
 		this.titleLabel = new JLabel(ENTER_COORDINATE_TO_PUT);
 		this.add(titleLabel, new Constraints(0, 0, 1, 1));
@@ -32,14 +32,15 @@ public class CoordinatePutView extends CoordinateView {
 		this.coordinate = null;
 	}
 
-	Coordinate getCoordinate() {
+	int[] getCoordinate() {
 		return this.coordinate;
 	}
 
 	public void actionPerformed(final ActionEvent event) {
-		Coordinate coordinateInserted = new Coordinate(Integer.parseInt(this.textFieldRow.getText()) - 1,
-				Integer.parseInt(this.textFieldColumn.getText()) - 1);
-		if (coordinateInserted.isValid()) {
+		int[] coordinateInserted = new int[2];
+		coordinateInserted[0] = Integer.parseInt(this.textFieldRow.getText()) - 1;
+		coordinateInserted[1] = Integer.parseInt(this.textFieldColumn.getText()) - 1;
+		if (this.playController.isCoordinateValid(coordinateInserted[0], coordinateInserted[1])) {
 			this.coordinate = coordinateInserted;
 		} else {
 			JOptionPane.showMessageDialog(null, ErrorView.MESSAGES[Error.WRONG_COORDINATES.ordinal()],

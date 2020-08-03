@@ -1,44 +1,44 @@
 package usantatecla.tictactoe.views.console;
 
-import usantatecla.tictactoe.models.Coordinate;
+import usantatecla.tictactoe.controllers.PlayController;
 import usantatecla.tictactoe.types.Error;
-import usantatecla.tictactoe.models.Player;
 import usantatecla.tictactoe.views.PlayerView;
 
 class MachinePlayerView extends PlayerView {
 
-    MachinePlayerView(Player player) {
-		super(player);
+	MachinePlayerView(PlayController playController) {
+		super(playController);
 	}
 
 	@Override
-	public Coordinate readCoordinateToPut() {
-        Coordinate coordinate = new Coordinate();
+	public int[] readCoordinateToPut() {
+		int[] coordinate = new int[2];
 		Error error;
 		do {
-			coordinate.random();
-			error = controlErrorsPutCoordinate(coordinate);
+			coordinate = this.playController.generateRandomCoordinate();
+			error = controlErrorsPutCoordinate(coordinate[0], coordinate[1]);
 		} while (error != null);
 		return coordinate;
-    }
+	}
 
 	@Override
-    public Coordinate[] readCoordinatesToMove() {
-        Coordinate originCoordinate = new Coordinate();
+	public int[][] readCoordinatesToMove() {
+		int[] originCoordinate = new int[2];
 		Error error;
 		do {
-			originCoordinate.random();
-			error = controlErrorsMoveOriginCoordinate(originCoordinate);
+			originCoordinate = this.playController.generateRandomCoordinate();
+			error = controlErrorsMoveOriginCoordinate(originCoordinate[0], originCoordinate[1]);
 		} while (error != null);
-		Coordinate targetCoordinate = new Coordinate();
+		int[] targetCoordinate = new int[2];
 		do {
-			targetCoordinate.random();
-			error = controlErrorsMoveTargetCoordinate(originCoordinate, targetCoordinate);
+			targetCoordinate = this.playController.generateRandomCoordinate();
+			error = controlErrorsMoveTargetCoordinate(originCoordinate[0], originCoordinate[1], targetCoordinate[0],
+					targetCoordinate[1]);
 		} while (error != null);
-		Coordinate[] coordinates = new Coordinate[2];
-        coordinates[0] = originCoordinate;
-        coordinates[1] = targetCoordinate;
+		int[][] coordinates = new int[2][2];
+		coordinates[0] = originCoordinate;
+		coordinates[1] = targetCoordinate;
 		return coordinates;
-    }
-    
+	}
+
 }
