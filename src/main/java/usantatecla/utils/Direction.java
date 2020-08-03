@@ -1,4 +1,4 @@
-package usantatecla.tictactoe.types;
+package usantatecla.utils;
 
 public enum Direction {
 

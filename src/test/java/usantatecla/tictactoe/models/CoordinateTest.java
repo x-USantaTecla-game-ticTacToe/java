@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import usantatecla.tictactoe.types.Direction;
+import usantatecla.utils.Direction;
 
 public class CoordinateTest {
 
