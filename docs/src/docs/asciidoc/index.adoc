@@ -219,6 +219,7 @@ class  tictactoe.views.console.CoordinateView{
 }
 utils.WithConsoleView <|-down- tictactoe.views.console.CoordinateView
 tictactoe.views.console.CoordinateView ..> tictactoe.types.Error
+tictactoe.views.console.CoordinateView ..> tictactoe.controllers.PlayController
 
 class  tictactoe.views.console.ErrorView{
 ~ ErrorView(Error)
