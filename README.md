@@ -1,4 +1,4 @@
-<h1 align="center">Welcome to TicTacToe. Versión 8.2. ** mvp.pm.withDoubleDispatching ** 👋</h1>
+<h1 align="center">Welcome to TicTacToe. Versión 9.3. ** mvp.pm.withComposite ** 👋</h1>
 <p>
   <a href="/docs" target="_blank">
     <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
@@ -8,7 +8,7 @@
   </a>
 </p>
 
-> TicTacToe. Solución mvp.pm.withDoubleDispatching
+> TicTacToe. Solución mvp.pm.withComposite
 
 ## Install
 
@@ -17,30 +17,6 @@ mvn install
 ```
 
 ## Usage
-
-For Console edition:
-
-Edit pom.xml line 59 for this:
-
-```sh
-<mainClass>usantatecla.tictactoe.ConsoleTicTacToe</mainClass>
-```
-And then:
-
-```sh
-mvn clean
-mvn package
-java -jar target/tictactoe-1.0-SNAPSHOT.jar
-```
-
-For Graphics edition:
-
-Edit pom.xml line 59 for this:
-
-```sh
-<mainClass>usantatecla.tictactoe.GraphicsTicTacToe</mainClass>
-```
-And then:
 
 ```sh
 mvn clean

@@ -1,20 +1,19 @@
 package usantatecla.tictactoe.controllers;
 
-import usantatecla.tictactoe.models.Game;
-import usantatecla.tictactoe.models.State;
+import usantatecla.tictactoe.models.Session;
 
-public class ResultController extends Controller {
+public class ResultController extends AcceptorController {
    
-    public ResultController(Game game, State state) {
-		super(game, state);
+    public ResultController(Session session) {
+		super(session);
 	}
 
 	public void finish() {
-		this.state.next();
+		this.session.next();
 	}
 
 	public int getOtherValueFromTurn() {
-		return this.game.getOtherValueFromTurn();
+		return this.session.getOtherValueFromTurn();
 	}
 
 	@Override

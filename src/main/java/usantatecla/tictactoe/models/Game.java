@@ -27,6 +27,25 @@ public class Game {
 		}
     }
 
+    Memento createMemento() {
+        Board board = this.board.copy();
+        return new Memento(board, this.createCopyOfPlayers(players, board), turn);
+    }
+
+    void set(Memento memento) {
+        this.board = memento.getBoard().copy();
+        this.players = this.createCopyOfPlayers(memento.getPlayers(), this.board);
+        this.turn = memento.getTurn().copy(this.players);
+    }
+
+    private Player[] createCopyOfPlayers(Player[] players, Board board) {
+        Player[] playersCopy = new Player[2];
+        for (int i = 0; i < Turn.PLAYERS; i++) {
+            playersCopy[i] = new Player(players[i].getToken(), board, players[i].getType());
+        }
+        return playersCopy;
+    }
+
     public Board getBoard() {
         return this.board;
     }

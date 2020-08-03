@@ -1,86 +1,97 @@
 package usantatecla.tictactoe.controllers;
 
 import usantatecla.tictactoe.models.Coordinate;
-import usantatecla.tictactoe.models.Game;
 import usantatecla.tictactoe.models.Player;
-import usantatecla.tictactoe.models.State;
+import usantatecla.tictactoe.models.Session;
 import usantatecla.tictactoe.types.Error;
 import usantatecla.tictactoe.types.PlayerType;
 import usantatecla.tictactoe.types.Token;
 
-public class PlayController extends Controller {
+public class PlayController extends AcceptorController {
+
+	private MovementController movementController;
+
+	private UndoController undoController;
+
+	private RedoController redoController;
     
-    public PlayController(Game game, State state) {
-		super(game, state);
+    public PlayController(Session session) {
+		super(session);
+		this.movementController = new MovementController(this.session);
+		this.undoController = new UndoController(this.session);
+		this.redoController = new RedoController(this.session);
+	}
+
+	public void undo() {
+		this.undoController.undo();
+	}
+
+	public void redo() {
+		this.redoController.redo();
+	}
+
+	public boolean undoable() {
+		return this.undoController.undoable();
+	}
+
+	public boolean redoable() {
+		return this.redoController.redoable();
 	}
 
 	public Player getTokenPlayerFromTurn() {
-		return this.game.getTokenPlayerFromTurn();
+		return this.movementController.getTokenPlayerFromTurn();
 	}
 
 	public PlayerType getTypeOfTokenPlayerFromTurn() {
-		return this.game.getTypeOfTokenPlayerFromTurn();
+		return this.movementController.getTypeOfTokenPlayerFromTurn();
 	}
 
 	public Error controlErrorsPutCoordinate(int row, int column) {
-		return this.game.controlErrorsPutCoordinate(new Coordinate(row, column));
+		return this.movementController.controlErrorsPutCoordinate(row, column);
 	}
 
 	public Error controlErrorsMoveOriginCoordinate(int originRow, int originColumn) {
-		return this.game.controlErrorsMoveOriginCoordinate(new Coordinate(originRow, originColumn));
+		return this.movementController.controlErrorsMoveOriginCoordinate(originRow, originColumn);
 	}
 
 	public Error controlErrorsMoveTargetCoordinate(int originRow, int originColumn, int targetRow, int targetColumn) {
-		return this.game.controlErrorsMoveTargetCoordinate(new Coordinate(originRow, originColumn),
-				new Coordinate(targetRow, targetColumn));
+		return this.movementController.controlErrorsMoveTargetCoordinate(originRow, originColumn, targetRow, targetColumn);
 	}
 
 	public boolean isCoordinateValid(int row, int column) {
-		return new Coordinate(row, column).isValid();
+		return this.movementController.isCoordinateValid(row, column);
 	}
 
 	public int[] generateRandomCoordinate() {
-		Coordinate coordinateRandom = new Coordinate();
-		coordinateRandom.random();
-		int[] coordinate = new int[2];
-		coordinate[0] = coordinateRandom.getRow();
-		coordinate[1] = coordinateRandom.getColumn();
-		return coordinate;
+		return this.movementController.generateRandomCoordinate();
 	}
 
 	public boolean isBoardComplete() {
-		return this.game.isBoardComplete();
+		return this.movementController.isBoardComplete();
 	}
 
 	public void putTokenPlayerFromTurn(int originRow, int originColumn) {
-		this.game.putTokenPlayerFromTurn(new Coordinate(originRow, originColumn));
+		this.movementController.putTokenPlayerFromTurn(originRow, originColumn);
 	}
 
 	public void moveTokenPlayerFromTurn(int originRow, int originColumn, int targetRow, int targetColumn) {
-		Coordinate[] coordinates = new Coordinate[2];
-		coordinates[0] = new Coordinate(originRow, originColumn);
-		coordinates[1] = new Coordinate(targetRow, targetColumn);
-		this.game.moveTokenPlayerFromTurn(coordinates);
+		this.movementController.moveTokenPlayerFromTurn(originRow, originColumn, targetRow, targetColumn);
 	}
 
 	public void changeTurn() {
-		this.game.changeTurn();
-	}
-
-	public void continueState() {
-		this.state.next();
+		this.movementController.changeTurn();
 	}
 
 	public Token getToken(int row, int column) {
-		return this.game.getToken(row, column);
+		return this.movementController.getToken(row, column);
 	}
 
 	public int getCoordinateDimension() {
 		return Coordinate.DIMENSION;
 	}
 
-	public boolean isTicTacToe() {
-		return this.game.isTicTacToe();
+	public void isTicTacToe() {
+		this.movementController.isTicTacToe();
 	}
 
 	@Override

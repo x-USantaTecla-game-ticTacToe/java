@@ -1,23 +1,18 @@
 package usantatecla.tictactoe.controllers;
 
 import usantatecla.tictactoe.models.Board;
-import usantatecla.tictactoe.models.Game;
-import usantatecla.tictactoe.models.State;
+import usantatecla.tictactoe.models.Session;
 
 public abstract class Controller {
     
-	protected Game game;
-	
-	protected State state;
+	protected Session session;
 
-	Controller(Game game, State state) {
-		this.game = game;
-		this.state = state;
+	Controller(Session session) {
+		this.session = session;
 	}
+	
 
 	public Board getBoard() {
-        return this.game.getBoard();
+        return this.session.getBoard();
 	}
-	
-	public abstract void accept(ControllersVisitor controllersVisitor);
 }

@@ -18,6 +18,10 @@ public class Board {
 		}
 	}
 
+	public Board(Coordinate[][] coordinates) {
+		this.coordinates = coordinates;
+	}
+
 	public Token getToken(Coordinate coordinate) {
 		for (int i = 0; i < Turn.PLAYERS; i++) {
 			for (int j = 0; j < Coordinate.DIMENSION; j++) {
@@ -106,6 +110,16 @@ public class Board {
 
 	boolean isOccupied(Coordinate coordinate, Token token) {
 		return this.getToken(coordinate) == token;
+	}
+
+	Board copy() {
+		Coordinate[][] coordinatesCopy = new Coordinate[Turn.PLAYERS][Coordinate.DIMENSION];
+		for(int i = 0; i < Turn.PLAYERS; i++ ) {
+			for(int j = 0; j < Coordinate.DIMENSION; j++ ) {
+				coordinatesCopy[i][j] = this.coordinates[i][j];
+			}
+		}
+		return new Board(coordinatesCopy);
 	}
 
 }

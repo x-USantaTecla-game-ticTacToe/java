@@ -12,7 +12,10 @@ public enum MessageView {
 	CHOOSE_PLAYERS("Number of users [0-" + Turn.PLAYERS + "] "),
 	READ_ROW("Row: "),
 	READ_COLUMN("Column: "),
-	ERROR("ERROR");
+	ERROR("ERROR"),
+	PROPOSE_COMMAND("Do a movement"), 
+	UNDO_COMMAND("Undo previous movement"), 
+	REDO_COMMAND("Redo previous movement");
 
 	private String message;
 

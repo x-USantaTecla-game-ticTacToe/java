@@ -11,23 +11,21 @@
 </head>
 <body class="book">
 <div id="header">
-<h1>TicTacToe. Solución 8.2. <strong>mvp.pm.withDoubleDispatching</strong></h1>
+<h1>TicTacToe. Solución 9.3. <strong>mvp.pm.withComposite</strong></h1>
 <div class="details">
 <span id="author" class="author">Santa Tecla</span><br>
 <span id="email" class="email"><a href="mailto:parqueNaturalSantaTecla@gmail.com">parqueNaturalSantaTecla@gmail.com</a></span><br>
-<span id="revnumber">version 0.7.5</span>
+<span id="revnumber">version 0.8.0</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Índice</div>
 <ul class="sectlevel1">
-<li><a href="#requisitos-1-básica">Requisitos 2. <strong>Gráficos</strong></a></li>
+<li><a href="#requisitos-1-básica">Requisitos 3. <strong>UndoRedo</strong></a></li>
 <li><a href="#vista-de-lógicadiseño">Vista de Lógica/Diseño</a>
 <ul class="sectlevel2">
 <li><a href="#arquitectura">Arquitectura</a></li>
 <li><a href="#paquete-tictactoe">Paquete <em>tictactoe</em></a></li>
 <li><a href="#paquete-tictactoe-views">Paquete <em>tictactoe.views</em></a></li>
-<li><a href="#paquete-tictactoe-views-console">Paquete <em>tictactoe.views.console</em></a></li>
-<li><a href="#paquete-tictactoe-views-graphics">Paquete <em>tictactoe.views.graphics</em></a></li>
 <li><a href="#paquete-tictactoe-models">Paquete <em>tictactoe.models</em></a></li>
 <li><a href="#paquete-tictactoe-types">Paquete <em>tictactoe.types</em></a></li>
 <li><a href="#paquete-tictactoe-controllers">Paquete <em>tictactoe.controllers</em></a></li>
@@ -48,7 +46,7 @@
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="requisitos-2-gráficos">Requisitos 2. <strong>Gráficos</strong></h2>
+<h2 id="requisitos-2-gráficos">Requisitos 3. <strong>UndoRedo</strong></h2>
 <div class="sectionbody">
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -64,7 +62,7 @@
 <div class="ulist">
 <ul>
 <li>
-<p><em>Funcionalidad: <strong>Básica</strong></em></p>
+<p><em>Funcionalidad: <strong>Básica</strong> + <span class="lime-background"><strong>undo/redo</strong></span></em></p>
 </li>
 <li>
 <p><em>Interfaz: <strong class="lime-background">Gráfica</strong> y <strong>Texto</strong></em></p>
@@ -96,20 +94,11 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Arquitectura Documento/Vista mediante <strong>Patrón de Vista Separada</strong></p>
+<p>Patrones de Diseño</p>
 <div class="ulist">
 <ul>
 <li>
-<p><strong class="lime-background">Patrón Template Method (Factory Method)</strong>, <em>para clases principales</em></p>
-</li>
-<li>
-<p><strong class="lime-background">Patrón Model View Presenter</strong>, <em>para incluir controllers</em></p>
-</li>
-<li>
-<p><strong class="lime-background">Patrón Facade</strong>, <em>para clases principales</em></p>
-</li>
-<li>
-<p><strong class="lime-background">Patrón Double Dispatching</strong>, <em>para clases principales</em></p>
+<p><strong class="lime-background">Patrón Undo/Redo</strong></p>
 </li>
 </ul>
 </div>
@@ -120,7 +109,7 @@
 <h3 id="arquitectura">Arquitectura</h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/arquitecturaVersion8.svg" alt="arquitecturaVersion8" width="500" height="700">
+<img src="build/docs/asciidoc/images/arquitecturaVersion9.svg" alt="arquitecturaVersion9" width="500" height="600">
 </div>
 </div>
 </div>
@@ -128,7 +117,7 @@
 <h3 id="paquete-tictactoe">Paquete <em>tictactoe</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/tictactoeVersion8.svg" alt="tictactoeVersion8" width="1000" height="400">
+<img src="build/docs/asciidoc/images/tictactoeVersion9.svg" alt="tictactoeVersion9" width="500" height="400">
 </div>
 </div>
 </div>
@@ -136,23 +125,7 @@
 <h3 id="paquete-tictactoe-views">Paquete <em>tictactoe.views</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/tictactoeViewsVersion8.svg" alt="tictactoeViewsVersion8" width="800" height="548">
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="paquete-tictactoe-views-console">Paquete <em>tictactoe.views.console</em></h3>
-<div class="imageblock">
-<div class="content">
-<img src="build/docs/asciidoc/images/tictactoeViewsConsoleVersion8.svg" alt="tictactoeViewsConsoleVersion8" width="900" height="800">
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="paquete-tictactoe-views-graphics">Paquete <em>tictactoe.views.graphics</em></h3>
-<div class="imageblock">
-<div class="content">
-<img src="build/docs/asciidoc/images/tictactoeViewsGraphicsVersion8.svg" alt="tictactoeViewsGraphicsVersion8" width="1200" height="1100">
+<img src="build/docs/asciidoc/images/tictactoeViewsVersion9.svg" alt="tictactoeViewsVersion9" width="1200" height="1000">
 </div>
 </div>
 </div>
@@ -160,7 +133,7 @@
 <h3 id="paquete-tictactoe-models">Paquete <em>tictactoe.models</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/tictactoeModelsVersion8.svg" alt="tictactoeModelsVersion8" width="1000" height="1000">
+<img src="build/docs/asciidoc/images/tictactoeModelsVersion9.svg" alt="tictactoeModelsVersion9" width="1200" height="1000">
 </div>
 </div>
 </div>
@@ -168,7 +141,7 @@
 <h3 id="paquete-tictactoe-types">Paquete <em>tictactoe.types</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/tictactoeTypesVersion8.svg" alt="tictactoeTypesVersion8" width="400" height="300">
+<img src="build/docs/asciidoc/images/tictactoeTypesVersion9.svg" alt="tictactoeTypesVersion9" width="400" height="300">
 </div>
 </div>
 </div>
@@ -176,7 +149,7 @@
 <h3 id="paquete-tictactoe-controllers">Paquete <em>tictactoe.controllers</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/tictactoeControllersVersion8.svg" alt="tictactoeControllersVersion8" width="1000" height="600">
+<img src="build/docs/asciidoc/images/tictactoeControllersVersion9.svg" alt="tictactoeControllersVersion9" width="1000" height="600">
 </div>
 </div>
 </div>
@@ -184,7 +157,7 @@
 <h3 id="paquete-utils">Paquete <em>utils</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/utilsVersion8.svg" alt="utilsVersion8" width="456" height="548">
+<img src="build/docs/asciidoc/images/utilsVersion9.svg" alt="utilsVersion9" width="456" height="548">
 </div>
 </div>
 </div>
@@ -260,8 +233,8 @@
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 0.7.5<br>
-Last updated 2020-08-03 13:50:00 +0200
+Version 0.8.0<br>
+Last updated 2020-08-03 18:50:00 +0200
 </div>
 </div>
 </html>

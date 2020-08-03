@@ -1,10 +1,10 @@
 package usantatecla.tictactoe;
 
-import usantatecla.tictactoe.controllers.Controller;
+import usantatecla.tictactoe.controllers.AcceptorController;
 import usantatecla.tictactoe.controllers.Logic;
 import usantatecla.tictactoe.views.View;
 
-public abstract class TicTacToe {
+public class TicTacToe {
 
     private Logic logic;
 
@@ -12,18 +12,20 @@ public abstract class TicTacToe {
 
     protected TicTacToe() {
         this.logic = new Logic();
-		this.view = this.createView();
+		this.view = new View();
     }
-
-    protected abstract View createView();
 
     protected void play() {
-        Controller controller;
+		AcceptorController acceptorController;
 		do {
-            controller = this.logic.getController();
-            if (controller != null) {
-                this.view.interact(controller);
-            }
-		} while (controller != null);
-    }
+			acceptorController = this.logic.getController();
+			if (acceptorController != null){
+				this.view.interact(acceptorController);
+			}
+		} while (acceptorController != null); 
+	}
+
+    public static void main(String[] args) {
+		new TicTacToe().play();
+	}
 }
