@@ -1,5 +1,7 @@
 package usantatecla.utils;
 
+import usantatecla.tictactoe.types.Direction;
+
 public class Coordinate {
 
 	protected int row;

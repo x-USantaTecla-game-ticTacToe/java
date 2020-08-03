@@ -150,12 +150,6 @@ class  tictactoe.views.PlayerView{
 }
 tictactoe.views.PlayerView ..> tictactoe.controllers.PlayController
 
-class tictactoe.views.TokenView{
-- token: Token
-+ TokenView(Token)
-+ getToken(): char
-}
-
 class  tictactoe.views.View{
 + {abstract} interact(Controller): void
 }
@@ -441,7 +435,6 @@ class  tictactoe.models.Game{
 + isBoardComplete(): boolean
 + putTokenPlayerFromTurn(Coordinate): void
 + moveTokenPlayerFromTurn(Coordinate[]): void
-+ getTokenPlayerFromTurn(int): Player
 + getTypeOfTokenPlayerFromTurn(): PlayerType
 + controlErrorsPutCoordinate(Coordinate): Error
 + controlErrorsMoveOriginCoordinate(Coordinate): Error
@@ -573,7 +566,8 @@ class  tictactoe.controllers.PlayController{
 + putTokenPlayerFromTurn(int, int): void
 + moveTokenPlayerFromTurn(int, int, int, int): void
 + changeTurn(): void
-+ getToken(int, int): Token
++ getTokenChar(int, int): char
++ isEmptyToken(int, int): boolean
 + getCoordinateDimension(): int
 + isTicTacToe(): boolean
 }

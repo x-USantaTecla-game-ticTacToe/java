@@ -2,20 +2,13 @@ package usantatecla.tictactoe.controllers;
 
 import usantatecla.tictactoe.models.Coordinate;
 import usantatecla.tictactoe.models.Game;
-import usantatecla.tictactoe.models.Player;
 import usantatecla.tictactoe.models.State;
 import usantatecla.tictactoe.types.Error;
 import usantatecla.tictactoe.types.PlayerType;
-import usantatecla.tictactoe.types.Token;
-
 public class PlayController extends Controller {
-    
-    public PlayController(Game game, State state) {
-		super(game, state);
-	}
 
-	public Player getTokenPlayerFromTurn() {
-		return this.game.getTokenPlayerFromTurn();
+	public PlayController(Game game, State state) {
+		super(game, state);
 	}
 
 	public PlayerType getTypeOfTokenPlayerFromTurn() {
@@ -71,8 +64,12 @@ public class PlayController extends Controller {
 		this.state.next();
 	}
 
-	public Token getToken(int row, int column) {
-		return this.game.getToken(row, column);
+	public char getTokenChar(int row, int column) {
+		return this.game.getToken(row, column).getChar();
+	}
+
+	public boolean isEmptyToken(int row, int column) {
+		return this.game.getToken(row, column) == null;
 	}
 
 	public int getCoordinateDimension() {
