@@ -2,7 +2,7 @@ package usantatecla.tictactoe.models;
 
 import java.util.Random;
 
-import usantatecla.utils.Direction;
+import usantatecla.tictactoe.types.Direction;
 
 public class Coordinate extends usantatecla.utils.Coordinate {
 

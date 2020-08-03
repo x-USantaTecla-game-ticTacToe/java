@@ -2,10 +2,8 @@ package usantatecla.tictactoe.controllers;
 
 import usantatecla.tictactoe.models.Board;
 import usantatecla.tictactoe.models.Game;
-import usantatecla.tictactoe.models.Player;
 import usantatecla.tictactoe.types.Error;
 import usantatecla.tictactoe.types.PlayerType;
-import usantatecla.tictactoe.types.Token;
 
 public class Logic {
     
@@ -26,10 +24,6 @@ public class Logic {
 
     public void createPlayers(int numberOfUsers) {
 		this.startController.createPlayers(numberOfUsers);
-	}
-    
-    public Player getTokenPlayerFromTurn() {
-		return this.playController.getTokenPlayerFromTurn();
 	}
 
 	public boolean isBoardComplete() {
@@ -72,8 +66,12 @@ public class Logic {
 		this.playController.changeTurn();
 	}
 
-	public Token getToken(int row, int column) {
-		return this.playController.getToken(row, column);
+	public char getTokenChar(int row, int column) {
+		return this.playController.getTokenChar(row, column);
+	}
+
+	public boolean isEmptyToken(int row, int column) {
+		return this.playController.isEmptyToken(row, column);
 	}
 
 	public int getCoordinateDimension() {
