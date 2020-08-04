@@ -20,7 +20,7 @@
 <div id="toc" class="toc">
 <div id="toctitle">Índice</div>
 <ul class="sectlevel1">
-<li><a href="#requisitos-1-básica">Requisitos 3. <strong>UndoRedo</strong></a></li>
+<li><a href="#requisitos-3-undoredo">Requisitos 3. <strong>UndoRedo</strong></a></li>
 <li><a href="#vista-de-lógicadiseño">Vista de Lógica/Diseño</a>
 <ul class="sectlevel2">
 <li><a href="#arquitectura">Arquitectura</a></li>
@@ -46,7 +46,7 @@
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="requisitos-2-gráficos">Requisitos 3. <strong>UndoRedo</strong></h2>
+<h2 id="requisitos-3-undoredo">Requisitos 3. <strong>UndoRedo</strong></h2>
 <div class="sectionbody">
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
