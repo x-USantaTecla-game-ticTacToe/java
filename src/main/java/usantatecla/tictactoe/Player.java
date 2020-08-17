@@ -49,14 +49,14 @@ abstract class Player {
 	}
 
 	Error getErrorsPutCoordinate(Coordinate coordinate) {
-		if (!board.isEmpty(coordinate)) {
+		if (!this.board.isEmpty(coordinate)) {
 			return Error.NOT_OWNER;
 		}
 		return null;
 	}
 
 	Error getErrorsMoveOriginCoordinate(Coordinate originCoordinate) {
-		if (!board.isOccupied(originCoordinate, this.token)) {
+		if (!this.board.isOccupied(originCoordinate, this.token)) {
 			return Error.NOT_OWNER;
 		}
 		return null;
@@ -65,7 +65,7 @@ abstract class Player {
 	Error getErrorsMoveTargetCoordinate(Coordinate originCoordinate, Coordinate targetCoordinate) {
 		if (originCoordinate.equals(targetCoordinate)) {
 			return Error.SAME_COORDINATES;
-		} else if (!board.isEmpty(targetCoordinate)) {
+		} else if (!this.board.isEmpty(targetCoordinate)) {
 			return Error.NOT_EMPTY;
 		}
 		return null;
