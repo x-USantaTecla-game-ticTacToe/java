@@ -152,6 +152,7 @@ class  tictactoe.TicTacToe{
 }
 utils.WithConsoleModel <|-down- tictactoe.TicTacToe
 tictactoe.TicTacToe ..> tictactoe.Error
+tictactoe.TicTacToe ..> utils.PlayersDialog
 tictactoe.TicTacToe *-down-> tictactoe.Board
 tictactoe.TicTacToe *-down-> tictactoe.Player
 tictactoe.TicTacToe *-down-> tictactoe.Turn
@@ -233,6 +234,12 @@ enum  utils.Direction{
   MAIN_DIAGONAL
   INVERSE_DIAGONAL
 }
+
+class  utils.PlayersDialog{
+- {static} ENTER_COORDINATE_TO_PUT: String
++ read(int): int
+}
+utils.WithConsoleModel <|-down- utils.PlayersDialog
 
 class  utils.WithConsoleModel{
 # console: Console
