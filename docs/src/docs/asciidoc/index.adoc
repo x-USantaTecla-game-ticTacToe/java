@@ -236,7 +236,7 @@ enum  utils.Direction{
 }
 
 class  utils.PlayersDialog{
-- {static} ENTER_COORDINATE_TO_PUT: String
+- {static} USERS_ERROR: String
 + read(int): int
 }
 utils.WithConsoleModel <|-down- utils.PlayersDialog
