@@ -129,9 +129,9 @@ class  tictactoe.Player{
 ~ {abstract} readCoordinateTargetToMove(Coordinate, Coordinate): Error
 ~ writeWin(Token): void
 ~ getToken(): Token
-~ controlErrorsPutCoordinate(Coordinate): Error
-~ controlErrorsMoveOriginCoordinate(Coordinate): Error
-~ controlErrorsMoveTargetCoordinate(Coordinate, Coordinate): Error
+~ getErrorsPutCoordinate(Coordinate): Error
+~ getErrorsMoveOriginCoordinate(Coordinate): Error
+~ getErrorsMoveTargetCoordinate(Coordinate, Coordinate): Error
 }
 tictactoe.Player *-down-> tictactoe.Token
 tictactoe.Player *-down-> tictactoe.Board
