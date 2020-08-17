@@ -6,6 +6,9 @@ public class Coordinate extends WithConsoleModel {
 
 	protected int column;
 
+	static final String ROW = "Row: ";
+	static final String COLUMN = "Column: ";
+
 	protected Coordinate() {
 	}
 
@@ -41,8 +44,8 @@ public class Coordinate extends WithConsoleModel {
 
 	protected void read(String title) {
 		this.console.writeln(title);
-		this.row = this.console.readInt("Row: ") - 1;
-		this.column = this.console.readInt("Column: ") - 1;
+		this.row = this.console.readInt(Coordinate.ROW) - 1;
+		this.column = this.console.readInt(Coordinate.COLUMN) - 1;
 	}
 
 	public int getRow() {

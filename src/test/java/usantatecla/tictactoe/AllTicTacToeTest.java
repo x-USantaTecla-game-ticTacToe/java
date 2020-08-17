@@ -9,6 +9,6 @@ import org.junit.runners.Suite;
     CoordinateTest.class,
     PlayerTest.class,
     TurnTest.class } )
-public class AllTest {
+public class AllTicTacToeTest {
     
 }

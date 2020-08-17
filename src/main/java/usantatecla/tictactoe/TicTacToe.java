@@ -1,5 +1,6 @@
 package usantatecla.tictactoe;
 
+import usantatecla.utils.PlayersDialog;
 import usantatecla.utils.WithConsoleModel;
 
 class TicTacToe extends WithConsoleModel{
@@ -38,24 +39,13 @@ class TicTacToe extends WithConsoleModel{
 	}
 
 	private void createPlayers() {
-		int users = this.readUsersNumber();
+		int users = new PlayersDialog().read(Turn.PLAYERS);
 		for (int i = 0; i < users; i++) {
 			this.players[i] = new UserPlayer(Token.values()[i], this.board);
 		}
 		for (int i = users; i < Turn.PLAYERS; i++) {
 			this.players[i] = new MachinePlayer(Token.values()[i], this.board);
 		}
-	}
-
-	private int readUsersNumber() {
-		int users = 0;
-		do {
-			users = this.console.readInt("Number of users [0-" + Turn.PLAYERS + "] ");
-			if (users < 0 || users > 2) {
-				Error.USERS_ERROR.writeln();
-			}
-		} while(users < 0 || users > 2);
-		return users;
 	}
 
 	public static void main(String[] args) {
