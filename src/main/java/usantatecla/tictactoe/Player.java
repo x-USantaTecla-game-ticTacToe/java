@@ -48,21 +48,21 @@ abstract class Player {
 		return this.token;
 	}
 
-	Error controlErrorsPutCoordinate(Coordinate coordinate) {
+	Error getErrorsPutCoordinate(Coordinate coordinate) {
 		if (!board.isEmpty(coordinate)) {
 			return Error.NOT_OWNER;
 		}
 		return null;
 	}
 
-	Error controlErrorsMoveOriginCoordinate(Coordinate originCoordinate) {
+	Error getErrorsMoveOriginCoordinate(Coordinate originCoordinate) {
 		if (!board.isOccupied(originCoordinate, this.token)) {
 			return Error.NOT_OWNER;
 		}
 		return null;
 	}
 
-	Error controlErrorsMoveTargetCoordinate(Coordinate originCoordinate, Coordinate targetCoordinate) {
+	Error getErrorsMoveTargetCoordinate(Coordinate originCoordinate, Coordinate targetCoordinate) {
 		if (originCoordinate.equals(targetCoordinate)) {
 			return Error.SAME_COORDINATES;
 		} else if (!board.isEmpty(targetCoordinate)) {
