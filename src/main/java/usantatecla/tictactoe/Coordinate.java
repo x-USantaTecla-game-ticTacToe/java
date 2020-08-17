@@ -43,6 +43,7 @@ class Coordinate extends usantatecla.utils.Coordinate {
 	protected void read(String title) {
 		do {
 			super.read(title);
+			assert this.isValid();
 			if (!this.isValid()) {
 				Error.WRONG_COORDINATES.writeln();
 			}
