@@ -96,13 +96,6 @@ class  tictactoe.views.ErrorView{
 }
 utils.WithConsoleView <|-down- tictactoe.views.ErrorView
 
-class  tictactoe.views.ChoosePlayerView{
-~ readPlayers(): void
-}
-utils.WithConsoleView <|-down- tictactoe.views.ChoosePlayerView
-tictactoe.views.ChoosePlayerView ..> tictactoe.views.MessageView
-tictactoe.views.ChoosePlayerView ..> tictactoe.views.ErrorView
-
 class  tictactoe.views.MachinePlayerView{
 ~ MachinePlayerView(Player)
 ~ readCoordinateToPut(): Coordinate
@@ -162,7 +155,7 @@ class tictactoe.views.StartView{
 ~ interact(): void
 }
 tictactoe.views.StartView ..> tictactoe.models.Game
-tictactoe.views.StartView ..> tictactoe.views.ChoosePlayerView
+tictactoe.views.StartView ..> utils.PlayersDialog
 tictactoe.views.StartView ..> tictactoe.views.BoardView
 tictactoe.views.StartView ..> tictactoe.views.MessageView
 
@@ -355,6 +348,12 @@ enum  utils.Direction{
   MAIN_DIAGONAL
   INVERSE_DIAGONAL
 }
+
+class  utils.PlayersDialog{
+- {static} USERS_ERROR: String
++ read(int): int
+}
+utils.WithConsoleView <|-down- utils.PlayersDialog
 
 class  utils.WithConsoleView{
 # console: Console

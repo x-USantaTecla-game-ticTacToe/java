@@ -9,7 +9,6 @@ class ErrorView extends WithConsoleView {
 		"The square is not empty",
 		"There is not a token of yours", 
 		"The origin and target squares are the same",
-		"Wrong number of users",
 		"The coordinates are wrong" };
 
 	private Error error;

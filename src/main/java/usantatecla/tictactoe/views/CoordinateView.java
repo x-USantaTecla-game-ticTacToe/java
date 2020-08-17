@@ -14,7 +14,7 @@ class CoordinateView extends WithConsoleView {
             int column = this.console.readInt("Column: ") - 1;
             coordinate = new Coordinate(row, column);
             if (!coordinate.isValid()) {
-				new ErrorView(Error.USERS_ERROR).writeln();
+				new ErrorView(Error.WRONG_COORDINATES).writeln();
 			}
         } while (!coordinate.isValid());
         return coordinate;
