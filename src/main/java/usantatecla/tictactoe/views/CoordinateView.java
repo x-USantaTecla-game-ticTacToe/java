@@ -13,6 +13,7 @@ class CoordinateView extends WithConsoleView {
             int row = this.console.readInt("Row: ") - 1;
             int column = this.console.readInt("Column: ") - 1;
             coordinate = new Coordinate(row, column);
+            assert coordinate.isValid();
             if (!coordinate.isValid()) {
 				new ErrorView(Error.WRONG_COORDINATES).writeln();
 			}

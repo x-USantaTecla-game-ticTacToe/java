@@ -30,24 +30,24 @@ public class Player {
 		return this.token;
 	}
 
-	public Error controlErrorsPutCoordinate(Coordinate coordinate) {
-		if (!board.isEmpty(coordinate)) {
+	public Error getErrorsPutCoordinate(Coordinate coordinate) {
+		if (!this.board.isEmpty(coordinate)) {
 			return Error.NOT_OWNER;
 		}
 		return null;
 	}
 
-	public Error controlErrorsMoveOriginCoordinate(Coordinate originCoordinate) {
-		if (!board.isOccupied(originCoordinate, this.token)) {
+	public Error getErrorsMoveOriginCoordinate(Coordinate originCoordinate) {
+		if (!this.board.isOccupied(originCoordinate, this.token)) {
 			return Error.NOT_OWNER;
 		}
 		return null;
 	}
 
-	public Error controlErrorsMoveTargetCoordinate(Coordinate originCoordinate, Coordinate targetCoordinate) {
+	public Error getErrorsMoveTargetCoordinate(Coordinate originCoordinate, Coordinate targetCoordinate) {
 		if (originCoordinate.equals(targetCoordinate)) {
 			return Error.SAME_COORDINATES;
-		} else if (!board.isEmpty(targetCoordinate)) {
+		} else if (!this.board.isEmpty(targetCoordinate)) {
 			return Error.NOT_EMPTY;
 		}
 		return null;

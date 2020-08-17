@@ -16,7 +16,7 @@ class MachinePlayerView extends PlayerView {
 		Error error;
 		do {
 			coordinate.random();
-			error = controlErrorsPutCoordinate(coordinate);
+			error = getErrorsPutCoordinate(coordinate);
 		} while (error != null);
 		return coordinate;
     }
@@ -27,12 +27,12 @@ class MachinePlayerView extends PlayerView {
 		Error error;
 		do {
 			originCoordinate.random();
-			error = controlErrorsMoveOriginCoordinate(originCoordinate);
+			error = getErrorsMoveOriginCoordinate(originCoordinate);
 		} while (error != null);
 		Coordinate targetCoordinate = new Coordinate();
 		do {
 			targetCoordinate.random();
-			error = controlErrorsMoveTargetCoordinate(originCoordinate, targetCoordinate);
+			error = getErrorsMoveTargetCoordinate(originCoordinate, targetCoordinate);
 		} while (error != null);
 		Coordinate[] coordinates = new Coordinate[2];
         coordinates[0] = originCoordinate;

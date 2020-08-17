@@ -127,9 +127,9 @@ class  tictactoe.views.PlayerView{
 ~ PlayerView(Player)
 ~ {abstract} readCoordinateToPut(): Coordinate
 ~ {abstract} readCoordinatesToMove(): Coordinate[]
-~ controlErrorsPutCoordinate(Coordinate): Error
-~ controlErrorsMoveOriginCoordinate(Coordinate): Error
-~ controlErrorsMoveTargetCoordinate(Coordinate, Coordinate): Error
+~ getErrorsPutCoordinate(Coordinate): Error
+~ getErrorsMoveOriginCoordinate(Coordinate): Error
+~ getErrorsMoveTargetCoordinate(Coordinate, Coordinate): Error
 }
 
 class  tictactoe.views.PlayView{
@@ -269,9 +269,9 @@ class  tictactoe.models.Player{
 ~ getToken(): Token
 ~ put(Coordinate): void
 ~ move(Coordinate[]): void
-+ controlErrorsPutCoordinate(Coordinate): Error
-+ controlErrorsMoveOriginCoordinate(Coordinate): Error
-+ controlErrorsMoveTargetCoordinate(Coordinate, Coordinate): Error
++ getErrorsPutCoordinate(Coordinate): Error
++ getErrorsMoveOriginCoordinate(Coordinate): Error
++ getErrorsMoveTargetCoordinate(Coordinate, Coordinate): Error
 }
 tictactoe.models.Player *-down-> tictactoe.models.Token
 tictactoe.models.Player *-down-> tictactoe.models.Board

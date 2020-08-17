@@ -15,15 +15,15 @@ abstract class PlayerView {
     abstract Coordinate readCoordinateToPut();
     abstract Coordinate[] readCoordinatesToMove();
 
-    Error controlErrorsPutCoordinate(Coordinate coordinate) {
-        return this.player.controlErrorsPutCoordinate(coordinate);
+    Error getErrorsPutCoordinate(Coordinate coordinate) {
+        return this.player.getErrorsPutCoordinate(coordinate);
 	}
 
-	Error controlErrorsMoveOriginCoordinate(Coordinate originCoordinate) {
-		return this.player.controlErrorsMoveOriginCoordinate(originCoordinate);
+	Error getErrorsMoveOriginCoordinate(Coordinate originCoordinate) {
+		return this.player.getErrorsMoveOriginCoordinate(originCoordinate);
 	}
 
-	Error controlErrorsMoveTargetCoordinate(Coordinate originCoordinate, Coordinate targetCoordinate) {
-		return this.player.controlErrorsMoveTargetCoordinate(originCoordinate, targetCoordinate);
+	Error getErrorsMoveTargetCoordinate(Coordinate originCoordinate, Coordinate targetCoordinate) {
+		return this.player.getErrorsMoveTargetCoordinate(originCoordinate, targetCoordinate);
 	}
 }

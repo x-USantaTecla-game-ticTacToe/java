@@ -31,6 +31,7 @@ public class Board {
 
 	void move(Coordinate originCoordinate, Coordinate coordinate) {
 		Token token = this.getToken(originCoordinate);
+		assert !this.isEmpty(originCoordinate);
 		this.remove(originCoordinate);
 		this.put(coordinate, token);
 	}
