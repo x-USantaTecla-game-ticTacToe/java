@@ -13,7 +13,7 @@ class TicTacToe extends WithConsoleModel{
 
 	TicTacToe() {
 		this.board = new Board();
-		this.players = new Player[Turn.PLAYERS];
+		this.players = new Player[Turn.NUM_PLAYERS];
 		this.turn = new Turn(this.players);
 	}
 
@@ -39,11 +39,11 @@ class TicTacToe extends WithConsoleModel{
 	}
 
 	private void createPlayers() {
-		int users = new PlayersDialog().read(Turn.PLAYERS);
+		int users = new PlayersDialog().read(Turn.NUM_PLAYERS);
 		for (int i = 0; i < users; i++) {
 			this.players[i] = new UserPlayer(Token.values()[i], this.board);
 		}
-		for (int i = users; i < Turn.PLAYERS; i++) {
+		for (int i = users; i < Turn.NUM_PLAYERS; i++) {
 			this.players[i] = new MachinePlayer(Token.values()[i], this.board);
 		}
 	}
