@@ -167,7 +167,7 @@ TOKEN_O
 tictactoe.Token..> utils.Console
 
 class  tictactoe.Turn{
-~ {static} PLAYERS: int
+~ {static} NUM_PLAYERS: int
 - value: int
 - players: Player[]
 ~ Turn(Player[])
@@ -216,14 +216,15 @@ class  utils.Coordinate{
 # column: int
 # Coordinate()
 # Coordinate(int, int)
-# getDirection(Coordinate): Direction
+# getMainDirection(Coordinate): Direction
 - inMainDiagonal(): boolean
 - inVertical(Coordinate): boolean
 - inHorizontal(Coordinate): boolean
 # read(String): void
 + getRow(): int
 + getColumn(): int
-+ equals(Coordinate): boolean
++ hashCode(): int
++ equals(Object): boolean
 }
 utils.WithConsoleModel <|-down- utils.Coordinate
 utils.Coordinate ..> utils.Direction

@@ -114,7 +114,7 @@
 <h3 id="paquete-utils">Paquete <em>utils</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/utils1.svg" alt="utils1" width="456" height="548">
+<img src="build/docs/asciidoc/images/utils1.svg" alt="utils1" width="600" height="548">
 </div>
 </div>
 </div>

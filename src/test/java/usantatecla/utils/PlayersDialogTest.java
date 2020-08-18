@@ -14,10 +14,10 @@ import org.mockito.junit.MockitoJUnitRunner;
 public class PlayersDialogTest {
 
     @Mock
-    Console console;
+    private Console console;
 
     @InjectMocks
-    PlayersDialog playersDialog = new PlayersDialog();
+    private PlayersDialog playersDialog = new PlayersDialog();
 
     @Test
     public void testGivenNewPlayersDialogWhenNumberOfPlayersAreZeroThenIsCorrect() {
