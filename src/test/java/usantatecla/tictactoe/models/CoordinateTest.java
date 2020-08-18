@@ -18,10 +18,10 @@ public class CoordinateTest {
     private Coordinate coordinate23;
 
     @Mock
-    Console console;
+    private Console console;
 
     @InjectMocks
-    Coordinate coordinate = new Coordinate();
+    private Coordinate coordinate = new Coordinate();
 
     public CoordinateTest() {
         this.coordinate11 = new Coordinate(1, 1);
