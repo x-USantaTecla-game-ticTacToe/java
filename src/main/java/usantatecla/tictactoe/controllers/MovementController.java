@@ -15,16 +15,16 @@ public class MovementController extends Controller {
 		return this.session.getTypeOfTokenPlayerFromTurn();
 	}
 
-	public Error controlErrorsPutCoordinate(int row, int column) {
-		return this.session.controlErrorsPutCoordinate(new Coordinate(row, column));
+	public Error getErrorsPutCoordinate(int row, int column) {
+		return this.session.getErrorsPutCoordinate(new Coordinate(row, column));
 	}
 
-	public Error controlErrorsMoveOriginCoordinate(int originRow, int originColumn) {
-		return this.session.controlErrorsMoveOriginCoordinate(new Coordinate(originRow, originColumn));
+	public Error getErrorsMoveOriginCoordinate(int originRow, int originColumn) {
+		return this.session.getErrorsMoveOriginCoordinate(new Coordinate(originRow, originColumn));
 	}
 
-	public Error controlErrorsMoveTargetCoordinate(int originRow, int originColumn, int targetRow, int targetColumn) {
-		return this.session.controlErrorsMoveTargetCoordinate(new Coordinate(originRow, originColumn),
+	public Error getErrorsMoveTargetCoordinate(int originRow, int originColumn, int targetRow, int targetColumn) {
+		return this.session.getErrorsMoveTargetCoordinate(new Coordinate(originRow, originColumn),
 				new Coordinate(targetRow, targetColumn));
 	}
 

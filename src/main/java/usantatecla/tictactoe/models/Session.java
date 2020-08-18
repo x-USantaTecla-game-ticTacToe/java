@@ -51,16 +51,16 @@ public class Session {
 		return this.game.getTypeOfTokenPlayerFromTurn();
 	}
 
-	public Error controlErrorsPutCoordinate(Coordinate coordinate) {
-		return this.game.controlErrorsPutCoordinate(coordinate);
+	public Error getErrorsPutCoordinate(Coordinate coordinate) {
+		return this.game.getErrorsPutCoordinate(coordinate);
 	}
 
-	public Error controlErrorsMoveOriginCoordinate(Coordinate originCoordinate) {
-		return this.game.controlErrorsMoveOriginCoordinate(originCoordinate);
+	public Error getErrorsMoveOriginCoordinate(Coordinate originCoordinate) {
+		return this.game.getErrorsMoveOriginCoordinate(originCoordinate);
 	}
 
-	public Error controlErrorsMoveTargetCoordinate(Coordinate originCoordinate, Coordinate targetCoordinate) {
-		return this.game.controlErrorsMoveTargetCoordinate(originCoordinate, targetCoordinate);
+	public Error getErrorsMoveTargetCoordinate(Coordinate originCoordinate, Coordinate targetCoordinate) {
+		return this.game.getErrorsMoveTargetCoordinate(originCoordinate, targetCoordinate);
 	}
 
     public boolean isBoardComplete() {

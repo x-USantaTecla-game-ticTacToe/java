@@ -14,7 +14,7 @@ public class Game {
     
     public Game() {
         this.board = new Board();
-        this.players = new Player[Turn.PLAYERS];
+        this.players = new Player[Turn.NUM_PLAYERS];
         this.turn = new Turn(this.players);
     }
 
@@ -22,7 +22,7 @@ public class Game {
 		for (int i = 0; i < numberOfUsers; i++) {
 			this.players[i] = new Player(Token.values()[i], this.board, PlayerType.USER_PLAYER);
 		}
-		for (int i = numberOfUsers; i < Turn.PLAYERS; i++) {
+		for (int i = numberOfUsers; i < Turn.NUM_PLAYERS; i++) {
 			this.players[i] = new Player(Token.values()[i], this.board, PlayerType.MACHINE_PLAYER);
 		}
     }
@@ -40,7 +40,7 @@ public class Game {
 
     private Player[] createCopyOfPlayers(Player[] players, Board board) {
         Player[] playersCopy = new Player[2];
-        for (int i = 0; i < Turn.PLAYERS; i++) {
+        for (int i = 0; i < Turn.NUM_PLAYERS; i++) {
             playersCopy[i] = new Player(players[i].getToken(), board, players[i].getType());
         }
         return playersCopy;
@@ -66,21 +66,21 @@ public class Game {
         return this.turn.getPlayer().getType();
     }
 
-    public Error controlErrorsPutCoordinate(Coordinate coordinate) {
+    public Error getErrorsPutCoordinate(Coordinate coordinate) {
         if (!board.isEmpty(coordinate)) {
 			return Error.NOT_OWNER;
 		}
 		return null;
     }
 
-    public Error controlErrorsMoveOriginCoordinate(Coordinate originCoordinate) {
+    public Error getErrorsMoveOriginCoordinate(Coordinate originCoordinate) {
         if (!board.isOccupied(originCoordinate, this.turn.getPlayer().getToken())) {
 			return Error.NOT_OWNER;
 		}
 		return null;
     }
 
-    public Error controlErrorsMoveTargetCoordinate(Coordinate originCoordinate, Coordinate targetCoordinate) {
+    public Error getErrorsMoveTargetCoordinate(Coordinate originCoordinate, Coordinate targetCoordinate) {
         if (originCoordinate.equals(targetCoordinate)) {
 			return Error.SAME_COORDINATES;
 		} else if (!board.isEmpty(targetCoordinate)) {
