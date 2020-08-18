@@ -10,7 +10,7 @@ public class Game {
     
     public Game() {
         this.board = new Board();
-        this.players = new Player[Turn.PLAYERS];
+        this.players = new Player[Turn.NUM_PLAYERS];
         this.turn = new Turn(this.players);
     }
 
@@ -18,7 +18,7 @@ public class Game {
 		for (int i = 0; i < numberOfUsers; i++) {
 			this.players[i] = new Player(Token.values()[i], this.board, PlayerType.USER_PLAYER);
 		}
-		for (int i = numberOfUsers; i < Turn.PLAYERS; i++) {
+		for (int i = numberOfUsers; i < Turn.NUM_PLAYERS; i++) {
 			this.players[i] = new Player(Token.values()[i], this.board, PlayerType.MACHINE_PLAYER);
 		}
     }

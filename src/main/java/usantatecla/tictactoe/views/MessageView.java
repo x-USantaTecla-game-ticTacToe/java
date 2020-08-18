@@ -11,7 +11,7 @@ enum MessageView {
 	VERTICAL_LINE_LEFT("| "),
 	PLAYER_WIN(" Player: You win!!! :-)"),
 	START_GAME("-------------------- TIC TAC TOE --------------------"),
-	CHOOSE_PLAYER("Number of users [0-" + Turn.PLAYERS + "] ");
+	CHOOSE_PLAYER("Number of users [0-" + Turn.NUM_PLAYERS + "] ");
 
 	private String message;
 	

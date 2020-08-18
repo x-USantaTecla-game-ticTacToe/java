@@ -14,7 +14,7 @@ class StartView {
 
     void interact() {
 		MessageView.START_GAME.writeln();
-		int numberOfPlayers = new PlayersDialog().read(Turn.PLAYERS);
+		int numberOfPlayers = new PlayersDialog().read(Turn.NUM_PLAYERS);
 		this.game.createPlayers(numberOfPlayers);
 		new BoardView(this.game.getBoard()).write();
 	}
