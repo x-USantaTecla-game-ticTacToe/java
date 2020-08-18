@@ -16,7 +16,7 @@ class StartView extends WithConsoleView {
 
     void interact() {
 		this.console.writeln(MessageView.START_GAME.getMessage());
-		int numberOfUsers = new PlayersDialog().read(Turn.PLAYERS);
+		int numberOfUsers = new PlayersDialog().read(Turn.NUM_PLAYERS);
 		this.game.createPlayers(numberOfUsers);
 		new BoardView(this.game.getBoard()).write();
 	}
