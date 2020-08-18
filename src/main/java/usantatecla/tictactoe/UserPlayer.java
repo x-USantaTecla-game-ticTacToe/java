@@ -11,7 +11,7 @@ class UserPlayer extends Player {
 
 	Error readCoordinateToPut(Coordinate coordinate) {
 		coordinate.read(ENTER_COORDINATE_TO_PUT);
-		Error error = getErrorsPutCoordinate(coordinate);
+		Error error = this.getErrorsPutCoordinate(coordinate);
 		this.writeErrorWhenNotNull(error);
 		return error;
 	}
@@ -19,7 +19,7 @@ class UserPlayer extends Player {
 	@Override
 	Error readCoordinateOriginToRemove(Coordinate coordinate) {
 		coordinate.read(ENTER_COORDINATE_TO_REMOVE);
-		Error error = getErrorsMoveOriginCoordinate(coordinate);
+		Error error = this.getErrorsMoveOriginCoordinate(coordinate);
 		this.writeErrorWhenNotNull(error);
 		return error;
 	}
@@ -27,7 +27,7 @@ class UserPlayer extends Player {
 	@Override
 	Error readCoordinateTargetToMove(Coordinate originCoordinate, Coordinate targetCoordinate) {
 		targetCoordinate.read(ENTER_COORDINATE_TO_PUT);
-		Error error = getErrorsMoveTargetCoordinate(originCoordinate, targetCoordinate);
+		Error error = this.getErrorsMoveTargetCoordinate(originCoordinate, targetCoordinate);
 		this.writeErrorWhenNotNull(error);
 		return error;
 	}

@@ -9,18 +9,18 @@ class MachinePlayer extends Player {
 	@Override
 	Error readCoordinateToPut(Coordinate coordinate) {
 		coordinate.random();
-		return getErrorsPutCoordinate(coordinate);
+		return this.getErrorsPutCoordinate(coordinate);
 	}
 
 	@Override
 	Error readCoordinateOriginToRemove(Coordinate coordinate) {
 		coordinate.random();
-		return getErrorsMoveOriginCoordinate(coordinate);
+		return this.getErrorsMoveOriginCoordinate(coordinate);
 	}
 
 	@Override
 	Error readCoordinateTargetToMove(Coordinate originCoordinate, Coordinate targetCoordinate) {
 		targetCoordinate.random();
-		return getErrorsMoveTargetCoordinate(originCoordinate, targetCoordinate);
+		return this.getErrorsMoveTargetCoordinate(originCoordinate, targetCoordinate);
 	}
 }
