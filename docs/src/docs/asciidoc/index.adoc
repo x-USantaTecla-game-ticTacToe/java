@@ -461,7 +461,7 @@ TOKEN_O
 }
 
 class  tictactoe.models.Turn{
-+ {static} PLAYERS: int
++ {static} NUM_PLAYERS: int
 - value: int
 - players: Player[]
 + Turn(Player[])
@@ -500,13 +500,14 @@ class  utils.Coordinate{
 # column: int
 # Coordinate()
 # Coordinate(int, int)
-# getDirection(Coordinate): Direction
+# getMainDirection(Coordinate): Direction
 - inMainDiagonal(): boolean
 - inVertical(Coordinate): boolean
 - inHorizontal(Coordinate): boolean
 + getRow(): int
 + getColumn(): int
-+ equals(Coordinate): boolean
++ hashCode(): int
++ equals(Object): boolean
 }
 utils.Coordinate ..> utils.Direction
 
