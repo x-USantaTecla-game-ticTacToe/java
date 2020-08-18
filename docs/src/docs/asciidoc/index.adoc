@@ -159,12 +159,6 @@ class  tictactoe.views.console.BoardView{
 }
 utils.WithConsoleView <|-down- tictactoe.views.console.BoardView
 
-class  tictactoe.views.console.ChoosePlayerView{
-~ readPlayers(): void
-- readUsersNumber(): int
-}
-utils.WithConsoleView <|-down- tictactoe.views.console.ChoosePlayerView
-
 class  tictactoe.views.console.ConsoleView{
 - startView: StartView
 - playView: PlayView
@@ -216,7 +210,7 @@ class tictactoe.views.console.StartView{
 ~ StartView(Game)
 ~ interact(): void
 }
-tictactoe.views.console.StartView ..> tictactoe.views.console.ChoosePlayerView
+tictactoe.views.console.StartView ..> utils.PlayersDialog
 
 class  tictactoe.views.console.UserPlayerView{
 ~ {static} ENTER_COORDINATE_TO_PUT: String
@@ -522,6 +516,12 @@ enum  utils.Direction{
   MAIN_DIAGONAL
   INVERSE_DIAGONAL
 }
+
+class  utils.PlayersDialog{
+- {static} USERS_ERROR: String
++ read(int): int
+}
+utils.WithConsoleView <|-down- utils.PlayersDialog
 
 class  utils.WithConsoleView{
 # console: Console
