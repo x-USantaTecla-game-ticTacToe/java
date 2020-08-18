@@ -16,7 +16,7 @@ class MachinePlayerView extends PlayerView {
 		Error error;
 		do {
 			coordinate = this.logic.generateRandomCoordinate();
-			error = controlErrorsPutCoordinate(coordinate[0], coordinate[1]);
+			error = getErrorsPutCoordinate(coordinate[0], coordinate[1]);
 		} while (error != null);
 		return coordinate;
 	}
@@ -27,11 +27,11 @@ class MachinePlayerView extends PlayerView {
 		Error error;
 		do {
 			coordinates[0] = this.logic.generateRandomCoordinate();
-			error = controlErrorsMoveOriginCoordinate(coordinates[0][0], coordinates[0][1]);
+			error = getErrorsMoveOriginCoordinate(coordinates[0][0], coordinates[0][1]);
 		} while (error != null);
 		do {
 			coordinates[1] = this.logic.generateRandomCoordinate();
-			error = controlErrorsMoveTargetCoordinate(coordinates[0][0], coordinates[0][1], coordinates[1][0], coordinates[1][1]);
+			error = getErrorsMoveTargetCoordinate(coordinates[0][0], coordinates[0][1], coordinates[1][0], coordinates[1][1]);
 		} while (error != null);
 		return coordinates;
 	}

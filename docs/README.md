@@ -15,7 +15,7 @@
 <div class="details">
 <span id="author" class="author">Santa Tecla</span><br>
 <span id="email" class="email"><a href="mailto:parqueNaturalSantaTecla@gmail.com">parqueNaturalSantaTecla@gmail.com</a></span><br>
-<span id="revnumber">version 0.5.7</span>
+<span id="revnumber">version 0.5.8</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Índice</div>
@@ -117,7 +117,7 @@
 <h3 id="arquitectura">Arquitectura</h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/arquitecturaVersion6.svg" alt="arquitecturaVersion6" width="500" height="700">
+<img src="build/docs/asciidoc/images/arquitecturaVersion6.svg" alt="arquitecturaVersion6" width="700" height="700">
 </div>
 </div>
 </div>
@@ -125,7 +125,7 @@
 <h3 id="paquete-tictactoe">Paquete <em>tictactoe</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/tictactoeVersion6.svg" alt="tictactoeVersion6" width="1000" height="400">
+<img src="build/docs/asciidoc/images/tictactoeVersion6.svg" alt="tictactoeVersion6" width="800" height="400">
 </div>
 </div>
 </div>
@@ -173,7 +173,7 @@
 <h3 id="paquete-tictactoe-controllers">Paquete <em>tictactoe.controllers</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/tictactoeControllersVersion6.svg" alt="tictactoeControllersVersion6" width="800" height="400">
+<img src="build/docs/asciidoc/images/tictactoeControllersVersion6.svg" alt="tictactoeControllersVersion6" width="800" height="500">
 </div>
 </div>
 </div>
@@ -257,8 +257,8 @@
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 0.5.7<br>
-Last updated 2020-08-03 23:25:00 +0200
+Version 0.5.8<br>
+Last updated 2020-08-18 14:15:00 +0200
 </div>
 </div>
 </html>

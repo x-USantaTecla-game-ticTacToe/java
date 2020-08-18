@@ -21,7 +21,7 @@ public class Coordinate extends usantatecla.utils.Coordinate {
 	}
 
 	Direction getDirection(Coordinate coordinate) {
-		Direction direction = super.getDirection(coordinate);
+		Direction direction = super.getMainDirection(coordinate);
 		if (direction != null) {
 			return direction;
 		}

@@ -21,6 +21,7 @@ class CoordinateView extends WithConsoleView {
 			this.console.writeln(title);
             row = this.console.readInt(MessageView.READ_ROW.getMessage()) - 1;
             column = this.console.readInt(MessageView.READ_COLUMN.getMessage()) - 1;
+            assert this.logic.isCoordinateValid(row, column);
             if (!this.logic.isCoordinateValid(row, column)) {
                 new ErrorView(Error.WRONG_COORDINATES).writeln();
             }

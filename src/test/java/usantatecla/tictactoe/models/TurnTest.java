@@ -21,11 +21,23 @@ public class TurnTest {
     }
 
     @Test
-    public void testGivenNewTurnThenChangeTurnIsValid() {
+    public void testGivenNewTurnWhenChangeTurnThenIsOtherTurn() {
         assertEquals(this.players[0].getToken(), this.turn.getPlayer().getToken());
         assertEquals(this.players[1].getToken(), this.turn.getOtherPlayer().getToken());
         this.turn.change();
         assertEquals(this.players[1].getToken(), this.turn.getPlayer().getToken());
         assertEquals(this.players[0].getToken(), this.turn.getOtherPlayer().getToken());
+    }
+
+    @Test
+    public void testGivenNewTurnWhenChangeTurnTwoTimesThenIsTheSameTurn() {
+        assertEquals(this.players[0].getToken(), this.turn.getPlayer().getToken());
+        assertEquals(this.players[1].getToken(), this.turn.getOtherPlayer().getToken());
+        this.turn.change();
+        assertEquals(this.players[1].getToken(), this.turn.getPlayer().getToken());
+        assertEquals(this.players[0].getToken(), this.turn.getOtherPlayer().getToken());
+        this.turn.change();
+        assertEquals(this.players[0].getToken(), this.turn.getPlayer().getToken());
+        assertEquals(this.players[1].getToken(), this.turn.getOtherPlayer().getToken());
     }
 }

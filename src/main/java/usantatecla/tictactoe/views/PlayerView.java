@@ -14,15 +14,15 @@ public abstract class PlayerView {
     public abstract int[] readCoordinateToPut();
     public abstract int[][] readCoordinatesToMove();
 
-    public Error controlErrorsPutCoordinate(int row, int column) {
-        return this.logic.controlErrorsPutCoordinate(row, column);
+    public Error getErrorsPutCoordinate(int row, int column) {
+        return this.logic.getErrorsPutCoordinate(row, column);
 	}
 
-	public Error controlErrorsMoveOriginCoordinate(int originRow, int originColumn) {
-		return this.logic.controlErrorsMoveOriginCoordinate(originRow, originColumn);
+	public Error getErrorsMoveOriginCoordinate(int originRow, int originColumn) {
+		return this.logic.getErrorsMoveOriginCoordinate(originRow, originColumn);
 	}
 
-	public Error controlErrorsMoveTargetCoordinate(int originRow, int originColumn, int targetRow, int targetColumn) {
-		return this.logic.controlErrorsMoveTargetCoordinate(originRow, originColumn, targetRow, targetColumn);
+	public Error getErrorsMoveTargetCoordinate(int originRow, int originColumn, int targetRow, int targetColumn) {
+		return this.logic.getErrorsMoveTargetCoordinate(originRow, originColumn, targetRow, targetColumn);
 	}
 }
