@@ -261,7 +261,7 @@
 <div id="footer">
 <div id="footer-text">
 Version 0.7.7<br>
-Last updated 2020-08-03 23:35:00 +0200
+Last updated 2020-08-18 17:00:00 +0200
 </div>
 </div>
 </html>
