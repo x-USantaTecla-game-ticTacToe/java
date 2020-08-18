@@ -14,16 +14,16 @@ public class PlayController extends Controller {
 		return this.game.getTypeOfTokenPlayerFromTurn();
 	}
 
-	public Error controlErrorsPutCoordinate(int row, int column) {
-		return this.game.controlErrorsPutCoordinate(new Coordinate(row, column));
+	public Error getErrorsPutCoordinate(int row, int column) {
+		return this.game.getErrorsPutCoordinate(new Coordinate(row, column));
 	}
 
-	public Error controlErrorsMoveOriginCoordinate(int originRow, int originColumn) {
-		return this.game.controlErrorsMoveOriginCoordinate(new Coordinate(originRow, originColumn));
+	public Error getErrorsMoveOriginCoordinate(int originRow, int originColumn) {
+		return this.game.getErrorsMoveOriginCoordinate(new Coordinate(originRow, originColumn));
 	}
 
-	public Error controlErrorsMoveTargetCoordinate(int originRow, int originColumn, int targetRow, int targetColumn) {
-		return this.game.controlErrorsMoveTargetCoordinate(new Coordinate(originRow, originColumn),
+	public Error getErrorsMoveTargetCoordinate(int originRow, int originColumn, int targetRow, int targetColumn) {
+		return this.game.getErrorsMoveTargetCoordinate(new Coordinate(originRow, originColumn),
 				new Coordinate(targetRow, targetColumn));
 	}
 

@@ -18,6 +18,7 @@ public class Console {
 			} catch (Exception ex) {
 				this.writeError("characte string");
 			}
+			assert ok;
 		} while (!ok);
 		return input;
 	}
@@ -36,6 +37,7 @@ public class Console {
 			} catch (Exception ex) {
 				this.writeError("integer");
 			}
+			assert ok;
 		} while (!ok);
 		return input;
 	}
@@ -51,6 +53,7 @@ public class Console {
 				charValue = input.charAt(0);
 				ok = true;
 			}
+			assert ok;
 		} while (!ok);
 		return charValue;
 	}

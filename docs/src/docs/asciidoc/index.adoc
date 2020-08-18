@@ -148,9 +148,9 @@ class  tictactoe.views.PlayerView{
 + PlayerView(PlayController)
 + {abstract} readCoordinateToPut(): int[]
 + {abstract} readCoordinatesToMove(): int[][]
-+ controlErrorsPutCoordinate(int, int): Error
-+ controlErrorsMoveOriginCoordinate(int, int): Error
-+ controlErrorsMoveTargetCoordinate(int, int, int, int): Error
++ getErrorsPutCoordinate(int, int): Error
++ getErrorsMoveOriginCoordinate(int, int): Error
++ getErrorsMoveTargetCoordinate(int, int, int, int): Error
 }
 tictactoe.views.PlayerView ..> tictactoe.controllers.PlayController
 
@@ -185,12 +185,6 @@ class  tictactoe.views.console.BoardView{
 }
 utils.WithConsoleView <|-down- tictactoe.views.console.BoardView
 tictactoe.views.console.BoardView ..> tictactoe.controllers.PlayController
-
-class  tictactoe.views.console.ChoosePlayerView{
-~ readPlayers(): void
-- readUsersNumber(): int
-}
-utils.WithConsoleView <|-down- tictactoe.views.console.ChoosePlayerView
 
 class  tictactoe.views.console.ConsoleView{
 - startView: StartView
@@ -250,7 +244,7 @@ class tictactoe.views.console.StartView{
 ~ StartView(StartController)
 ~ interact(): void
 }
-tictactoe.views.console.StartView ..> tictactoe.views.console.ChoosePlayerView
+tictactoe.views.console.StartView ..> utils.PlayersDialog
 tictactoe.views.console.StartView ..> tictactoe.controllers.StartController
 
 class  tictactoe.views.console.UserPlayerView{
@@ -486,9 +480,9 @@ class  tictactoe.models.Player{
 ~ getToken(): Token
 ~ put(Coordinate): void
 ~ move(Coordinate[]): void
-+ controlErrorsPutCoordinate(Coordinate): Error
-+ controlErrorsMoveOriginCoordinate(Coordinate): Error
-+ controlErrorsMoveTargetCoordinate(Coordinate, Coordinate): Error
++ getErrorsPutCoordinate(Coordinate): Error
++ getErrorsMoveOriginCoordinate(Coordinate): Error
++ getErrorsMoveTargetCoordinate(Coordinate, Coordinate): Error
 }
 tictactoe.models.Player *-down-> tictactoe.types.Token
 tictactoe.models.Player *-down-> tictactoe.models.Board
@@ -497,7 +491,7 @@ tictactoe.models.Player ..> tictactoe.models.Coordinate
 tictactoe.models.Player ..> tictactoe.types.Error
 
 class  tictactoe.models.Turn{
-+ {static} PLAYERS: int
++ {static} NUM_PLAYERS: int
 - value: int
 - players: Player[]
 + Turn(Player[])
@@ -611,13 +605,14 @@ class  utils.Coordinate{
 # column: int
 # Coordinate()
 # Coordinate(int, int)
-# getDirection(Coordinate): Direction
+# getMainDirection(Coordinate): Direction
 - inMainDiagonal(): boolean
 - inVertical(Coordinate): boolean
 - inHorizontal(Coordinate): boolean
 + getRow(): int
 + getColumn(): int
-+ equals(Coordinate): boolean
++ hashCode(): int
++ equals(Object): boolean
 }
 utils.Coordinate ..> utils.Direction
 
@@ -627,6 +622,12 @@ enum  utils.Direction{
   MAIN_DIAGONAL
   INVERSE_DIAGONAL
 }
+
+class  utils.PlayersDialog{
+- {static} USERS_ERROR: String
++ read(int): int
+}
+utils.WithConsoleView <|-down- utils.PlayersDialog
 
 class  utils.WithConsoleView{
 # console: Console
