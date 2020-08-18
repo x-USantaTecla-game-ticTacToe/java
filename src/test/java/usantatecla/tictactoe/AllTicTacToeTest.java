@@ -10,5 +10,5 @@ import usantatecla.tictactoe.views.console.AllViewTest;
 @Suite.SuiteClasses({ 
     AllModelTest.class, 
     AllViewTest.class } )
-public class AllTest {
+public class AllTicTacToeTest {
 }

@@ -133,9 +133,9 @@ class  tictactoe.views.PlayerView{
 + PlayerView(Player)
 + {abstract} readCoordinateToPut(): Coordinate
 + {abstract} readCoordinatesToMove(): Coordinate[]
-+ controlErrorsPutCoordinate(Coordinate): Error
-+ controlErrorsMoveOriginCoordinate(Coordinate): Error
-+ controlErrorsMoveTargetCoordinate(Coordinate, Coordinate): Error
++ getErrorsPutCoordinate(Coordinate): Error
++ getErrorsMoveOriginCoordinate(Coordinate): Error
++ getErrorsMoveTargetCoordinate(Coordinate, Coordinate): Error
 }
 
 class  tictactoe.views.View{
@@ -164,12 +164,6 @@ class  tictactoe.views.console.BoardView{
 - printSquareValueBoard(int, int): void
 }
 utils.WithConsoleView <|-down- tictactoe.views.console.BoardView
-
-class  tictactoe.views.console.ChoosePlayerView{
-~ readPlayers(): void
-- readUsersNumber(): int
-}
-utils.WithConsoleView <|-down- tictactoe.views.console.ChoosePlayerView
 
 class  tictactoe.views.console.ConsoleView{
 - startView: StartView
@@ -222,7 +216,7 @@ class tictactoe.views.console.StartView{
 ~ StartView(Game)
 ~ interact(): void
 }
-tictactoe.views.console.StartView ..> tictactoe.views.console.ChoosePlayerView
+tictactoe.views.console.StartView ..> utils.PlayersDialog
 
 class  tictactoe.views.console.UserPlayerView{
 ~ {static} ENTER_COORDINATE_TO_PUT: String
@@ -449,9 +443,9 @@ class  tictactoe.models.Player{
 ~ getToken(): Token
 ~ put(Coordinate): void
 ~ move(Coordinate[]): void
-+ controlErrorsPutCoordinate(Coordinate): Error
-+ controlErrorsMoveOriginCoordinate(Coordinate): Error
-+ controlErrorsMoveTargetCoordinate(Coordinate, Coordinate): Error
++ getErrorsPutCoordinate(Coordinate): Error
++ getErrorsMoveOriginCoordinate(Coordinate): Error
++ getErrorsMoveTargetCoordinate(Coordinate, Coordinate): Error
 }
 tictactoe.models.Player *-down-> tictactoe.models.Token
 tictactoe.models.Player *-down-> tictactoe.models.Board
@@ -473,7 +467,7 @@ TOKEN_O
 }
 
 class  tictactoe.models.Turn{
-+ {static} PLAYERS: int
++ {static} NUM_PLAYERS: int
 - value: int
 - players: Player[]
 + Turn(Player[])
@@ -512,13 +506,14 @@ class  utils.Coordinate{
 # column: int
 # Coordinate()
 # Coordinate(int, int)
-# getDirection(Coordinate): Direction
+# getMainDirection(Coordinate): Direction
 - inMainDiagonal(): boolean
 - inVertical(Coordinate): boolean
 - inHorizontal(Coordinate): boolean
 + getRow(): int
 + getColumn(): int
-+ equals(Coordinate): boolean
++ hashCode(): int
++ equals(Object): boolean
 }
 utils.Coordinate ..> utils.Direction
 
@@ -528,6 +523,12 @@ enum  utils.Direction{
   MAIN_DIAGONAL
   INVERSE_DIAGONAL
 }
+
+class  utils.PlayersDialog{
+- {static} USERS_ERROR: String
++ read(int): int
+}
+utils.WithConsoleView <|-down- utils.PlayersDialog
 
 class  utils.WithConsoleView{
 # console: Console
