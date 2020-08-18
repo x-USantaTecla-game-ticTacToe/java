@@ -17,7 +17,7 @@ public class Coordinate extends WithConsoleModel {
 		this.column = column;
 	}
 
-	protected Direction getDirection(Coordinate coordinate) {
+	protected Direction getMainDirection(Coordinate coordinate) {
 		if (this.inHorizontal(coordinate)) {
 			return Direction.HORIZONTAL;
 		}
@@ -56,8 +56,24 @@ public class Coordinate extends WithConsoleModel {
 		return this.column;
 	}
 
-	public boolean equals(Coordinate coordinate) {
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + column;
+		result = prime * result + row;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object coordinateObject) {
+		if (!(coordinateObject instanceof Coordinate)) {
+			return false;
+		}
+		Coordinate coordinate = (Coordinate) coordinateObject;
 		return this.column == coordinate.column && this.row == coordinate.row;
 	}
+
+	
 
 }
