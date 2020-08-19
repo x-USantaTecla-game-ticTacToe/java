@@ -27,10 +27,7 @@ image::Dibujo.jpg[]
 
 == Vista de Lógica/Diseño
 
-- Arquitectura Documento/Vista mediante *Patrón de Vista Separada*
-* [lime-background]*Patrón Template Method (Factory Method)*, _para clases principales_
-* [lime-background]*Patrón Model View Presenter*, _para incluir controllers_
-* [lime-background]*Patrón Facade*, _para clases principales_
+- Modelo/Vista/Presentador con Presentador del Modelo con *Vista Achicada*
 
 === Arquitectura
 

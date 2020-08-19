@@ -15,7 +15,7 @@
 <div class="details">
 <span id="author" class="author">Santa Tecla</span><br>
 <span id="email" class="email"><a href="mailto:parqueNaturalSantaTecla@gmail.com">parqueNaturalSantaTecla@gmail.com</a></span><br>
-<span id="revnumber">version 0.6.8</span>
+<span id="revnumber">version 0.6.9</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Índice</div>
@@ -96,7 +96,7 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Arquitectura Documento/Vista mediante <strong>Patrón de Vista Separada</strong></p>
+<p>Modelo/Vista/Presentador con Presentador del Modelo con <strong>Vista Achicada</strong></p>
 <div class="ulist">
 <ul>
 <li>
@@ -195,27 +195,10 @@
 <div class="ulist">
 <ul>
 <li>
-<p><strong class="red line-through"><em><span class="red">DRY: clases principales</span></em></strong></p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="rediseño">Rediseño</h3>
-<div class="ulist">
-<ul>
-<li>
-<p><em>Nuevas funcionalidades: undo/redo, demo, estadísiticas,&#8230;&#8203;</em></p>
-<div class="ulist">
-<ul>
-<li>
-<p><span class="red"><em><strong>Clases Grandes</strong>: los Modelos asumen la responsabilidad y crecen en líneas, métodos, atributos, &#8230;&#8203; con las nuevas funcionalidades</em></span></p>
+<p><em><span class="red"><strong class="red line-through">DRY</strong>: en las clases de vistas que asume el flujo de control y se repite en mastermind.views.console.ProposalView y mastermind.views.graphics.GameView</span></em></strong></p>
 </li>
 <li>
-<p><span class="red"><em><strong>Open/Close</strong>: hay que modificar los modelos que estaban funcionando previamente para incorporar nuevas funcionalidades</em></span></p>
-</li>
-</ul>
-</div>
+<p><em><span class="red"><strong class="red line-through">Principio de Sustitución de Liskov</strong>: las vistas preguntan por el tipo de controlador polimórfico</span></em></strong></p>
 </li>
 </ul>
 </div>
@@ -257,8 +240,8 @@
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 0.6.8<br>
-Last updated 2020-08-03 17:00:00 +0200
+Version 0.6.9<br>
+Last updated 2020-08-19 23:35:00 +0200
 </div>
 </div>
 </html>
