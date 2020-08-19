@@ -193,6 +193,8 @@
 <div class="imageblock">
 <div class="content">
 <img src="build/docs/asciidoc/images/diagramaImplementacion.svg" alt="diagramaImplementacion" width="1000" height="200">
+<img src="build/docs/asciidoc/images/diagramaImplementacionClient.svg" alt="diagramaImplementacionClient" width="1000" height="207">
+<img src="build/docs/asciidoc/images/diagramaImplementacionServer.svg" alt="diagramaImplementacionServer" width="1000" height="207">
 </div>
 </div>
 </div>
@@ -202,7 +204,7 @@
 <div class="sectionbody">
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/diagramaDespliegue.svg" alt="diagramaDespliegue" width="203" height="207">
+<img src="build/docs/asciidoc/images/diagramaDespliegue.svg" alt="diagramaDespliegue" width="600" height="207">
 </div>
 </div>
 </div>

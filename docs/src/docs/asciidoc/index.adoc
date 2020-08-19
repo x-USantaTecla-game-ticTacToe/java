@@ -797,15 +797,15 @@ package "  "  as java.util {
 
 [tictactoeServer.jar] as jarServer
 
-jarClient *--> tictactoe
-jarClient *--> tictactoe.distributed.dispatchers
-jarClient *--> tictactoe.models
-jarClient *--> tictactoe.types
-jarClient *--> tictactoe.controllers
-jarClient *--> tictactoe.views
-jarClient *--> utils
-jarClient *--> java.io
-jarClient *--> java.util
+jarServer *--> tictactoe
+jarServer *--> tictactoe.distributed.dispatchers
+jarServer *--> tictactoe.models
+jarServer *--> tictactoe.types
+jarServer *--> tictactoe.controllers
+jarServer *--> tictactoe.views
+jarServer *--> utils
+jarServer *--> java.io
+jarServer *--> java.util
 ....
 
 
