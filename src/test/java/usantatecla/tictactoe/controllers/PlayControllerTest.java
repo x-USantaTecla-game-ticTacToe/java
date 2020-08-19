@@ -123,4 +123,73 @@ public class PlayControllerTest {
     public void testGivenNewPlayControllerWhenNotPutAnyTokenThenIsEmptyToken() {
         assertTrue(this.playController.isEmptyToken(0, 0));
     }
+
+    @Test
+    public void testGivenNewPlayControllerWhenCheckUndoableWithoutDoingAnyMovementThenIsFalse() {
+        assertFalse(this.playController.undoable());
+    }
+    
+    @Test
+    public void testGivenNewPlayControllerWhenCheckUndoableDoingTwoMovementsThenIsTrue() {
+        this.playController.putTokenPlayerFromTurn(0, 0);
+        this.playController.changeTurn();
+        this.playController.putTokenPlayerFromTurn(0, 1);
+        this.playController.changeTurn();
+        assertTrue(this.playController.undoable());
+    }
+
+    @Test
+    public void testGivenNewPlayControllerWhenCheckUndoableDoingTwoMovementsAndUndoThenIsFalse() {
+        this.playController.putTokenPlayerFromTurn(0, 0);
+        this.playController.changeTurn();
+        this.playController.putTokenPlayerFromTurn(0, 1);
+        this.playController.changeTurn();
+        assertTrue(this.playController.undoable());
+        this.playController.undo();
+        assertFalse(this.playController.undoable());
+    }
+
+    @Test
+    public void testGivenNewPlayControllerWhenCheckRedoableDoingUndoThenIsTrue() {
+        this.playController.putTokenPlayerFromTurn(0, 0);
+        this.playController.changeTurn();
+        this.playController.putTokenPlayerFromTurn(0, 1);
+        this.playController.changeTurn();
+        this.playController.undo();
+        assertTrue(this.playController.redoable());
+    }
+
+    @Test
+    public void testGivenNewPlayControllerWhenCheckRedoableDoingUndoAndRedoThenIsFalse() {
+        this.playController.putTokenPlayerFromTurn(0, 0);
+        this.playController.changeTurn();
+        this.playController.putTokenPlayerFromTurn(0, 1);
+        this.playController.changeTurn();
+        this.playController.undo();
+        assertTrue(this.playController.redoable());
+        this.playController.redo();
+        assertFalse(this.playController.redoable());
+    }
+
+    @Test
+    public void testGivenNewPlayControllerWhenUndoMovementThenTheLastTokenPutIsEmpty() {
+        this.playController.putTokenPlayerFromTurn(0, 0);
+        this.playController.changeTurn();
+        this.playController.putTokenPlayerFromTurn(0, 1);
+        this.playController.changeTurn();
+        this.playController.undo();
+        assertTrue(this.playController.isEmptyToken(0, 1));
+    }
+
+    @Test
+    public void testGivenNewPlayControllerWhenUndoAndRedoMovementThenTheLastTokenPutIsOcuppiedAgain() {
+        this.playController.putTokenPlayerFromTurn(0, 0);
+        this.playController.changeTurn();
+        this.playController.putTokenPlayerFromTurn(0, 1);
+        this.playController.changeTurn();
+        this.playController.undo();
+        assertTrue(this.playController.isEmptyToken(0, 1));
+        this.playController.redo();
+        assertFalse(this.playController.isEmptyToken(0, 1));
+    }
 }
