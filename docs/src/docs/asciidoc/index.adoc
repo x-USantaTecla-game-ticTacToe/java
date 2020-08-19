@@ -27,8 +27,10 @@ image::Dibujo.jpg[]
 
 == Vista de Lógica/Diseño
 
-- Patrones de Diseño
-* [lime-background]*Patrón Undo/Redo*
+- *Modelo/Vista/Presentador* con *Presentador del Modelo*  con *Vista Achicada*
+* [lime-background]*Patrón Command*, para el menú
+* [lime-background]*Patrón Composite*, para multi-controladores
+* [lime-background]*Patrón Memento*, para la funcionalidad undo/redo
 
 === Arquitectura
 

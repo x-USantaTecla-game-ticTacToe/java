@@ -94,11 +94,17 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Patrones de Diseño</p>
+<p><strong>Modelo/Vista/Presentador</strong> con <strong>Presentador del Modelo</strong> con <strong>Vista Achicada</strong></p>
 <div class="ulist">
 <ul>
 <li>
-<p><strong class="lime-background">Patrón Undo/Redo</strong></p>
+<p><strong class="lime-background">Patrón Command</strong>, para el menú</p>
+</li>
+<li>
+<p><strong class="lime-background">Patrón Composite</strong>, para multi-controladores</p>
+</li>
+<li>
+<p><strong class="lime-background">Patrón Memento</strong>, para la funcionalidad undo/redo</p>
 </li>
 </ul>
 </div>
@@ -159,41 +165,6 @@
 <div class="content">
 <img src="build/docs/asciidoc/images/utilsVersion9.svg" alt="utilsVersion9" width="456" height="548">
 </div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="calidad-del-software">Calidad del Software</h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="diseño">Diseño</h3>
-<div class="ulist">
-<ul>
-<li>
-<p><strong class="red line-through"><em><span class="red">DRY: clases principales</span></em></strong></p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="rediseño">Rediseño</h3>
-<div class="ulist">
-<ul>
-<li>
-<p><em>Nuevas funcionalidades: undo/redo, demo, estadísiticas,&#8230;&#8203;</em></p>
-<div class="ulist">
-<ul>
-<li>
-<p><span class="red"><em><strong>Clases Grandes</strong>: los Modelos asumen la responsabilidad y crecen en líneas, métodos, atributos, &#8230;&#8203; con las nuevas funcionalidades</em></span></p>
-</li>
-<li>
-<p><span class="red"><em><strong>Open/Close</strong>: hay que modificar los modelos que estaban funcionando previamente para incorporar nuevas funcionalidades</em></span></p>
-</li>
-</ul>
-</div>
-</li>
-</ul>
 </div>
 </div>
 </div>
