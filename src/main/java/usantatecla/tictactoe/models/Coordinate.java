@@ -32,7 +32,7 @@ public class Coordinate extends usantatecla.utils.Coordinate {
 	}
 
 	private boolean inInverseDiagonal() {
-		return this.row + this.column == Coordinate.DIMENSION + 1;
+		return this.row + this.column == Coordinate.DIMENSION - 1;
 	}
 
 	public boolean isValid() {
