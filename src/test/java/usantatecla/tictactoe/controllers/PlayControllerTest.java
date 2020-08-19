@@ -8,19 +8,18 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import usantatecla.tictactoe.models.Coordinate;
-import usantatecla.tictactoe.models.Game;
-import usantatecla.tictactoe.models.State;
+import usantatecla.tictactoe.models.Session;
 
 public class PlayControllerTest {
     
     private PlayController playController;
 
-    private Game game;
+    private Session session;
 
     public PlayControllerTest() {
-        this.game = new Game();
-        this.game.createPlayers(0);
-        this.playController = new PlayController(this.game, new State());
+        this.session = new Session();
+        this.session.createPlayers(0);
+        this.playController = new PlayController(this.session);
     }
 
     @Test
