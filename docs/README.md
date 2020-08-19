@@ -96,23 +96,7 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Arquitectura Documento/Vista mediante <strong>Patrón de Vista Separada</strong></p>
-<div class="ulist">
-<ul>
-<li>
-<p><strong class="lime-background">Patrón Template Method (Factory Method)</strong>, <em>para clases principales</em></p>
-</li>
-<li>
-<p><strong class="lime-background">Patrón Model View Presenter</strong>, <em>para incluir controllers</em></p>
-</li>
-<li>
-<p><strong class="lime-background">Patrón Facade</strong>, <em>para clases principales</em></p>
-</li>
-<li>
-<p><strong class="lime-background">Patrón Double Dispatching</strong>, <em>para clases principales</em></p>
-</li>
-</ul>
-</div>
+<p><strong>Modelo/Vista/Presentador</strong> con <strong>Presentador del Modelo</strong> con <strong>Vista Achicada</strong></p>
 </li>
 </ul>
 </div>
@@ -198,27 +182,7 @@
 <div class="ulist">
 <ul>
 <li>
-<p><strong class="red line-through"><em><span class="red">DRY: clases principales</span></em></strong></p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="rediseño">Rediseño</h3>
-<div class="ulist">
-<ul>
-<li>
-<p><em>Nuevas funcionalidades: undo/redo, demo, estadísiticas,&#8230;&#8203;</em></p>
-<div class="ulist">
-<ul>
-<li>
-<p><span class="red"><em><strong>Clases Grandes</strong>: los Modelos asumen la responsabilidad y crecen en líneas, métodos, atributos, &#8230;&#8203; con las nuevas funcionalidades</em></span></p>
-</li>
-<li>
-<p><span class="red"><em><strong>Open/Close</strong>: hay que modificar los modelos que estaban funcionando previamente para incorporar nuevas funcionalidades</em></span></p>
-</li>
-</ul>
-</div>
+<p><strong>Principio de Sustitución de Liskov</strong>: las vistas preguntan por el tipo de controlador polimórfico</p>
 </li>
 </ul>
 </div>
