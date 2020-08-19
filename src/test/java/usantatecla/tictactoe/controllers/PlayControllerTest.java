@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import usantatecla.tictactoe.models.Coordinate;
 import usantatecla.tictactoe.models.Game;
+import usantatecla.tictactoe.models.State;
 
 public class PlayControllerTest {
     
@@ -19,7 +20,7 @@ public class PlayControllerTest {
     public PlayControllerTest() {
         this.game = new Game();
         this.game.createPlayers(0);
-        this.playController = new PlayController(this.game);
+        this.playController = new PlayController(this.game, new State());
     }
 
     @Test
