@@ -15,9 +15,9 @@ public class MachinePlayerViewTest {
     private MachinePlayerView machinePlayerView;
 
     public MachinePlayerViewTest() {
-        this.session = new Session();
+        this.session = new Session(null);
         this.session.createPlayers(0);
-        this.machinePlayerView = new MachinePlayerView(new PlayController(this.session));
+        this.machinePlayerView = new MachinePlayerView(new PlayController(this.session, null));
     }
 
     @Test

@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.8">
 <meta name="author" content="Santa Tecla">
-<title>Master Mind. Solución 9.3. mvp.pm.withComposite</title>
+<title>Master Mind. Solución 10.4. mvp.pm.withoutProxy</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -439,7 +439,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="book">
 <div id="header">
-<h1>Master Mind. Solución 9.3. <strong>mvp.pm.withComposite</strong></h1>
+<h1>Master Mind. Solución 10.4. <strong>mvp.pm.withoutProxy</strong></h1>
 <div class="details">
 <span id="author" class="author">Santa Tecla</span><br>
 <span id="email" class="email"><a href="mailto:parqueNaturalSantaTecla@gmail.com">parqueNaturalSantaTecla@gmail.com</a></span><br>
@@ -496,7 +496,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p><em>Interfaz: <strong class="lime-background">Gráfica</strong> y <strong>Texto</strong></em></p>
 </li>
 <li>
-<p><em>Distribución: <strong>Standalone</strong></em></p>
+<p><em>Distribución: <strong>Standalone</strong> + <strong class="lime-background">Client/Server</strong></em></p>
 </li>
 <li>
 <p><em>Persistencia: <strong>No</strong></em></p>
@@ -522,14 +522,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="ulist">
 <ul>
 <li>
-<p>Patrones de Diseño</p>
-<div class="ulist">
-<ul>
-<li>
-<p><strong class="lime-background">Patrón Undo/Redo</strong></p>
-</li>
-</ul>
-</div>
+<p>Modelo/Vista/Presentador con Presentador del Modelo con Vista Achicada</p>
 </li>
 </ul>
 </div>
@@ -537,7 +530,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h3 id="arquitectura">Arquitectura</h3>
 <div class="imageblock">
 <div class="content">
-<img src="images/arquitecturaVersion9.svg" alt="arquitecturaVersion9" width="506" height="648">
+<img src="images/arquitecturaVersion10.svg" alt="arquitecturaVersion10" width="1047" height="648">
 </div>
 </div>
 </div>
@@ -553,7 +546,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h3 id="paquete-tictactoe-views">Paquete <em>tictactoe.views</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="images/tictactoeViewsVersion9.svg" alt="tictactoeViewsVersion9" width="2577" height="1472">
+<img src="images/tictactoeViewsVersion9.svg" alt="tictactoeViewsVersion9" width="2442" height="1472">
 </div>
 </div>
 </div>
@@ -561,7 +554,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h3 id="paquete-tictactoe-models">Paquete <em>tictactoe.models</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="images/tictactoeModelsVersion9.svg" alt="tictactoeModelsVersion9" width="1678" height="2218">
+<img src="images/tictactoeModelsVersion9.svg" alt="tictactoeModelsVersion9" width="1660" height="2218">
 </div>
 </div>
 </div>
@@ -577,7 +570,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h3 id="paquete-tictactoe-controllers">Paquete <em>tictactoe.controllers</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="images/tictactoeControllersVersion9.svg" alt="tictactoeControllersVersion9" width="1233" height="1175">
+<img src="images/tictactoeControllersVersion9.svg" alt="tictactoeControllersVersion9" width="1215" height="1175">
 </div>
 </div>
 </div>
@@ -585,7 +578,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h3 id="paquete-utils">Paquete <em>utils</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="images/utilsVersion9.svg" alt="utilsVersion9" width="1026" height="721">
+<img src="images/utilsVersion9.svg" alt="utilsVersion9" width="1026" height="707">
 </div>
 </div>
 </div>
@@ -634,6 +627,16 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <img src="images/diagramaImplementacion.svg" alt="diagramaImplementacion" width="1184" height="167">
 </div>
 </div>
+<div class="imageblock">
+<div class="content">
+<img src="images/diagramaImplementacionClient.svg" alt="diagramaImplementacionClient" width="1391" height="167">
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/diagramaImplementacionServer.svg" alt="diagramaImplementacionServer" width="1478" height="173">
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -641,7 +644,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sectionbody">
 <div class="imageblock">
 <div class="content">
-<img src="images/diagramaDespliegue.svg" alt="diagramaDespliegue" width="213" height="223">
+<img src="images/diagramaDespliegue.svg" alt="diagramaDespliegue" width="697" height="270">
 </div>
 </div>
 </div>
@@ -662,7 +665,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1<br>
-Last updated 2020-08-18 17:00:00 +0200
+Last updated 2020-08-19 20:42:58 +0200
 </div>
 </div>
 <script>

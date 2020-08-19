@@ -1,9 +1,11 @@
 package usantatecla.tictactoe.models;
 
+import usantatecla.tictactoe.distributed.dispatchers.FrameType;
 import usantatecla.tictactoe.types.Error;
 import usantatecla.tictactoe.types.PlayerType;
 import usantatecla.tictactoe.types.StateValue;
 import usantatecla.tictactoe.types.Token;
+import usantatecla.utils.TCPIP;
 
 public class Session {
     
@@ -12,11 +14,14 @@ public class Session {
 	private Game game;
 	
     private Registry registry;
+
+    private TCPIP tcpip;
     
-    public Session() {
+    public Session(TCPIP tcpip) {
 		this.state = new State();
 		this.game = new Game();
-		this.registry = new Registry(this.game);
+        this.registry = new Registry(this.game);
+        this.tcpip = tcpip;
 	}
 
 	public void next() {
@@ -94,6 +99,10 @@ public class Session {
     }
 
     public StateValue getValueState() {
-		return this.state.getValueState();
+		if (this.tcpip == null) {
+			return this.state.getValueState();
+		}
+		this.tcpip.send(FrameType.STATE.name());
+		return StateValue.values()[this.tcpip.receiveInt()];
 	}
 }

@@ -9,7 +9,7 @@ public enum MessageView {
 	VERTICAL_LINE_LEFT("| "),
 	PLAYER_WIN(" Player: You win!!! :-)"),
 	START_GAME("-------------------- TIC TAC TOE --------------------"),
-	CHOOSE_PLAYERS("Number of users [0-" + Turn.NUM_PLAYERS + "] "),
+	CHOOSE_PLAYERS("Number of users [0-" + Turn.PLAYERS + "] "),
 	READ_ROW("Row: "),
 	READ_COLUMN("Column: "),
 	ERROR("ERROR"),

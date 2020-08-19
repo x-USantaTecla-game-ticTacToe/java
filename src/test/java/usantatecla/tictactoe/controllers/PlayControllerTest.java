@@ -17,9 +17,9 @@ public class PlayControllerTest {
     private Session session;
 
     public PlayControllerTest() {
-        this.session = new Session();
+        this.session = new Session(null);
         this.session.createPlayers(0);
-        this.playController = new PlayController(this.session);
+        this.playController = new PlayController(this.session, null);
     }
 
     @Test

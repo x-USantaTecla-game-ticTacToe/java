@@ -23,7 +23,7 @@ public class CoordinateViewTest {
     Console console;
 
     @InjectMocks
-    CoordinateView coordinateView = new CoordinateView(new PlayController(new Session()));
+    CoordinateView coordinateView = new CoordinateView(new PlayController(new Session(null), null));
 
     @Test
     public void testGivenNewCoordinateViewWhenReadCoordinateThenIsCorrect() {

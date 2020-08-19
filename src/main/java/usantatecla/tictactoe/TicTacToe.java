@@ -4,16 +4,18 @@ import usantatecla.tictactoe.controllers.AcceptorController;
 import usantatecla.tictactoe.controllers.Logic;
 import usantatecla.tictactoe.views.View;
 
-public class TicTacToe {
+public abstract class TicTacToe {
 
     private Logic logic;
 
     private View view;
 
     protected TicTacToe() {
-        this.logic = new Logic();
+        this.logic = new Logic(this.isStandalone());
 		this.view = new View();
-    }
+	}
+	
+	protected abstract boolean isStandalone();
 
     protected void play() {
 		AcceptorController acceptorController;
@@ -22,10 +24,9 @@ public class TicTacToe {
 			if (acceptorController != null){
 				this.view.interact(acceptorController);
 			}
-		} while (acceptorController != null); 
-	}
-
-    public static void main(String[] args) {
-		new TicTacToe().play();
+		} while (acceptorController != null);
+		if (!this.isStandalone()) {
+			this.logic.close();
+		}
 	}
 }

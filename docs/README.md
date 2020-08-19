@@ -11,16 +11,16 @@
 </head>
 <body class="book">
 <div id="header">
-<h1>TicTacToe. Solución 9.3. <strong>mvp.pm.withComposite</strong></h1>
+<h1>TicTacToe. Solución 10.4. <strong>mvp.pm.withoutProxy</strong></h1>
 <div class="details">
 <span id="author" class="author">Santa Tecla</span><br>
 <span id="email" class="email"><a href="mailto:parqueNaturalSantaTecla@gmail.com">parqueNaturalSantaTecla@gmail.com</a></span><br>
-<span id="revnumber">version 0.8.2</span>
+<span id="revnumber">version 0.9.0</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Índice</div>
 <ul class="sectlevel1">
-<li><a href="#requisitos-3-undoredo">Requisitos 3. <strong>UndoRedo</strong></a></li>
+<li><a href="#requisitos-4-clienteservidor">Requisitos 4. <strong>ClienteServidor</strong></a></li>
 <li><a href="#vista-de-lógicadiseño">Vista de Lógica/Diseño</a>
 <ul class="sectlevel2">
 <li><a href="#arquitectura">Arquitectura</a></li>
@@ -46,7 +46,7 @@
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="requisitos-3-undoredo">Requisitos 3. <strong>UndoRedo</strong></h2>
+<h2 id="requisitos-4-clienteservidor">Requisitos 4. <strong>ClienteServidor</strong></h2>
 <div class="sectionbody">
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -68,7 +68,7 @@
 <p><em>Interfaz: <strong class="lime-background">Gráfica</strong> y <strong>Texto</strong></em></p>
 </li>
 <li>
-<p><em>Distribución: <strong>Standalone</strong></em></p>
+<p><em>Distribución: <strong>Standalone</strong> + <span class="lime-background"><strong>Client/Server</strong></span></em></p>
 </li>
 <li>
 <p><em>Persistencia: <strong>No</strong></em></p>
@@ -94,14 +94,7 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Patrones de Diseño</p>
-<div class="ulist">
-<ul>
-<li>
-<p><strong class="lime-background">Patrón Undo/Redo</strong></p>
-</li>
-</ul>
-</div>
+<p>Modelo/Vista/Presentador con Presentador del Modelo con Vista Achicada</p>
 </li>
 </ul>
 </div>
@@ -109,7 +102,7 @@
 <h3 id="arquitectura">Arquitectura</h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/arquitecturaVersion9.svg" alt="arquitecturaVersion9" width="700" height="600">
+<img src="build/docs/asciidoc/images/arquitecturaVersion10.svg" alt="arquitecturaVersion10" width="800" height="600">
 </div>
 </div>
 </div>
@@ -171,7 +164,13 @@
 <div class="ulist">
 <ul>
 <li>
-<p><strong class="red line-through"><em><span class="red">DRY: clases principales</span></em></strong></p>
+<p><span class="red"><em><strong>Baja Cohesión</strong>: de Lógica y Controladores que controlan y comunican</em></span></p>
+</li>
+<li>
+<p><span class="red"><em><strong>Alto Acoplamiento</strong>: de Lógica y Controladores a tecnologías de comunicación</em></span></p>
+</li>
+<li>
+<p><span class="red"><em><strong>Open/Close</strong>: en Lógica y Controladores cuando hay que cambiar el código de éstos con nuevas tecnologías de comunicación</em></span></p>
 </li>
 </ul>
 </div>
@@ -181,17 +180,7 @@
 <div class="ulist">
 <ul>
 <li>
-<p><em>Nuevas funcionalidades: undo/redo, demo, estadísiticas,&#8230;&#8203;</em></p>
-<div class="ulist">
-<ul>
-<li>
-<p><span class="red"><em><strong>Clases Grandes</strong>: los Modelos asumen la responsabilidad y crecen en líneas, métodos, atributos, &#8230;&#8203; con las nuevas funcionalidades</em></span></p>
-</li>
-<li>
-<p><span class="red"><em><strong>Open/Close</strong>: hay que modificar los modelos que estaban funcionando previamente para incorporar nuevas funcionalidades</em></span></p>
-</li>
-</ul>
-</div>
+<p><span class="red"><em><strong>Clases Grandes</strong>: de Controladores con distintas ramas para distintas tecnologías de comunicación</em></span></p>
 </li>
 </ul>
 </div>
@@ -233,8 +222,8 @@
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 0.8.2<br>
-Last updated 2020-08-18 17:15:00 +0200
+Version 0.9.0<br>
+Last updated 2020-08-19 20:30:00 +0200
 </div>
 </div>
 </html>
