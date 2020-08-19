@@ -17,7 +17,7 @@ class UserPlayerView extends PlayerView {
         Error error;
         do {
             coordinate = new CoordinateView(this.playController).read(ENTER_COORDINATE_TO_PUT);
-            error = getErrorsPutCoordinate(coordinate[0], coordinate[1]);
+            error = this.getErrorsPutCoordinate(coordinate[0], coordinate[1]);
             if (error != null) {
                 new ErrorView(error).writeln();
             }
@@ -31,7 +31,7 @@ class UserPlayerView extends PlayerView {
         Error error;
         do {
             originCoordinate = new CoordinateView(this.playController).read(ENTER_COORDINATE_TO_REMOVE);
-            error = getErrorsMoveOriginCoordinate(originCoordinate[0], originCoordinate[1]);
+            error = this.getErrorsMoveOriginCoordinate(originCoordinate[0], originCoordinate[1]);
             if (error != null) {
                 new ErrorView(error).writeln();
             }
@@ -39,7 +39,7 @@ class UserPlayerView extends PlayerView {
         int[] targetCoordinate = new int[2];
         do {
             targetCoordinate = new CoordinateView(this.playController).read(ENTER_COORDINATE_TO_PUT);
-            error = getErrorsMoveTargetCoordinate(originCoordinate[0], originCoordinate[1], targetCoordinate[0],
+            error = this.getErrorsMoveTargetCoordinate(originCoordinate[0], originCoordinate[1], targetCoordinate[0],
                     targetCoordinate[1]);
             if (error != null) {
                 new ErrorView(error).writeln();
