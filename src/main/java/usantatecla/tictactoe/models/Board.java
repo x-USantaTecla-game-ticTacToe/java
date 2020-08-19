@@ -34,11 +34,13 @@ public class Board {
 		Token token = this.getToken(originCoordinate);
 		assert !this.isEmpty(originCoordinate);
 		this.remove(originCoordinate);
+		assert this.isEmpty(coordinate);
 		this.put(coordinate, token);
 	}
 
 	void put(Coordinate coordinate, Token token) {
 		int i = 0;
+		assert this.isEmpty(coordinate);
 		while (this.coordinates[token.ordinal()][i] != null) {
 			i++;
 		}
