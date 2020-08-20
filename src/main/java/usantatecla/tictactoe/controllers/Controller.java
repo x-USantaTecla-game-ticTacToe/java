@@ -1,6 +1,5 @@
 package usantatecla.tictactoe.controllers;
 
-import usantatecla.tictactoe.models.Board;
 import usantatecla.tictactoe.models.Session;
 
 public abstract class Controller {
@@ -9,10 +8,5 @@ public abstract class Controller {
 
 	Controller(Session session) {
 		this.session = session;
-	}
-	
-
-	public Board getBoard() {
-        return this.session.getBoard();
 	}
 }
