@@ -24,7 +24,7 @@ public class Logic {
 		this.controllers.put(StateValue.RESULT, new ResultController(this.game, this.state));
 		this.controllers.put(StateValue.EXIT, null);
 	}
-	
+
 	public Controller getController() {
 		return this.controllers.get(this.state.getValueState());
 	}
