@@ -1,6 +1,5 @@
 package usantatecla.tictactoe.controllers;
 
-import usantatecla.tictactoe.models.Board;
 import usantatecla.tictactoe.models.Game;
 import usantatecla.tictactoe.types.Error;
 import usantatecla.tictactoe.types.PlayerType;
@@ -85,9 +84,5 @@ public class Logic {
     public int getOtherValueFromTurn() {
 		return this.resultController.getOtherValueFromTurn();
 	}
-	
-	public Board getBoard() {
-        return this.startController.getBoard();
-    }
     
 }

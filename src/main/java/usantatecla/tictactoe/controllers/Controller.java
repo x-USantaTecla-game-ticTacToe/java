@@ -1,6 +1,5 @@
 package usantatecla.tictactoe.controllers;
 
-import usantatecla.tictactoe.models.Board;
 import usantatecla.tictactoe.models.Game;
 
 abstract class Controller {
@@ -10,8 +9,4 @@ abstract class Controller {
 	Controller(Game game) {
 		this.game = game;
 	}
-
-	Board getBoard() {
-        return this.game.getBoard();
-    }
 }

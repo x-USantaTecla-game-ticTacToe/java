@@ -439,7 +439,6 @@ class  tictactoe.models.Game{
 - turn: Turn
 + Game()
 + createPlayers(int): void
-+ getBoard(): Board
 + isBoardComplete(): boolean
 + putTokenPlayerFromTurn(Coordinate): void
 + moveTokenPlayerFromTurn(Coordinate[]): void
@@ -528,7 +527,6 @@ TOKEN_O
 class  tictactoe.controllers.Controller{
 # game: Game
 ~ Controller(Game)
-+ getBoard(): Board
 }
 tictactoe.controllers.Controller ..> tictactoe.models.Game
 
@@ -555,7 +553,6 @@ class  tictactoe.controllers.Logic{
 + getCoordinateDimension(): int
 + isTicTacToe(): boolean
 + getOtherValueFromTurn(): int
-+ getBoard(): Board
 }
 tictactoe.controllers.Logic *-down-> tictactoe.models.Game
 tictactoe.controllers.Logic *-down-> tictactoe.controllers.StartController
