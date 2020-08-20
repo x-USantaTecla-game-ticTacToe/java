@@ -23,6 +23,10 @@ public class Game {
 		}
     }
 
+    public Board getBoard() {
+        return this.board;
+    }
+
     public boolean isBoardComplete() {
         return this.board.isCompleted();
     }
