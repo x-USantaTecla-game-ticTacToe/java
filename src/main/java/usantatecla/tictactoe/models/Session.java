@@ -48,10 +48,6 @@ public class Session {
         this.game.createPlayers(numberOfUsers);
     }
 
-	public Board getBoard() {
-        return this.game.getBoard();
-    }
-
     public PlayerType getTypeOfTokenPlayerFromTurn() {
 		return this.game.getTypeOfTokenPlayerFromTurn();
 	}

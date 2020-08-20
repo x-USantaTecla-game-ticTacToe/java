@@ -330,7 +330,6 @@ class  tictactoe.models.Game{
 ~ createMemento(): Memento
 ~ set(Memento): void
 - createCopyOfPlayers(Player[], Board): Player[]
-+ getBoard(): Board
 + isBoardComplete(): boolean
 + putTokenPlayerFromTurn(Coordinate): void
 + moveTokenPlayerFromTurn(Coordinate[]): void
@@ -407,7 +406,6 @@ class  tictactoe.models.Session{
 + undo(): void
 + redo(): void
 + createPlayers(int): void
-+ getBoard(): Board
 + getTypeOfTokenPlayerFromTurn(): PlayerType
 + getErrorsPutCoordinate(Coordinate): Error
 + getErrorsMoveOriginCoordinate(Coordinate): Error
@@ -499,7 +497,6 @@ tictactoe.controllers.Controller <|-down- tictactoe.controllers.AcceptorControll
 class  tictactoe.controllers.Controller{
 # session: Session
 ~ Controller(Session)
-+ getBoard(): Board
 }
 tictactoe.controllers.Controller ..> tictactoe.models.Session
 
