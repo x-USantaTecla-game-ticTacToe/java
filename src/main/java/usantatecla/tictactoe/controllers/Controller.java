@@ -1,6 +1,5 @@
 package usantatecla.tictactoe.controllers;
 
-import usantatecla.tictactoe.models.Board;
 import usantatecla.tictactoe.models.Game;
 import usantatecla.tictactoe.models.State;
 
@@ -14,8 +13,4 @@ public abstract class Controller {
 		this.game = game;
 		this.state = state;
 	}
-
-	public Board getBoard() {
-        return this.game.getBoard();
-    }
 }
