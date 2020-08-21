@@ -31,7 +31,7 @@ image::Dibujo.jpg[]
 
 === Arquitectura
 
-[plantuml,arquitecturaVersion10,svg]
+[plantuml,arquitecturaVersion9,svg]
 ....
 
 package tictactoe #DDDDDD { } 
@@ -41,12 +41,18 @@ tictactoe .down.> tictactoe.controllers
 package tictactoe.controllers #DDDDDD { } 
 tictactoe.controllers .down.> tictactoe.models
 tictactoe.controllers .down.> java.util
+tictactoe.controllers .down.> utils
 
 package tictactoe.distributed #DDDDDD { } 
+tictactoe.distributed .down.> tictactoe.controllers
+tictactoe.distributed .down.> tictactoe
 tictactoe.distributed .down.> tictactoe.distributed.dispatchers
 
 package tictactoe.distributed.dispatchers #DDDDDD { } 
 tictactoe.distributed.dispatchers .down.> tictactoe.controllers
+package java.util{ }
+tictactoe.distributed.dispatchers .down.> java.util
+tictactoe.distributed.dispatchers .down.> utils
 
 package tictactoe.distributed.dispatchers.errors #DDDDDD { } 
 tictactoe.distributed.dispatchers.errors .down.> tictactoe.distributed.dispatchers
@@ -62,6 +68,10 @@ tictactoe.models .down.> java.util
 tictactoe.models .down.> utils
 
 package utils #DDDDDD { } 
+package java.util{ }
+utils .down.> java.util
+package java.net{ }
+utils .down.> java.net
 package java.io{ }
 utils .down.> java.io
 
@@ -80,11 +90,17 @@ class  tictactoe.TicTacToe{
 - logic: Logic
 - view: View
 # TicTacToe()
+# {abstract} isStandalone(): boolean
 # play(): void
-+ {static} main(String[]): void
 }
 tictactoe.TicTacToe *-down-> tictactoe.views.View
 tictactoe.TicTacToe *-down-> tictactoe.controllers.Logic
+
+class  tictactoe.TicTacToeStandalone{
++ {static} main(String[]): void
+# isStandalone(): boolean
+}
+tictactoe.TicTacToe <|-down- tictactoe.TicTacToeStandalone
 
 ....
 
@@ -180,7 +196,6 @@ class  tictactoe.views.MovementCommand{
 # isActive(): boolean
 }
 tictactoe.views.MovementCommand ..> tictactoe.controllers.PlayController
-tictactoe.views.MovementCommand ..> tictactoe.types.PlayerType
 tictactoe.views.MovementCommand ..> tictactoe.views.MessageView
 tictactoe.views.MovementCommand ..> tictactoe.views.GameView
 
@@ -337,8 +352,6 @@ class  tictactoe.models.Game{
 tictactoe.models.Game *-down-> tictactoe.models.Board
 tictactoe.models.Game *-down-> tictactoe.models.Player
 tictactoe.models.Game *-down-> tictactoe.models.Turn
-tictactoe.models.Game ..> tictactoe.types.Token
-tictactoe.models.Game ..> tictactoe.types.PlayerType
 tictactoe.models.Game ..> tictactoe.models.Memento
 
 class  tictactoe.models.Memento{
@@ -381,7 +394,7 @@ class  tictactoe.models.Registry{
 ~ redoable(): boolean
 ~ reset(): void
 }
-tictactoe.models.Registry *-down-> tictactoe.types.Game
+tictactoe.models.Registry *-down-> tictactoe.models.Game
 tictactoe.models.Registry *-down-> tictactoe.models.Memento
 tictactoe.models.Registry *-down-> java.util.ArrayList
 
@@ -389,7 +402,8 @@ class  tictactoe.models.Session{
 - state: State
 - game: Game
 - registry: Registry
-+ Session()
+- tcpip: TCPIP
++ Session(TCPIP)
 + next(): void
 + undoable(): boolean
 + redoable(): boolean
@@ -412,6 +426,7 @@ class  tictactoe.models.Session{
 tictactoe.models.Session *-down-> tictactoe.models.State
 tictactoe.models.Session *-down-> tictactoe.models.Game
 tictactoe.models.Session *-down-> tictactoe.models.Registry
+tictactoe.models.Session *-down-> utils.TCPIP
 
 class  tictactoe.models.State{
 - stateValue: StateValue
@@ -448,33 +463,45 @@ class  tictactoe.controllers.AcceptorController{
 + {abstract} accept(ControllersVisitor): void
 }
 tictactoe.controllers.Controller <|-down- tictactoe.controllers.AcceptorController
+tictactoe.controllers.AcceptorController *-down-> utils.TCPIP
 tictactoe.controllers.AcceptorController ..> tictactoe.controllers.ControllersVisitor
 
 class  tictactoe.controllers.Controller{
 # session: Session
 ~ Controller(Session)
++ getValueState(): StateValue
 }
 tictactoe.controllers.Controller -down-> tictactoe.models.Session
+tictactoe.controllers.Controller ..> tictactoe.models.StateValue
 
 interface  tictactoe.controllers.ControllersVisitor{
-~ visit(StartController): void
-~ visit(PlayController): void
-~ visit(ResultController): void
+~ {abstract} visit(StartController): void
+~ {abstract} visit(PlayController): void
+~ {abstract} visit(ResultController): void
 }
 tictactoe.controllers.ControllersVisitor ..> tictactoe.controllers.ResultController
 tictactoe.controllers.ControllersVisitor ..> tictactoe.controllers.StartController
 tictactoe.controllers.ControllersVisitor ..> tictactoe.controllers.PlayController
 
 class  tictactoe.controllers.Logic{
-- session: Session
-- acceptorControllers: Map<StateValue, AcceptorController>
-+ Logic()
+# session: Session
+# acceptorControllers: Map<StateValue, AcceptorController>
+# startController: StartController
+# playController: PlayController
+# resumeController: ResultController
+- tcpip: TCPIP
++ Logic(boolean)
++ close(): void
 + getController(): AcceptorController
 }
+tictactoe.controllers.Logic *-down-> tictactoe.controllers.ResultController
 tictactoe.controllers.Logic *-down-> tictactoe.models.Session
-tictactoe.controllers.Logic *-down-> tictactoe.controllers.AcceptorController
 tictactoe.controllers.Logic *-down-> tictactoe.models.StateValue
-mastermind.controllers.Logic *-down-> java.util.Map
+tictactoe.controllers.Logic *-down-> java.util.Map
+tictactoe.controllers.Logic *-down-> tictactoe.controllers.StartController
+tictactoe.controllers.Logic *-down-> utils.TCPIP
+tictactoe.controllers.Logic *-down-> tictactoe.controllers.PlayController
+tictactoe.controllers.Logic *-> tictactoe.controllers.AcceptorController
 
 class  tictactoe.controllers.MovementController{
 + MovementController(Session)
@@ -500,7 +527,7 @@ class  tictactoe.controllers.PlayController{
 - movementController: MovementController
 - undoController: UndoController
 - redoController: RedoController
-+ PlayController(Session)
++ PlayController(Session, TCPIP)
 + undo(): void
 + redo(): void
 + undoable(): boolean
@@ -525,7 +552,7 @@ tictactoe.controllers.AcceptorController <|-down- tictactoe.controllers.PlayCont
 tictactoe.controllers.PlayController *-down-> tictactoe.controllers.MovementController
 tictactoe.controllers.PlayController *-down-> tictactoe.controllers.UndoController
 tictactoe.controllers.PlayController *-down-> tictactoe.controllers.RedoController
-tictactoe.controllers.PlayController ..> tictactoe.controllers.ControllersVisitor
+tictactoe.controllers.PlayController ..> tictactoe.models.Session
 
 class  tictactoe.controllers.RedoController{
 + RedoController(Session)
@@ -558,6 +585,328 @@ class  tictactoe.controllers.UndoController{
 + undoable(): boolean
 }
 tictactoe.controllers.Controller <|-down- tictactoe.controllers.UndoController
+
+....
+
+=== Paquete tictactoe.distributed_
+
+[plantuml,tictactoeDistributed,svg]
+
+....
+
+class  tictactoe.distributed.LogicServer{
++ LogicServer(boolean)
++ createDispatchers(DispatcherPrototype): void
+}
+tictactoe.controllers.Logic <|-down- tictactoe.distributed.LogicServer
+tictactoe.distributed.LogicServer ..> tictactoe.distributed.dispatchers.DispatcherPrototype
+
+class  tictactoe.distributed.TicTacToeClient{
++ {static} main(String[]): void
+# isStandalone(): Boolean
+}
+tictactoe.TicTacToe <|-down- tictactoe.distributed.TicTacToeClient
+
+class  tictactoe.distributed.TicTacToeServer{
+- dispatcherPrototype: DispatcherPrototype
+- logic: LogicServer
+- TicTacToeServer()
++ {static} main(String[]): void
+- serve(): void
+}
+tictactoe.distributed.TicTacToeServer *-down-> tictactoe.distributed.dispatchers.DispatcherPrototype
+tictactoe.distributed.TicTacToeServer *-down-> tictactoe.distributed.LogicServer
+
+....
+
+=== Paquete tictactoe.distributed.dispatchers_
+
+[plantuml,tictactoeDistributerDispatchers,svg]
+
+....
+
+class  tictactoe.distributed.dispatchers.BoardCompleteDispatcher{
++ BoardCompleteDispatcher(PlayController)
++ dispatch(): void
+}
+tictactoe.distributed.dispatchers.Dispatcher <|-down- tictactoe.distributed.dispatchers.BoardCompleteDispatcher
+tictactoe.distributed.dispatchers.BoardCompleteDispatcher ..> tictactoe.controllers.PlayController
+
+class  tictactoe.distributed.dispatchers.ChangeTurnDispatcher{
++ ChangeTurnDispatcher(PlayController)
++ dispatch(): void
+}
+tictactoe.distributed.dispatchers.Dispatcher <|-down- tictactoe.distributed.dispatchers.ChangeTurnDispatcher
+tictactoe.distributed.dispatchers.ChangeTurnDispatcher ..> tictactoe.controllers.PlayController
+
+class  tictactoe.distributed.dispatchers.CoordinateValidDispatcher{
++ CoordinateValidDispatcher(PlayController)
++ dispatch(): void
+}
+tictactoe.distributed.dispatchers.Dispatcher <|-down- tictactoe.distributed.dispatchers.CoordinateValidDispatcher
+tictactoe.distributed.dispatchers.CoordinateValidDispatcher ..> tictactoe.controllers.PlayController
+
+class  tictactoe.distributed.dispatchers.CreatePlayersDispatcher{
++ CreatePlayersDispatcher(PlayController)
++ dispatch(): void
+}
+tictactoe.distributed.dispatchers.Dispatcher <|-down- tictactoe.distributed.dispatchers.CreatePlayersDispatcher
+tictactoe.distributed.dispatchers.CreatePlayersDispatcher ..> tictactoe.controllers.PlayController
+
+class  tictactoe.distributed.dispatchers.DimensionDispatcher{
++ DimensionDispatcher(PlayController)
++ dispatch(): void
+}
+tictactoe.distributed.dispatchers.Dispatcher <|-down- tictactoe.distributed.dispatchers.DimensionDispatcher
+tictactoe.distributed.dispatchers.DimensionDispatcher ..> tictactoe.controllers.PlayController
+
+class  tictactoe.distributed.dispatchers.Dispatcher{
+# acceptorController: AcceptorController
+# tcpip: TCPIP
++ Dispatcher(AcceptorController)
++ {abstract} dispatch(): void
++ associate(TCPIP): void
+}
+tictactoe.distributed.dispatchers.Dispatcher *-down-> tictactoe.controllers.AcceptorController
+tictactoe.distributed.dispatchers.Dispatcher --> utils.TCPIP
+
+class  tictactoe.distributed.dispatchers.DispatcherPrototype{
+- tcpip: TCPIP
+- dispatcherMap: Map<FrameType, Dispatcher>
++ DispatcherPrototype()
++ add(FrameType, Dispatcher): void
++ dispatch(FrameType): void
++ serve(): void
+}
+tictactoe.distributed.dispatchers.DispatcherPrototype *-down-> java.util.Map
+tictactoe.distributed.dispatchers.DispatcherPrototype *-down-> utils.TCPIP
+tictactoe.distributed.dispatchers.DispatcherPrototype --> tictactoe.distributed.dispatchers.Dispatcher
+tictactoe.distributed.dispatchers.DispatcherPrototype --> tictactoe.distributed.dispatchers.FrameType
+
+class  tictactoe.distributed.dispatchers.EmptyTokenDispatcher{
++ EmptyTokenDispatcher(PlayController)
++ dispatch(): void
+}
+tictactoe.distributed.dispatchers.Dispatcher <|-down- tictactoe.distributed.dispatchers.EmptyTokenDispatcher
+tictactoe.distributed.dispatchers.EmptyTokenDispatcher ..> tictactoe.controllers.PlayController
+
+class  tictactoe.distributed.dispatchers.FrameType{
++ {static} START: FrameType
++ {static} CREATE_PLAYERS: FrameType
++ {static} STATE: FrameType
++ {static} UNDO: FrameType
++ {static} REDO: FrameType
++ {static} UNDOABLE: FrameType
++ {static} REDOABLE: FrameType
++ {static} PLAYER_TYPE: FrameType
++ {static} RESULT: FrameType
++ {static} COORDINATE_VALID: FrameType
++ {static} BOARD_COMPLETE: FrameType
++ {static} RANDOM_COORDINATE: FrameType
++ {static} CHANGE_TURN: FrameType
++ {static} TOKEN_CHAR: FrameType
++ {static} EMPTY_TOKEN: FrameType
++ {static} DIMENSION: FrameType
++ {static} TICTACTOE: FrameType
++ {static} ERRORS_PUT: FrameType
++ {static} ERRORS_MOVE_ORIGIN: FrameType
++ {static} ERRORS_MOVE_TARGET: FrameType
++ {static} PUT_TOKEN: FrameType
++ {static} MOVE_TOKEN: FrameType
++ {static} CLOSE: FrameType
+- FrameType()
++ {static} parser(String): FrameType
+}
+
+class  tictactoe.distributed.dispatchers.MoveTokenDispatcher{
++ MoveTokenDispatcher(PlayController)
++ dispatch(): void
+}
+tictactoe.distributed.dispatchers.Dispatcher <|-down- tictactoe.distributed.dispatchers.MoveTokenDispatcher
+tictactoe.distributed.dispatchers.MoveTokenDispatcher ..> tictactoe.controllers.PlayController
+
+class  tictactoe.distributed.dispatchers.OtherValueTurnDispatcher{
++ OtherValueTurnDispatcher(ResultController)
++ dispatch(): void
+}
+tictactoe.distributed.dispatchers.Dispatcher <|-down- tictactoe.distributed.dispatchers.OtherValueTurnDispatcher
+tictactoe.distributed.dispatchers.OtherValueTurnDispatcher ..> tictactoe.controllers.ResultController
+
+class  tictactoe.distributed.dispatchers.PlayerTypeDispatcher{
++ PlayerTypeDispatcher(PlayController)
++ dispatch(): void
+}
+tictactoe.distributed.dispatchers.Dispatcher <|-down- tictactoe.distributed.dispatchers.PlayerTypeDispatcher
+tictactoe.distributed.dispatchers.PlayerTypeDispatcher ..> tictactoe.controllers.PlayController
+
+class  tictactoe.distributed.dispatchers.PutTokenDispatcher{
++ PutTokenDispatcher(PlayController)
++ dispatch(): void
+}
+tictactoe.distributed.dispatchers.Dispatcher <|-down- tictactoe.distributed.dispatchers.PutTokenDispatcher
+tictactoe.distributed.dispatchers.PutTokenDispatcher ..> tictactoe.controllers.PlayController
+
+class  tictactoe.distributed.dispatchers.RandomCoordinateDispatcher{
++ RandomCoordinateDispatcher(PlayController)
++ dispatch(): void
+}
+tictactoe.distributed.dispatchers.Dispatcher <|-down- tictactoe.distributed.dispatchers.RandomCoordinateDispatcher
+tictactoe.distributed.dispatchers.RandomCoordinateDispatcher ..> tictactoe.controllers.PlayController
+
+class  tictactoe.distributed.dispatchers.ResultDispatcher{
++ ResultDispatcher(ResultController)
++ dispatch(): void
+}
+tictactoe.distributed.dispatchers.Dispatcher <|-down- tictactoe.distributed.dispatchers.ResultDispatcher
+tictactoe.distributed.dispatchers.ResultDispatcher ..> tictactoe.controllers.ResultController
+
+class  tictactoe.distributed.dispatchers.StartDispatcher{
++ StartDispatcher(StartController)
++ dispatch(): void
+}
+tictactoe.distributed.dispatchers.Dispatcher <|-down- tictactoe.distributed.dispatchers.StartDispatcher
+tictactoe.distributed.dispatchers.StartDispatcher ..> tictactoe.controllers.StartController
+
+class  tictactoe.distributed.dispatchers.StateDispatcher{
++ StateDispatcher(PlayController)
++ dispatch(): void
+}
+tictactoe.distributed.dispatchers.Dispatcher <|-down- tictactoe.distributed.dispatchers.StateDispatcher
+tictactoe.distributed.dispatchers.StateDispatcher ..> tictactoe.controllers.PlayController
+
+class  tictactoe.distributed.dispatchers.RandomCoordinateDispatcher{
++ RandomCoordinateDispatcher(PlayController)
++ dispatch(): void
+}
+tictactoe.distributed.dispatchers.Dispatcher <|-down- tictactoe.distributed.dispatchers.RandomCoordinateDispatcher
+tictactoe.distributed.dispatchers.RandomCoordinateDispatcher ..> tictactoe.controllers.PlayController
+
+class  tictactoe.distributed.dispatchers.RedoableDispatcher{
++ RedoableDispatcher(PlayController)
++ dispatch(): void
+}
+tictactoe.distributed.dispatchers.Dispatcher <|-down- tictactoe.distributed.dispatchers.RedoableDispatcher
+tictactoe.distributed.dispatchers.RedoableDispatcher ..> tictactoe.controllers.PlayController
+
+class  tictactoe.distributed.dispatchers.RedoDispatcher{
++ RedoDispatcher(PlayController)
++ dispatch(): void
+}
+tictactoe.distributed.dispatchers.Dispatcher <|-down- tictactoe.distributed.dispatchers.RedoDispatcher
+tictactoe.distributed.dispatchers.RedoDispatcher ..> tictactoe.controllers.PlayController
+
+class  tictactoe.distributed.dispatchers.ResumeDispatcher{
++ ResumeDispatcher(ResumeController)
++ dispatch(): void
+}
+tictactoe.distributed.dispatchers.Dispatcher <|-down- tictactoe.distributed.dispatchers.ResumeDispatcher
+tictactoe.distributed.dispatchers.ResumeDispatcher ..> tictactoe.controllers.ResumeController
+
+class  tictactoe.distributed.dispatchers.StartDispatcher{
++ StartDispatcher(StartController)
++ dispatch(): void
+}
+tictactoe.distributed.dispatchers.Dispatcher <|-down- tictactoe.distributed.dispatchers.StartDispatcher
+tictactoe.distributed.dispatchers.StartDispatcher ..> tictactoe.controllers.StartController
+
+class  tictactoe.distributed.dispatchers.StateDispatcher{
++ StateDispatcher(PlayController)
++ dispatch(): void
+}
+tictactoe.distributed.dispatchers.Dispatcher <|-down- tictactoe.distributed.dispatchers.StateDispatcher
+tictactoe.distributed.dispatchers.StateDispatcher ..> tictactoe.controllers.PlayController
+
+class  tictactoe.distributed.dispatchers.TicTactToeDispatcher{
++ TicTactToeDispatcher(PlayController)
++ dispatch(): void
+}
+tictactoe.distributed.dispatchers.Dispatcher <|-down- tictactoe.distributed.dispatchers.TicTactToeDispatcher
+tictactoe.distributed.dispatchers.TicTactToeDispatcher ..> tictactoe.controllers.PlayController
+
+class  tictactoe.distributed.dispatchers.TCPIP{
++ {static} createClientSocket(): TCPIP
++ {static} createServerSocket(): TCPIP
++ TCPIP(Socket)
++ TCPIP(ServerSocket, Socket)
++ send(PlayerType): void
++ send(Error): void
++ receiveError(): Error
++ receivePlayerType(): PlayerType
++ close(): void
+}
+utils.TCPIP <|-down- tictactoe.distributed.dispatchers.TCPIP
+
+class  tictactoe.distributed.dispatchers.TokenCharDispatcher{
++ TokenCharDispatcher(PlayController)
++ dispatch(): void
+}
+tictactoe.distributed.dispatchers.Dispatcher <|-down- tictactoe.distributed.dispatchers.TokenCharDispatcher
+tictactoe.distributed.dispatchers.TokenCharDispatcher ..> tictactoe.controllers.PlayController
+
+....
+
+=== Paquete tictactoe.distributed.dispatchers.undoredo_
+
+[plantuml,tictactoeDistributerDispatchersUndoredo,svg]
+
+....
+
+class  tictactoe.distributed.dispatchers.undoredo.RedoableDispatcher{
++ RedoableDispatcher(PlayController)
++ dispatch(): void
+}
+tictactoe.distributed.dispatchers.Dispatcher <|-down- tictactoe.distributed.dispatchers.undoredo.RedoableDispatcher
+tictactoe.distributed.dispatchers.undoredo.RedoableDispatcher ..> tictactoe.controllers.PlayController
+
+class  tictactoe.distributed.dispatchers.undoredo.RedoDispatcher{
++ RedoDispatcher(PlayController)
++ dispatch(): void
+}
+tictactoe.distributed.dispatchers.Dispatcher <|-down- tictactoe.distributed.dispatchers.undoredo.RedoDispatcher
+tictactoe.distributed.dispatchers.undoredo.RedoDispatcher ..> tictactoe.controllers.PlayController
+
+class  tictactoe.distributed.dispatchers.undoredo.UndoableDispatcher{
++ UndoableDispatcher(PlayController)
++ dispatch(): void
+}
+tictactoe.distributed.dispatchers.Dispatcher <|-down- tictactoe.distributed.dispatchers.undoredo.UndoableDispatcher
+tictactoe.distributed.dispatchers.undoredo.UndoableDispatcher ..> tictactoe.controllers.PlayController
+
+class  tictactoe.distributed.dispatchers.undoredo.UndoDispatcher{
++ UndoDispatcher(PlayController)
++ dispatch(): void
+}
+tictactoe.distributed.dispatchers.Dispatcher <|-down- tictactoe.distributed.dispatchers.undoredo.UndoDispatcher
+tictactoe.distributed.dispatchers.undoredo.UndoDispatcher ..> tictactoe.controllers.PlayController
+
+....
+
+=== Paquete tictactoe.distributed.dispatchers.errors
+
+[plantuml,tictactoeDistributerDispatchersErrors,svg]
+
+....
+
+class  tictactoe.distributed.dispatchers.errors.ErrorsMoveOriginDispatcher{
++ ErrorsMoveOriginDispatcher(PlayController)
++ dispatch(): void
+}
+tictactoe.distributed.dispatchers.Dispatcher <|-down- tictactoe.distributed.dispatchers.errors.ErrorsMoveOriginDispatcher
+tictactoe.distributed.dispatchers.errors.ErrorsMoveOriginDispatcher ..> tictactoe.controllers.PlayController
+
+class  tictactoe.distributed.dispatchers.errors.ErrorsMoveTargetDispatcher{
++ ErrorsMoveTargetDispatcher(PlayController)
++ dispatch(): void
+}
+tictactoe.distributed.dispatchers.Dispatcher <|-down- tictactoe.distributed.dispatchers.errors.ErrorsMoveTargetDispatcher
+tictactoe.distributed.dispatchers.errors.ErrorsMoveTargetDispatcher ..> tictactoe.controllers.PlayController
+
+class  tictactoe.distributed.dispatchers.errors.ErrorsPutDispatcher{
++ ErrorsPutDispatcher(PlayController)
++ dispatch(): void
+}
+tictactoe.distributed.dispatchers.Dispatcher <|-down- tictactoe.distributed.dispatchers.errors.ErrorsPutDispatcher
+tictactoe.distributed.dispatchers.errors.ErrorsPutDispatcher ..> tictactoe.controllers.PlayController
 
 ....
 
@@ -637,6 +986,32 @@ class  utils.PlayersDialog{
 }
 utils.WithConsoleView <|-down- utils.PlayersDialog
 
+class  utils.TCPIP{
+- serverSocket: ServerSocket
+- socket: Socket
+- out: PrintWriter
+- in: BufferedReader
++ TCPIP(PrintWriter, Socket, BufferedReader)
++ TCPIP(ServerSocket, PrintWriter, BufferedReader, Socket)
++ close(): void
++ {static} createClientSocket(): TCPIP
++ {static} createServerSocket(): TCPIP
++ receiveInt(): int
++ send(int): void
++ send(String): void
++ send(boolean): void
++ send(char): void
++ receiveBoolean(): boolean
++ receiveInt(): int
++ receiveChar(): char
++ receiveLine(): String
+}
+utils.TCPIP *-down-> java.net.ServerSocket
+utils.TCPIP *-down-> java.io.PrintWriter
+utils.TCPIP *-down-> java.net.Socket
+utils.TCPIP *-down-> java.io.BufferedReader
+utils.TCPIP ..> mastermind.utils.TCPIP
+
 class  utils.WithConsoleView{
 # console: Console
 # WithConsoleView()
@@ -686,8 +1061,6 @@ package "  "  as tictactoe.distributed {
 }
 package "  "  as tictactoe.models {
 }
-package "  "  as tictactoe.types {
-}
 package "  "  as tictactoe.controllers {
 }
 package "  "  as tictactoe.views {
@@ -704,7 +1077,6 @@ package "  "  as java.util {
 jarClient *--> tictactoe
 jarClient *--> tictactoe.distributed
 jarClient *--> tictactoe.models
-jarClient *--> tictactoe.types
 jarClient *--> tictactoe.controllers
 jarClient *--> tictactoe.views
 jarClient *--> utils
@@ -722,8 +1094,6 @@ package "  "  as tictactoe.distributed.dispatchers {
 }
 package "  "  as tictactoe.models {
 }
-package "  "  as tictactoe.types {
-}
 package "  "  as tictactoe.controllers {
 }
 package "  "  as tictactoe.views {
@@ -740,7 +1110,6 @@ package "  "  as java.util {
 jarServer *--> tictactoe
 jarServer *--> tictactoe.distributed.dispatchers
 jarServer *--> tictactoe.models
-jarServer *--> tictactoe.types
 jarServer *--> tictactoe.controllers
 jarServer *--> tictactoe.views
 jarServer *--> utils

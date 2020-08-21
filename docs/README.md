@@ -102,7 +102,7 @@
 <h3 id="arquitectura">Arquitectura</h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/arquitecturaVersion10.svg" alt="arquitecturaVersion10" width="800" height="600">
+<img src="build/docs/asciidoc/images/arquitecturaVersion9.svg" alt="arquitecturaVersion10" width="800" height="600">
 </div>
 </div>
 </div>
@@ -135,6 +135,38 @@
 <div class="imageblock">
 <div class="content">
 <img src="build/docs/asciidoc/images/tictactoeControllersVersion9.svg" alt="tictactoeControllersVersion9" width="1000" height="600">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="paquete-tictactoe-controllers">Paquete <em>tictactoe.distributed</em></h3>
+<div class="imageblock">
+<div class="content">
+<img src="build/docs/asciidoc/images/tictactoeDistributed.svg" alt="tictactoeDistributed" width="600" height="600">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="paquete-tictactoe-controllers">Paquete <em>tictactoe.distributed.dispatchers</em></h3>
+<div class="imageblock">
+<div class="content">
+<img src="build/docs/asciidoc/images/tictactoeDistributerDispatchers.svg" alt="tictactoeDistributerDispatchers" width="1000" height="600">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="paquete-tictactoe-controllers">Paquete <em>tictactoe.distributed.dispatchers.undoredo</em></h3>
+<div class="imageblock">
+<div class="content">
+<img src="build/docs/asciidoc/images/tictactoeDistributerDispatchersUndoredo.svg" alt="tictactoeDistributerDispatchersUndoredo" width="600" height="600">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="paquete-tictactoe-controllers">Paquete <em>tictactoe.distributed.dispatchers.errors</em></h3>
+<div class="imageblock">
+<div class="content">
+<img src="build/docs/asciidoc/images/tictactoeDistributerDispatchersErrors.svg" alt="tictactoeDistributerDispatchersErrors" width="600" height="600">
 </div>
 </div>
 </div>
