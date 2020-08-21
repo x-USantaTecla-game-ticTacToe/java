@@ -455,15 +455,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#paquete-tictactoe">Paquete <em>tictactoe</em></a></li>
 <li><a href="#paquete-tictactoe-views">Paquete <em>tictactoe.views</em></a></li>
 <li><a href="#paquete-tictactoe-models">Paquete <em>tictactoe.models</em></a></li>
-<li><a href="#paquete-tictactoe-types">Paquete <em>tictactoe.types</em></a></li>
 <li><a href="#paquete-tictactoe-controllers">Paquete <em>tictactoe.controllers</em></a></li>
 <li><a href="#paquete-utils">Paquete <em>utils</em></a></li>
-</ul>
-</li>
-<li><a href="#calidad-del-software">Calidad del Software</a>
-<ul class="sectlevel2">
-<li><a href="#diseño">Diseño</a></li>
-<li><a href="#rediseño">Rediseño</a></li>
 </ul>
 </li>
 <li><a href="#vista-de-desarrolloimplementación">Vista de Desarrollo/Implementación</a></li>
@@ -530,7 +523,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h3 id="arquitectura">Arquitectura</h3>
 <div class="imageblock">
 <div class="content">
-<img src="images/arquitecturaVersion10.svg" alt="arquitecturaVersion10" width="1047" height="648">
+<img src="images/arquitecturaVersion10.svg" alt="arquitecturaVersion10" width="1103" height="648">
 </div>
 </div>
 </div>
@@ -538,7 +531,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h3 id="paquete-tictactoe">Paquete <em>tictactoe</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="images/tictactoeVersion9.svg" alt="tictactoeVersion9" width="447" height="311">
+<img src="images/tictactoeVersion9.svg" alt="tictactoeVersion9" width="342" height="311">
 </div>
 </div>
 </div>
@@ -546,7 +539,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h3 id="paquete-tictactoe-views">Paquete <em>tictactoe.views</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="images/tictactoeViewsVersion9.svg" alt="tictactoeViewsVersion9" width="2442" height="1472">
+<img src="images/tictactoeViewsVersion9.svg" alt="tictactoeViewsVersion9" width="1897" height="1472">
 </div>
 </div>
 </div>
@@ -554,15 +547,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h3 id="paquete-tictactoe-models">Paquete <em>tictactoe.models</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="images/tictactoeModelsVersion9.svg" alt="tictactoeModelsVersion9" width="1660" height="2190">
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="paquete-tictactoe-types">Paquete <em>tictactoe.types</em></h3>
-<div class="imageblock">
-<div class="content">
-<img src="images/tictactoeTypesVersion9.svg" alt="tictactoeTypesVersion9" width="341" height="350">
+<img src="images/tictactoeModelsVersion9.svg" alt="tictactoeModelsVersion9" width="1384" height="2190">
 </div>
 </div>
 </div>
@@ -570,7 +555,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h3 id="paquete-tictactoe-controllers">Paquete <em>tictactoe.controllers</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="images/tictactoeControllersVersion9.svg" alt="tictactoeControllersVersion9" width="1215" height="1175">
+<img src="images/tictactoeControllersVersion9.svg" alt="tictactoeControllersVersion9" width="1254" height="1325">
 </div>
 </div>
 </div>
@@ -585,46 +570,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="calidad-del-software">Calidad del Software</h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="diseño">Diseño</h3>
-<div class="ulist">
-<ul>
-<li>
-<p><span class="red"><em><strong>DRY</strong>: clases principales</em></span></p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="rediseño">Rediseño</h3>
-<div class="ulist">
-<ul>
-<li>
-<p><em>Nuevas funcionalidades: undo/redo, demo, estadísiticas,&#8230;&#8203;</em></p>
-<div class="ulist">
-<ul>
-<li>
-<p><span class="red"><em><strong>Clases Grandes</strong>: los Modelos asumen la responsabilidad y crecen en líneas, métodos, atributos, &#8230;&#8203; con las nuevas funcionalidades</em></span></p>
-</li>
-<li>
-<p><span class="red"><em><strong>Open/Close</strong>: hay que modificar los modelos que estaban funcionando previamente para incorporar nuevas funcionalidades</em></span></p>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
 <h2 id="vista-de-desarrolloimplementación">Vista de Desarrollo/Implementación</h2>
 <div class="sectionbody">
 <div class="imageblock">
 <div class="content">
-<img src="images/diagramaImplementacion.svg" alt="diagramaImplementacion" width="1184" height="167">
+<img src="images/diagramaImplementacion.svg" alt="diagramaImplementacion" width="1015" height="167">
 </div>
 </div>
 <div class="imageblock">
@@ -665,7 +615,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1<br>
-Last updated 2020-08-20 11:52:32 +0200
+Last updated 2020-08-21 11:25:21 +0200
 </div>
 </div>
 <script>
