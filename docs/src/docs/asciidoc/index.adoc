@@ -36,13 +36,13 @@ image::Dibujo.jpg[]
 
 package tictactoe #DDDDDD { } 
 tictactoe .down.> tictactoe.views.graphics
-tictactoe .down.> tictactoe.models
 tictactoe .down.> tictactoe.views.console
 tictactoe .down.> tictactoe.controllers
 tictactoe .down.> tictactoe.views
 
 package tictactoe.controllers #DDDDDD { } 
 tictactoe.controllers .down.> tictactoe.models
+tictactoe.controllers .down.> java.util
 
 package tictactoe.models #DDDDDD { }
 package java.util{ }
@@ -97,8 +97,7 @@ class  tictactoe.TicTacToe{
 # play(): void
 }
 tictactoe.TicTacToe --> tictactoe.views.View
-tictactoe.TicTacToe --> tictactoe.controllers.Logic
-tictactoe.TicTacToe ..> tictactoe.controllers.Controller
+tictactoe.TicTacToe *-down-> tictactoe.controllers.Logic
 
 ....
 
@@ -144,6 +143,7 @@ tictactoe.views.PlayerView ..> tictactoe.controllers.PlayController
 class  tictactoe.views.View{
 + {abstract} interact(Controller): void
 }
+tictactoe.views.View *-down-> tictactoe.controllers.Controller
 
 ....
 
@@ -174,6 +174,9 @@ tictactoe.views.View <|-down- tictactoe.views.console.ConsoleView
 tictactoe.views.console.ConsoleView *-down-> tictactoe.views.console.StartView
 tictactoe.views.console.ConsoleView *-down-> tictactoe.views.console.PlayView
 tictactoe.views.console.ConsoleView *-down-> tictactoe.views.console.ResultView
+tictactoe.views.console.ConsoleView ..> tictactoe.controllers.ResultController
+tictactoe.views.console.ConsoleView ..> tictactoe.controllers.StartController
+tictactoe.views.console.ConsoleView ..> tictactoe.controllers.PlayController
 
 class  tictactoe.views.console.CoordinateView{
 ~ playController: PlayController
@@ -477,8 +480,8 @@ class  tictactoe.controllers.Controller{
 # state: State
 ~ Controller(Game, State)
 }
-tictactoe.controllers.Controller ..> tictactoe.models.Game
-tictactoe.controllers.Controller ..> tictactoe.models.State
+tictactoe.controllers.Controller -down-> tictactoe.models.Game
+tictactoe.controllers.Controller -down-> tictactoe.models.State
 
 class  tictactoe.controllers.Logic{
 - state: State
@@ -491,6 +494,7 @@ tictactoe.controllers.Logic *-down-> tictactoe.models.Game
 tictactoe.controllers.Logic *-down-> tictactoe.models.State
 tictactoe.controllers.Logic *-down-> tictactoe.controllers.Controller
 tictactoe.controllers.Logic *-down-> tictactoe.models.StateValue
+mastermind.controllers.Logic *-down-> java.util.Map
 
 class  tictactoe.controllers.PlayController{
 + PlayController(Game, State)
@@ -589,13 +593,8 @@ utils.WithConsoleView *-down-> utils.Console
 
 === Diseño
 
-- [red]#_**DRY**: clases principales_#
-
-=== Rediseño
-
-- _Nuevas funcionalidades: undo/redo, demo, estadísiticas,..._
-* [red]#_**Clases Grandes**: los Modelos asumen la responsabilidad y crecen en líneas, métodos, atributos, ... con las nuevas funcionalidades_#
-* [red]#_**Open/Close**: hay que modificar los modelos que estaban funcionando previamente para incorporar nuevas funcionalidades_#
+- [red line-through]#_**DRY**: en las clases de vistas que asume el flujo de control y se repite en mastermind.views.console.ProposalView y mastermind.views.graphics.GameView_#
+- [red]#_**Principio de Sustitución de Liskov**: las vistas preguntan por el tipo de controlador polimórfico_#
 
 == Vista de Desarrollo/Implementación
 

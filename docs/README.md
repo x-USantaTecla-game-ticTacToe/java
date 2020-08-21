@@ -97,19 +97,6 @@
 <ul>
 <li>
 <p>Modelo/Vista/Presentador con Presentador del Modelo con <strong>Vista Achicada</strong></p>
-<div class="ulist">
-<ul>
-<li>
-<p><strong class="lime-background">Patrón Template Method (Factory Method)</strong>, <em>para clases principales</em></p>
-</li>
-<li>
-<p><strong class="lime-background">Patrón Model View Presenter</strong>, <em>para incluir controllers</em></p>
-</li>
-<li>
-<p><strong class="lime-background">Patrón Facade</strong>, <em>para clases principales</em></p>
-</li>
-</ul>
-</div>
 </li>
 </ul>
 </div>
@@ -233,7 +220,7 @@
 <div id="footer">
 <div id="footer-text">
 Version 0.6.10<br>
-Last updated 2020-08-19 23:35:00 +0200
+Last updated 2020-08-21 11:05:00 +0200
 </div>
 </div>
 </html>
