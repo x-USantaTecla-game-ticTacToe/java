@@ -457,7 +457,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#paquete-tictactoe-views-console">Paquete <em>tictactoe.views.console</em></a></li>
 <li><a href="#paquete-tictactoe-views-graphics">Paquete <em>tictactoe.views.graphics</em></a></li>
 <li><a href="#paquete-tictactoe-models">Paquete <em>tictactoe.models</em></a></li>
-<li><a href="#paquete-tictactoe-types">Paquete <em>tictactoe.types</em></a></li>
 <li><a href="#paquete-tictactoe-controllers">Paquete <em>tictactoe.controllers</em></a></li>
 <li><a href="#paquete-utils">Paquete <em>utils</em></a></li>
 </ul>
@@ -465,7 +464,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#calidad-del-software">Calidad del Software</a>
 <ul class="sectlevel2">
 <li><a href="#diseño">Diseño</a></li>
-<li><a href="#rediseño">Rediseño</a></li>
 </ul>
 </li>
 <li><a href="#vista-de-desarrolloimplementación">Vista de Desarrollo/Implementación</a></li>
@@ -532,7 +530,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h3 id="arquitectura">Arquitectura</h3>
 <div class="imageblock">
 <div class="content">
-<img src="images/arquitecturaVersion8.svg" alt="arquitecturaVersion8" width="1112" height="648">
+<img src="images/arquitecturaVersion8.svg" alt="arquitecturaVersion8" width="848" height="648">
 </div>
 </div>
 </div>
@@ -540,7 +538,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h3 id="paquete-tictactoe">Paquete <em>tictactoe</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="images/tictactoeVersion8.svg" alt="tictactoeVersion8" width="766" height="323">
+<img src="images/tictactoeVersion8.svg" alt="tictactoeVersion8" width="709" height="323">
 </div>
 </div>
 </div>
@@ -556,7 +554,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h3 id="paquete-tictactoe-views-console">Paquete <em>tictactoe.views.console</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="images/tictactoeViewsConsoleVersion8.svg" alt="tictactoeViewsConsoleVersion8" width="1666" height="790">
+<img src="images/tictactoeViewsConsoleVersion8.svg" alt="tictactoeViewsConsoleVersion8" width="1529" height="790">
 </div>
 </div>
 </div>
@@ -564,7 +562,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h3 id="paquete-tictactoe-views-graphics">Paquete <em>tictactoe.views.graphics</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="images/tictactoeViewsGraphicsVersion8.svg" alt="tictactoeViewsGraphicsVersion8" width="2948" height="994">
+<img src="images/tictactoeViewsGraphicsVersion8.svg" alt="tictactoeViewsGraphicsVersion8" width="2824" height="994">
 </div>
 </div>
 </div>
@@ -572,15 +570,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h3 id="paquete-tictactoe-models">Paquete <em>tictactoe.models</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="images/tictactoeModelsVersion8.svg" alt="tictactoeModelsVersion8" width="1356" height="1477">
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="paquete-tictactoe-types">Paquete <em>tictactoe.types</em></h3>
-<div class="imageblock">
-<div class="content">
-<img src="images/tictactoeTypesVersion8.svg" alt="tictactoeTypesVersion8" width="341" height="350">
+<img src="images/tictactoeModelsVersion8.svg" alt="tictactoeModelsVersion8" width="879" height="1477">
 </div>
 </div>
 </div>
@@ -588,7 +578,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h3 id="paquete-tictactoe-controllers">Paquete <em>tictactoe.controllers</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="images/tictactoeControllersVersion8.svg" alt="tictactoeControllersVersion8" width="1263" height="843">
+<img src="images/tictactoeControllersVersion8.svg" alt="tictactoeControllersVersion8" width="1356" height="843">
 </div>
 </div>
 </div>
@@ -610,27 +600,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="ulist">
 <ul>
 <li>
-<p><span class="red"><em><strong>DRY</strong>: clases principales</em></span></p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="rediseño">Rediseño</h3>
-<div class="ulist">
-<ul>
-<li>
-<p><em>Nuevas funcionalidades: undo/redo, demo, estadísiticas,&#8230;&#8203;</em></p>
-<div class="ulist">
-<ul>
-<li>
-<p><span class="red"><em><strong>Clases Grandes</strong>: los Modelos asumen la responsabilidad y crecen en líneas, métodos, atributos, &#8230;&#8203; con las nuevas funcionalidades</em></span></p>
+<p><span class="red line-through"><em><strong>DRY</strong>: en las clases de vistas que asume el flujo de control y se repite en mastermind.views.console.ProposalView y mastermind.views.graphics.GameView</em></span></p>
 </li>
 <li>
-<p><span class="red"><em><strong>Open/Close</strong>: hay que modificar los modelos que estaban funcionando previamente para incorporar nuevas funcionalidades</em></span></p>
-</li>
-</ul>
-</div>
+<p><span class="red"><em><strong>Principio de Sustitución de Liskov</strong>: las vistas preguntan por el tipo de controlador polimórfico</em></span></p>
 </li>
 </ul>
 </div>
@@ -642,7 +615,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sectionbody">
 <div class="imageblock">
 <div class="content">
-<img src="images/diagramaImplementacion.svg" alt="diagramaImplementacion" width="2088" height="167">
+<img src="images/diagramaImplementacion.svg" alt="diagramaImplementacion" width="1919" height="167">
 </div>
 </div>
 </div>
@@ -673,7 +646,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1<br>
-Last updated 2020-08-20 11:46:58 +0200
+Last updated 2020-08-21 11:03:09 +0200
 </div>
 </div>
 <script>

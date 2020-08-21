@@ -36,20 +36,17 @@ image::Dibujo.jpg[]
 
 package tictactoe #DDDDDD { } 
 tictactoe .down.> tictactoe.views.graphics
-tictactoe .down.> tictactoe.models
 tictactoe .down.> tictactoe.views.console
 tictactoe .down.> tictactoe.controllers
 tictactoe .down.> tictactoe.views
 
 package tictactoe.controllers #DDDDDD { } 
 tictactoe.controllers .down.> tictactoe.models
-tictactoe.controllers .down.> tictactoe.types
+tictactoe.controllers .down.> java.util
 
 package tictactoe.models #DDDDDD { }
-package tictactoe.types #DDDDDD { }  
 package java.util{ }
 tictactoe.models .down.> java.util
-tictactoe.models .down.> tictactoe.types
 
 package utils #DDDDDD { } 
 package java.io{ }
@@ -57,13 +54,11 @@ utils .down.> java.io
 
 package tictactoe.views #DDDDDD { } 
 tictactoe.views .down.> tictactoe.controllers
-tictactoe.views .down.> tictactoe.types
 
 package tictactoe.views.console #DDDDDD { } 
 tictactoe.views.console .down.> tictactoe.views
 tictactoe.views.console .down.> tictactoe.controllers 
 tictactoe.views.console .down.> utils
-tictactoe.views.console .down.> tictactoe.types
 
 package tictactoe.views.graphics #DDDDDD { } 
 package java.awt{ }
@@ -72,7 +67,6 @@ package java.awt.event{ }
 tictactoe.views.graphics .down.> java.awt.event
 tictactoe.views.graphics .down.> tictactoe.views
 tictactoe.views.graphics .down.> tictactoe.controllers 
-tictactoe.views.graphics .down.> tictactoe.types
 package javax.swing{ }
 tictactoe.views.graphics .down.> javax.swing
 
@@ -103,8 +97,7 @@ class  tictactoe.TicTacToe{
 # play(): void
 }
 tictactoe.TicTacToe --> tictactoe.views.View
-tictactoe.TicTacToe --> tictactoe.controllers.Logic
-tictactoe.TicTacToe ..> tictactoe.controllers.Controller
+tictactoe.TicTacToe *-down-> tictactoe.controllers.Logic
 
 ....
 
@@ -184,6 +177,9 @@ tictactoe.views.View <|-down- tictactoe.views.console.ConsoleView
 tictactoe.views.console.ConsoleView *-down-> tictactoe.views.console.StartView
 tictactoe.views.console.ConsoleView *-down-> tictactoe.views.console.PlayView
 tictactoe.views.console.ConsoleView *-down-> tictactoe.views.console.ResultView
+tictactoe.views.console.ConsoleView ..> tictactoe.controllers.ResultController
+tictactoe.views.console.ConsoleView ..> tictactoe.controllers.StartController
+tictactoe.views.console.ConsoleView ..> tictactoe.controllers.PlayController
 
 class  tictactoe.views.console.CoordinateView{
 ~ playController: PlayController
@@ -191,7 +187,6 @@ class  tictactoe.views.console.CoordinateView{
 ~ read(String): int[]
 }
 utils.WithConsoleView <|-down- tictactoe.views.console.CoordinateView
-tictactoe.views.console.CoordinateView ..> tictactoe.types.Error
 tictactoe.views.console.CoordinateView ..> tictactoe.controllers.PlayController
 
 class  tictactoe.views.console.ErrorView{
@@ -213,7 +208,6 @@ class  tictactoe.views.console.PlayView{
 tictactoe.views.console.PlayView ..> tictactoe.views.console.BoardView
 tictactoe.views.console.PlayView ..> tictactoe.views.PlayerView
 tictactoe.views.console.PlayView ..> tictactoe.controllers.PlayController
-tictactoe.views.console.PlayView ..> tictactoe.types.PlayerType
 
 class tictactoe.views.console.ResultView{
 ~ interact(ResultController): void
@@ -343,7 +337,6 @@ tictactoe.views.graphics.GameView ..> tictactoe.views.graphics.ChoosePlayersView
 tictactoe.views.graphics.GameView ..> tictactoe.views.PlayerView
 tictactoe.views.graphics.GameView ..> tictactoe.views.graphics.BoardView
 tictactoe.views.graphics.GameView ..> tictactoe.views.graphics.Constraints
-tictactoe.views.graphics.GameView ..> tictactoe.types.PlayerType
 
 class  tictactoe.views.graphics.GraphicsView{
 - gameView: GameView
@@ -404,7 +397,6 @@ class  tictactoe.models.Board{
 - checkDirectionOfAllCoordinates(Coordinate[]): boolean
 }
 tictactoe.models.Board *-down-> tictactoe.models.Coordinate
-tictactoe.models.Board ..> tictactoe.types.Token
 tictactoe.models.Board ..> tictactoe.models.Turn
 tictactoe.models.Board ..> utils.Direction
 
@@ -443,8 +435,6 @@ class  tictactoe.models.Game{
 tictactoe.models.Game *-down-> tictactoe.models.Board
 tictactoe.models.Game *-down-> tictactoe.models.Player
 tictactoe.models.Game *-down-> tictactoe.models.Turn
-tictactoe.models.Game ..> tictactoe.types.Token
-tictactoe.models.Game ..> tictactoe.types.PlayerType
 
 class  tictactoe.models.Player{
 - token: Token
@@ -459,11 +449,8 @@ class  tictactoe.models.Player{
 + getErrorsMoveOriginCoordinate(Coordinate): Error
 + getErrorsMoveTargetCoordinate(Coordinate, Coordinate): Error
 }
-tictactoe.models.Player *-down-> tictactoe.types.Token
 tictactoe.models.Player *-down-> tictactoe.models.Board
-tictactoe.models.Player *-down-> tictactoe.types.PlayerType 
 tictactoe.models.Player ..> tictactoe.models.Coordinate
-tictactoe.models.Player ..> tictactoe.types.Error
 
 class  tictactoe.models.State{
 - stateValue: StateValue
@@ -487,41 +474,6 @@ tictactoe.models.Turn *-down-> tictactoe.models.Player
 
 ....
 
-=== Paquete _tictactoe.types_
-
-[plantuml,tictactoeTypesVersion8,svg]
-
-....
-
-enum  tictactoe.types.Error{
-NOT_EMPTY
-NOT_OWNER
-SAME_COORDINATES
-WRONG_COORDINATES
-}
-
-enum  tictactoe.types.PlayerType{
-USER_PLAYER
-MACHINE_PLAYER
-}
-
-enum  tictactoe.types.StateValue{
-INITIAL
-IN_GAME
-RESULT
-EXIT
-}
-
-enum  tictactoe.types.Token{
-TOKEN_X
-TOKEN_O
-- character: char
-~ Token(char)
-+ getChar(): char
-}
-
-....
-
 === Paquete _tictactoe.controllers_
 
 [plantuml,tictactoeControllersVersion8,svg]
@@ -534,8 +486,8 @@ class  tictactoe.controllers.Controller{
 ~ Controller(Game, State)
 + {abstract} accept(ControllersVisitor): void
 }
-tictactoe.controllers.Controller ..> tictactoe.models.Game
-tictactoe.controllers.Controller ..> tictactoe.models.State
+tictactoe.controllers.Controller -down-> tictactoe.models.Game
+tictactoe.controllers.Controller -down-> tictactoe.models.State
 
 class  tictactoe.controllers.ControllersVisitor{
 ~ visit(StartController): void
@@ -554,6 +506,7 @@ tictactoe.controllers.Logic *-down-> tictactoe.models.Game
 tictactoe.controllers.Logic *-down-> tictactoe.models.State
 tictactoe.controllers.Logic *-down-> tictactoe.controllers.Controller
 tictactoe.controllers.Logic *-down-> tictactoe.models.StateValue
+mastermind.controllers.Logic *-down-> java.util.Map
 
 class  tictactoe.controllers.PlayController{
 + PlayController(Game, State)
@@ -660,13 +613,8 @@ utils.WithConsoleView *-down-> utils.Console
 
 === Diseño
 
-- [red]#_**DRY**: clases principales_#
-
-=== Rediseño
-
-- _Nuevas funcionalidades: undo/redo, demo, estadísiticas,..._
-* [red]#_**Clases Grandes**: los Modelos asumen la responsabilidad y crecen en líneas, métodos, atributos, ... con las nuevas funcionalidades_#
-* [red]#_**Open/Close**: hay que modificar los modelos que estaban funcionando previamente para incorporar nuevas funcionalidades_#
+- [red line-through]#_**DRY**: en las clases de vistas que asume el flujo de control y se repite en mastermind.views.console.ProposalView y mastermind.views.graphics.GameView_#
+- [red]#_**Principio de Sustitución de Liskov**: las vistas preguntan por el tipo de controlador polimórfico_#
 
 == Vista de Desarrollo/Implementación
 
@@ -676,8 +624,6 @@ utils.WithConsoleView *-down-> utils.Console
 package "  "  as tictactoe {
 }
 package "  "  as tictactoe.models {
-}
-package "  "  as tictactoe.types {
 }
 package "  "  as tictactoe.controllers {
 }
@@ -704,7 +650,6 @@ package "  "  as javax.swing {
 
 jar *--> tictactoe
 jar *--> tictactoe.models
-jar *--> tictactoe.types
 jar *--> tictactoe.controllers
 jar *--> tictactoe.views
 jar *--> tictactoe.views.console
