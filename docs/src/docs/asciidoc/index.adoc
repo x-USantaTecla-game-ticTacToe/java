@@ -39,20 +39,16 @@ image::Dibujo.jpg[]
 
 package tictactoe #DDDDDD { } 
 tictactoe .down.> tictactoe.views
-tictactoe .down.> tictactoe.models
 tictactoe .down.> tictactoe.controllers
-tictactoe .down.> tictactoe.views
 
 package tictactoe.controllers #DDDDDD { } 
 tictactoe.controllers .down.> tictactoe.models
-tictactoe.controllers .down.> tictactoe.types
+tictactoe.controllers .down.> java.util
 
 package tictactoe.models #DDDDDD { }
-package tictactoe.types #DDDDDD { }  
 package java.util{ }
 tictactoe.models .down.> java.util
 tictactoe.models .down.> utils
-tictactoe.models .down.> tictactoe.types
 
 package utils #DDDDDD { } 
 package java.io{ }
@@ -60,7 +56,6 @@ utils .down.> java.io
 
 package tictactoe.views #DDDDDD { } 
 tictactoe.views .down.> tictactoe.controllers
-tictactoe.views .down.> tictactoe.types
 tictactoe.views .down.> utils
 
 ....
@@ -77,9 +72,8 @@ class  tictactoe.TicTacToe{
 # play(): void
 + {static} main(String[]): void
 }
-tictactoe.TicTacToe --> tictactoe.views.View
-tictactoe.TicTacToe --> tictactoe.controllers.Logic
-tictactoe.TicTacToe ..> tictactoe.controllers.AcceptorController
+tictactoe.TicTacToe *-down-> tictactoe.views.View
+tictactoe.TicTacToe *-down-> tictactoe.controllers.Logic
 
 ....
 
@@ -201,13 +195,15 @@ class tictactoe.views.PlayMenu{
 ~ PlayMenu(PlayController)
 }
 utils.Menu <|-down- tictactoe.views.PlayMenu
-tictactoe.views.PlayMenu ..> tictactoe.views.MovementCommand
-tictactoe.views.PlayMenu ..> tictactoe.views.UndoCommand
-tictactoe.views.PlayMenu ..> tictactoe.views.RedoCommand
+tictactoe.views.PlayMenu ..> tictactoe.controllers.PlayController
+tictactoe.views.PlayMenu *-down-> tictactoe.views.MovementCommand
+tictactoe.views.PlayMenu *-down-> tictactoe.views.UndoCommand
+tictactoe.views.PlayMenu *-down-> tictactoe.views.RedoCommand
 
 class tictactoe.views.PlayView{
 ~ interact(PlayController): void
 }
+tictactoe.views.PlayView ..> tictactoe.controllers.PlayController
 tictactoe.views.PlayView ..> tictactoe.views.PlayMenu
 
 class tictactoe.views.RedoCommand{
@@ -216,9 +212,6 @@ class tictactoe.views.RedoCommand{
 # isActive(): boolean
 }
 tictactoe.views.Command <|-down- tictactoe.views.RedoCommand
-tictactoe.views.RedoCommand ..> tictactoe.views.MessageView
-tictactoe.views.RedoCommand ..> tictactoe.controllers.PlayController
-tictactoe.views.RedoCommand ..> tictactoe.views.GameView
 
 class tictactoe.views.ResultView{
 ~ interact(ResultController): void
@@ -299,7 +292,6 @@ class  tictactoe.models.Board{
 ~ copy(): Board
 }
 tictactoe.models.Board *-down-> tictactoe.models.Coordinate
-tictactoe.models.Board ..> tictactoe.types.Token
 tictactoe.models.Board ..> tictactoe.models.Turn
 tictactoe.models.Board ..> utils.Direction
 
@@ -371,11 +363,8 @@ class  tictactoe.models.Player{
 + getErrorsMoveOriginCoordinate(Coordinate): Error
 + getErrorsMoveTargetCoordinate(Coordinate, Coordinate): Error
 }
-tictactoe.models.Player *-down-> tictactoe.types.Token
 tictactoe.models.Player *-down-> tictactoe.models.Board
-tictactoe.models.Player *-down-> tictactoe.types.PlayerType 
 tictactoe.models.Player ..> tictactoe.models.Coordinate
-tictactoe.models.Player ..> tictactoe.types.Error
 
 class  tictactoe.models.Registry{
 - mementoList: ArrayList<Memento>
@@ -390,6 +379,7 @@ class  tictactoe.models.Registry{
 }
 tictactoe.models.Registry *-down-> tictactoe.types.Game
 tictactoe.models.Registry *-down-> tictactoe.models.Memento
+tictactoe.models.Registry *-down-> java.util.ArrayList
 
 class  tictactoe.models.Session{
 - state: State
@@ -443,41 +433,6 @@ tictactoe.models.Turn *-down-> tictactoe.models.Player
 
 ....
 
-=== Paquete _tictactoe.types_
-
-[plantuml,tictactoeTypesVersion9,svg]
-
-....
-
-enum  tictactoe.types.Error{
-NOT_EMPTY
-NOT_OWNER
-SAME_COORDINATES
-WRONG_COORDINATES
-}
-
-enum  tictactoe.types.PlayerType{
-USER_PLAYER
-MACHINE_PLAYER
-}
-
-enum  tictactoe.types.StateValue{
-INITIAL
-IN_GAME
-RESULT
-EXIT
-}
-
-enum  tictactoe.types.Token{
-TOKEN_X
-TOKEN_O
-- character: char
-~ Token(char)
-+ getChar(): char
-}
-
-....
-
 === Paquete _tictactoe.controllers_
 
 [plantuml,tictactoeControllersVersion9,svg]
@@ -489,18 +444,22 @@ class  tictactoe.controllers.AcceptorController{
 + {abstract} accept(ControllersVisitor): void
 }
 tictactoe.controllers.Controller <|-down- tictactoe.controllers.AcceptorController
+tictactoe.controllers.AcceptorController ..> tictactoe.controllers.ControllersVisitor
 
 class  tictactoe.controllers.Controller{
 # session: Session
 ~ Controller(Session)
 }
-tictactoe.controllers.Controller ..> tictactoe.models.Session
+tictactoe.controllers.Controller -down-> tictactoe.models.Session
 
 interface  tictactoe.controllers.ControllersVisitor{
 ~ visit(StartController): void
 ~ visit(PlayController): void
 ~ visit(ResultController): void
 }
+tictactoe.controllers.ControllersVisitor ..> tictactoe.controllers.ResultController
+tictactoe.controllers.ControllersVisitor ..> tictactoe.controllers.StartController
+tictactoe.controllers.ControllersVisitor ..> tictactoe.controllers.PlayController
 
 class  tictactoe.controllers.Logic{
 - session: Session
@@ -511,6 +470,7 @@ class  tictactoe.controllers.Logic{
 tictactoe.controllers.Logic *-down-> tictactoe.models.Session
 tictactoe.controllers.Logic *-down-> tictactoe.controllers.AcceptorController
 tictactoe.controllers.Logic *-down-> tictactoe.models.StateValue
+mastermind.controllers.Logic *-down-> java.util.Map
 
 class  tictactoe.controllers.MovementController{
 + MovementController(Session)
@@ -569,7 +529,6 @@ class  tictactoe.controllers.RedoController{
 + redoable(): boolean
 }
 tictactoe.controllers.Controller <|-down- tictactoe.controllers.RedoController
-tictactoe.controllers.RedoController ..> tictactoe.models.Session
 
 class  tictactoe.controllers.ResultController{
 + ResultController(Session)
@@ -578,7 +537,7 @@ class  tictactoe.controllers.ResultController{
 + accept(ControllersVisitor): void
 }
 tictactoe.controllers.AcceptorController <|-down- tictactoe.controllers.ResultController
-tictactoe.controllers.ResultController ..> tictactoe.controllers.ControllersVisitor
+tictactoe.controllers.ResultController ..> tictactoe.models.Session
 
 class  tictactoe.controllers.StartController{
 + StartController(Session)
@@ -587,7 +546,7 @@ class  tictactoe.controllers.StartController{
 + accept(ControllersVisitor): void
 }
 tictactoe.controllers.AcceptorController <|-down- tictactoe.controllers.StartController
-tictactoe.controllers.StartController ..> tictactoe.controllers.ControllersVisitor
+tictactoe.controllers.StartController ..> tictactoe.models.Session
 
 class  tictactoe.controllers.UndoController{
 + UndoController(Session)
@@ -595,7 +554,6 @@ class  tictactoe.controllers.UndoController{
 + undoable(): boolean
 }
 tictactoe.controllers.Controller <|-down- tictactoe.controllers.UndoController
-tictactoe.controllers.UndoController ..> tictactoe.models.Session
 
 ....
 
@@ -684,18 +642,6 @@ utils.WithConsoleView *-down-> utils.Console
 
 ....
 
-== Calidad del Software
-
-=== Diseño
-
-- [red]#_**DRY**: clases principales_#
-
-=== Rediseño
-
-- _Nuevas funcionalidades: undo/redo, demo, estadísiticas,..._
-* [red]#_**Clases Grandes**: los Modelos asumen la responsabilidad y crecen en líneas, métodos, atributos, ... con las nuevas funcionalidades_#
-* [red]#_**Open/Close**: hay que modificar los modelos que estaban funcionando previamente para incorporar nuevas funcionalidades_#
-
 == Vista de Desarrollo/Implementación
 
 [plantuml,diagramaImplementacion,svg]
@@ -704,8 +650,6 @@ utils.WithConsoleView *-down-> utils.Console
 package "  "  as tictactoe {
 }
 package "  "  as tictactoe.models {
-}
-package "  "  as tictactoe.types {
 }
 package "  "  as tictactoe.controllers {
 }
@@ -722,7 +666,6 @@ package "  "  as java.util {
 
 jar *--> tictactoe
 jar *--> tictactoe.models
-jar *--> tictactoe.types
 jar *--> tictactoe.controllers
 jar *--> tictactoe.views
 jar *--> utils
