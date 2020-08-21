@@ -46,13 +46,10 @@ tictactoe .down.> tictactoe.views
 
 package tictactoe.controllers #DDDDDD { } 
 tictactoe.controllers .down.> tictactoe.models
-tictactoe.controllers .down.> tictactoe.types
 
 package tictactoe.models #DDDDDD { }
-package tictactoe.types #DDDDDD { }  
 package java.util{ }
 tictactoe.models .down.> java.util
-tictactoe.models .down.> tictactoe.types
 
 package utils #DDDDDD { } 
 package java.io{ }
@@ -60,13 +57,11 @@ utils .down.> java.io
 
 package tictactoe.views #DDDDDD { } 
 tictactoe.views .down.> tictactoe.controllers
-tictactoe.views .down.> tictactoe.types
 
 package tictactoe.views.console #DDDDDD { } 
 tictactoe.views.console .down.> tictactoe.views
 tictactoe.views.console .down.> tictactoe.controllers 
 tictactoe.views.console .down.> utils
-tictactoe.views.console .down.> tictactoe.types
 
 package tictactoe.views.graphics #DDDDDD { } 
 package java.awt{ }
@@ -75,7 +70,6 @@ package java.awt.event{ }
 tictactoe.views.graphics .down.> java.awt.event
 tictactoe.views.graphics .down.> tictactoe.views
 tictactoe.views.graphics .down.> tictactoe.controllers 
-tictactoe.views.graphics .down.> tictactoe.types
 package javax.swing{ }
 tictactoe.views.graphics .down.> javax.swing
 
@@ -198,7 +192,6 @@ class  tictactoe.views.console.CoordinateView{
 ~ read(String): int[]
 }
 utils.WithConsoleView <|-down- tictactoe.views.console.CoordinateView
-tictactoe.views.console.CoordinateView ..> tictactoe.types.Error
 tictactoe.views.console.CoordinateView ..> tictactoe.controllers.Logic
 
 class  tictactoe.views.console.ErrorView{
@@ -222,7 +215,6 @@ class  tictactoe.views.console.PlayView{
 tictactoe.views.console.PlayView ..> tictactoe.views.console.BoardView
 tictactoe.views.console.PlayView ..> tictactoe.views.PlayerView
 tictactoe.views.console.PlayView ..> tictactoe.controllers.Logic
-tictactoe.views.console.PlayView ..> tictactoe.types.PlayerType
 
 class tictactoe.views.console.ResultView{
 ~ logic: Logic
@@ -355,7 +347,6 @@ tictactoe.views.graphics.GameView ..> tictactoe.views.graphics.ChoosePlayersView
 tictactoe.views.graphics.GameView ..> tictactoe.views.PlayerView
 tictactoe.views.graphics.GameView ..> tictactoe.views.graphics.BoardView
 tictactoe.views.graphics.GameView ..> tictactoe.views.graphics.Constraints
-tictactoe.views.graphics.GameView ..> tictactoe.types.PlayerType
 
 class  tictactoe.views.graphics.GraphicsView{
 - gameView: GameView
@@ -415,7 +406,6 @@ class  tictactoe.models.Board{
 - checkDirectionOfAllCoordinates(Coordinate[]): boolean
 }
 tictactoe.models.Board *-down-> tictactoe.models.Coordinate
-tictactoe.models.Board ..> tictactoe.types.Token
 tictactoe.models.Board ..> tictactoe.models.Turn
 tictactoe.models.Board ..> utils.Direction
 
@@ -454,8 +444,6 @@ class  tictactoe.models.Game{
 tictactoe.models.Game *-down-> tictactoe.models.Board
 tictactoe.models.Game *-down-> tictactoe.models.Player
 tictactoe.models.Game *-down-> tictactoe.models.Turn
-tictactoe.models.Game ..> tictactoe.types.Token
-tictactoe.models.Game ..> tictactoe.types.PlayerType
 
 class  tictactoe.models.Player{
 - token: Token
@@ -470,11 +458,8 @@ class  tictactoe.models.Player{
 + getErrorsMoveOriginCoordinate(Coordinate): Error
 + getErrorsMoveTargetCoordinate(Coordinate, Coordinate): Error
 }
-tictactoe.models.Player *-down-> tictactoe.types.Token
 tictactoe.models.Player *-down-> tictactoe.models.Board
-tictactoe.models.Player *-down-> tictactoe.types.PlayerType 
 tictactoe.models.Player ..> tictactoe.models.Coordinate
-tictactoe.models.Player ..> tictactoe.types.Error
 
 class  tictactoe.models.Turn{
 + {static} NUM_PLAYERS: int
@@ -487,34 +472,6 @@ class  tictactoe.models.Turn{
 ~ getOtherPlayer(): Player
 }
 tictactoe.models.Turn *-down-> tictactoe.models.Player
-
-....
-
-=== Paquete _tictactoe.types_
-
-[plantuml,tictactoeTypesVersion6,svg]
-
-....
-
-enum  tictactoe.types.Error{
-NOT_EMPTY
-NOT_OWNER
-SAME_COORDINATES
-WRONG_COORDINATES
-}
-
-enum  tictactoe.types.PlayerType{
-USER_PLAYER
-MACHINE_PLAYER
-}
-
-enum  tictactoe.types.Token{
-TOKEN_X
-TOKEN_O
-- character: char
-~ Token(char)
-+ getChar(): char
-}
 
 ....
 
@@ -673,8 +630,6 @@ package "  "  as tictactoe {
 }
 package "  "  as tictactoe.models {
 }
-package "  "  as tictactoe.types {
-}
 package "  "  as tictactoe.controllers {
 }
 package "  "  as tictactoe.views {
@@ -700,7 +655,6 @@ package "  "  as javax.swing {
 
 jar *--> tictactoe
 jar *--> tictactoe.models
-jar *--> tictactoe.types
 jar *--> tictactoe.controllers
 jar *--> tictactoe.views
 jar *--> tictactoe.views.console
