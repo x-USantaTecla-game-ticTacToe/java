@@ -488,12 +488,16 @@ class  tictactoe.controllers.Controller{
 }
 tictactoe.controllers.Controller -down-> tictactoe.models.Game
 tictactoe.controllers.Controller -down-> tictactoe.models.State
+tictactoe.controllers.Controller ..> tictactoe.controllers.ControllersVisitor
 
 class  tictactoe.controllers.ControllersVisitor{
 ~ visit(StartController): void
 ~ visit(PlayController): void
 ~ visit(ResultController): void
 }
+tictactoe.controllers.ControllersVisitor ..> tictactoe.controllers.ResultController
+tictactoe.controllers.ControllersVisitor ..> tictactoe.controllers.StartController
+tictactoe.controllers.ControllersVisitor ..> tictactoe.controllers.PlayController
 
 class  tictactoe.controllers.Logic{
 - state: State
@@ -504,7 +508,7 @@ class  tictactoe.controllers.Logic{
 }
 tictactoe.controllers.Logic *-down-> tictactoe.models.Game
 tictactoe.controllers.Logic *-down-> tictactoe.models.State
-tictactoe.controllers.Logic *-down-> tictactoe.controllers.Controller
+tictactoe.controllers.Logic --> tictactoe.controllers.Controller
 tictactoe.controllers.Logic *-down-> tictactoe.models.StateValue
 mastermind.controllers.Logic *-down-> java.util.Map
 
@@ -528,7 +532,6 @@ class  tictactoe.controllers.PlayController{
 + accept(ControllersVisitor): void
 }
 tictactoe.controllers.Controller <|-down- tictactoe.controllers.PlayController
-tictactoe.controllers.PlayController ..> tictactoe.controllers.ControllersVisitor
 tictactoe.controllers.PlayController ..> tictactoe.models.Coordinate
 
 class  tictactoe.controllers.ResultController{
@@ -538,7 +541,6 @@ class  tictactoe.controllers.ResultController{
 + accept(ControllersVisitor): void
 }
 tictactoe.controllers.Controller <|-down- tictactoe.controllers.ResultController
-tictactoe.controllers.ResultController ..> tictactoe.controllers.ControllersVisitor
 
 class  tictactoe.controllers.StartController{
 + StartController(Game, State)
@@ -547,7 +549,6 @@ class  tictactoe.controllers.StartController{
 + accept(ControllersVisitor): void
 }
 tictactoe.controllers.Controller <|-down- tictactoe.controllers.StartController
-tictactoe.controllers.StartController ..> tictactoe.controllers.ControllersVisitor
 
 ....
 
@@ -613,8 +614,7 @@ utils.WithConsoleView *-down-> utils.Console
 
 === Diseño
 
-- [red line-through]#_**DRY**: en las clases de vistas que asume el flujo de control y se repite en mastermind.views.console.ProposalView y mastermind.views.graphics.GameView_#
-- [red]#_**Principio de Sustitución de Liskov**: las vistas preguntan por el tipo de controlador polimórfico_#
+- [red line-through]#_**Principio de Sustitución de Liskov**: las vistas preguntan por el tipo de controlador polimórfico_#
 
 == Vista de Desarrollo/Implementación
 
