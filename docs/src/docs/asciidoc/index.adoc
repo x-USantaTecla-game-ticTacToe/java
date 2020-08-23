@@ -1203,6 +1203,12 @@ package "  "  as tictactoe {
 }
 package "  "  as tictactoe.distributed {
 }
+package "  "  as tictactoe.distributed.dispatchers {
+}
+package "  "  as tictactoe.distributed.dispatchers.errors {
+}
+package "  "  as tictactoe.distributed.dispatchers.undoredo {
+}
 package "  "  as tictactoe.models {
 }
 package "  "  as tictactoe.controllers {
@@ -1222,6 +1228,9 @@ package "  "  as java.util {
 
 jarClient *--> tictactoe
 jarClient *--> tictactoe.distributed
+jarClient *--> tictactoe.distributed.dispatchers
+jarClient *--> tictactoe.distributed.dispatchers.errors
+jarClient *--> tictactoe.distributed.dispatchers.undoredo
 jarClient *--> tictactoe.models
 jarClient *--> tictactoe.controllers
 jarClient *--> tictactoe.controllers.implementation
@@ -1240,6 +1249,10 @@ package "  "  as tictactoe {
 package "  "  as tictactoe.distributed {
 }
 package "  "  as tictactoe.distributed.dispatchers {
+}
+package "  "  as tictactoe.distributed.dispatchers.errors {
+}
+package "  "  as tictactoe.distributed.dispatchers.undoredo {
 }
 package "  "  as tictactoe.models {
 }
@@ -1260,7 +1273,9 @@ package "  "  as java.util {
 
 jarServer *--> tictactoe
 jarServer *--> tictactoe.distributed
-jarServer *--> tictactoe.distributed.dispatchers
+jarClient *--> tictactoe.distributed.dispatchers
+jarClient *--> tictactoe.distributed.dispatchers.errors
+jarClient *--> tictactoe.distributed.dispatchers.undoredo
 jarServer *--> tictactoe.models
 jarServer *--> tictactoe.controllers
 jarServer *--> tictactoe.controllers.implementation
