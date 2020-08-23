@@ -1,4 +1,4 @@
-= Master Mind. Solución 10.4. *mvp.pm.withoutProxy*
+= Master Mind. Solución 11.4. *mvp.pm.withProxy*
 Santa Tecla <parqueNaturalSantaTecla@gmail.com>
 :toc-title: Índice
 :toc: left
@@ -7,7 +7,7 @@ Santa Tecla <parqueNaturalSantaTecla@gmail.com>
 :idseparator: -
 :imagesdir: images
 
-== Requisitos 2. *Gráficos*
+== Requisitos 4. *Cliente/Servidor*
 
 [cols="50,50"]
 |===
@@ -27,32 +27,39 @@ image::Dibujo.jpg[]
 
 == Vista de Lógica/Diseño
 
-- Modelo/Vista/Presentador con Presentador del Modelo con Vista Achicada
+- *Modelo/Vista/Presentador* con *Presentador del Modelo* con *Vista Achicada*
+* [lime-background]#*Patrón Proxy*#, para la ejecución distribuida
 
 === Arquitectura
 
-[plantuml,arquitecturaVersion9,svg]
+[plantuml,arquitecturaVersion10,svg]
 ....
 
 package tictactoe #DDDDDD { } 
 tictactoe .down.> tictactoe.views
 tictactoe .down.> tictactoe.controllers
+tictactoe .down.> tictactoe.controllers.implementation
 
 package tictactoe.controllers #DDDDDD { } 
 tictactoe.controllers .down.> tictactoe.models
 tictactoe.controllers .down.> java.util
-tictactoe.controllers .down.> utils
+
+package tictactoe.controllers.implementation #DDDDDD { } 
+tictactoe.controllers.implementation .down.> tictactoe.controllers
 
 package tictactoe.distributed #DDDDDD { } 
-tictactoe.distributed .down.> tictactoe.controllers
-tictactoe.distributed .down.> tictactoe
 tictactoe.distributed .down.> tictactoe.distributed.dispatchers
+tictactoe.distributed .down.> tictactoe.controllers.implementation
+tictactoe.distributed .down.> tictactoe
+tictactoe.distributed .down.> tictactoe.models
+tictactoe.distributed .down.> tictactoe.controllers
+tictactoe.distributed .down.> utils
 
 package tictactoe.distributed.dispatchers #DDDDDD { } 
 tictactoe.distributed.dispatchers .down.> tictactoe.controllers
-package java.util{ }
-tictactoe.distributed.dispatchers .down.> java.util
+tictactoe.distributed.dispatchers .down.> tictactoe.controllers.implementation
 tictactoe.distributed.dispatchers .down.> utils
+tictactoe.distributed.dispatchers .down.> java.util
 
 package tictactoe.distributed.dispatchers.errors #DDDDDD { } 
 tictactoe.distributed.dispatchers.errors .down.> tictactoe.distributed.dispatchers
@@ -68,12 +75,10 @@ tictactoe.models .down.> java.util
 tictactoe.models .down.> utils
 
 package utils #DDDDDD { } 
-package java.util{ }
-utils .down.> java.util
-package java.net{ }
-utils .down.> java.net
 package java.io{ }
 utils .down.> java.io
+package java.net{ }
+utils .down.> java.net
 
 package tictactoe.views #DDDDDD { } 
 tictactoe.views .down.> tictactoe.controllers
@@ -83,22 +88,22 @@ tictactoe.views .down.> utils
 
 === Paquete _tictactoe_
 
-[plantuml,tictactoeVersion9,svg]
+[plantuml,tictactoeVersion10,svg]
 ....
 
 class  tictactoe.TicTacToe{
 - logic: Logic
 - view: View
 # TicTacToe()
-# {abstract} isStandalone(): boolean
-# play(): void
+# {abstract} createLogic(): Logic
 }
 tictactoe.TicTacToe *-down-> tictactoe.views.View
-tictactoe.TicTacToe *-down-> tictactoe.controllers.Logic
+tictactoe.TicTacToe --> tictactoe.controllers.Logic
 
 class  tictactoe.TicTacToeStandalone{
++ TicTacToeStandalone()
+# createLogic(): Logic
 + {static} main(String[]): void
-# isStandalone(): boolean
 }
 tictactoe.TicTacToe <|-down- tictactoe.TicTacToeStandalone
 
@@ -106,7 +111,7 @@ tictactoe.TicTacToe <|-down- tictactoe.TicTacToeStandalone
 
 === Paquete _tictactoe.views_
 
-[plantuml,tictactoeViewsVersion9,svg]
+[plantuml,tictactoeViewsVersion10,svg]
 
 ....
 
@@ -287,7 +292,7 @@ tictactoe.views.View *-down-> tictactoe.views.ResultView
 
 === Paquete _tictactoe.models_
 
-[plantuml,tictactoeModelsVersion9,svg]
+[plantuml,tictactoeModelsVersion10,svg]
 
 ....
 
@@ -398,12 +403,16 @@ tictactoe.models.Registry *-down-> tictactoe.models.Game
 tictactoe.models.Registry *-down-> tictactoe.models.Memento
 tictactoe.models.Registry *-down-> java.util.ArrayList
 
-class  tictactoe.models.Session{
+interface  tictactoe.models.Session{
++ {abstract} getValueState(): StateValue
+}
+tictactoe.models.Session ..> tictactoe.models.StateValue
+
+class  tictactoe.models.SessionImplementation{
 - state: State
 - game: Game
 - registry: Registry
-- tcpip: TCPIP
-+ Session(TCPIP)
++ SessionImplementation()
 + next(): void
 + undoable(): boolean
 + redoable(): boolean
@@ -423,10 +432,10 @@ class  tictactoe.models.Session{
 + getOtherValueFromTurn(): int
 + getValueState(): StateValue
 }
-tictactoe.models.Session *-down-> tictactoe.models.State
-tictactoe.models.Session *-down-> tictactoe.models.Game
-tictactoe.models.Session *-down-> tictactoe.models.Registry
-tictactoe.models.Session *-down-> utils.TCPIP
+tictactoe.models.Session <|-down- tictactoe.models.SessionImplementation
+tictactoe.models.SessionImplementation *-down-> tictactoe.models.State
+tictactoe.models.SessionImplementation *-down-> tictactoe.models.Game
+tictactoe.models.SessionImplementation *-down-> tictactoe.models.Registry
 
 class  tictactoe.models.State{
 - stateValue: StateValue
@@ -463,7 +472,6 @@ class  tictactoe.controllers.AcceptorController{
 + {abstract} accept(ControllersVisitor): void
 }
 tictactoe.controllers.Controller <|-down- tictactoe.controllers.AcceptorController
-tictactoe.controllers.AcceptorController *-down-> utils.TCPIP
 tictactoe.controllers.AcceptorController ..> tictactoe.controllers.ControllersVisitor
 
 class  tictactoe.controllers.Controller{
@@ -471,7 +479,7 @@ class  tictactoe.controllers.Controller{
 ~ Controller(Session)
 + getValueState(): StateValue
 }
-tictactoe.controllers.Controller -down-> tictactoe.models.Session
+tictactoe.controllers.Controller *-down-> tictactoe.models.Session
 tictactoe.controllers.Controller ..> tictactoe.models.StateValue
 
 interface  tictactoe.controllers.ControllersVisitor{
@@ -486,22 +494,14 @@ tictactoe.controllers.ControllersVisitor ..> tictactoe.controllers.PlayControlle
 class  tictactoe.controllers.Logic{
 # session: Session
 # acceptorControllers: Map<StateValue, AcceptorController>
-# startController: StartController
-# playController: PlayController
-# resumeController: ResultController
-- tcpip: TCPIP
-+ Logic(boolean)
-+ close(): void
+# Logic()
 + getController(): AcceptorController
 }
-tictactoe.controllers.Logic *-down-> tictactoe.controllers.ResultController
 tictactoe.controllers.Logic *-down-> tictactoe.models.Session
+tictactoe.controllers.Logic --> tictactoe.controllers.AcceptorController
 tictactoe.controllers.Logic *-down-> tictactoe.models.StateValue
 tictactoe.controllers.Logic *-down-> java.util.Map
-tictactoe.controllers.Logic *-down-> tictactoe.controllers.StartController
-tictactoe.controllers.Logic *-down-> utils.TCPIP
-tictactoe.controllers.Logic *-down-> tictactoe.controllers.PlayController
-tictactoe.controllers.Logic *-> tictactoe.controllers.AcceptorController
+tictactoe.controllers.Logic *-down-> tictactoe.controllers.Controller
 
 class  tictactoe.controllers.MovementController{
 + MovementController(Session)
@@ -524,10 +524,86 @@ tictactoe.controllers.Controller <|-down- tictactoe.controllers.MovementControll
 tictactoe.controllers.MovementController ..> tictactoe.models.Coordinate
 
 class  tictactoe.controllers.PlayController{
+# PlayController(Session)
++ {abstract} undo(): void
++ {abstract} redo(): void
++ {abstract} undoable(): boolean
++ {abstract} redoable(): boolean
++ {abstract} getTypeOfTokenPlayerFromTurn(): PlayerType
++ {abstract} getErrorsPutCoordinate(int, int): Error
++ {abstract} getErrorsMoveOriginCoordinate(int, int): Error
++ {abstract} getErrorsMoveTargetCoordinate(int, int, int, int): Error
++ {abstract} isCoordinateValid(int, int): boolean
++ {abstract} generateRandomCoordinate(): int[]
++ {abstract} isBoardComplete(): boolean
++ {abstract} putTokenPlayerFromTurn(int, int): void
++ {abstract} moveTokenPlayerFromTurn(int, int, int, int): void
++ {abstract} changeTurn(): void
++ {abstract} getTokenChar(int, int): char
++ {abstract} isEmptyToken(int, int): boolean
++ {abstract} getCoordinateDimension(): int
++ {abstract} isTicTacToe(): boolean
++ accept(ControllersVisitor): void
+}
+tictactoe.controllers.AcceptorController <|-down- tictactoe.controllers.PlayController
+
+class  tictactoe.controllers.RedoController{
++ RedoController(Session)
++ redo(): void
++ redoable(): boolean
+}
+tictactoe.controllers.Controller <|-down- tictactoe.controllers.RedoController
+tictactoe.controllers.RedoController ..> tictactoe.models.Session
+
+class  tictactoe.controllers.ResultController{
++ ResultController(Session)
++ {abstract} finish(): void
++ {abstract} getOtherValueFromTurn(): int
++ accept(ControllersVisitor): void
+}
+tictactoe.controllers.AcceptorController <|-down- tictactoe.controllers.ResultController
+tictactoe.controllers.ResultController ..> tictactoe.models.Session
+
+class  tictactoe.controllers.StartController{
++ StartController(Session)
++ {abstract} start(): void
++ {abstract} createPlayers(int): void
++ accept(ControllersVisitor): void
+}
+tictactoe.controllers.AcceptorController <|-down- tictactoe.controllers.StartController
+tictactoe.controllers.StartController ..> tictactoe.models.Session
+
+class  tictactoe.controllers.UndoController{
++ UndoController(Session)
++ undo(): void
++ undoable(): boolean
+}
+tictactoe.controllers.Controller <|-down- tictactoe.controllers.UndoController
+
+....
+
+=== Paquete _tictactoe.controllers.implementation_
+
+[plantuml,tictactoeControllersImplementation,svg]
+
+....
+
+class  tictactoe.controllers.implementation.LogicImplementation{
+# startControllerImplementation: StartControllerImplementation
+# playControllerImplementation: PlayControllerImplementation
+# resultControllerImplementation: ResultControllerImplementation
++ LogicImplementation()
+}
+tictactoe.controllers.Logic <|-down- tictactoe.controllers.implementation.LogicImplementation
+tictactoe.controllers.implementation.LogicImplementation *-down-> tictactoe.controllers.implementation.StartControllerImplementation
+tictactoe.controllers.implementation.LogicImplementation *-down-> tictactoe.controllers.implementation.ResultControllerImplementation
+tictactoe.controllers.implementation.LogicImplementation *-down-> tictactoe.controllers.implementation.PlayControllerImplementation
+
+class  tictactoe.controllers.implementation.PlayControllerImplementation{
 - movementController: MovementController
 - undoController: UndoController
 - redoController: RedoController
-+ PlayController(Session, TCPIP)
++ PlayControllerImplementation(Session)
 + undo(): void
 + redo(): void
 + undoable(): boolean
@@ -546,45 +622,25 @@ class  tictactoe.controllers.PlayController{
 + isEmptyToken(int, int): boolean
 + getCoordinateDimension(): int
 + isTicTacToe(): boolean
-+ accept(ControllersVisitor): void
 }
-tictactoe.controllers.AcceptorController <|-down- tictactoe.controllers.PlayController
-tictactoe.controllers.PlayController *-down-> tictactoe.controllers.MovementController
-tictactoe.controllers.PlayController *-down-> tictactoe.controllers.UndoController
-tictactoe.controllers.PlayController *-down-> tictactoe.controllers.RedoController
-tictactoe.controllers.PlayController ..> tictactoe.models.Session
+tictactoe.controllers.PlayController <|-down- tictactoe.controllers.implementation.PlayControllerImplementation
+tictactoe.controllers.implementation.PlayControllerImplementation *-down-> tictactoe.controllers.MovementController
+tictactoe.controllers.implementation.PlayControllerImplementation *-down-> tictactoe.controllers.UndoController
+tictactoe.controllers.implementation.PlayControllerImplementation *-down-> tictactoe.controllers.RedoController
 
-class  tictactoe.controllers.RedoController{
-+ RedoController(Session)
-+ redo(): void
-+ redoable(): boolean
-}
-tictactoe.controllers.Controller <|-down- tictactoe.controllers.RedoController
-
-class  tictactoe.controllers.ResultController{
-+ ResultController(Session)
+class  tictactoe.controllers.implementation.ResultControllerImplementation{
++ ResultControllerImplementation(Session)
 + finish(): void
 + getOtherValueFromTurn(): int
-+ accept(ControllersVisitor): void
 }
-tictactoe.controllers.AcceptorController <|-down- tictactoe.controllers.ResultController
-tictactoe.controllers.ResultController ..> tictactoe.models.Session
+tictactoe.controllers.ResultController <|-down- tictactoe.controllers.implementation.ResultControllerImplementation
 
-class  tictactoe.controllers.StartController{
-+ StartController(Session)
+class  tictactoe.controllers.implementation.StartControllerImplementation{
++ StartControllerImplementation(Session)
 + start(): void
 + createPlayers(int): void
-+ accept(ControllersVisitor): void
 }
-tictactoe.controllers.AcceptorController <|-down- tictactoe.controllers.StartController
-tictactoe.controllers.StartController ..> tictactoe.models.Session
-
-class  tictactoe.controllers.UndoController{
-+ UndoController(Session)
-+ undo(): void
-+ undoable(): boolean
-}
-tictactoe.controllers.Controller <|-down- tictactoe.controllers.UndoController
+tictactoe.controllers.StartController <|-down- tictactoe.controllers.implementation.StartControllerImplementation
 
 ....
 
@@ -594,18 +650,91 @@ tictactoe.controllers.Controller <|-down- tictactoe.controllers.UndoController
 
 ....
 
-class  tictactoe.distributed.LogicServer{
-+ LogicServer(boolean)
+class  tictactoe.distributed.LogicImplementationServer{
++ LogicImplementationServer()
 + createDispatchers(DispatcherPrototype): void
 }
-tictactoe.controllers.Logic <|-down- tictactoe.distributed.LogicServer
-tictactoe.distributed.LogicServer ..> tictactoe.distributed.dispatchers.DispatcherPrototype
+tictactoe.controllers.implementation.LogicImplementation <|-down- tictactoe.distributed.LogicImplementationServer
+tictactoe.distributed.LogicImplementationServer ..> tictactoe.distributed.dispatchers.DispatcherPrototype
+tictactoe.distributed.LogicImplementationServer ..> tictactoe.distributed.dispatchers.FrameType
+
+class  tictactoe.distributed.LogicProxy{
+- tcpip: TCPIP
++ LogicProxy()
++ close(): void
+}
+tictactoe.controllers.Logic <|-down- tictactoe.distributed.LogicProxy
+tictactoe.distributed.LogicProxy *-down-> utils.TCPIP
+tictactoe.distributed.LogicProxy *-down-> tictactoe.distributed.SessionProxy
+tictactoe.distributed.LogicProxy *-down-> tictactoe.distributed.ResultControllerProxy
+tictactoe.distributed.LogicProxy *-down-> tictactoe.distributed.StartControllerProxy
+tictactoe.distributed.LogicProxy *-down-> tictactoe.distributed.PlayControllerProxy
+
+class  tictactoe.distributed.PlayControllerProxy{
+- tcpip: TCPIP
++ PlayControllerProxy(TCPIP, Session)
++ undo(): void
++ redo(): void
++ undoable(): boolean
++ redoable(): boolean
++ getTypeOfTokenPlayerFromTurn(): PlayerType
++ getErrorsPutCoordinate(int, int): Error
++ getErrorsMoveOriginCoordinate(int, int): Error
++ getErrorsMoveTargetCoordinate(int, int, int, int): Error
++ isCoordinateValid(int, int): boolean
++ generateRandomCoordinate(): int[]
++ isBoardComplete(): boolean
++ putTokenPlayerFromTurn(int, int): void
++ moveTokenPlayerFromTurn(int, int, int, int): void
++ changeTurn(): void
++ getTokenChar(int, int): char
++ isEmptyToken(int, int): boolean
++ getCoordinateDimension(): int
++ isTicTacToe(): boolean
+}
+tictactoe.controllers.PlayController <|-down- tictactoe.distributed.PlayControllerProxy
+tictactoe.distributed.PlayControllerProxy *-down-> utils.TCPIP
+tictactoe.distributed.PlayControllerProxy ..> tictactoe.distributed.dispatchers.FrameType
+
+class  tictactoe.distributed.ResultControllerProxy{
+- tcpip: TCPIP
++ ResultControllerProxy(TCPIP, Session)
++ finish(): void
++ getOtherValueFromTurn(): int
+}
+tictactoe.controllers.ResultController <|-down- tictactoe.distributed.ResultControllerProxy
+tictactoe.distributed.ResultControllerProxy *-down-> utils.TCPIP
+tictactoe.distributed.ResultControllerProxy ..> tictactoe.distributed.dispatchers.FrameType
+
+class  tictactoe.distributed.SessionProxy{
+- tcpip: TCPIP
++ SessionProxy(TCPIP)
++ getValueState(): StateValue
++ getWidth(): int
+}
+tictactoe.models.Session <|-down- tictactoe.distributed.SessionProxy
+tictactoe.distributed.SessionProxy *-down-> utils.TCPIP
+tictactoe.distributed.SessionProxy..> tictactoe.distributed.dispatchers.FrameType
+
+class  tictactoe.distributed.StartControllerProxy{
+- tcpip: TCPIP
++ StartControllerProxy(TCPIP, Session)
++ start(): void
++ createPlayers(int): void
+}
+tictactoe.controllers.StartController <|-down- tictactoe.distributed.StartControllerProxy
+tictactoe.distributed.StartControllerProxy *-down-> utils.TCPIP
+tictactoe.distributed.StartControllerProxy ..> tictactoe.distributed.dispatchers.FrameType
 
 class  tictactoe.distributed.TicTacToeClient{
+- logicProxy: LogicProxy
++ TicTacToeClient()
 + {static} main(String[]): void
-# isStandalone(): Boolean
+# createLogic(): Logic
+# play(): void
 }
 tictactoe.TicTacToe <|-down- tictactoe.distributed.TicTacToeClient
+mastermind.distributed.TicTacToeClient *-down-> mastermind.distributed.LogicProxy
 
 class  tictactoe.distributed.TicTacToeServer{
 - dispatcherPrototype: DispatcherPrototype
@@ -615,7 +744,7 @@ class  tictactoe.distributed.TicTacToeServer{
 - serve(): void
 }
 tictactoe.distributed.TicTacToeServer *-down-> tictactoe.distributed.dispatchers.DispatcherPrototype
-tictactoe.distributed.TicTacToeServer *-down-> tictactoe.distributed.LogicServer
+tictactoe.distributed.TicTacToeServer *-down-> tictactoe.distributed.LogicImplementationServer
 
 ....
 
@@ -912,7 +1041,7 @@ tictactoe.distributed.dispatchers.errors.ErrorsPutDispatcher ..> tictactoe.contr
 
 === Paquete _utils_
 
-[plantuml,utilsVersion9,svg]
+[plantuml,utilsVersion10,svg]
 
 ....
 
@@ -1020,6 +1149,18 @@ utils.WithConsoleView *-down-> utils.Console
 
 ....
 
+== Calidad del Software
+
+=== Diseño
+
+- [red line-through]#_**Baja Cohesión**: de Lógica y Controladores que controlan y comunican_#
+- [red line-through]#_**Alto Acoplamiento**: de Lógica y Controladores a tecnologías de comunicación_#
+- [red line-through]#_**Open/Close**: en Lógica y Controladores cuando hay que cambiar el código de éstos con nuevas tecnologías de comunicación_#
+
+=== Rediseño
+
+- [red line-through]#_**Clases Grandes**: de Controladores con distintas ramas para distintas tecnologías de comunicación_#
+
 == Vista de Desarrollo/Implementación
 
 [plantuml,diagramaImplementacion,svg]
@@ -1030,6 +1171,8 @@ package "  "  as tictactoe {
 package "  "  as tictactoe.models {
 }
 package "  "  as tictactoe.controllers {
+}
+package "  "  as tictactoe.controllers.implementation {
 }
 package "  "  as tictactoe.views {
 }
@@ -1045,6 +1188,7 @@ package "  "  as java.util {
 jar *--> tictactoe
 jar *--> tictactoe.models
 jar *--> tictactoe.controllers
+jar *--> tictactoe.controllers.implementation
 jar *--> tictactoe.views
 jar *--> utils
 jar *--> java.io
@@ -1063,6 +1207,8 @@ package "  "  as tictactoe.models {
 }
 package "  "  as tictactoe.controllers {
 }
+package "  "  as tictactoe.controllers.implementation {
+}
 package "  "  as tictactoe.views {
 }
 package "  "  as utils {
@@ -1078,6 +1224,7 @@ jarClient *--> tictactoe
 jarClient *--> tictactoe.distributed
 jarClient *--> tictactoe.models
 jarClient *--> tictactoe.controllers
+jarClient *--> tictactoe.controllers.implementation
 jarClient *--> tictactoe.views
 jarClient *--> utils
 jarClient *--> java.io
@@ -1090,11 +1237,15 @@ jarClient *--> java.util
 
 package "  "  as tictactoe {
 }
+package "  "  as tictactoe.distributed {
+}
 package "  "  as tictactoe.distributed.dispatchers {
 }
 package "  "  as tictactoe.models {
 }
 package "  "  as tictactoe.controllers {
+}
+package "  "  as tictactoe.controllers.implementation {
 }
 package "  "  as tictactoe.views {
 }
@@ -1108,9 +1259,11 @@ package "  "  as java.util {
 [tictactoeServer.jar] as jarServer
 
 jarServer *--> tictactoe
+jarServer *--> tictactoe.distributed
 jarServer *--> tictactoe.distributed.dispatchers
 jarServer *--> tictactoe.models
 jarServer *--> tictactoe.controllers
+jarServer *--> tictactoe.controllers.implementation
 jarServer *--> tictactoe.views
 jarServer *--> utils
 jarServer *--> java.io

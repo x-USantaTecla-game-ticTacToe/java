@@ -11,11 +11,11 @@
 </head>
 <body class="book">
 <div id="header">
-<h1>TicTacToe. Solución 10.4. <strong>mvp.pm.withoutProxy</strong></h1>
+<h1>TicTacToe. Solución 11.4. <strong>mvp.pm.withProxy</strong></h1>
 <div class="details">
 <span id="author" class="author">Santa Tecla</span><br>
 <span id="email" class="email"><a href="mailto:parqueNaturalSantaTecla@gmail.com">parqueNaturalSantaTecla@gmail.com</a></span><br>
-<span id="revnumber">version 0.9.1</span>
+<span id="revnumber">version 0.10.0</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Índice</div>
@@ -94,7 +94,14 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Modelo/Vista/Presentador con Presentador del Modelo con Vista Achicada</p>
+<p><strong>Modelo/Vista/Presentador</strong> con <strong>Presentador del Modelo</strong> con <strong>Vista Achicada</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p><span class="lime-background"><strong>Patrón Proxy</strong></span>, para la ejecución distribuida</p>
+</li>
+</ul>
+</div>
 </li>
 </ul>
 </div>
@@ -102,7 +109,7 @@
 <h3 id="arquitectura">Arquitectura</h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/arquitecturaVersion9.svg" alt="arquitecturaVersion10" width="800" height="600">
+<img src="build/docs/asciidoc/images/arquitecturaVersion10.svg" alt="arquitecturaVersion10" width="800" height="600">
 </div>
 </div>
 </div>
@@ -110,7 +117,7 @@
 <h3 id="paquete-tictactoe">Paquete <em>tictactoe</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/tictactoeVersion9.svg" alt="tictactoeVersion9" width="500" height="400">
+<img src="build/docs/asciidoc/images/tictactoeVersion10.svg" alt="tictactoeVersion10" width="500" height="400">
 </div>
 </div>
 </div>
@@ -118,7 +125,7 @@
 <h3 id="paquete-tictactoe-views">Paquete <em>tictactoe.views</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/tictactoeViewsVersion9.svg" alt="tictactoeViewsVersion9" width="1200" height="1000">
+<img src="build/docs/asciidoc/images/tictactoeViewsVersion10.svg" alt="tictactoeViewsVersion10" width="1200" height="1000">
 </div>
 </div>
 </div>
@@ -126,7 +133,7 @@
 <h3 id="paquete-tictactoe-models">Paquete <em>tictactoe.models</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/tictactoeModelsVersion9.svg" alt="tictactoeModelsVersion5" width="800" height="1000">
+<img src="build/docs/asciidoc/images/tictactoeModelsVersion10.svg" alt="tictactoeModelsVersion10" width="1200" height="1000">
 </div>
 </div>
 </div>
@@ -134,20 +141,28 @@
 <h3 id="paquete-tictactoe-controllers">Paquete <em>tictactoe.controllers</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/tictactoeControllersVersion9.svg" alt="tictactoeControllersVersion9" width="1000" height="600">
+<img src="build/docs/asciidoc/images/tictactoeControllersVersion10.svg" alt="tictactoeControllersVersion10" width="1000" height="600">
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="paquete-tictactoe-controllers">Paquete <em>tictactoe.distributed</em></h3>
+<h3 id="paquete-tictactoe-controllers-implementation">Paquete <em>tictactoe.controllers.implementation</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/tictactoeDistributed.svg" alt="tictactoeDistributed" width="600" height="600">
+<img src="build/docs/asciidoc/images/tictactoeControllersImplementation.svg" alt="tictactoeControllersImplementation" width="1848" height="514">
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="paquete-tictactoe-controllers">Paquete <em>tictactoe.distributed.dispatchers</em></h3>
+<h3 id="paquete-tictactoe-distributed">Paquete <em>tictactoe.distributed</em></h3>
+<div class="imageblock">
+<div class="content">
+<img src="build/docs/asciidoc/images/tictactoeDistributed.svg" alt="tictactoeDistributed" width="1000" height="600">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="paquete-tictactoe-distributed-dispatchers">Paquete <em>tictactoe.distributed.dispatchers</em></h3>
 <div class="imageblock">
 <div class="content">
 <img src="build/docs/asciidoc/images/tictactoeDistributerDispatchers.svg" alt="tictactoeDistributerDispatchers" width="1000" height="600">
@@ -155,7 +170,7 @@
 </div>
 </div>
 <div class="sect2">
-<h3 id="paquete-tictactoe-controllers">Paquete <em>tictactoe.distributed.dispatchers.undoredo</em></h3>
+<h3 id="paquete-tictactoe-distributed-dispatchers-undoredo">Paquete <em>tictactoe.distributed.dispatchers.undoredo</em></h3>
 <div class="imageblock">
 <div class="content">
 <img src="build/docs/asciidoc/images/tictactoeDistributerDispatchersUndoredo.svg" alt="tictactoeDistributerDispatchersUndoredo" width="600" height="600">
@@ -163,7 +178,7 @@
 </div>
 </div>
 <div class="sect2">
-<h3 id="paquete-tictactoe-controllers">Paquete <em>tictactoe.distributed.dispatchers.errors</em></h3>
+<h3 id="paquete-tictactoe-distributed-dispatchers-errors">Paquete <em>tictactoe.distributed.dispatchers.errors</em></h3>
 <div class="imageblock">
 <div class="content">
 <img src="build/docs/asciidoc/images/tictactoeDistributerDispatchersErrors.svg" alt="tictactoeDistributerDispatchersErrors" width="600" height="600">
@@ -174,7 +189,7 @@
 <h3 id="paquete-utils">Paquete <em>utils</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/utilsVersion9.svg" alt="utilsVersion9" width="456" height="548">
+<img src="build/docs/asciidoc/images/utilsVersion10.svg" alt="utilsVersion10" width="456" height="548">
 </div>
 </div>
 </div>
@@ -248,8 +263,8 @@
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 0.9.1<br>
-Last updated 2020-08-21 20:30:00 +0200
+Version 0.10.0<br>
+Last updated 2020-08-23 12:30:00 +0200
 </div>
 </div>
 </html>

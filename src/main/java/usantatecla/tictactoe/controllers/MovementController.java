@@ -2,6 +2,7 @@ package usantatecla.tictactoe.controllers;
 
 import usantatecla.tictactoe.models.Coordinate;
 import usantatecla.tictactoe.models.Session;
+import usantatecla.tictactoe.models.SessionImplementation;
 import usantatecla.tictactoe.types.Error;
 import usantatecla.tictactoe.types.PlayerType;
 
@@ -12,19 +13,19 @@ public class MovementController extends Controller {
 	}
 
 	public PlayerType getTypeOfTokenPlayerFromTurn() {
-		return this.session.getTypeOfTokenPlayerFromTurn();
+		return ((SessionImplementation) this.session).getTypeOfTokenPlayerFromTurn();
 	}
 
 	public Error getErrorsPutCoordinate(int row, int column) {
-		return this.session.getErrorsPutCoordinate(new Coordinate(row, column));
+		return ((SessionImplementation) this.session).getErrorsPutCoordinate(new Coordinate(row, column));
 	}
 
 	public Error getErrorsMoveOriginCoordinate(int originRow, int originColumn) {
-		return this.session.getErrorsMoveOriginCoordinate(new Coordinate(originRow, originColumn));
+		return ((SessionImplementation) this.session).getErrorsMoveOriginCoordinate(new Coordinate(originRow, originColumn));
 	}
 
 	public Error getErrorsMoveTargetCoordinate(int originRow, int originColumn, int targetRow, int targetColumn) {
-		return this.session.getErrorsMoveTargetCoordinate(new Coordinate(originRow, originColumn),
+		return ((SessionImplementation) this.session).getErrorsMoveTargetCoordinate(new Coordinate(originRow, originColumn),
 				new Coordinate(targetRow, targetColumn));
 	}
 
@@ -42,30 +43,30 @@ public class MovementController extends Controller {
 	}
 
 	public boolean isBoardComplete() {
-		return this.session.isBoardComplete();
+		return ((SessionImplementation) this.session).isBoardComplete();
 	}
 
 	public void putTokenPlayerFromTurn(int originRow, int originColumn) {
-		this.session.putTokenPlayerFromTurn(new Coordinate(originRow, originColumn));
+		((SessionImplementation) this.session).putTokenPlayerFromTurn(new Coordinate(originRow, originColumn));
 	}
 
 	public void moveTokenPlayerFromTurn(int originRow, int originColumn, int targetRow, int targetColumn) {
 		Coordinate[] coordinates = new Coordinate[2];
 		coordinates[0] = new Coordinate(originRow, originColumn);
 		coordinates[1] = new Coordinate(targetRow, targetColumn);
-		this.session.moveTokenPlayerFromTurn(coordinates);
+		((SessionImplementation) this.session).moveTokenPlayerFromTurn(coordinates);
 	}
 
 	public void changeTurn() {
-		this.session.changeTurn();
+		((SessionImplementation) this.session).changeTurn();
 	}
 
 	public char getTokenChar(int row, int column) {
-		return this.session.getToken(row, column).getChar();
+		return ((SessionImplementation) this.session).getToken(row, column).getChar();
 	}
 
 	public boolean isEmptyToken(int row, int column) {
-		return this.session.getToken(row, column) == null;
+		return ((SessionImplementation) this.session).getToken(row, column) == null;
 	}
 
 	public int getCoordinateDimension() {
@@ -73,8 +74,8 @@ public class MovementController extends Controller {
 	}
 
 	public void isTicTacToe() {
-		if (this.session.isTicTacToe()) {
-			this.session.next();
+		if (((SessionImplementation) this.session).isTicTacToe()) {
+			((SessionImplementation) this.session).next();
 		};
 	}
 }

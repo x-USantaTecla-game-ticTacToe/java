@@ -1,4 +1,4 @@
-<h1 align="center">Welcome to TicTacToe. Versión 10.4. ** mvp.pm.withoutProxy ** 👋</h1>
+<h1 align="center">Welcome to TicTacToe. Versión 11.4. ** mvp.pm.withProxy ** 👋</h1>
 <p>
   <a href="/docs" target="_blank">
     <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
@@ -8,7 +8,7 @@
   </a>
 </p>
 
-> TicTacToe. Solución mvp.pm.withoutProxy
+> TicTacToe. Solución mvp.pm.withProxy
 
 ## Install
 

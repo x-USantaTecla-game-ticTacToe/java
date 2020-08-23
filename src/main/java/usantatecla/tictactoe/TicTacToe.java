@@ -11,11 +11,11 @@ public abstract class TicTacToe {
     private View view;
 
     protected TicTacToe() {
-        this.logic = new Logic(this.isStandalone());
+        this.logic = this.createLogic();
 		this.view = new View();
 	}
 	
-	protected abstract boolean isStandalone();
+	protected abstract Logic createLogic();
 
     protected void play() {
 		AcceptorController acceptorController;
@@ -25,8 +25,5 @@ public abstract class TicTacToe {
 				this.view.interact(acceptorController);
 			}
 		} while (acceptorController != null);
-		if (!this.isStandalone()) {
-			this.logic.close();
-		}
 	}
 }
