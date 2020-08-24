@@ -463,7 +463,7 @@ tictactoe.models.Turn *-down-> tictactoe.models.Player
 
 === Paquete _tictactoe.controllers_
 
-[plantuml,tictactoeControllersVersion9,svg]
+[plantuml,tictactoeControllersVersion10,svg]
 
 ....
 
