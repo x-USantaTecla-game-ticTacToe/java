@@ -29,6 +29,10 @@
 <li><a href="#paquete-tictactoe-models">Paquete <em>tictactoe.models</em></a></li>
 <li><a href="#paquete-tictactoe-types">Paquete <em>tictactoe.types</em></a></li>
 <li><a href="#paquete-tictactoe-controllers">Paquete <em>tictactoe.controllers</em></a></li>
+<li><a href="#paquete-tictactoe-distributed">Paquete <em>tictactoe.distributed</em></a></li>
+<li><a href="#paquete-tictactoe-distributed-dispatchers">Paquete <em>tictactoe.distributed.dispatchers</em></a></li>
+<li><a href="#paquete-tictactoe-distributed-dispatchers-errors">Paquete <em>tictactoe.distributed.dispatchers.errors</em></a></li>
+<li><a href="#paquete-tictactoe-distributed-dispatchers-undoredo">Paquete <em>tictactoe.distributed.dispatchers.undoredo</em></a></li>
 <li><a href="#paquete-utils">Paquete <em>utils</em></a></li>
 </ul>
 </li>
@@ -65,7 +69,7 @@
 <p><em>Funcionalidad: <strong>Básica</strong> + <span class="lime-background"><strong>undo/redo</strong></span></em></p>
 </li>
 <li>
-<p><em>Interfaz: <strong class="lime-background">Gráfica</strong> y <strong>Texto</strong></em></p>
+<p><em>Interfaz: <strong class="line-through">Gráfica</strong> y <strong>Texto</strong></em></p>
 </li>
 <li>
 <p><em>Distribución: <strong>Standalone</strong> + <span class="lime-background"><strong>Client/Server</strong></span></em></p>
