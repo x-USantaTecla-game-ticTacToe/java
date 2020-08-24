@@ -1,5 +1,9 @@
 package usantatecla.tictactoe.models;
 
+import java.io.BufferedReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import usantatecla.tictactoe.types.Token;
 import usantatecla.utils.Direction;
 
@@ -117,12 +121,49 @@ public class Board {
 
 	Board copy() {
 		Coordinate[][] coordinatesCopy = new Coordinate[Turn.PLAYERS][Coordinate.DIMENSION];
-		for(int i = 0; i < Turn.PLAYERS; i++ ) {
-			for(int j = 0; j < Coordinate.DIMENSION; j++ ) {
+		for (int i = 0; i < Turn.PLAYERS; i++) {
+			for (int j = 0; j < Coordinate.DIMENSION; j++) {
 				coordinatesCopy[i][j] = this.coordinates[i][j];
 			}
 		}
 		return new Board(coordinatesCopy);
+	}
+
+	void save(FileWriter fileWriter) {
+		try {
+			for (Coordinate[] coordinatesPlayer : this.coordinates) {
+				for (Coordinate coordinate : coordinatesPlayer) {
+					if (coordinate == null) {
+						fileWriter.write(Board.EMPTY + "\n");
+					} else {
+						fileWriter.write(coordinate.getRow() + "." + coordinate.getColumn() + "\n");
+					}
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	void load(BufferedReader bufferedReader) {
+		try {
+			for (int i = 0; i < Turn.PLAYERS; i++) {
+				for (int j = 0; j < Coordinate.DIMENSION; j++) {
+					String tokenCoordinate = bufferedReader.readLine();
+					if ("-".equals(tokenCoordinate)) {
+						this.coordinates[i][j] = null;
+					} else {
+						String[] coordinatesString = tokenCoordinate.split("\\.");
+						this.coordinates[i][j] = new Coordinate(Integer.parseInt(coordinatesString[0]),
+								Integer.parseInt(coordinatesString[1]));
+					}
+				}
+			}
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

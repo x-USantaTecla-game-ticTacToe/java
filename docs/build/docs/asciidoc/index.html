@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.8">
 <meta name="author" content="Santa Tecla">
-<title>Master Mind. Solución 11.4. mvp.pm.withProxy</title>
+<title>Master Mind. Solución 12.5. mvp.pm.-DAO</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -439,7 +439,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="book">
 <div id="header">
-<h1>Master Mind. Solución 11.4. <strong>mvp.pm.withProxy</strong></h1>
+<h1>Master Mind. Solución 12.5. <strong>mvp.pm.-DAO</strong></h1>
 <div class="details">
 <span id="author" class="author">Santa Tecla</span><br>
 <span id="email" class="email"><a href="mailto:parqueNaturalSantaTecla@gmail.com">parqueNaturalSantaTecla@gmail.com</a></span><br>
@@ -448,18 +448,21 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toc" class="toc">
 <div id="toctitle">Índice</div>
 <ul class="sectlevel1">
-<li><a href="#requisitos-4-clienteservidor">Requisitos 4. <strong>Cliente/Servidor</strong></a></li>
+<li><a href="#requisitos-5-ficheros">Requisitos 5. <strong>Ficheros</strong></a></li>
 <li><a href="#vista-de-lógicadiseño">Vista de Lógica/Diseño</a>
 <ul class="sectlevel2">
 <li><a href="#arquitectura">Arquitectura</a></li>
 <li><a href="#paquete-tictactoe">Paquete <em>tictactoe</em></a></li>
 <li><a href="#paquete-tictactoe-views">Paquete <em>tictactoe.views</em></a></li>
+<li><a href="#paquete-tictactoe-views-menus">Paquete <em>tictactoe.views.menus</em></a></li>
+<li><a href="#paquete-tictactoe-views-models">Paquete <em>tictactoe.views.models</em></a></li>
 <li><a href="#paquete-tictactoe-models">Paquete <em>tictactoe.models</em></a></li>
 <li><a href="#paquete-tictactoe-controllers">Paquete <em>tictactoe.controllers</em></a></li>
 <li><a href="#paquete-tictactoe-controllers-implementation">Paquete <em>tictactoe.controllers.implementation</em></a></li>
 <li><a href="#paquete-tictactoe-distributed_">Paquete tictactoe.distributed_</a></li>
 <li><a href="#paquete-tictactoe-distributed-dispatchers_">Paquete tictactoe.distributed.dispatchers_</a></li>
 <li><a href="#paquete-tictactoe-distributed-dispatchers-undoredo_">Paquete tictactoe.distributed.dispatchers.undoredo_</a></li>
+<li><a href="#paquete-tictactoe-distributed-dispatchers-save">Paquete tictactoe.distributed.dispatchers.save</a></li>
 <li><a href="#paquete-tictactoe-distributed-dispatchers-errors">Paquete tictactoe.distributed.dispatchers.errors</a></li>
 <li><a href="#paquete-utils">Paquete <em>utils</em></a></li>
 </ul>
@@ -478,7 +481,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="requisitos-4-clienteservidor">Requisitos 4. <strong>Cliente/Servidor</strong></h2>
+<h2 id="requisitos-5-ficheros">Requisitos 5. <strong>Ficheros</strong></h2>
 <div class="sectionbody">
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -494,16 +497,16 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="ulist">
 <ul>
 <li>
-<p><em>Funcionalidad: <strong>Básica</strong> + <strong class="lime-background">undo/redo</strong></em></p>
+<p><em>Funcionalidad: <strong>Básica</strong> + <strong>undo/redo</strong></em></p>
 </li>
 <li>
-<p><em>Interfaz: <strong class="lime-background">Gráfica</strong> y <strong>Texto</strong></em></p>
+<p><em>Interfaz: <strong class="line-through">Gráfica</strong> y <strong>Texto</strong></em></p>
 </li>
 <li>
-<p><em>Distribución: <strong>Standalone</strong> + <strong class="lime-background">Client/Server</strong></em></p>
+<p><em>Distribución: <strong>Standalone</strong> + <strong>Client/Server</strong></em></p>
 </li>
 <li>
-<p><em>Persistencia: <strong>No</strong></em></p>
+<p><em>Persistencia: <span class="lime-background"><strong>Ficheros</strong></span></em></p>
 </li>
 </ul>
 </div>
@@ -527,13 +530,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul>
 <li>
 <p><strong>Modelo/Vista/Presentador</strong> con <strong>Presentador del Modelo</strong> con <strong>Vista Achicada</strong></p>
-<div class="ulist">
-<ul>
-<li>
-<p><span class="lime-background"><strong>Patrón Proxy</strong></span>, para la ejecución distribuida</p>
-</li>
-</ul>
-</div>
 </li>
 </ul>
 </div>
@@ -541,7 +537,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h3 id="arquitectura">Arquitectura</h3>
 <div class="imageblock">
 <div class="content">
-<img src="images/arquitecturaVersion10.svg" alt="arquitecturaVersion10" width="1296" height="763">
+<img src="images/arquitecturaVersion11.svg" alt="arquitecturaVersion11" width="2068" height="878">
 </div>
 </div>
 </div>
@@ -549,7 +545,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h3 id="paquete-tictactoe">Paquete <em>tictactoe</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="images/tictactoeVersion10.svg" alt="tictactoeVersion10" width="550" height="323">
+<img src="images/tictactoeVersion11.svg" alt="tictactoeVersion11" width="550" height="337">
 </div>
 </div>
 </div>
@@ -557,7 +553,23 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h3 id="paquete-tictactoe-views">Paquete <em>tictactoe.views</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="images/tictactoeViewsVersion10.svg" alt="tictactoeViewsVersion10" width="2361" height="1472">
+<img src="images/tictactoeViewsVersion11.svg" alt="tictactoeViewsVersion11" width="2373" height="500">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="paquete-tictactoe-views-menus">Paquete <em>tictactoe.views.menus</em></h3>
+<div class="imageblock">
+<div class="content">
+<img src="images/tictactoeViewsMenus.svg" alt="tictactoeViewsMenus" width="1974" height="544">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="paquete-tictactoe-views-models">Paquete <em>tictactoe.views.models</em></h3>
+<div class="imageblock">
+<div class="content">
+<img src="images/tictactoeViewsModels.svg" alt="tictactoeViewsModels" width="1140" height="954">
 </div>
 </div>
 </div>
@@ -565,7 +577,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h3 id="paquete-tictactoe-models">Paquete <em>tictactoe.models</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="images/tictactoeModelsVersion10.svg" alt="tictactoeModelsVersion10" width="990" height="2545">
+<img src="images/tictactoeModelsVersion11.svg" alt="tictactoeModelsVersion11" width="1284" height="2671">
 </div>
 </div>
 </div>
@@ -573,7 +585,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h3 id="paquete-tictactoe-controllers">Paquete <em>tictactoe.controllers</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="images/tictactoeControllersVersion9.svg" alt="tictactoeControllersVersion9" width="1299" height="1298">
+<img src="images/tictactoeControllersVersion11.svg" alt="tictactoeControllersVersion11" width="1510" height="1325">
 </div>
 </div>
 </div>
@@ -581,7 +593,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h3 id="paquete-tictactoe-controllers-implementation">Paquete <em>tictactoe.controllers.implementation</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="images/tictactoeControllersImplementation.svg" alt="tictactoeControllersImplementation" width="1898" height="647">
+<img src="images/tictactoeControllersImplementation.svg" alt="tictactoeControllersImplementation" width="1208" height="751">
 </div>
 </div>
 </div>
@@ -589,7 +601,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h3 id="paquete-tictactoe-distributed_">Paquete tictactoe.distributed_</h3>
 <div class="imageblock">
 <div class="content">
-<img src="images/tictactoeDistributed.svg" alt="tictactoeDistributed" width="2153" height="820">
+<img src="images/tictactoeDistributed.svg" alt="tictactoeDistributed" width="2572" height="984">
 </div>
 </div>
 </div>
@@ -597,7 +609,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h3 id="paquete-tictactoe-distributed-dispatchers_">Paquete tictactoe.distributed.dispatchers_</h3>
 <div class="imageblock">
 <div class="content">
-<img src="images/tictactoeDistributerDispatchers.svg" alt="tictactoeDistributerDispatchers" width="4868" height="984">
+<img src="images/tictactoeDistributerDispatchers.svg" alt="tictactoeDistributerDispatchers" width="5122" height="1095">
 </div>
 </div>
 </div>
@@ -606,6 +618,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="imageblock">
 <div class="content">
 <img src="images/tictactoeDistributerDispatchersUndoredo.svg" alt="tictactoeDistributerDispatchersUndoredo" width="924" height="394">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="paquete-tictactoe-distributed-dispatchers-save">Paquete tictactoe.distributed.dispatchers.save</h3>
+<div class="imageblock">
+<div class="content">
+<img src="images/tictactoeDistributerDispatchersSave.svg" alt="tictactoeDistributerDispatchersSave" width="1522" height="394">
 </div>
 </div>
 </div>
@@ -621,7 +641,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h3 id="paquete-utils">Paquete <em>utils</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="images/utilsVersion10.svg" alt="utilsVersion10" width="1392" height="804">
+<img src="images/utilsVersion11.svg" alt="utilsVersion11" width="1428" height="804">
 </div>
 </div>
 </div>
@@ -663,17 +683,17 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sectionbody">
 <div class="imageblock">
 <div class="content">
-<img src="images/diagramaImplementacion.svg" alt="diagramaImplementacion" width="1334" height="167">
+<img src="images/diagramaImplementacion.svg" alt="diagramaImplementacion" width="1783" height="167">
 </div>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/diagramaImplementacionClient.svg" alt="diagramaImplementacionClient" width="2545" height="167">
+<img src="images/diagramaImplementacionClient.svg" alt="diagramaImplementacionClient" width="3326" height="167">
 </div>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/diagramaImplementacionServer.svg" alt="diagramaImplementacionServer" width="2544" height="173">
+<img src="images/diagramaImplementacionServer.svg" alt="diagramaImplementacionServer" width="3326" height="167">
 </div>
 </div>
 </div>
@@ -704,7 +724,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1<br>
-Last updated 2020-08-23 12:25:30 +0200
+Last updated 2020-08-24 19:04:08 +0200
 </div>
 </div>
 <script>

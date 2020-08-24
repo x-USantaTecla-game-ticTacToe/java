@@ -11,24 +11,32 @@
 </head>
 <body class="book">
 <div id="header">
-<h1>TicTacToe. Solución 11.4. <strong>mvp.pm.withProxy</strong></h1>
+<h1>TicTacToe. Solución 12.5. <strong>mvp.pm.-DAO</strong></h1>
 <div class="details">
 <span id="author" class="author">Santa Tecla</span><br>
 <span id="email" class="email"><a href="mailto:parqueNaturalSantaTecla@gmail.com">parqueNaturalSantaTecla@gmail.com</a></span><br>
-<span id="revnumber">version 0.10.0</span>
+<span id="revnumber">version 0.11.0</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Índice</div>
 <ul class="sectlevel1">
-<li><a href="#requisitos-4-clienteservidor">Requisitos 4. <strong>ClienteServidor</strong></a></li>
+<li><a href="#requisitos-4-clienteservidor">Requisitos 5. <strong>Ficheros</strong></a></li>
 <li><a href="#vista-de-lógicadiseño">Vista de Lógica/Diseño</a>
 <ul class="sectlevel2">
 <li><a href="#arquitectura">Arquitectura</a></li>
 <li><a href="#paquete-tictactoe">Paquete <em>tictactoe</em></a></li>
 <li><a href="#paquete-tictactoe-views">Paquete <em>tictactoe.views</em></a></li>
+<li><a href="#paquete-tictactoe-views-menus">Paquete <em>tictactoe.views.menus</em></a></li>
+<li><a href="#paquete-tictactoe-views-models">Paquete <em>tictactoe.views.models</em></a></li>
 <li><a href="#paquete-tictactoe-models">Paquete <em>tictactoe.models</em></a></li>
 <li><a href="#paquete-tictactoe-types">Paquete <em>tictactoe.types</em></a></li>
 <li><a href="#paquete-tictactoe-controllers">Paquete <em>tictactoe.controllers</em></a></li>
+<li><a href="#paquete-tictactoe-controllers-implementation">Paquete <em>tictactoe.controllers.implementation</em></a></li>
+<li><a href="#paquete-tictactoe-distributed">Paquete <em>tictactoe.distributed</em></a></li>
+<li><a href="#paquete-tictactoe-distributed-dispatchers">Paquete <em>tictactoe.distributed.dispatchers</em></a></li>
+<li><a href="#paquete-tictactoe-distributed-dispatchers-errors">Paquete <em>tictactoe.distributed.dispatchers.errors</em></a></li>
+<li><a href="#paquete-tictactoe-distributed-dispatchers-save">Paquete <em>tictactoe.distributed.dispatchers.save</em></a></li>
+<li><a href="#paquete-tictactoe-distributed-dispatchers-undoredo">Paquete <em>tictactoe.distributed.dispatchers.undoredo</em></a></li>
 <li><a href="#paquete-utils">Paquete <em>utils</em></a></li>
 </ul>
 </li>
@@ -46,7 +54,7 @@
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="requisitos-4-clienteservidor">Requisitos 4. <strong>ClienteServidor</strong></h2>
+<h2 id="requisitos-4-clienteservidor">Requisitos 5. <strong>Ficheros</strong></h2>
 <div class="sectionbody">
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -62,16 +70,16 @@
 <div class="ulist">
 <ul>
 <li>
-<p><em>Funcionalidad: <strong>Básica</strong> + <span class="lime-background"><strong>undo/redo</strong></span></em></p>
+<p><em>Funcionalidad: <strong>Básica</strong> + <strong>undo/redo</strong></em></p>
 </li>
 <li>
-<p><em>Interfaz: <strong class="lime-background">Gráfica</strong> y <strong>Texto</strong></em></p>
+<p><em>Interfaz: <strong class="line-through">Gráfica</strong> y <strong>Texto</strong></em></p>
 </li>
 <li>
-<p><em>Distribución: <strong>Standalone</strong> + <span class="lime-background"><strong>Client/Server</strong></span></em></p>
+<p><em>Distribución: <strong>Standalone</strong> + <strong>Client/Server</strong></em></p>
 </li>
 <li>
-<p><em>Persistencia: <strong>No</strong></em></p>
+<p><em>Persistencia: <span class="lime-background"><strong>Ficheros</strong></span></em></p>
 </li>
 </ul>
 </div>
@@ -95,13 +103,6 @@
 <ul>
 <li>
 <p><strong>Modelo/Vista/Presentador</strong> con <strong>Presentador del Modelo</strong> con <strong>Vista Achicada</strong></p>
-<div class="ulist">
-<ul>
-<li>
-<p><span class="lime-background"><strong>Patrón Proxy</strong></span>, para la ejecución distribuida</p>
-</li>
-</ul>
-</div>
 </li>
 </ul>
 </div>
@@ -109,7 +110,7 @@
 <h3 id="arquitectura">Arquitectura</h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/arquitecturaVersion10.svg" alt="arquitecturaVersion10" width="800" height="600">
+<img src="build/docs/asciidoc/images/arquitecturaVersion11.svg" alt="arquitecturaVersion11" width="1000" height="600">
 </div>
 </div>
 </div>
@@ -117,7 +118,7 @@
 <h3 id="paquete-tictactoe">Paquete <em>tictactoe</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/tictactoeVersion10.svg" alt="tictactoeVersion10" width="500" height="400">
+<img src="build/docs/asciidoc/images/tictactoeVersion11.svg" alt="tictactoeVersion11" width="500" height="400">
 </div>
 </div>
 </div>
@@ -125,7 +126,23 @@
 <h3 id="paquete-tictactoe-views">Paquete <em>tictactoe.views</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/tictactoeViewsVersion10.svg" alt="tictactoeViewsVersion10" width="1200" height="1000">
+<img src="build/docs/asciidoc/images/tictactoeViewsVersion11.svg" alt="tictactoeViewsVersion11" width="1200" height="600">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="paquete-tictactoe-views-models">Paquete <em>tictactoe.views.models</em></h3>
+<div class="imageblock">
+<div class="content">
+<img src="build/docs/asciidoc/images/tictactoeViewsModels.svg" alt="tictactoeViewsModels" width="1200" height="1000">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="paquete-tictactoe-views-menus">Paquete <em>tictactoe.views.menus</em></h3>
+<div class="imageblock">
+<div class="content">
+<img src="build/docs/asciidoc/images/tictactoeViewsMenus.svg" alt="tictactoeViewsMenus" width="1000" height="700">
 </div>
 </div>
 </div>
@@ -133,7 +150,7 @@
 <h3 id="paquete-tictactoe-models">Paquete <em>tictactoe.models</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/tictactoeModelsVersion10.svg" alt="tictactoeModelsVersion10" width="1200" height="1000">
+<img src="build/docs/asciidoc/images/tictactoeModelsVersion11.svg" alt="tictactoeModelsVersion11" width="1200" height="1300">
 </div>
 </div>
 </div>
@@ -141,7 +158,7 @@
 <h3 id="paquete-tictactoe-controllers">Paquete <em>tictactoe.controllers</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/tictactoeControllersVersion10.svg" alt="tictactoeControllersVersion10" width="1000" height="600">
+<img src="build/docs/asciidoc/images/tictactoeControllersVersion11.svg" alt="tictactoeControllersVersion11" width="1000" height="600">
 </div>
 </div>
 </div>
@@ -178,6 +195,14 @@
 </div>
 </div>
 <div class="sect2">
+<h3 id="paquete-tictactoe-distributed-dispatchers-save">Paquete <em>tictactoe.distributed.dispatchers.save</em></h3>
+<div class="imageblock">
+<div class="content">
+<img src="build/docs/asciidoc/images/tictactoeDistributerDispatchersSave.svg" alt="tictactoeDistributerDispatchersSave" width="800" height="600">
+</div>
+</div>
+</div>
+<div class="sect2">
 <h3 id="paquete-tictactoe-distributed-dispatchers-errors">Paquete <em>tictactoe.distributed.dispatchers.errors</em></h3>
 <div class="imageblock">
 <div class="content">
@@ -189,7 +214,7 @@
 <h3 id="paquete-utils">Paquete <em>utils</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/utilsVersion10.svg" alt="utilsVersion10" width="456" height="548">
+<img src="build/docs/asciidoc/images/utilsVersion11.svg" alt="utilsVersion11" width="700" height="548">
 </div>
 </div>
 </div>
@@ -203,13 +228,13 @@
 <div class="ulist">
 <ul>
 <li>
-<p><span class="red"><em><strong>Baja Cohesión</strong>: de Lógica y Controladores que controlan y comunican</em></span></p>
+<p><span class="red"><em><strong>Alto Acoplamiento</strong>: de los Modelos los a tecnologías de persistencia</em></span></p>
 </li>
 <li>
-<p><span class="red"><em><strong>Alto Acoplamiento</strong>: de Lógica y Controladores a tecnologías de comunicación</em></span></p>
+<p><span class="red"><em><strong>Baja Cohesión</strong>: de los Modelos con gestión y persistencia</em></span></p>
 </li>
 <li>
-<p><span class="red"><em><strong>Open/Close</strong>: en Lógica y Controladores cuando hay que cambiar el código de éstos con nuevas tecnologías de comunicación</em></span></p>
+<p><span class="red"><em><strong>Open/Close</strong>: en los Modelos hay que cambiar el código de éstos con nuevas tecnologías de persistencia</em></span></p>
 </li>
 </ul>
 </div>
@@ -219,7 +244,7 @@
 <div class="ulist">
 <ul>
 <li>
-<p><span class="red"><em><strong>Clases Grandes</strong>: de Controladores con distintas ramas para distintas tecnologías de comunicación</em></span></p>
+<p><span class="red"><em><strong>Clases Grandes</strong>: de los Modelos con nuevas tecnologías de persistencia</em></span></p>
 </li>
 </ul>
 </div>
@@ -263,8 +288,8 @@
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 0.10.0<br>
-Last updated 2020-08-23 12:30:00 +0200
+Version 0.11.0<br>
+Last updated 2020-08-24 19:30:00 +0200
 </div>
 </div>
 </html>

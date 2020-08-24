@@ -13,7 +13,6 @@ public class SessionProxy implements Session {
 		this.tcpip = tcpip;
 	}
 	
-	
 	public StateValue getValueState() {
 		this.tcpip.send(FrameType.STATE.name());
 		return StateValue.values()[this.tcpip.receiveInt()];

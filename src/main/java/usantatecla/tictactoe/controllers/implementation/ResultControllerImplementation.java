@@ -10,12 +10,19 @@ public class ResultControllerImplementation extends ResultController {
 		super(session);
 	}
 
+	@Override
 	public void finish() {
 		((SessionImplementation) this.session).next();
 	}
 
+	@Override
 	public int getOtherValueFromTurn() {
 		return ((SessionImplementation) this.session).getOtherValueFromTurn();
+	}
+
+	@Override
+	public boolean isTicTacToe() {
+		return ((SessionImplementation) this.session).isTicTacToe();
 	}
 
 }

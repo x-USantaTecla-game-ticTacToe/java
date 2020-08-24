@@ -1,17 +1,21 @@
 package usantatecla.tictactoe.models;
 
+import java.io.BufferedReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import usantatecla.tictactoe.types.Error;
 import usantatecla.tictactoe.types.PlayerType;
 import usantatecla.tictactoe.types.Token;
 
 public class Game {
-    
+
     private Board board;
 
-	private Player[] players;
+    private Player[] players;
 
     private Turn turn;
-    
+
     public Game() {
         this.board = new Board();
         this.players = new Player[Turn.PLAYERS];
@@ -19,17 +23,17 @@ public class Game {
     }
 
     public void createPlayers(int numberOfUsers) {
-		for (int i = 0; i < numberOfUsers; i++) {
-			this.players[i] = new Player(Token.values()[i], this.board, PlayerType.USER_PLAYER);
-		}
-		for (int i = numberOfUsers; i < Turn.PLAYERS; i++) {
-			this.players[i] = new Player(Token.values()[i], this.board, PlayerType.MACHINE_PLAYER);
-		}
+        for (int i = 0; i < numberOfUsers; i++) {
+            this.players[i] = new Player(Token.values()[i], this.board, PlayerType.USER_PLAYER);
+        }
+        for (int i = numberOfUsers; i < Turn.PLAYERS; i++) {
+            this.players[i] = new Player(Token.values()[i], this.board, PlayerType.MACHINE_PLAYER);
+        }
     }
 
     Memento createMemento() {
         Board board = this.board.copy();
-        return new Memento(board, this.createCopyOfPlayers(players, board), turn);
+        return new Memento(board, this.createCopyOfPlayers(this.players, board), turn);
     }
 
     void set(Memento memento) {
@@ -64,25 +68,25 @@ public class Game {
 
     public Error getErrorsPutCoordinate(Coordinate coordinate) {
         if (!board.isEmpty(coordinate)) {
-			return Error.NOT_OWNER;
-		}
-		return null;
+            return Error.NOT_OWNER;
+        }
+        return null;
     }
 
     public Error getErrorsMoveOriginCoordinate(Coordinate originCoordinate) {
         if (!board.isOccupied(originCoordinate, this.turn.getPlayer().getToken())) {
-			return Error.NOT_OWNER;
-		}
-		return null;
+            return Error.NOT_OWNER;
+        }
+        return null;
     }
 
     public Error getErrorsMoveTargetCoordinate(Coordinate originCoordinate, Coordinate targetCoordinate) {
         if (originCoordinate.equals(targetCoordinate)) {
-			return Error.SAME_COORDINATES;
-		} else if (!board.isEmpty(targetCoordinate)) {
-			return Error.NOT_EMPTY;
-		}
-		return null;
+            return Error.SAME_COORDINATES;
+        } else if (!board.isEmpty(targetCoordinate)) {
+            return Error.NOT_EMPTY;
+        }
+        return null;
     }
 
     public Token getToken(int row, int column) {
@@ -99,5 +103,37 @@ public class Game {
 
     public int getOtherValueFromTurn() {
         return this.turn.getOtherValue();
+    }
+
+    void save(FileWriter fileWriter) {
+        try {
+            this.board.save(fileWriter);
+            fileWriter.write(this.players[0].getType().ordinal() + "\n");
+            fileWriter.write(this.players[0].getToken().ordinal() + "\n");
+            fileWriter.write(this.players[1].getType().ordinal() + "\n");
+            fileWriter.write(this.players[1].getToken().ordinal() + "\n");
+            this.turn.save(fileWriter);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    void load(BufferedReader bufferedReader) {
+        try {
+            this.board.load(bufferedReader);
+            int typeFirstPlayer = Integer.parseInt(bufferedReader.readLine());
+            int tokenFirstPlayer = Integer.parseInt(bufferedReader.readLine());
+            this.players[0] = new Player(Token.values()[tokenFirstPlayer], this.board,
+                    PlayerType.values()[typeFirstPlayer]);
+            int typeSecondPlayer = Integer.parseInt(bufferedReader.readLine());
+            int tokenSecondPlayer = Integer.parseInt(bufferedReader.readLine());
+            this.players[1] = new Player(Token.values()[tokenSecondPlayer], this.board,
+                    PlayerType.values()[typeSecondPlayer]);
+            this.turn.load(bufferedReader);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

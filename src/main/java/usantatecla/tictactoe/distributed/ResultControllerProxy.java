@@ -25,4 +25,10 @@ public class ResultControllerProxy extends ResultController {
 		return this.tcpip.receiveInt();
 	}
 
+	@Override
+	public boolean isTicTacToe() {
+		this.tcpip.send(FrameType.IS_TICTACTOE.name());
+		return this.tcpip.receiveBoolean();
+	}
+
 }

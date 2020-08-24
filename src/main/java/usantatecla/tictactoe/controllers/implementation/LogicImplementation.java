@@ -10,15 +10,19 @@ public class LogicImplementation extends Logic {
 
 	protected PlayControllerImplementation playControllerImplementation;
 
+	protected SaveControllerImplementation saveControllerImplementation;
+
 	protected ResultControllerImplementation resultControllerImplementation;
 
 	public LogicImplementation() {
 		this.session = new SessionImplementation();
 		this.startControllerImplementation = new StartControllerImplementation(this.session);
 		this.playControllerImplementation = new PlayControllerImplementation(this.session);
+		this.saveControllerImplementation = new SaveControllerImplementation(this.session);
 		this.resultControllerImplementation = new ResultControllerImplementation(this.session);
 		this.acceptorControllers.put(StateValue.INITIAL, this.startControllerImplementation);
 		this.acceptorControllers.put(StateValue.IN_GAME, this.playControllerImplementation);
+		this.acceptorControllers.put(StateValue.SAVING, this.saveControllerImplementation);
 		this.acceptorControllers.put(StateValue.RESULT, this.resultControllerImplementation);
 		this.acceptorControllers.put(StateValue.EXIT, null);
 	}

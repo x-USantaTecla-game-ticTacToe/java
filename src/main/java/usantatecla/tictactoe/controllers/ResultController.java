@@ -12,6 +12,8 @@ public abstract class ResultController extends AcceptorController {
 
 	public abstract int getOtherValueFromTurn();
 
+	public abstract boolean isTicTacToe();
+
 	@Override
 	public void accept(ControllersVisitor controllersVisitor) {
 		controllersVisitor.visit(this);

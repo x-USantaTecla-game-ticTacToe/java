@@ -19,4 +19,14 @@ public class StartControllerImplementation extends StartController {
 		((SessionImplementation) this.session).next();		
 	}
 
+	@Override
+	public void start(String name) {
+		((SessionImplementation) this.session).load(name);
+	}
+
+	@Override
+	public String[] getGamesNames() {
+		return ((SessionImplementation) this.session).getGamesNames();
+	}
+
 }

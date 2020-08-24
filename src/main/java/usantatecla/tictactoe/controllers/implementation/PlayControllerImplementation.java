@@ -1,6 +1,7 @@
 package usantatecla.tictactoe.controllers.implementation;
 
 import usantatecla.tictactoe.controllers.PlayController;
+import usantatecla.tictactoe.controllers.ExitController;
 import usantatecla.tictactoe.controllers.MovementController;
 import usantatecla.tictactoe.controllers.RedoController;
 import usantatecla.tictactoe.controllers.UndoController;
@@ -16,12 +17,15 @@ public class PlayControllerImplementation extends PlayController {
 	private UndoController undoController;
 
 	private RedoController redoController;
+	
+	private ExitController exitController;
 
 	public PlayControllerImplementation(Session session) {
 		super(session);
 		this.movementController = new MovementController(this.session);
 		this.undoController = new UndoController(this.session);
 		this.redoController = new RedoController(this.session);
+		this.exitController = new ExitController(this.session);
 	}
 
 	@Override
@@ -32,6 +36,11 @@ public class PlayControllerImplementation extends PlayController {
 	@Override
 	public void redo() {
 		this.redoController.redo();
+	}
+
+	@Override
+	public void next() {
+		this.exitController.next();
 	}
 
 	@Override

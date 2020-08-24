@@ -1,4 +1,4 @@
-= Master Mind. Solución 11.4. *mvp.pm.withProxy*
+= Master Mind. Solución 12.5. *mvp.pm.-DAO*
 Santa Tecla <parqueNaturalSantaTecla@gmail.com>
 :toc-title: Índice
 :toc: left
@@ -7,17 +7,17 @@ Santa Tecla <parqueNaturalSantaTecla@gmail.com>
 :idseparator: -
 :imagesdir: images
 
-== Requisitos 4. *Cliente/Servidor*
+== Requisitos 5. *Ficheros*
 
 [cols="50,50"]
 |===
 
 a|
 - link:https://en.wikipedia.org/wiki/Tic-tac-toe[*Wiki*]
-* _Funcionalidad: **Básica** + [lime-background]**undo/redo**_
-* _Interfaz: [lime-background]*Gráfica* y **Texto**_
-* _Distribución: **Standalone** + [lime-background]**Client/Server**_
-* _Persistencia: **No**_
+* _Funcionalidad: **Básica** + **undo/redo**_
+* _Interfaz: [line-through]*Gráfica* y **Texto**_
+* _Distribución: **Standalone** + **Client/Server**_
+* _Persistencia: [lime-background]#**Ficheros**#_
 
 a|
 
@@ -28,17 +28,15 @@ image::Dibujo.jpg[]
 == Vista de Lógica/Diseño
 
 - *Modelo/Vista/Presentador* con *Presentador del Modelo* con *Vista Achicada*
-* [lime-background]#*Patrón Proxy*#, para la ejecución distribuida
 
 === Arquitectura
 
-[plantuml,arquitecturaVersion10,svg]
+[plantuml,arquitecturaVersion11,svg]
 ....
 
 package tictactoe #DDDDDD { } 
 tictactoe .down.> tictactoe.views
 tictactoe .down.> tictactoe.controllers
-tictactoe .down.> tictactoe.controllers.implementation
 
 package tictactoe.controllers #DDDDDD { } 
 tictactoe.controllers .down.> tictactoe.models
@@ -46,6 +44,7 @@ tictactoe.controllers .down.> java.util
 
 package tictactoe.controllers.implementation #DDDDDD { } 
 tictactoe.controllers.implementation .down.> tictactoe.controllers
+tictactoe.controllers.implementation .down.> tictactoe.models
 
 package tictactoe.distributed #DDDDDD { } 
 tictactoe.distributed .down.> tictactoe.distributed.dispatchers
@@ -65,6 +64,10 @@ package tictactoe.distributed.dispatchers.errors #DDDDDD { }
 tictactoe.distributed.dispatchers.errors .down.> tictactoe.distributed.dispatchers
 tictactoe.distributed.dispatchers.errors .down.> tictactoe.controllers
 
+package tictactoe.distributed.dispatchers.save #DDDDDD { } 
+tictactoe.distributed.dispatchers.save .down.> tictactoe.distributed.dispatchers
+tictactoe.distributed.dispatchers.save .down.> tictactoe.controllers
+
 package tictactoe.distributed.dispatchers.undoredo #DDDDDD { } 
 tictactoe.distributed.dispatchers.undoredo .down.> tictactoe.distributed.dispatchers
 tictactoe.distributed.dispatchers.undoredo .down.> tictactoe.controllers
@@ -83,12 +86,22 @@ utils .down.> java.net
 package tictactoe.views #DDDDDD { } 
 tictactoe.views .down.> tictactoe.controllers
 tictactoe.views .down.> utils
+tictactoe.views ..> tictactoe.views.menus
+tictactoe.views ..> tictactoe.views.models
+
+package tictactoe.views.menus #DDDDDD { } 
+tictactoe.views.menus .down.> tictactoe.controllers
+tictactoe.views.menus .down.> utils
+
+package tictactoe.views.models #DDDDDD { } 
+tictactoe.views.menus .down.> tictactoe.controllers
+tictactoe.views.menus .down.> utils
 
 ....
 
 === Paquete _tictactoe_
 
-[plantuml,tictactoeVersion10,svg]
+[plantuml,tictactoeVersion11,svg]
 ....
 
 class  tictactoe.TicTacToe{
@@ -96,6 +109,7 @@ class  tictactoe.TicTacToe{
 - view: View
 # TicTacToe()
 # {abstract} createLogic(): Logic
+# play(): void
 }
 tictactoe.TicTacToe *-down-> tictactoe.views.View
 tictactoe.TicTacToe --> tictactoe.controllers.Logic
@@ -111,7 +125,160 @@ tictactoe.TicTacToe <|-down- tictactoe.TicTacToeStandalone
 
 === Paquete _tictactoe.views_
 
-[plantuml,tictactoeViewsVersion10,svg]
+[plantuml,tictactoeViewsVersion11,svg]
+
+....
+
+class tictactoe.views.PlayView{
+~ interact(PlayController): void
+}
+tictactoe.views.PlayView ..> tictactoe.controllers.PlayController
+tictactoe.views.PlayView ..> tictactoe.views.menus.PlayMenu
+
+class tictactoe.views.ResultView{
+~ interact(ResultController): void
+}
+utils.WithConsoleView <|-down- tictactoe.views.ResultView
+tictactoe.views.ResultView ..> tictactoe.controllers.ResultController
+tictactoe.views.ResultView ..> tictactoe.views.modelsMessageView
+
+class  tictactoe.views.SaveView{
+~ SaveView()
+~ interact(SaveController): void
+}
+utils.WithConsoleView <|-down- tictactoe.views.SaveView
+tictactoe.views.SaveView ..> tictactoe.controllers.SaveController
+tictactoe.views.SaveView..> tictactoe.views.models.MessageView
+
+class tictactoe.views.StartView{
+~ interact(StartController): void
+}
+utils.WithConsoleView <|-down- tictactoe.views.StartView
+tictactoe.views.StartView ..> tictactoe.controllers.StartController
+tictactoe.views.StartView ..> tictactoe.views.models.MessageView
+
+class  tictactoe.views.View{
+- startView: StartView
+- playView: PlayView
+- saveView: SaveView
+- resultView: ResultView
++ View()
++ interact(AcceptorController): void
++ visit(StartController): void
++ visit(PlayController): void
++ visit(SaveController): void
++ visit(ResultController): void
+}
+tictactoe.controllers.ControllersVisitor <|-down- tictactoe.views.View
+tictactoe.views.View ..> tictactoe.controllers.AcceptorController
+tictactoe.views.View *-down-> tictactoe.views.StartView
+tictactoe.views.View *-down-> tictactoe.views.PlayView
+tictactoe.views.View *-down-> tictactoe.views.SaveView
+tictactoe.views.View *-down-> tictactoe.views.ResultView
+
+....
+
+=== Paquete _tictactoe.views.menus_
+
+[plantuml,tictactoeViewsMenus,svg]
+
+....
+
+class  tictactoe.views.menus.Command{
+# acceptorController: AcceptorController
+# Command(String, AcceptorController)
+}
+utils.Command <|-down- tictactoe.views.menus.Command
+tictactoe.menus.Command *-down-> tictactoe.controllers.AcceptorController
+
+class  tictactoe.views.menus.ExitCommand{
+# ExitCommand(PlayController)
+# execute(): void
+# isActive(): boolean
+}
+tictactoe.views.menus.Command <|-down- tictactoe.views.menus.ExitCommand
+tictactoe.views.menus.ExitCommand ..> tictactoe.controllers.PlayController
+
+class  tictactoe.views.menus.GameSelectCommand{
+# GameSelectCommand(StartController, String)
+# execute(): void
+# isActive(): boolean
+}
+tictactoe.views.menus.Command <|-down- tictactoe.views.menus.GameSelectCommand
+tictactoe.views.menus.GameSelectCommand ..> tictactoe.controllers.StartController
+
+class  tictactoe.views.menus.GameSelectMenu{
+~ GameSelectMenu(StartController)
+}
+utils.Menu <|-down- tictactoe.views.menus.GameSelectMenu
+tictactoe.views.menus.GameSelectMenu ..> tictactoe.controllers.StartController
+tictactoe.views.menus.GameSelectMenu *-down-> tictactoe.views.menus.GameSelectCommand
+
+class  tictactoe.views.menus.MovementCommand{
++ MovementCommand(PlayController)
+# execute(): void
+# isActive(): boolean
+}
+tictactoe.views.menus.Command <|-down- tictactoe.views.menus.MovementCommand
+tictactoe.views.menus.MovementCommand ..> tictactoe.controllers.PlayController
+tictactoe.views.menus.MovementCommand ..> tictactoe.views.models.MessageView
+tictactoe.views.menus.MovementCommand ..> tictactoe.views.models.GameView
+
+class  tictactoe.views.menus.NewGameCommand{
+# NewGameCommand(StartController)
+# execute(): void
+# isActive(): boolean
+}
+tictactoe.views.menus.Command <|-down- tictactoe.views.menus.NewGameCommand
+tictactoe.views.menus.NewGameCommand ..> tictactoe.controllers.StartController
+
+class  tictactoe.views.menus.OpenGameCommand{
+# OpenGameCommand(StartController)
+# execute(): void
+# isActive(): boolean
+}
+tictactoe.views.menus.Command <|-down- tictactoe.views.menus.OpenGameCommand
+tictactoe.views.menus.OpenGameCommand ..> tictactoe.controllers.StartController
+
+class tictactoe.views.menus.PlayMenu{
+~ PlayMenu(PlayController)
+}
+utils.Menu <|-down- tictactoe.views.menus.PlayMenu
+tictactoe.views.menus.PlayMenu ..> tictactoe.controllers.PlayController
+tictactoe.views.menus.PlayMenu *-down-> tictactoe.views.menus.MovementCommand
+tictactoe.views.menus.PlayMenu *-down-> tictactoe.views.menus.UndoCommand
+tictactoe.views.menus.PlayMenu *-down-> tictactoe.views.menus.RedoCommand
+tictactoe.views.menus.PlayMenu *-down-> tictactoe.views.menus.ExitCommand
+
+class tictactoe.views.menus.RedoCommand{
+~ RedoCommand(PlayController)
+# execute(): void
+# isActive(): boolean
+}
+tictactoe.views.menus.Command <|-down- tictactoe.views.menus.RedoCommand
+tictactoe.views.menus.UndoCommand ..> tictactoe.controllers.PlayController
+
+class  tictactoe.views.menus.StartMenu{
++ StartMenu(StartController)
+}
+utils.Menu <|-down- tictactoe.views.menus.StartMenu
+tictactoe.views.menus.StartMenu ..> tictactoe.controllers.StartController
+tictactoe.views.menus.StartMenu*-down-> tictactoe.views.menus.NewGameCommand
+tictactoe.views.menus.StartMenu*-down-> tictactoe.views.menus.OpenGameCommand
+
+class tictactoe.views.menus.UndoCommand{
+~ UndoCommand(PlayController)
+# execute(): void
+# isActive(): boolean
+}
+tictactoe.views.menus.Command <|-down- tictactoe.views.menus.UndoCommand
+tictactoe.views.menus.UndoCommand ..> tictactoe.controllers.PlayController
+
+....
+
+=== Paquete _tictactoe.views.models_
+
+[plantuml,tictactoeViewsModels,svg]
 
 ....
 
@@ -124,26 +291,6 @@ class  tictactoe.views.BoardView{
 }
 utils.WithConsoleView <|-down- tictactoe.views.BoardView
 tictactoe.views.BoardView ..> tictactoe.controllers.PlayController
-
-class  tictactoe.views.Command{
-# playController: PlayController
-# Command(String, PlayController)
-}
-utils.Command <|-down- tictactoe.views.Command
-
-class  tictactoe.views.ConsoleView{
-- startView: StartView
-- playView: PlayView
-- resultView: ResultView
-+ ConsoleView()
-+ visit(StartController): void
-+ visit(PlayController): void
-+ visit(ResultController): void
-}
-tictactoe.views.View <|-down- tictactoe.views.ConsoleView
-tictactoe.views.ConsoleView ..> tictactoe.views.StartView
-tictactoe.views.ConsoleView ..> tictactoe.views.PlayView
-tictactoe.views.ConsoleView ..> tictactoe.views.ResultView
 
 class  tictactoe.views.CoordinateView{
 ~ playController: PlayController
@@ -190,19 +337,16 @@ enum  tictactoe.views.MessageView{
 + PROPOSE_COMMAND: MessageView
 + UNDO_COMMAND: MessageView
 + REDO_COMMAND: MessageView
++ NEWGAME_COMMAND: MessageView
++ SAVE: MessageView
++ OPENGAME_COMMAND: MessageView
++ NAME: MessageView
++ EXIT_COMMAND: MessageView
++ ALREADY_EXIST: MessageView
 - message: String
 - MessageView(String)
 + getMessage(): String
 }
-
-class  tictactoe.views.MovementCommand{
-+ MovementCommand(PlayController)
-# execute(): void
-# isActive(): boolean
-}
-tictactoe.views.MovementCommand ..> tictactoe.controllers.PlayController
-tictactoe.views.MovementCommand ..> tictactoe.views.MessageView
-tictactoe.views.MovementCommand ..> tictactoe.views.GameView
 
 class  tictactoe.views.PlayerView{
 # playController: PlayController
@@ -215,53 +359,6 @@ class  tictactoe.views.PlayerView{
 }
 tictactoe.views.PlayerView ..> tictactoe.controllers.PlayController
 
-class tictactoe.views.PlayMenu{
-~ PlayMenu(PlayController)
-}
-utils.Menu <|-down- tictactoe.views.PlayMenu
-tictactoe.views.PlayMenu ..> tictactoe.controllers.PlayController
-tictactoe.views.PlayMenu *-down-> tictactoe.views.MovementCommand
-tictactoe.views.PlayMenu *-down-> tictactoe.views.UndoCommand
-tictactoe.views.PlayMenu *-down-> tictactoe.views.RedoCommand
-
-class tictactoe.views.PlayView{
-~ interact(PlayController): void
-}
-tictactoe.views.PlayView ..> tictactoe.controllers.PlayController
-tictactoe.views.PlayView ..> tictactoe.views.PlayMenu
-
-class tictactoe.views.RedoCommand{
-~ RedoCommand(PlayController)
-# execute(): void
-# isActive(): boolean
-}
-tictactoe.views.Command <|-down- tictactoe.views.RedoCommand
-
-class tictactoe.views.ResultView{
-~ interact(ResultController): void
-}
-utils.WithConsoleView <|-down- tictactoe.views.ResultView
-tictactoe.views.ResultView ..> tictactoe.controllers.ResultController
-tictactoe.views.ResultView ..> tictactoe.views.MessageView
-
-class tictactoe.views.StartView{
-~ interact(StartController): void
-}
-utils.WithConsoleView <|-down- tictactoe.views.StartView
-tictactoe.views.StartView ..> utils.PlayersDialog
-tictactoe.views.StartView ..> tictactoe.controllers.StartController
-tictactoe.views.StartView ..> tictactoe.views.MessageView
-
-class tictactoe.views.UndoCommand{
-~ UndoCommand(PlayController)
-# execute(): void
-# isActive(): boolean
-}
-tictactoe.views.Command <|-down- tictactoe.views.UndoCommand
-tictactoe.views.UndoCommand ..> tictactoe.views.MessageView
-tictactoe.views.UndoCommand ..> tictactoe.controllers.PlayController
-tictactoe.views.UndoCommand ..> tictactoe.views.GameView
-
 class  tictactoe.views.UserPlayerView{
 ~ {static} ENTER_COORDINATE_TO_PUT: String
 ~ {static} ENTER_COORDINATE_TO_REMOVE: String
@@ -272,27 +369,11 @@ class  tictactoe.views.UserPlayerView{
 tictactoe.views.PlayerView <|-down- tictactoe.views.UserPlayerView
 tictactoe.views.UserPlayerView ..> tictactoe.views.CoordinateView
 
-class  tictactoe.views.View{
-- startView: StartView
-- playView: PlayView
-- resultView: ResultView
-+ View()
-+ interact(AcceptorController): void
-+ visit(StartController): void
-+ visit(PlayController): void
-+ visit(ResultController): void
-}
-tictactoe.controllers.ControllersVisitor <|-down- tictactoe.views.View
-tictactoe.views.View ..> tictactoe.controllers.AcceptorController
-tictactoe.views.View *-down-> tictactoe.views.StartView
-tictactoe.views.View *-down-> tictactoe.views.PlayView
-tictactoe.views.View *-down-> tictactoe.views.ResultView
-
 ....
 
 === Paquete _tictactoe.models_
 
-[plantuml,tictactoeModelsVersion10,svg]
+[plantuml,tictactoeModelsVersion11,svg]
 
 ....
 
@@ -314,10 +395,14 @@ class  tictactoe.models.Board{
 - checkDirectionOfFirstCoordinates(Coordinate[]): boolean
 - checkDirectionOfAllCoordinates(Coordinate[]): boolean
 ~ copy(): Board
+~ save(FileWriter): void
+~ load(BufferedReader): void
 }
 tictactoe.models.Board *-down-> tictactoe.models.Coordinate
 tictactoe.models.Board ..> tictactoe.models.Turn
 tictactoe.models.Board ..> utils.Direction
+tictactoe.models.Board ..> java.io.FileWriter
+tictactoe.models.Board ..> java.io.BufferedReader
 
 class  tictactoe.models.Coordinate{
 + {static} DIMENSION: char
@@ -353,11 +438,15 @@ class  tictactoe.models.Game{
 + changeTurn(): void
 + isTicTacToe(): boolean
 + getOtherValueFromTurn(): int
+~ save(FileWriter): void
+~ load(BufferedReader): void
 }
 tictactoe.models.Game *-down-> tictactoe.models.Board
 tictactoe.models.Game *-down-> tictactoe.models.Player
 tictactoe.models.Game *-down-> tictactoe.models.Turn
 tictactoe.models.Game ..> tictactoe.models.Memento
+tictactoe.models.Game ..> java.io.FileWriter
+tictactoe.models.Game ..> java.io.BufferedReader
 
 class  tictactoe.models.Memento{
 - board: Board
@@ -409,6 +498,9 @@ interface  tictactoe.models.Session{
 tictactoe.models.Session ..> tictactoe.models.StateValue
 
 class  tictactoe.models.SessionImplementation{
++ {static} EXTENSION: String
++ {static} DIRECTORY: String
+- {static} directory: File
 - state: State
 - game: Game
 - registry: Registry
@@ -442,6 +534,7 @@ class  tictactoe.models.State{
 + State()
 + next(): void
 + getValueState(): StateValue
+~ setValueState(): void
 }
 tictactoe.models.State *-down-> tictactoe.types.StateValue
 
@@ -456,14 +549,18 @@ class  tictactoe.models.Turn{
 ~ getOtherValue(): int
 ~ getOtherPlayer(): Player
 ~ copy(Player[]): Turn
+~ save(FileWriter): void
+~ load(BufferedReader): void
 }
 tictactoe.models.Turn *-down-> tictactoe.models.Player
+tictactoe.models.Turn ..> java.io.FileWriter
+tictactoe.models.Turn ..> java.io.BufferedReader
 
 ....
 
 === Paquete _tictactoe.controllers_
 
-[plantuml,tictactoeControllersVersion9,svg]
+[plantuml,tictactoeControllersVersion11,svg]
 
 ....
 
@@ -485,11 +582,19 @@ tictactoe.controllers.Controller ..> tictactoe.models.StateValue
 interface  tictactoe.controllers.ControllersVisitor{
 ~ {abstract} visit(StartController): void
 ~ {abstract} visit(PlayController): void
++ {abstract} visit(SaveController): void
 ~ {abstract} visit(ResultController): void
 }
 tictactoe.controllers.ControllersVisitor ..> tictactoe.controllers.ResultController
 tictactoe.controllers.ControllersVisitor ..> tictactoe.controllers.StartController
 tictactoe.controllers.ControllersVisitor ..> tictactoe.controllers.PlayController
+tictactoe.controllers.ControllersVisitor ..> tictactoe.controllers.SaveController
+
+class  tictactoe.controllers.ExitController{
++ ExitController(Session)
++ next(): void
+}
+tictactoe.controllers.Controller <|-down- tictactoe.controllers.ExitController
 
 class  tictactoe.controllers.Logic{
 # session: Session
@@ -527,6 +632,7 @@ class  tictactoe.controllers.PlayController{
 # PlayController(Session)
 + {abstract} undo(): void
 + {abstract} redo(): void
++ {abstract} next(): void
 + {abstract} undoable(): boolean
 + {abstract} redoable(): boolean
 + {abstract} getTypeOfTokenPlayerFromTurn(): PlayerType
@@ -559,14 +665,29 @@ class  tictactoe.controllers.ResultController{
 + ResultController(Session)
 + {abstract} finish(): void
 + {abstract} getOtherValueFromTurn(): int
++ {abstract} isTicTacToe(): boolean
 + accept(ControllersVisitor): void
 }
 tictactoe.controllers.AcceptorController <|-down- tictactoe.controllers.ResultController
 tictactoe.controllers.ResultController ..> tictactoe.models.Session
 
+class  tictactoe.controllers.SaveController{
++ SaveController(Session)
++ {abstract} next(): void
++ accept(ControllersVisitor): void
++ {abstract} save(): void
++ {abstract} save(String): void
++ {abstract} exists(String): boolean
++ {abstract} hasName(): boolean
+}
+tictactoe.controllers.AcceptorController <|-down- tictactoe.controllers.SaveController
+tictactoe.controllers.SaveController ..> tictactoe.models.Session
+
 class  tictactoe.controllers.StartController{
 + StartController(Session)
 + {abstract} start(): void
++ {abstract} start(String): void
++ {abstract} getGamesNames(): String[]
 + {abstract} createPlayers(int): void
 + accept(ControllersVisitor): void
 }
@@ -591,6 +712,7 @@ tictactoe.controllers.Controller <|-down- tictactoe.controllers.UndoController
 class  tictactoe.controllers.implementation.LogicImplementation{
 # startControllerImplementation: StartControllerImplementation
 # playControllerImplementation: PlayControllerImplementation
+# saveControllerImplementation: SaveControllerImplementation
 # resultControllerImplementation: ResultControllerImplementation
 + LogicImplementation()
 }
@@ -598,14 +720,17 @@ tictactoe.controllers.Logic <|-down- tictactoe.controllers.implementation.LogicI
 tictactoe.controllers.implementation.LogicImplementation *-down-> tictactoe.controllers.implementation.StartControllerImplementation
 tictactoe.controllers.implementation.LogicImplementation *-down-> tictactoe.controllers.implementation.ResultControllerImplementation
 tictactoe.controllers.implementation.LogicImplementation *-down-> tictactoe.controllers.implementation.PlayControllerImplementation
+tictactoe.controllers.implementation.LogicImplementation *-down-> tictactoe.controllers.implementation.SaveControllerImplementation
 
 class  tictactoe.controllers.implementation.PlayControllerImplementation{
 - movementController: MovementController
 - undoController: UndoController
 - redoController: RedoController
+- exitController: ExitController
 + PlayControllerImplementation(Session)
 + undo(): void
 + redo(): void
++ next(): void
 + undoable(): boolean
 + redoable(): boolean
 + getTypeOfTokenPlayerFromTurn(): PlayerType
@@ -627,11 +752,13 @@ tictactoe.controllers.PlayController <|-down- tictactoe.controllers.implementati
 tictactoe.controllers.implementation.PlayControllerImplementation *-down-> tictactoe.controllers.MovementController
 tictactoe.controllers.implementation.PlayControllerImplementation *-down-> tictactoe.controllers.UndoController
 tictactoe.controllers.implementation.PlayControllerImplementation *-down-> tictactoe.controllers.RedoController
+tictactoe.controllers.implementation.PlayControllerImplementation *-down-> tictactoe.controllers.ExitController
 
 class  tictactoe.controllers.implementation.ResultControllerImplementation{
 + ResultControllerImplementation(Session)
 + finish(): void
 + getOtherValueFromTurn(): int
++ isTicTacToe(): boolean
 }
 tictactoe.controllers.ResultController <|-down- tictactoe.controllers.implementation.ResultControllerImplementation
 
@@ -639,6 +766,8 @@ class  tictactoe.controllers.implementation.StartControllerImplementation{
 + StartControllerImplementation(Session)
 + start(): void
 + createPlayers(int): void
++ start(String): void
++ getGamesNames(): String[]
 }
 tictactoe.controllers.StartController <|-down- tictactoe.controllers.implementation.StartControllerImplementation
 
@@ -669,12 +798,14 @@ tictactoe.distributed.LogicProxy *-down-> tictactoe.distributed.SessionProxy
 tictactoe.distributed.LogicProxy *-down-> tictactoe.distributed.ResultControllerProxy
 tictactoe.distributed.LogicProxy *-down-> tictactoe.distributed.StartControllerProxy
 tictactoe.distributed.LogicProxy *-down-> tictactoe.distributed.PlayControllerProxy
+tictactoe.distributed.LogicProxy *-down-> tictactoe.distributed.SaveControllerProxy
 
 class  tictactoe.distributed.PlayControllerProxy{
 - tcpip: TCPIP
 + PlayControllerProxy(TCPIP, Session)
 + undo(): void
 + redo(): void
++ next(): void
 + undoable(): boolean
 + redoable(): boolean
 + getTypeOfTokenPlayerFromTurn(): PlayerType
@@ -706,6 +837,18 @@ tictactoe.controllers.ResultController <|-down- tictactoe.distributed.ResultCont
 tictactoe.distributed.ResultControllerProxy *-down-> utils.TCPIP
 tictactoe.distributed.ResultControllerProxy ..> tictactoe.distributed.dispatchers.FrameType
 
+class  tictactoe.distributed.SaveControllerProxy{
+- tcpip: TCPIP
+~ SaveControllerProxy(TCPIP, Session)
++ next(): void
++ save(): void
++ save(String): void
++ exists(String): boolean
++ hasName(): boolean
+}
+tictactoe.controllers.SaveController <|-down- tictactoe.distributed.SaveControllerProxy
+tictactoe.distributed.SaveControllerProxy *-down-> utils.TCPIP
+
 class  tictactoe.distributed.SessionProxy{
 - tcpip: TCPIP
 + SessionProxy(TCPIP)
@@ -720,7 +863,9 @@ class  tictactoe.distributed.StartControllerProxy{
 - tcpip: TCPIP
 + StartControllerProxy(TCPIP, Session)
 + start(): void
++ start(String): void
 + createPlayers(int): void
++ getGamesNames(): String[]
 }
 tictactoe.controllers.StartController <|-down- tictactoe.distributed.StartControllerProxy
 tictactoe.distributed.StartControllerProxy *-down-> utils.TCPIP
@@ -734,7 +879,7 @@ class  tictactoe.distributed.TicTacToeClient{
 # play(): void
 }
 tictactoe.TicTacToe <|-down- tictactoe.distributed.TicTacToeClient
-mastermind.distributed.TicTacToeClient *-down-> mastermind.distributed.LogicProxy
+tictactoe.distributed.TicTacToeClient *-down-> tictactoe.distributed.LogicProxy
 
 class  tictactoe.distributed.TicTacToeServer{
 - dispatcherPrototype: DispatcherPrototype
@@ -837,15 +982,30 @@ class  tictactoe.distributed.dispatchers.FrameType{
 + {static} EMPTY_TOKEN: FrameType
 + {static} DIMENSION: FrameType
 + {static} TICTACTOE: FrameType
++ {static} IS_TICTACTOE: FrameType
 + {static} ERRORS_PUT: FrameType
 + {static} ERRORS_MOVE_ORIGIN: FrameType
 + {static} ERRORS_MOVE_TARGET: FrameType
 + {static} PUT_TOKEN: FrameType
 + {static} MOVE_TOKEN: FrameType
 + {static} CLOSE: FrameType
++ {static} OTHER_VALUE_TURN: FrameType
++ {static} SAVE: FrameType
++ {static} SAVE_NAMED: FrameType
++ {static} NEXT: FrameType
++ {static} HAS_NAME: FrameType
++ {static} EXISTS: FrameType
++ {static} TITLES: FrameType
 - FrameType()
 + {static} parser(String): FrameType
 }
+
+class  tictactoe.distributed.dispatchers.IsTicTacToeDispatcher{
++ IsTicTacToeDispatcher(ResultController)
++ dispatch(): void
+}
+tictactoe.distributed.dispatchers.Dispatcher <|-down- tictactoe.distributed.dispatchers.IsTicTacToeDispatcher
+tictactoe.distributed.dispatchers.IsTicTacToeDispatcher ..> tictactoe.controllers.ResultController
 
 class  tictactoe.distributed.dispatchers.MoveTokenDispatcher{
 + MoveTokenDispatcher(PlayController)
@@ -1010,6 +1170,49 @@ tictactoe.distributed.dispatchers.undoredo.UndoDispatcher ..> tictactoe.controll
 
 ....
 
+=== Paquete tictactoe.distributed.dispatchers.save
+
+[plantuml,tictactoeDistributerDispatchersSave,svg]
+
+....
+
+class  tictactoe.distributed.dispatchers.save.ExistsDispatcher{
++ ExistsDispatcher(SaveControllerImplementation)
++ dispatch(): void
+}
+tictactoe.distributed.dispatchers.Dispatcher <|-down- tictactoe.distributed.dispatchers.save.ExistsDispatcher
+tictactoe.distributed.dispatchers.save.ExistsDispatcher ..> tictactoe.controllers.implementation.SaveControllerImplementation
+
+class  tictactoe.distributed.dispatchers.save.HasNameDispatcher{
++ HasNameDispatcher(SaveControllerImplementation)
++ dispatch(): void
+}
+tictactoe.distributed.dispatchers.Dispatcher <|-down- tictactoe.distributed.dispatchers.save.HasNameDispatcher
+tictactoe.distributed.dispatchers.save.HasNameDispatcher ..> tictactoe.controllers.implementation.SaveControllerImplementation
+
+class  tictactoe.distributed.dispatchers.save.NextDispatcher{
++ NextDispatcher(PlayControllerImplementation)
++ dispatch(): void
+}
+tictactoe.distributed.dispatchers.Dispatcher <|-down- tictactoe.distributed.dispatchers.save.NextDispatcher
+tictactoe.distributed.dispatchers.save.NextDispatcher ..> tictactoe.controllers.implementation.PlayControllerImplementation
+
+class  tictactoe.distributed.dispatchers.save.SaveDispatcher{
++ SaveDispatcher(SaveControllerImplementation)
++ dispatch(): void
+}
+tictactoe.distributed.dispatchers.Dispatcher <|-down- tictactoe.distributed.dispatchers.save.SaveDispatcher
+tictactoe.distributed.dispatchers.save.SaveDispatcher ..> tictactoe.controllers.implementation.SaveControllerImplementation
+
+class  tictactoe.distributed.dispatchers.save.SaveNamedDispatcher{
++ SaveNamedDispatcher(SaveControllerImplementation)
++ dispatch(): void
+}
+tictactoe.distributed.dispatchers.Dispatcher <|-down- tictactoe.distributed.dispatchers.save.SaveNamedDispatcher
+tictactoe.distributed.dispatchers.save.SaveNamedDispatcher ..> tictactoe.controllers.implementation.SaveControllerImplementation
+
+....
+
 === Paquete tictactoe.distributed.dispatchers.errors
 
 [plantuml,tictactoeDistributerDispatchersErrors,svg]
@@ -1041,7 +1244,7 @@ tictactoe.distributed.dispatchers.errors.ErrorsPutDispatcher ..> tictactoe.contr
 
 === Paquete _utils_
 
-[plantuml,utilsVersion10,svg]
+[plantuml,utilsVersion11,svg]
 
 ....
 
@@ -1139,13 +1342,25 @@ utils.TCPIP *-down-> java.net.ServerSocket
 utils.TCPIP *-down-> java.io.PrintWriter
 utils.TCPIP *-down-> java.net.Socket
 utils.TCPIP *-down-> java.io.BufferedReader
-utils.TCPIP ..> mastermind.utils.TCPIP
+utils.TCPIP ..> utils.TCPIP
 
 class  utils.WithConsoleView{
 # console: Console
 # WithConsoleView()
 }
 utils.WithConsoleView *-down-> utils.Console
+
+class  utils.YesNoDialog{
+- {static} AFIRMATIVE: char
+- {static} NEGATIVE: char
+- {static} QUESTION: String
+- {static} MESSAGE: String
++ YesNoDialog()
++ read(String): boolean
+- {static} isNegative(char): boolean
+- {static} isAfirmative(char): boolean
+}
+utils.WithConsoleView <|-down- utils.YesNoDialog
 
 ....
 
@@ -1176,6 +1391,10 @@ package "  "  as tictactoe.controllers.implementation {
 }
 package "  "  as tictactoe.views {
 }
+package "  "  as tictactoe.views.menus {
+}
+package "  "  as tictactoe.views.models {
+}
 package "  "  as utils {
 }
 package "  "  as java.io {
@@ -1190,6 +1409,8 @@ jar *--> tictactoe.models
 jar *--> tictactoe.controllers
 jar *--> tictactoe.controllers.implementation
 jar *--> tictactoe.views
+jar *--> tictactoe.views.menus
+jar *--> tictactoe.views.models
 jar *--> utils
 jar *--> java.io
 jar *--> java.util
@@ -1207,6 +1428,8 @@ package "  "  as tictactoe.distributed.dispatchers {
 }
 package "  "  as tictactoe.distributed.dispatchers.errors {
 }
+package "  "  as tictactoe.distributed.dispatchers.save {
+}
 package "  "  as tictactoe.distributed.dispatchers.undoredo {
 }
 package "  "  as tictactoe.models {
@@ -1216,6 +1439,10 @@ package "  "  as tictactoe.controllers {
 package "  "  as tictactoe.controllers.implementation {
 }
 package "  "  as tictactoe.views {
+}
+package "  "  as tictactoe.views.menus {
+}
+package "  "  as tictactoe.views.models {
 }
 package "  "  as utils {
 }
@@ -1230,11 +1457,14 @@ jarClient *--> tictactoe
 jarClient *--> tictactoe.distributed
 jarClient *--> tictactoe.distributed.dispatchers
 jarClient *--> tictactoe.distributed.dispatchers.errors
+jarClient *--> tictactoe.distributed.dispatchers.save
 jarClient *--> tictactoe.distributed.dispatchers.undoredo
 jarClient *--> tictactoe.models
 jarClient *--> tictactoe.controllers
 jarClient *--> tictactoe.controllers.implementation
 jarClient *--> tictactoe.views
+jarClient *--> tictactoe.views.menus
+jarClient *--> tictactoe.views.models
 jarClient *--> utils
 jarClient *--> java.io
 jarClient *--> java.util
@@ -1252,6 +1482,8 @@ package "  "  as tictactoe.distributed.dispatchers {
 }
 package "  "  as tictactoe.distributed.dispatchers.errors {
 }
+package "  "  as tictactoe.distributed.dispatchers.save {
+}
 package "  "  as tictactoe.distributed.dispatchers.undoredo {
 }
 package "  "  as tictactoe.models {
@@ -1261,6 +1493,10 @@ package "  "  as tictactoe.controllers {
 package "  "  as tictactoe.controllers.implementation {
 }
 package "  "  as tictactoe.views {
+}
+package "  "  as tictactoe.views.menus {
+}
+package "  "  as tictactoe.views.models {
 }
 package "  "  as utils {
 }
@@ -1273,13 +1509,16 @@ package "  "  as java.util {
 
 jarServer *--> tictactoe
 jarServer *--> tictactoe.distributed
-jarClient *--> tictactoe.distributed.dispatchers
-jarClient *--> tictactoe.distributed.dispatchers.errors
-jarClient *--> tictactoe.distributed.dispatchers.undoredo
+jarServer *--> tictactoe.distributed.dispatchers
+jarServer *--> tictactoe.distributed.dispatchers.errors
+jarServer *--> tictactoe.distributed.dispatchers.save
+jarServer *--> tictactoe.distributed.dispatchers.undoredo
 jarServer *--> tictactoe.models
 jarServer *--> tictactoe.controllers
 jarServer *--> tictactoe.controllers.implementation
 jarServer *--> tictactoe.views
+jarServer *--> tictactoe.views.menus
+jarServer *--> tictactoe.views.models
 jarServer *--> utils
 jarServer *--> java.io
 jarServer *--> java.util

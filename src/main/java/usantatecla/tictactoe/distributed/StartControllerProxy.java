@@ -20,9 +20,26 @@ public class StartControllerProxy extends StartController {
 	}
 
 	@Override
+	public void start(String title) {
+		this.tcpip.send(FrameType.START.name());
+		this.tcpip.send(title);
+	}
+
+	@Override
 	public void createPlayers(int numberOfUsers) {
 		this.tcpip.send(FrameType.CREATE_PLAYERS.name());
 		this.tcpip.send(numberOfUsers);
+	}
+
+	@Override
+	public String[] getGamesNames() {
+		this.tcpip.send(FrameType.TITLES.name());
+		int length = this.tcpip.receiveInt();
+		String[] names = new String[length];
+		for (int i = 0; i < length; i++) {
+			names[i] = this.tcpip.receiveLine();
+		}
+		return names;
 	}
 
 }
