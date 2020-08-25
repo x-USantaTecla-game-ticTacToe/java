@@ -45,7 +45,6 @@ public class Registry {
 
 	void reset() {
 		this.mementoList = new ArrayList<Memento>();
-		this.mementoList.add(firstPrevious, this.game.createMemento());
 		this.firstPrevious = 0;
     }
     

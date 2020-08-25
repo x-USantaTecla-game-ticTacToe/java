@@ -33,7 +33,7 @@ public class Game {
 
     Memento createMemento() {
         Board board = this.board.copy();
-        return new Memento(board, this.createCopyOfPlayers(this.players, board), turn);
+        return new Memento(board, this.createCopyOfPlayers(this.players, board), this.turn);
     }
 
     void set(Memento memento) {

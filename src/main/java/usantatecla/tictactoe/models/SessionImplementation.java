@@ -58,7 +58,8 @@ public class SessionImplementation implements Session {
     }
     
     public void createPlayers(int numberOfUsers) {
-        this.game.createPlayers(numberOfUsers);
+		this.game.createPlayers(numberOfUsers);
+		this.registry.registry();
     }
 
     public PlayerType getTypeOfTokenPlayerFromTurn() {
@@ -82,13 +83,15 @@ public class SessionImplementation implements Session {
     }
 
     public void putTokenPlayerFromTurn(Coordinate coordinate) {
-        this.game.putTokenPlayerFromTurn(coordinate);
-        this.registry.registry();
+		this.game.putTokenPlayerFromTurn(coordinate);
+		this.changeTurn();
+		this.registry.registry();
     }
 
     public void moveTokenPlayerFromTurn(Coordinate[] coordinates) {
-        this.game.moveTokenPlayerFromTurn(coordinates);
-        this.registry.registry();
+		this.game.moveTokenPlayerFromTurn(coordinates);
+		this.changeTurn();
+		this.registry.registry();
     }
 
     public void changeTurn() {
@@ -118,6 +121,7 @@ public class SessionImplementation implements Session {
 			BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
 			this.game.load(bufferedReader);
 			this.registry.reset();
+			this.registry.registry();
 			bufferedReader.close();
 		} catch (IOException e) {
 			e.printStackTrace();
