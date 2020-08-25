@@ -25,6 +25,7 @@ import usantatecla.tictactoe.distributed.dispatchers.PutTokenDispatcher;
 import usantatecla.tictactoe.distributed.dispatchers.RandomCoordinateDispatcher;
 import usantatecla.tictactoe.distributed.dispatchers.ResultDispatcher;
 import usantatecla.tictactoe.distributed.dispatchers.StartDispatcher;
+import usantatecla.tictactoe.distributed.dispatchers.StartNameDispatcher;
 import usantatecla.tictactoe.distributed.dispatchers.StateDispatcher;
 import usantatecla.tictactoe.distributed.dispatchers.TicTactToeDispatcher;
 import usantatecla.tictactoe.distributed.dispatchers.TitlesDispatcher;
@@ -38,6 +39,7 @@ public class LogicImplementationServer extends LogicImplementation {
 
 	public void createDispatchers(DispatcherPrototype dispatcherPrototype) {
 		dispatcherPrototype.add(FrameType.START, new StartDispatcher(this.startControllerImplementation));
+		dispatcherPrototype.add(FrameType.START_NAME, new StartNameDispatcher(this.startControllerImplementation));
 		dispatcherPrototype.add(FrameType.CREATE_PLAYERS, new CreatePlayersDispatcher(this.startControllerImplementation));
 		dispatcherPrototype.add(FrameType.STATE, new StateDispatcher(this.playControllerImplementation));
 		dispatcherPrototype.add(FrameType.UNDO, new UndoDispatcher(this.playControllerImplementation));

@@ -2,6 +2,7 @@ package usantatecla.tictactoe.distributed.dispatchers;
 
 public enum FrameType { 
 	START,
+	START_NAME,
 	CREATE_PLAYERS,
 	STATE,
 	UNDO, 

@@ -21,7 +21,7 @@ public class StartControllerProxy extends StartController {
 
 	@Override
 	public void start(String title) {
-		this.tcpip.send(FrameType.START.name());
+		this.tcpip.send(FrameType.START_NAME.name());
 		this.tcpip.send(title);
 	}
 

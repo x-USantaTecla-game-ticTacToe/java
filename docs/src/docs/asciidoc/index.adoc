@@ -976,6 +976,7 @@ tictactoe.distributed.dispatchers.EmptyTokenDispatcher ..> tictactoe.controllers
 
 class  tictactoe.distributed.dispatchers.FrameType{
 + {static} START: FrameType
++ {static} START_NAME: FrameType
 + {static} CREATE_PLAYERS: FrameType
 + {static} STATE: FrameType
 + {static} UNDO: FrameType
@@ -1107,6 +1108,13 @@ class  tictactoe.distributed.dispatchers.StartDispatcher{
 }
 tictactoe.distributed.dispatchers.Dispatcher <|-down- tictactoe.distributed.dispatchers.StartDispatcher
 tictactoe.distributed.dispatchers.StartDispatcher ..> tictactoe.controllers.StartController
+
+class  tictactoe.distributed.dispatchers.StartNameDispatcher{
++ StartNameDispatcher(StartController)
++ dispatch(): void
+}
+tictactoe.distributed.dispatchers.Dispatcher <|-down- tictactoe.distributed.dispatchers.StartNameDispatcher
+tictactoe.distributed.dispatchers.StartNameDispatcher ..> tictactoe.controllers.StartController
 
 class  tictactoe.distributed.dispatchers.StateDispatcher{
 + StateDispatcher(PlayController)
