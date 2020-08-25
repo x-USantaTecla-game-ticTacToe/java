@@ -58,7 +58,6 @@ public class PlayControllerImplementationTest {
     public void testGivenNewPlayControllerWhenPutNewTokenChangeTurnAndPutAnotherTokenThenGetTokenCharIsValid() {
         this.playControllerImplementation.putTokenPlayerFromTurn(0, 0);
         assertEquals('X', this.playControllerImplementation.getTokenChar(0, 0));
-        this.playControllerImplementation.changeTurn();
         this.playControllerImplementation.putTokenPlayerFromTurn(1, 1);
         assertEquals('O', this.playControllerImplementation.getTokenChar(1, 1));
     }
@@ -67,10 +66,8 @@ public class PlayControllerImplementationTest {
     public void testGivenNewPlayControllerWhenPutNewTokenOnOccupiedSpaceThenAssertionError() {
         this.playControllerImplementation.putTokenPlayerFromTurn(0, 0);
         assertEquals('X', this.playControllerImplementation.getTokenChar(0, 0));
-        this.playControllerImplementation.changeTurn();
         this.playControllerImplementation.putTokenPlayerFromTurn(1, 1);
         assertEquals('O', this.playControllerImplementation.getTokenChar(1, 1));
-        this.playControllerImplementation.changeTurn();
         this.playControllerImplementation.putTokenPlayerFromTurn(1, 1);
     }
 
@@ -78,10 +75,8 @@ public class PlayControllerImplementationTest {
     public void testGivenNewPlayControllerWhenMoveATokenGetTokenCharTargetAndCheckEmptyTokenOriginThenMovedIsCorrect() {
         this.playControllerImplementation.putTokenPlayerFromTurn(0, 0);
         assertEquals('X', this.playControllerImplementation.getTokenChar(0, 0));
-        this.playControllerImplementation.changeTurn();
         this.playControllerImplementation.putTokenPlayerFromTurn(1, 1);
         assertEquals('O', this.playControllerImplementation.getTokenChar(1, 1));
-        this.playControllerImplementation.changeTurn();
         this.playControllerImplementation.moveTokenPlayerFromTurn(0, 0, 0, 1);
         assertEquals('X', this.playControllerImplementation.getTokenChar(0, 1));
         assertTrue(this.playControllerImplementation.isEmptyToken(0, 0));
@@ -91,10 +86,8 @@ public class PlayControllerImplementationTest {
     public void testGivenNewPlayControllerWhenMoveATokenWithOriginEmptyThenAssertionError() {
         this.playControllerImplementation.putTokenPlayerFromTurn(0, 0);
         assertEquals('X', this.playControllerImplementation.getTokenChar(0, 0));
-        this.playControllerImplementation.changeTurn();
         this.playControllerImplementation.putTokenPlayerFromTurn(1, 1);
         assertEquals('O', this.playControllerImplementation.getTokenChar(1, 1));
-        this.playControllerImplementation.changeTurn();
         this.playControllerImplementation.moveTokenPlayerFromTurn(1, 0, 0, 1);
     }
 
@@ -102,10 +95,8 @@ public class PlayControllerImplementationTest {
     public void testGivenNewPlayControllerWhenMoveATokenWithTargetOccupiedThenAssertionError() {
         this.playControllerImplementation.putTokenPlayerFromTurn(0, 0);
         assertEquals('X', this.playControllerImplementation.getTokenChar(0, 0));
-        this.playControllerImplementation.changeTurn();
         this.playControllerImplementation.putTokenPlayerFromTurn(1, 1);
         assertEquals('O', this.playControllerImplementation.getTokenChar(1, 1));
-        this.playControllerImplementation.changeTurn();
         this.playControllerImplementation.moveTokenPlayerFromTurn(0, 0, 1, 1);
     }
 
@@ -133,18 +124,13 @@ public class PlayControllerImplementationTest {
     @Test
     public void testGivenNewPlayControllerWhenCheckUndoableDoingTwoMovementsThenIsTrue() {
         this.playControllerImplementation.putTokenPlayerFromTurn(0, 0);
-        this.playControllerImplementation.changeTurn();
         this.playControllerImplementation.putTokenPlayerFromTurn(0, 1);
-        this.playControllerImplementation.changeTurn();
         assertTrue(this.playControllerImplementation.undoable());
     }
 
     @Test
-    public void testGivenNewPlayControllerWhenCheckUndoableDoingTwoMovementsAndUndoThenIsFalse() {
+    public void testGivenNewPlayControllerWhenCheckUndoableDoingOneMovementsAndUndoThenIsFalse() {
         this.playControllerImplementation.putTokenPlayerFromTurn(0, 0);
-        this.playControllerImplementation.changeTurn();
-        this.playControllerImplementation.putTokenPlayerFromTurn(0, 1);
-        this.playControllerImplementation.changeTurn();
         assertTrue(this.playControllerImplementation.undoable());
         this.playControllerImplementation.undo();
         assertFalse(this.playControllerImplementation.undoable());
@@ -153,9 +139,7 @@ public class PlayControllerImplementationTest {
     @Test
     public void testGivenNewPlayControllerWhenCheckRedoableDoingUndoThenIsTrue() {
         this.playControllerImplementation.putTokenPlayerFromTurn(0, 0);
-        this.playControllerImplementation.changeTurn();
         this.playControllerImplementation.putTokenPlayerFromTurn(0, 1);
-        this.playControllerImplementation.changeTurn();
         this.playControllerImplementation.undo();
         assertTrue(this.playControllerImplementation.redoable());
     }
@@ -163,9 +147,7 @@ public class PlayControllerImplementationTest {
     @Test
     public void testGivenNewPlayControllerWhenCheckRedoableDoingUndoAndRedoThenIsFalse() {
         this.playControllerImplementation.putTokenPlayerFromTurn(0, 0);
-        this.playControllerImplementation.changeTurn();
         this.playControllerImplementation.putTokenPlayerFromTurn(0, 1);
-        this.playControllerImplementation.changeTurn();
         this.playControllerImplementation.undo();
         assertTrue(this.playControllerImplementation.redoable());
         this.playControllerImplementation.redo();
@@ -175,9 +157,7 @@ public class PlayControllerImplementationTest {
     @Test
     public void testGivenNewPlayControllerWhenUndoMovementThenTheLastTokenPutIsEmpty() {
         this.playControllerImplementation.putTokenPlayerFromTurn(0, 0);
-        this.playControllerImplementation.changeTurn();
         this.playControllerImplementation.putTokenPlayerFromTurn(0, 1);
-        this.playControllerImplementation.changeTurn();
         this.playControllerImplementation.undo();
         assertTrue(this.playControllerImplementation.isEmptyToken(0, 1));
     }
@@ -185,9 +165,7 @@ public class PlayControllerImplementationTest {
     @Test
     public void testGivenNewPlayControllerWhenUndoAndRedoMovementThenTheLastTokenPutIsOcuppiedAgain() {
         this.playControllerImplementation.putTokenPlayerFromTurn(0, 0);
-        this.playControllerImplementation.changeTurn();
         this.playControllerImplementation.putTokenPlayerFromTurn(0, 1);
-        this.playControllerImplementation.changeTurn();
         this.playControllerImplementation.undo();
         assertTrue(this.playControllerImplementation.isEmptyToken(0, 1));
         this.playControllerImplementation.redo();

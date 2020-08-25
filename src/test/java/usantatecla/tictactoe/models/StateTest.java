@@ -26,7 +26,15 @@ public class StateTest {
     }
 
     @Test
+    public void testGivenNewStateWhenDoTwoNextAndGetValueStateThenIsSave() {
+        this.state.next();
+        this.state.next();
+        assertEquals(StateValue.SAVING, this.state.getValueState());
+    }
+
+    @Test
     public void testGivenNewStateWhenDoTwoNextAndGetValueStateThenIsResult() {
+        this.state.next();
         this.state.next();
         this.state.next();
         assertEquals(StateValue.RESULT, this.state.getValueState());
@@ -34,6 +42,7 @@ public class StateTest {
 
     @Test
     public void testGivenNewStateWhenDoThreeNextAndGetValueStateThenIsExit() {
+        this.state.next();
         this.state.next();
         this.state.next();
         this.state.next();
