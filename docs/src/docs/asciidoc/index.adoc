@@ -762,6 +762,16 @@ class  tictactoe.controllers.implementation.ResultControllerImplementation{
 }
 tictactoe.controllers.ResultController <|-down- tictactoe.controllers.implementation.ResultControllerImplementation
 
+class  tictactoe.controllers.implementation.SaveControllerImplementation{
++ SaveControllerImplementation(Session)
++ save(String): void
++ save(): void
++ next(): void
++ hasName(): boolean
++ exists(String): boolean
+}
+tictactoe.controllers.StartController <|-down- tictactoe.controllers.implementation.SaveControllerImplementation
+
 class  tictactoe.controllers.implementation.StartControllerImplementation{
 + StartControllerImplementation(Session)
 + start(): void
@@ -1111,6 +1121,13 @@ class  tictactoe.distributed.dispatchers.TicTactToeDispatcher{
 }
 tictactoe.distributed.dispatchers.Dispatcher <|-down- tictactoe.distributed.dispatchers.TicTactToeDispatcher
 tictactoe.distributed.dispatchers.TicTactToeDispatcher ..> tictactoe.controllers.PlayController
+
+class  tictactoe.distributed.dispatchers.TitlesDispatcher{
++ TitlesDispatcher(StartControllerImplementation)
++ dispatch(): void
+}
+tictactoe.distributed.dispatchers.Dispatcher <|-down- tictactoe.distributed.dispatchers.TitlesDispatcher
+tictactoe.distributed.dispatchers.TitlesDispatcher ..> tictactoe.controllers.StartController
 
 class  tictactoe.distributed.dispatchers.TCPIP{
 + {static} createClientSocket(): TCPIP

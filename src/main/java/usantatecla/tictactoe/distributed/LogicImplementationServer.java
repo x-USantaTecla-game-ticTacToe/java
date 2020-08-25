@@ -11,7 +11,13 @@ import usantatecla.tictactoe.distributed.dispatchers.EmptyTokenDispatcher;
 import usantatecla.tictactoe.distributed.dispatchers.errors.ErrorsMoveOriginDispatcher;
 import usantatecla.tictactoe.distributed.dispatchers.errors.ErrorsMoveTargetDispatcher;
 import usantatecla.tictactoe.distributed.dispatchers.errors.ErrorsPutDispatcher;
+import usantatecla.tictactoe.distributed.dispatchers.save.ExistsDispatcher;
+import usantatecla.tictactoe.distributed.dispatchers.save.HasNameDispatcher;
+import usantatecla.tictactoe.distributed.dispatchers.save.NextDispatcher;
+import usantatecla.tictactoe.distributed.dispatchers.save.SaveDispatcher;
+import usantatecla.tictactoe.distributed.dispatchers.save.SaveNamedDispatcher;
 import usantatecla.tictactoe.distributed.dispatchers.FrameType;
+import usantatecla.tictactoe.distributed.dispatchers.IsTicTacToeDispatcher;
 import usantatecla.tictactoe.distributed.dispatchers.MoveTokenDispatcher;
 import usantatecla.tictactoe.distributed.dispatchers.OtherValueTurnDispatcher;
 import usantatecla.tictactoe.distributed.dispatchers.PlayerTypeDispatcher;
@@ -21,6 +27,7 @@ import usantatecla.tictactoe.distributed.dispatchers.ResultDispatcher;
 import usantatecla.tictactoe.distributed.dispatchers.StartDispatcher;
 import usantatecla.tictactoe.distributed.dispatchers.StateDispatcher;
 import usantatecla.tictactoe.distributed.dispatchers.TicTactToeDispatcher;
+import usantatecla.tictactoe.distributed.dispatchers.TitlesDispatcher;
 import usantatecla.tictactoe.distributed.dispatchers.TokenCharDispatcher;
 import usantatecla.tictactoe.distributed.dispatchers.undoredo.RedoDispatcher;
 import usantatecla.tictactoe.distributed.dispatchers.undoredo.RedoableDispatcher;
@@ -45,6 +52,7 @@ public class LogicImplementationServer extends LogicImplementation {
 		dispatcherPrototype.add(FrameType.EMPTY_TOKEN, new EmptyTokenDispatcher(this.playControllerImplementation));
 		dispatcherPrototype.add(FrameType.DIMENSION, new DimensionDispatcher(this.playControllerImplementation));
 		dispatcherPrototype.add(FrameType.TICTACTOE, new TicTactToeDispatcher(this.playControllerImplementation));
+		dispatcherPrototype.add(FrameType.IS_TICTACTOE, new IsTicTacToeDispatcher(this.resultControllerImplementation));
 		dispatcherPrototype.add(FrameType.RANDOM_COORDINATE, new RandomCoordinateDispatcher(this.playControllerImplementation));
 		dispatcherPrototype.add(FrameType.ERRORS_PUT, new ErrorsPutDispatcher(this.playControllerImplementation));
 		dispatcherPrototype.add(FrameType.ERRORS_MOVE_ORIGIN, new ErrorsMoveOriginDispatcher(this.playControllerImplementation));
@@ -53,6 +61,12 @@ public class LogicImplementationServer extends LogicImplementation {
 		dispatcherPrototype.add(FrameType.MOVE_TOKEN, new MoveTokenDispatcher(this.playControllerImplementation));
 		dispatcherPrototype.add(FrameType.RESULT, new ResultDispatcher(this.resultControllerImplementation));
 		dispatcherPrototype.add(FrameType.OTHER_VALUE_TURN, new OtherValueTurnDispatcher(this.resultControllerImplementation));
+		dispatcherPrototype.add(FrameType.NEXT, new NextDispatcher(this.playControllerImplementation));
+		dispatcherPrototype.add(FrameType.SAVE, new SaveDispatcher(this.saveControllerImplementation));
+		dispatcherPrototype.add(FrameType.SAVE_NAMED, new SaveNamedDispatcher(this.saveControllerImplementation));
+		dispatcherPrototype.add(FrameType.HAS_NAME, new HasNameDispatcher(this.saveControllerImplementation));
+		dispatcherPrototype.add(FrameType.EXISTS, new ExistsDispatcher(this.saveControllerImplementation));
+		dispatcherPrototype.add(FrameType.TITLES, new TitlesDispatcher(this.startControllerImplementation));
 	}
 
 }

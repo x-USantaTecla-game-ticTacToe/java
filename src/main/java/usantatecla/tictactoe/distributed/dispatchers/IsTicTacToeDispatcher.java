@@ -10,6 +10,6 @@ public class IsTicTacToeDispatcher extends Dispatcher {
 
 	@Override
 	public void dispatch() {
-		((ResultController)this.acceptorController).isTicTacToe();
+		this.tcpip.send(((ResultController)this.acceptorController).isTicTacToe());
 	}
 }
