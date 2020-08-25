@@ -1,9 +1,5 @@
 package usantatecla.tictactoe.models;
 
-import java.io.BufferedReader;
-import java.io.FileWriter;
-import java.io.IOException;
-
 import usantatecla.tictactoe.types.Error;
 import usantatecla.tictactoe.types.PlayerType;
 import usantatecla.tictactoe.types.Token;
@@ -105,35 +101,24 @@ public class Game {
         return this.turn.getOtherValue();
     }
 
-    void save(FileWriter fileWriter) {
-        try {
-            this.board.save(fileWriter);
-            fileWriter.write(this.players[0].getType().ordinal() + "\n");
-            fileWriter.write(this.players[0].getToken().ordinal() + "\n");
-            fileWriter.write(this.players[1].getType().ordinal() + "\n");
-            fileWriter.write(this.players[1].getToken().ordinal() + "\n");
-            this.turn.save(fileWriter);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public int getPlayerOrdinalTokenByIndex(int playerIndex) {
+        return this.players[playerIndex].getToken().ordinal();
     }
 
-    void load(BufferedReader bufferedReader) {
-        try {
-            this.board.load(bufferedReader);
-            int typeFirstPlayer = Integer.parseInt(bufferedReader.readLine());
-            int tokenFirstPlayer = Integer.parseInt(bufferedReader.readLine());
-            this.players[0] = new Player(Token.values()[tokenFirstPlayer], this.board,
-                    PlayerType.values()[typeFirstPlayer]);
-            int typeSecondPlayer = Integer.parseInt(bufferedReader.readLine());
-            int tokenSecondPlayer = Integer.parseInt(bufferedReader.readLine());
-            this.players[1] = new Player(Token.values()[tokenSecondPlayer], this.board,
-                    PlayerType.values()[typeSecondPlayer]);
-            this.turn.load(bufferedReader);
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public int getPlayerOrdinalTypeByIndex(int playerIndex) {
+        return this.players[playerIndex].getType().ordinal();
     }
+
+    public void setPlayerByIndex(Player player, int playerIndex) {
+        this.players[playerIndex] = player;
+    }
+
+    public Board getBoard() {
+        return this.board;
+    }
+
+    public Turn getTurn() {
+        return this.turn;
+    }
+
 }

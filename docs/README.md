@@ -11,11 +11,11 @@
 </head>
 <body class="book">
 <div id="header">
-<h1>TicTacToe. Solución 12.5. <strong>mvp.pm.-DAO</strong></h1>
+<h1>TicTacToe. Solución 13.5. <strong>mvp.pm.withDao</strong></h1>
 <div class="details">
 <span id="author" class="author">Santa Tecla</span><br>
 <span id="email" class="email"><a href="mailto:parqueNaturalSantaTecla@gmail.com">parqueNaturalSantaTecla@gmail.com</a></span><br>
-<span id="revnumber">version 0.11.0</span>
+<span id="revnumber">version 0.12.0</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Índice</div>
@@ -29,6 +29,7 @@
 <li><a href="#paquete-tictactoe-views-menus">Paquete <em>tictactoe.views.menus</em></a></li>
 <li><a href="#paquete-tictactoe-views-models">Paquete <em>tictactoe.views.models</em></a></li>
 <li><a href="#paquete-tictactoe-models">Paquete <em>tictactoe.models</em></a></li>
+<li><a href="#paquete-tictactoe-models-DAO">Paquete <em>tictactoe.models.DAO</em></a></li>
 <li><a href="#paquete-tictactoe-types">Paquete <em>tictactoe.types</em></a></li>
 <li><a href="#paquete-tictactoe-controllers">Paquete <em>tictactoe.controllers</em></a></li>
 <li><a href="#paquete-tictactoe-controllers-implementation">Paquete <em>tictactoe.controllers.implementation</em></a></li>
@@ -102,7 +103,7 @@
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Modelo/Vista/Presentador</strong> con <strong>Presentador del Modelo</strong> con <strong>Vista Achicada</strong></p>
+<p><strong>Modelo/Vista/Presentador</strong> con <strong>Patrón DAO</strong></p>
 </li>
 </ul>
 </div>
@@ -110,7 +111,7 @@
 <h3 id="arquitectura">Arquitectura</h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/arquitecturaVersion11.svg" alt="arquitecturaVersion11" width="1000" height="600">
+<img src="build/docs/asciidoc/images/arquitecturaVersion12.svg" alt="arquitecturaVersion12" width="1000" height="600">
 </div>
 </div>
 </div>
@@ -118,7 +119,7 @@
 <h3 id="paquete-tictactoe">Paquete <em>tictactoe</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/tictactoeVersion11.svg" alt="tictactoeVersion11" width="500" height="400">
+<img src="build/docs/asciidoc/images/tictactoeVersion12.svg" alt="tictactoeVersion12" width="500" height="400">
 </div>
 </div>
 </div>
@@ -126,7 +127,7 @@
 <h3 id="paquete-tictactoe-views">Paquete <em>tictactoe.views</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/tictactoeViewsVersion11.svg" alt="tictactoeViewsVersion11" width="1200" height="600">
+<img src="build/docs/asciidoc/images/tictactoeViewsVersion12.svg" alt="tictactoeViewsVersion12" width="1200" height="600">
 </div>
 </div>
 </div>
@@ -150,7 +151,15 @@
 <h3 id="paquete-tictactoe-models">Paquete <em>tictactoe.models</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/tictactoeModelsVersion11.svg" alt="tictactoeModelsVersion11" width="1200" height="1300">
+<img src="build/docs/asciidoc/images/tictactoeModelsVersion12.svg" alt="tictactoeModelsVersion12" width="1200" height="1300">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="paquete-tictactoe-models-DAO">Paquete <em>tictactoe.models.DAO</em></h3>
+<div class="imageblock">
+<div class="content">
+<img src="build/docs/asciidoc/images/tictactoeModelsDAO.svg" alt="tictactoeModelsDAO" width="1200" height="1300">
 </div>
 </div>
 </div>
@@ -158,7 +167,7 @@
 <h3 id="paquete-tictactoe-controllers">Paquete <em>tictactoe.controllers</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/tictactoeControllersVersion11.svg" alt="tictactoeControllersVersion11" width="1000" height="600">
+<img src="build/docs/asciidoc/images/tictactoeControllersVersion12.svg" alt="tictactoeControllersVersion12" width="1000" height="600">
 </div>
 </div>
 </div>
@@ -214,39 +223,8 @@
 <h3 id="paquete-utils">Paquete <em>utils</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/utilsVersion11.svg" alt="utilsVersion11" width="700" height="548">
+<img src="build/docs/asciidoc/images/utilsVersion12.svg" alt="utilsVersion12" width="700" height="548">
 </div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="calidad-del-software">Calidad del Software</h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="diseño">Diseño</h3>
-<div class="ulist">
-<ul>
-<li>
-<p><span class="red"><em><strong>Alto Acoplamiento</strong>: de los Modelos los a tecnologías de persistencia</em></span></p>
-</li>
-<li>
-<p><span class="red"><em><strong>Baja Cohesión</strong>: de los Modelos con gestión y persistencia</em></span></p>
-</li>
-<li>
-<p><span class="red"><em><strong>Open/Close</strong>: en los Modelos hay que cambiar el código de éstos con nuevas tecnologías de persistencia</em></span></p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="rediseño">Rediseño</h3>
-<div class="ulist">
-<ul>
-<li>
-<p><span class="red"><em><strong>Clases Grandes</strong>: de los Modelos con nuevas tecnologías de persistencia</em></span></p>
-</li>
-</ul>
 </div>
 </div>
 </div>
@@ -288,8 +266,8 @@
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 0.11.0<br>
-Last updated 2020-08-24 19:30:00 +0200
+Version 0.12.0<br>
+Last updated 2020-08-25 21:30:00 +0200
 </div>
 </div>
 </html>

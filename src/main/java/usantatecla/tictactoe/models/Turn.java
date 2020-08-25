@@ -1,9 +1,5 @@
 package usantatecla.tictactoe.models;
 
-import java.io.BufferedReader;
-import java.io.FileWriter;
-import java.io.IOException;
-
 public class Turn {
 
 	public static final int PLAYERS = 2;
@@ -30,6 +26,14 @@ public class Turn {
 		return this.players[this.value];
 	}
 
+	public int getValue() {
+		return this.value;
+	}
+
+	public void setValue(int value) {
+		this.value = value;
+	}
+
 	int getOtherValue() {
 		return (this.value + 1) % Turn.PLAYERS;
 	}
@@ -40,24 +44,6 @@ public class Turn {
 
 	Turn copy(Player[] players) {
 		return new Turn(players, this.value);
-	}
-
-	void save(FileWriter fileWriter) {
-		try {
-			fileWriter.write(this.value + "\n");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	void load(BufferedReader bufferedReader) {
-		try {
-			this.value = Integer.parseInt(bufferedReader.readLine());
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 
 }

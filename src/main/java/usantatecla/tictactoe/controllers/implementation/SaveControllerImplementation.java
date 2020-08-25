@@ -3,21 +3,25 @@ package usantatecla.tictactoe.controllers.implementation;
 import usantatecla.tictactoe.controllers.SaveController;
 import usantatecla.tictactoe.models.Session;
 import usantatecla.tictactoe.models.SessionImplementation;
+import usantatecla.tictactoe.models.DAO.SessionImplementationDAO;
 
 public class SaveControllerImplementation extends SaveController {
 
-	SaveControllerImplementation(Session session) {
+	private SessionImplementationDAO sessionImplementationDAO;
+
+	SaveControllerImplementation(Session session, SessionImplementationDAO sessionImplementationDAO) {
 		super(session);
+		this.sessionImplementationDAO = sessionImplementationDAO;
 	}
 
 	@Override
 	public void save(String name) {
-		((SessionImplementation) this.session).save(name);
+		this.sessionImplementationDAO.save(name);
 	}
 
 	@Override
 	public void save() {
-		((SessionImplementation) this.session).save();
+		this.sessionImplementationDAO.save();
 	}
 
 	@Override
@@ -32,7 +36,7 @@ public class SaveControllerImplementation extends SaveController {
 
 	@Override
 	public boolean exists(String name) {
-		return ((SessionImplementation) this.session).exists(name);
+		return this.sessionImplementationDAO.exists(name);
 	}
 
 }

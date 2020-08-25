@@ -34,8 +34,13 @@ import usantatecla.tictactoe.distributed.dispatchers.undoredo.RedoDispatcher;
 import usantatecla.tictactoe.distributed.dispatchers.undoredo.RedoableDispatcher;
 import usantatecla.tictactoe.distributed.dispatchers.undoredo.UndoDispatcher;
 import usantatecla.tictactoe.distributed.dispatchers.undoredo.UndoableDispatcher;
+import usantatecla.tictactoe.models.DAO.SessionImplementationDAO;
 
 public class LogicImplementationServer extends LogicImplementation {
+
+	public LogicImplementationServer(SessionImplementationDAO sessionImplementationDAO) {
+		super(sessionImplementationDAO);
+	}
 
 	public void createDispatchers(DispatcherPrototype dispatcherPrototype) {
 		dispatcherPrototype.add(FrameType.START, new StartDispatcher(this.startControllerImplementation));

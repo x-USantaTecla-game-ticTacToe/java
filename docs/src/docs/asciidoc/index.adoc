@@ -1,4 +1,4 @@
-= Master Mind. Solución 12.5. *mvp.pm.-DAO*
+= Master Mind. Solución 13.5. *mvp.pm.withDAO*
 Santa Tecla <parqueNaturalSantaTecla@gmail.com>
 :toc-title: Índice
 :toc: left
@@ -27,11 +27,11 @@ image::Dibujo.jpg[]
 
 == Vista de Lógica/Diseño
 
-- *Modelo/Vista/Presentador* con *Presentador del Modelo* con *Vista Achicada*
+- *Modelo/Vista/Presentador* con *Patrón DAO*
 
 === Arquitectura
 
-[plantuml,arquitecturaVersion11,svg]
+[plantuml,arquitecturaVersion12,svg]
 ....
 
 package tictactoe #DDDDDD { } 
@@ -45,6 +45,7 @@ tictactoe.controllers .down.> java.util
 package tictactoe.controllers.implementation #DDDDDD { } 
 tictactoe.controllers.implementation .down.> tictactoe.controllers
 tictactoe.controllers.implementation .down.> tictactoe.models
+tictactoe.controllers.implementation .down.> tictactoe.models.DAO
 
 package tictactoe.distributed #DDDDDD { } 
 tictactoe.distributed .down.> tictactoe.distributed.dispatchers
@@ -77,6 +78,11 @@ package java.util{ }
 tictactoe.models .down.> java.util
 tictactoe.models .down.> utils
 
+package tictactoe.models.DAO #DDDDDD { }
+package java.io{ }
+tictactoe.models.DAO .down.> tictactoe.models
+tictactoe.models.DAO .down.> java.io
+
 package utils #DDDDDD { } 
 package java.io{ }
 utils .down.> java.io
@@ -101,7 +107,7 @@ tictactoe.views.menus .down.> utils
 
 === Paquete _tictactoe_
 
-[plantuml,tictactoeVersion11,svg]
+[plantuml,tictactoeVersion12,svg]
 ....
 
 class  tictactoe.TicTacToe{
@@ -125,7 +131,7 @@ tictactoe.TicTacToe <|-down- tictactoe.TicTacToeStandalone
 
 === Paquete _tictactoe.views_
 
-[plantuml,tictactoeViewsVersion11,svg]
+[plantuml,tictactoeViewsVersion12,svg]
 
 ....
 
@@ -395,14 +401,12 @@ class  tictactoe.models.Board{
 - checkDirectionOfFirstCoordinates(Coordinate[]): boolean
 - checkDirectionOfAllCoordinates(Coordinate[]): boolean
 ~ copy(): Board
-~ save(FileWriter): void
-~ load(BufferedReader): void
++ getCoordinates(): Coordinate[][]
++ setCoordinate(int, int, Coordinate): void
 }
 tictactoe.models.Board *-down-> tictactoe.models.Coordinate
 tictactoe.models.Board ..> tictactoe.models.Turn
 tictactoe.models.Board ..> utils.Direction
-tictactoe.models.Board ..> java.io.FileWriter
-tictactoe.models.Board ..> java.io.BufferedReader
 
 class  tictactoe.models.Coordinate{
 + {static} DIMENSION: char
@@ -438,15 +442,16 @@ class  tictactoe.models.Game{
 + changeTurn(): void
 + isTicTacToe(): boolean
 + getOtherValueFromTurn(): int
-~ save(FileWriter): void
-~ load(BufferedReader): void
++ getPlayerOrdinalTokenByIndex(int): int
++ getPlayerOrdinalTypeByIndex(int): int
++ setPlayerByIndex(Player, int): void
++ getBoard(): Board
++ getTurn(): Turn
 }
 tictactoe.models.Game *-down-> tictactoe.models.Board
 tictactoe.models.Game *-down-> tictactoe.models.Player
 tictactoe.models.Game *-down-> tictactoe.models.Turn
 tictactoe.models.Game ..> tictactoe.models.Memento
-tictactoe.models.Game ..> java.io.FileWriter
-tictactoe.models.Game ..> java.io.BufferedReader
 
 class  tictactoe.models.Memento{
 - board: Board
@@ -523,6 +528,13 @@ class  tictactoe.models.SessionImplementation{
 + isTicTacToe(): boolean
 + getOtherValueFromTurn(): int
 + getValueState(): StateValue
++ setValueState(StateValue): void
++ hasName(): boolean
++ setName(String): void
++ getName(): String
++ getGame(): Game
++ resetRegistry(): void
++ registry(): void
 }
 tictactoe.models.Session <|-down- tictactoe.models.SessionImplementation
 tictactoe.models.SessionImplementation *-down-> tictactoe.models.State
@@ -549,8 +561,8 @@ class  tictactoe.models.Turn{
 ~ getOtherValue(): int
 ~ getOtherPlayer(): Player
 ~ copy(Player[]): Turn
-~ save(FileWriter): void
-~ load(BufferedReader): void
++ getValue(): int
++ setValue(int): void
 }
 tictactoe.models.Turn *-down-> tictactoe.models.Player
 tictactoe.models.Turn ..> java.io.FileWriter
@@ -558,9 +570,78 @@ tictactoe.models.Turn ..> java.io.BufferedReader
 
 ....
 
+=== Paquete _tictactoe.models.DAO_
+
+[plantuml,tictactoeModelsDAO,svg]
+
+....
+
+class  tictactoe.models.DAO.BoardDAO{
+- board: Board
++ BoardDAO(Board)
++ save(FileWriter): void
++ load(BufferedReader): void
+}
+tictactoe.models.DAO.DAO <|-down- tictactoe.models.DAO.BoardDAO
+tictactoe.models.BoardDAO *-down-> tictactoe.models.Board
+tictactoe.models.BoardDAO ..> tictactoe.models.Turn
+tictactoe.models.BoardDAO ..> tictactoe.models.Coordinate
+tictactoe.models.BoardDAO ..> java.io.FileWriter
+tictactoe.models.BoardDAO ..> java.io.BufferedReader
+
+interface  tictactoe.models.DAO.DAO{
++ {abstract} save(FileWriter): void
++ {abstract} load(BufferedReader): void
+}
+
+class  tictactoe.models.DAO.GameDAO{
+- game: Game
+- boardDAO: BoardDAO
+- turnDAO: TurnDAO
++ GameDAO(Game)
++ save(FileWriter): void
++ load(BufferedReader): void
+}
+tictactoe.models.DAO.DAO <|-down- tictactoe.models.DAO.GameDAO
+tictactoe.models.DAO.GameDAO *-down-> tictactoe.models.Game
+tictactoe.models.DAO.GameDAO *-down-> tictactoe.models.DAO.BoardDAO
+tictactoe.models.DAO.GameDAO *-down-> tictactoe.models.DAO.TurnDAO
+tictactoe.models.DAO.GameDAO ..> java.io.FileWriter
+tictactoe.models.DAO.GameDAO ..> java.io.BufferedReader
+
+class  tictactoe.models.DAO.SessionImplementationDAO{
++ {static} EXTENSION: String
++ {static} DIRECTORY: String
+- {static} directory: File
+- sessionImplementation: SessionImplementation
+- gameDAO: GameDAO
++ associate(SessionImplementation)
++ save(): void
++ save(String): void
++ load(String): void
+}
+tictactoe.models.DAO.SessionImplementationDAO *-down-> tictactoe.models.SessionImplementation
+tictactoe.models.DAO.SessionImplementationDAO *-down-> tictactoe.models.DAO.GameDAO
+tictactoe.models.DAO.SessionImplementationDAO ..> java.io.FileWriter
+tictactoe.models.DAO.SessionImplementationDAO ..> java.io.File
+tictactoe.models.DAO.SessionImplementationDAO ..> java.io.BufferedReader
+
+class  tictactoe.models.DAO.TurnDAO{
+- turn: Turn
++ TurnDAO(Turn)
++ save(FileWriter): void
++ load(BufferedReader): void
+}
+tictactoe.models.DAO.DAO <|-down- tictactoe.models.DAO.TurnDAO
+tictactoe.models.DAO.TurnDAO *-down-> tictactoe.models.Turn
+tictactoe.models.DAO.TurnDAO ..> java.io.FileWriter
+tictactoe.models.DAO.TurnDAO ..> java.io.BufferedReader
+
+....
+
 === Paquete _tictactoe.controllers_
 
-[plantuml,tictactoeControllersVersion11,svg]
+[plantuml,tictactoeControllersVersion12,svg]
 
 ....
 
@@ -710,13 +791,15 @@ tictactoe.controllers.Controller <|-down- tictactoe.controllers.UndoController
 ....
 
 class  tictactoe.controllers.implementation.LogicImplementation{
+# sessionImplementationDAO: SessionImplementationDAO
 # startControllerImplementation: StartControllerImplementation
 # playControllerImplementation: PlayControllerImplementation
 # saveControllerImplementation: SaveControllerImplementation
 # resultControllerImplementation: ResultControllerImplementation
-+ LogicImplementation()
++ LogicImplementation(SessionImplementationDAO)
 }
 tictactoe.controllers.Logic <|-down- tictactoe.controllers.implementation.LogicImplementation
+tictactoe.controllers.implementation.LogicImplementation *-down-> tictactoe.models.DAO.SessionImplementationDAO
 tictactoe.controllers.implementation.LogicImplementation *-down-> tictactoe.controllers.implementation.StartControllerImplementation
 tictactoe.controllers.implementation.LogicImplementation *-down-> tictactoe.controllers.implementation.ResultControllerImplementation
 tictactoe.controllers.implementation.LogicImplementation *-down-> tictactoe.controllers.implementation.PlayControllerImplementation
@@ -763,17 +846,17 @@ class  tictactoe.controllers.implementation.ResultControllerImplementation{
 tictactoe.controllers.ResultController <|-down- tictactoe.controllers.implementation.ResultControllerImplementation
 
 class  tictactoe.controllers.implementation.SaveControllerImplementation{
-+ SaveControllerImplementation(Session)
-+ save(String): void
-+ save(): void
-+ next(): void
-+ hasName(): boolean
-+ exists(String): boolean
+- sessionImplementationDAO: SessionImplementationDAO
++ SaveControllerImplementation(Session, SessionImplementationDAO)
++ finish(): void
++ getOtherValueFromTurn(): int
++ isTicTacToe(): boolean
 }
-tictactoe.controllers.StartController <|-down- tictactoe.controllers.implementation.SaveControllerImplementation
+tictactoe.controllers.SaveController <|-down- tictactoe.controllers.implementation.SaveControllerImplementation
 
 class  tictactoe.controllers.implementation.StartControllerImplementation{
-+ StartControllerImplementation(Session)
+  - sessionImplementationDAO: SessionImplementationDAO
++ StartControllerImplementation(Session, SessionImplementationDAO)
 + start(): void
 + createPlayers(int): void
 + start(String): void
@@ -790,7 +873,7 @@ tictactoe.controllers.StartController <|-down- tictactoe.controllers.implementat
 ....
 
 class  tictactoe.distributed.LogicImplementationServer{
-+ LogicImplementationServer()
++ LogicImplementationServer(SessionImplementationDAO)
 + createDispatchers(DispatcherPrototype): void
 }
 tictactoe.controllers.implementation.LogicImplementation <|-down- tictactoe.distributed.LogicImplementationServer
@@ -1269,7 +1352,7 @@ tictactoe.distributed.dispatchers.errors.ErrorsPutDispatcher ..> tictactoe.contr
 
 === Paquete _utils_
 
-[plantuml,utilsVersion11,svg]
+[plantuml,utilsVersion12,svg]
 
 ....
 
@@ -1389,18 +1472,6 @@ utils.WithConsoleView <|-down- utils.YesNoDialog
 
 ....
 
-== Calidad del Software
-
-=== Diseño
-
-- [red line-through]#_**Baja Cohesión**: de Lógica y Controladores que controlan y comunican_#
-- [red line-through]#_**Alto Acoplamiento**: de Lógica y Controladores a tecnologías de comunicación_#
-- [red line-through]#_**Open/Close**: en Lógica y Controladores cuando hay que cambiar el código de éstos con nuevas tecnologías de comunicación_#
-
-=== Rediseño
-
-- [red line-through]#_**Clases Grandes**: de Controladores con distintas ramas para distintas tecnologías de comunicación_#
-
 == Vista de Desarrollo/Implementación
 
 [plantuml,diagramaImplementacion,svg]
@@ -1420,6 +1491,8 @@ package "  "  as tictactoe.views.menus {
 }
 package "  "  as tictactoe.views.models {
 }
+package "  "  as tictactoe.views.models.DAO {
+}
 package "  "  as utils {
 }
 package "  "  as java.io {
@@ -1436,6 +1509,7 @@ jar *--> tictactoe.controllers.implementation
 jar *--> tictactoe.views
 jar *--> tictactoe.views.menus
 jar *--> tictactoe.views.models
+jar *--> tictactoe.views.models.DAO
 jar *--> utils
 jar *--> java.io
 jar *--> java.util
@@ -1469,6 +1543,8 @@ package "  "  as tictactoe.views.menus {
 }
 package "  "  as tictactoe.views.models {
 }
+package "  "  as tictactoe.views.models.DAO {
+}
 package "  "  as utils {
 }
 package "  "  as java.io {
@@ -1490,6 +1566,7 @@ jarClient *--> tictactoe.controllers.implementation
 jarClient *--> tictactoe.views
 jarClient *--> tictactoe.views.menus
 jarClient *--> tictactoe.views.models
+jarClient *--> tictactoe.views.models.DAO
 jarClient *--> utils
 jarClient *--> java.io
 jarClient *--> java.util
@@ -1523,6 +1600,8 @@ package "  "  as tictactoe.views.menus {
 }
 package "  "  as tictactoe.views.models {
 }
+package "  "  as tictactoe.views.models.DAO {
+}
 package "  "  as utils {
 }
 package "  "  as java.io {
@@ -1544,6 +1623,7 @@ jarServer *--> tictactoe.controllers.implementation
 jarServer *--> tictactoe.views
 jarServer *--> tictactoe.views.menus
 jarServer *--> tictactoe.views.models
+jarServer *--> tictactoe.views.models.DAO
 jarServer *--> utils
 jarServer *--> java.io
 jarServer *--> java.util
