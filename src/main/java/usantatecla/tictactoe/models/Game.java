@@ -121,4 +121,8 @@ public class Game {
         return this.turn;
     }
 
+    public void setTurnWithValue(int value) {
+        this.turn = new Turn(this.players, value);
+    }
+
 }

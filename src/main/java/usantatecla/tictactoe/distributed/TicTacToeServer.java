@@ -3,24 +3,22 @@ package usantatecla.tictactoe.distributed;
 import usantatecla.tictactoe.distributed.dispatchers.DispatcherPrototype;
 import usantatecla.tictactoe.models.DAO.SessionImplementationDAO;
 
-public class TicTacToeServer {
+public abstract class TicTacToeServer {
 
 	private DispatcherPrototype dispatcherPrototype;
 
 	private LogicImplementationServer logic;
 
-	private TicTacToeServer() {
+	protected TicTacToeServer() {
 		this.dispatcherPrototype = new DispatcherPrototype();
-		this.logic = new LogicImplementationServer(new SessionImplementationDAO());
+		this.logic = new LogicImplementationServer(this.createDAO());
 		this.logic.createDispatchers(this.dispatcherPrototype);
 	}
 
-	private void serve() {
+	protected void serve() {
 		this.dispatcherPrototype.serve();
 	}
 
-	public static void main(String[] args) {
-		new TicTacToeServer().serve();
-	}
+	protected abstract SessionImplementationDAO createDAO();
 
 }

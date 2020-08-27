@@ -79,9 +79,19 @@ tictactoe.models .down.> java.util
 tictactoe.models .down.> utils
 
 package tictactoe.models.DAO #DDDDDD { }
-package java.io{ }
 tictactoe.models.DAO .down.> tictactoe.models
-tictactoe.models.DAO .down.> java.io
+
+package tictactoe.models.database #DDDDDD { }
+package java.sql{ }
+tictactoe.models.database .down.> tictactoe.models
+tictactoe.models.database .down.> tictactoe.models.DAO
+tictactoe.models.database .down.> java.sql
+
+package tictactoe.models.File #DDDDDD { }
+package java.io{ }
+tictactoe.models.File .down.> tictactoe.models
+tictactoe.models.File .down.> tictactoe.models.DAO
+tictactoe.models.File .down.> java.io
 
 package utils #DDDDDD { } 
 package java.io{ }
@@ -123,9 +133,21 @@ tictactoe.TicTacToe --> tictactoe.controllers.Logic
 class  tictactoe.TicTacToeStandalone{
 + TicTacToeStandalone()
 # createLogic(): Logic
-+ {static} main(String[]): void
+# {abstract} createDAO(): SessionImplementationDAO
 }
 tictactoe.TicTacToe <|-down- tictactoe.TicTacToeStandalone
+
+class  tictactoe.TicTacToeStandaloneFile{
+# createDAO(): SessionImplementationFile
++ {static} main(String[]): void
+}
+tictactoe.TicTacToeStandalone <|-down- tictactoe.TicTacToeStandaloneFile
+
+class  tictactoe.TicTacToeStandaloneDB{
+# createLogic(): SessionImplementationDAO
++ {static} main(String[]): void
+}
+tictactoe.TicTacToeStandalone <|-down- tictactoe.TicTacToeStandaloneDB
 
 ....
 
@@ -379,7 +401,7 @@ tictactoe.views.UserPlayerView ..> tictactoe.views.CoordinateView
 
 === Paquete _tictactoe.models_
 
-[plantuml,tictactoeModelsVersion11,svg]
+[plantuml,tictactoeModelsVersion12,svg]
 
 ....
 
@@ -447,6 +469,7 @@ class  tictactoe.models.Game{
 + setPlayerByIndex(Player, int): void
 + getBoard(): Board
 + getTurn(): Turn
++ setTurnWithValue(int): void
 }
 tictactoe.models.Game *-down-> tictactoe.models.Board
 tictactoe.models.Game *-down-> tictactoe.models.Player
@@ -577,65 +600,158 @@ tictactoe.models.Turn ..> java.io.BufferedReader
 ....
 
 class  tictactoe.models.DAO.BoardDAO{
-- board: Board
+# board: Board
 + BoardDAO(Board)
++ loadCoordinateInBoard(String, int, int)
+}
+tictactoe.models.DAO.BoardDAO *-down-> tictactoe.models.Board
+
+class  tictactoe.models.DAO.GameDAO{
+# game: Game
++ GameDAO(Game)
+}
+tictactoe.models.DAO.GameDAO *-down-> tictactoe.models.Game
+
+class  tictactoe.models.DAO.SessionImplementationDAO{
+# sessionImplementation: SessionImplementation
++ associate(SessionImplementation)
++ save(): void
++ {abstract} save(String): void
++ {abstract} load(String): void
++ {abstract} getGamesNames(): String[]
++ {abstract} exists(String): boolean
+}
+tictactoe.models.DAO.SessionImplementationDAO *-down-> tictactoe.models.SessionImplementation
+
+....
+
+=== Paquete _tictactoe.models.database_
+
+[plantuml,tictactoeModelsDatabase,svg]
+
+....
+
+class  tictactoe.models.database.BoardDBDAO{
+~ BoardDAO(Board)
++ save(String, Connection, boolean): void
+- insertBoard(String, Connection): void
+- getCoordinateToSave(Coordinate): String
++ load(String, Connection): void
+}
+tictactoe.models.DAO.BoardDAO <|-down- tictactoe.models.database.BoardDBDAO
+tictactoe.models.database.DBDAO <|-down- tictactoe.models.database.BoardDBDAO
+tictactoe.models.database.BoardDBDAO ..> tictactoe.models.Turn
+tictactoe.models.database.BoardDBDAO ..> tictactoe.models.Coordinate
+tictactoe.models.database.BoardDBDAO ..> java.sql.Connection
+tictactoe.models.database.BoardDBDAO ..> java.sql.ResultSet
+tictactoe.models.database.BoardDBDAO ..> java.sql.Statement
+
+interface  tictactoe.models.database.DBDAO{
+~ {abstract} save(String, Connection, boolean): void
+~ {abstract} load(String, Connection): void
+}
+
+class  tictactoe.models.database.GameDBDAO{
+- boardDBDAO: BoardDBDAO
+~ GameDBDAO(Game)
++ save(String, Connection, boolean): void
++ load(String, Connection): void
+}
+tictactoe.models.DAO.GameDAO <|-down- tictactoe.models.database.GameDBDAO
+tictactoe.models.database.DBDAO <|-down- tictactoe.models.database.GameDBDAO
+tictactoe.models.database.GameDBDAO *-down-> tictactoe.models.database.BoardDBDAO
+tictactoe.models.database.GameDBDAO ..> java.sql.Connection
+tictactoe.models.database.GameDBDAO ..> java.sql.ResultSet
+tictactoe.models.database.GameDBDAO ..> java.sql.Statement
+
+class  tictactoe.models.database.SessionImplementationDBDAO{
+- {static} URL: String
+- {static} USER: String
+- {static} PASSWORD: File
+- gameDBDAO: GameDBDAO
+# connection: Connection
++ associate(SessionImplementation)
++ SessionImplementationDBDAO()
++ save(String): void
++ load(String): void
++ getGamesNames(): String[]
++ exists(String): boolean
+}
+tictactoe.models.DAO.SessionImplementationDAO <|-down- tictactoe.models.database.SessionImplementationDBDAO
+tictactoe.models.database.SessionImplementationDBDAO *-down-> tictactoe.models.database.GameDBDAO
+tictactoe.models.database.SessionImplementationDBDAO *-down-> java.sql.Connection
+tictactoe.models.database.SessionImplementationDBDAO ..> java.sql.ResultSet
+tictactoe.models.database.SessionImplementationDBDAO ..> java.sql.Statement
+tictactoe.models.database.SessionImplementationDBDAO ..> java.sql.DriverManager
+
+....
+
+=== Paquete _tictactoe.models.Files_
+
+[plantuml,tictactoeModelsFiles,svg]
+
+....
+
+class  tictactoe.models.Files.BoardFileDAO{
+~ BoardFileDAO(Board)
 + save(FileWriter): void
 + load(BufferedReader): void
 }
-tictactoe.models.DAO.DAO <|-down- tictactoe.models.DAO.BoardDAO
-tictactoe.models.BoardDAO *-down-> tictactoe.models.Board
-tictactoe.models.BoardDAO ..> tictactoe.models.Turn
-tictactoe.models.BoardDAO ..> tictactoe.models.Coordinate
-tictactoe.models.BoardDAO ..> java.io.FileWriter
-tictactoe.models.BoardDAO ..> java.io.BufferedReader
+tictactoe.models.Files.FileDAO <|-down- tictactoe.models.Files.BoardFileDAO
+tictactoe.models.DAO.BoardDAO <|-down- tictactoe.models.Files.BoardFileDAO
+tictactoe.models.Files.BoardFileDAO ..> tictactoe.models.Turn
+tictactoe.models.Files.BoardFileDAO ..> tictactoe.models.Coordinate
+tictactoe.models.Files.BoardFileDAO ..> java.io.FileWriter
+tictactoe.models.Files.BoardFileDAO ..> java.io.BufferedReader
 
-interface  tictactoe.models.DAO.DAO{
+interface  tictactoe.models.Files.FileDAO{
 + {abstract} save(FileWriter): void
 + {abstract} load(BufferedReader): void
 }
 
-class  tictactoe.models.DAO.GameDAO{
-- game: Game
-- boardDAO: BoardDAO
-- turnDAO: TurnDAO
-+ GameDAO(Game)
+class  tictactoe.models.Files.GameFileDAO{
+- boardFileDAO: BoardFileDAO
+- turnFileDAO: TurnFileDAO
+~ GameFileDAO(Game)
 + save(FileWriter): void
 + load(BufferedReader): void
 }
-tictactoe.models.DAO.DAO <|-down- tictactoe.models.DAO.GameDAO
-tictactoe.models.DAO.GameDAO *-down-> tictactoe.models.Game
-tictactoe.models.DAO.GameDAO *-down-> tictactoe.models.DAO.BoardDAO
-tictactoe.models.DAO.GameDAO *-down-> tictactoe.models.DAO.TurnDAO
-tictactoe.models.DAO.GameDAO ..> java.io.FileWriter
-tictactoe.models.DAO.GameDAO ..> java.io.BufferedReader
+tictactoe.models.DAO.DAO <|-down- tictactoe.models.Files.GameFileDAO
+tictactoe.models.Files.GameFileDAO <|-down- tictactoe.models.Files.GameFileDAO
+tictactoe.models.Files.GameFileDAO *-down-> tictactoe.models.Files.BoardFileDAO
+tictactoe.models.Files.GameFileDAO *-down-> tictactoe.models.Files.TurnFileDAO
+tictactoe.models.Files.GameFileDAO ..> java.io.FileWriter
+tictactoe.models.Files.GameFileDAO ..> java.io.BufferedReader
 
-class  tictactoe.models.DAO.SessionImplementationDAO{
+class  tictactoe.models.Files.SessionImplementationFileDAO{
 + {static} EXTENSION: String
 + {static} DIRECTORY: String
 - {static} directory: File
 - sessionImplementation: SessionImplementation
-- gameDAO: GameDAO
+- gameFileDAO: GameFileDAO
 + associate(SessionImplementation)
-+ save(): void
 + save(String): void
 + load(String): void
++ getGamesNames(): String[]
++ exists(String): boolean
 }
-tictactoe.models.DAO.SessionImplementationDAO *-down-> tictactoe.models.SessionImplementation
-tictactoe.models.DAO.SessionImplementationDAO *-down-> tictactoe.models.DAO.GameDAO
-tictactoe.models.DAO.SessionImplementationDAO ..> java.io.FileWriter
-tictactoe.models.DAO.SessionImplementationDAO ..> java.io.File
-tictactoe.models.DAO.SessionImplementationDAO ..> java.io.BufferedReader
+tictactoe.models.DAO.SessionImplementationDAO <|-down- tictactoe.models.Files.SessionImplementationFileDAO
+tictactoe.models.Files.SessionImplementationFileDAO *-down-> tictactoe.models.SessionImplementation
+tictactoe.models.Files.SessionImplementationFileDAO *-down-> tictactoe.models.Files.GameFileDAO
+tictactoe.models.Files.SessionImplementationFileDAO ..> java.io.FileWriter
+tictactoe.models.Files.SessionImplementationFileDAO ..> java.io.File
+tictactoe.models.Files.SessionImplementationFileDAO ..> java.io.BufferedReader
 
-class  tictactoe.models.DAO.TurnDAO{
+class  tictactoe.models.Files.TurnFileDAO{
 - turn: Turn
-+ TurnDAO(Turn)
+~ TurnFileDAO(Turn)
 + save(FileWriter): void
 + load(BufferedReader): void
 }
-tictactoe.models.DAO.DAO <|-down- tictactoe.models.DAO.TurnDAO
-tictactoe.models.DAO.TurnDAO *-down-> tictactoe.models.Turn
-tictactoe.models.DAO.TurnDAO ..> java.io.FileWriter
-tictactoe.models.DAO.TurnDAO ..> java.io.BufferedReader
+tictactoe.models.DAO.TurnDAO <|-down- tictactoe.models.Files.TurnFileDAO
+tictactoe.models.Files.TurnFileDAO *-down-> tictactoe.models.Turn
+tictactoe.models.Files.TurnFileDAO ..> java.io.FileWriter
+tictactoe.models.Files.TurnFileDAO ..> java.io.BufferedReader
 
 ....
 
@@ -976,13 +1092,25 @@ tictactoe.distributed.TicTacToeClient *-down-> tictactoe.distributed.LogicProxy
 
 class  tictactoe.distributed.TicTacToeServer{
 - dispatcherPrototype: DispatcherPrototype
-- logic: LogicServer
-- TicTacToeServer()
-+ {static} main(String[]): void
-- serve(): void
+- logic: LogicImplementationServer
+# TicTacToeServer()
+# serve(): void
+# {abstract} createDAO(): SessionImplementationDAO
 }
 tictactoe.distributed.TicTacToeServer *-down-> tictactoe.distributed.dispatchers.DispatcherPrototype
 tictactoe.distributed.TicTacToeServer *-down-> tictactoe.distributed.LogicImplementationServer
+
+class  tictactoe.distributed.TicTacToeServerDB{
++ createDAO(): SessionImplementationDAO
++ {static} main(String[]): void
+}
+tictactoe.distributed.TicTacToeServer <|-down- tictactoe.distributed.TicTacToeServerDB
+
+class  tictactoe.distributed.TicTacToeServerFile{
++ createDAO(): SessionImplementationDAO
++ {static} main(String[]): void
+}
+tictactoe.distributed.TicTacToeServer <|-down- tictactoe.distributed.TicTacToeServerFile
 
 ....
 
@@ -1493,6 +1621,10 @@ package "  "  as tictactoe.views.models {
 }
 package "  "  as tictactoe.views.models.DAO {
 }
+package "  "  as tictactoe.views.models.database {
+}
+package "  "  as tictactoe.views.models.Files {
+}
 package "  "  as utils {
 }
 package "  "  as java.io {
@@ -1510,6 +1642,8 @@ jar *--> tictactoe.views
 jar *--> tictactoe.views.menus
 jar *--> tictactoe.views.models
 jar *--> tictactoe.views.models.DAO
+jar *--> tictactoe.views.models.database
+jar *--> tictactoe.views.models.Files
 jar *--> utils
 jar *--> java.io
 jar *--> java.util
@@ -1545,6 +1679,10 @@ package "  "  as tictactoe.views.models {
 }
 package "  "  as tictactoe.views.models.DAO {
 }
+package "  "  as tictactoe.views.models.database {
+}
+package "  "  as tictactoe.views.models.Files {
+}
 package "  "  as utils {
 }
 package "  "  as java.io {
@@ -1567,6 +1705,8 @@ jarClient *--> tictactoe.views
 jarClient *--> tictactoe.views.menus
 jarClient *--> tictactoe.views.models
 jarClient *--> tictactoe.views.models.DAO
+jarClient *--> tictactoe.views.models.database
+jarClient *--> tictactoe.views.models.Files
 jarClient *--> utils
 jarClient *--> java.io
 jarClient *--> java.util
@@ -1602,6 +1742,10 @@ package "  "  as tictactoe.views.models {
 }
 package "  "  as tictactoe.views.models.DAO {
 }
+package "  "  as tictactoe.views.models.database {
+}
+package "  "  as tictactoe.views.models.Files {
+}
 package "  "  as utils {
 }
 package "  "  as java.io {
@@ -1624,6 +1768,8 @@ jarServer *--> tictactoe.views
 jarServer *--> tictactoe.views.menus
 jarServer *--> tictactoe.views.models
 jarServer *--> tictactoe.views.models.DAO
+jarServer *--> tictactoe.views.models.database
+jarServer *--> tictactoe.views.models.Files
 jarServer *--> utils
 jarServer *--> java.io
 jarServer *--> java.util

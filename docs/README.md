@@ -20,7 +20,7 @@
 <div id="toc" class="toc">
 <div id="toctitle">Índice</div>
 <ul class="sectlevel1">
-<li><a href="#requisitos-4-clienteservidor">Requisitos 5. <strong>Ficheros</strong></a></li>
+<li><a href="#requisitos-5-ficheros">Requisitos 5. <strong>Ficheros</strong></a></li>
 <li><a href="#vista-de-lógicadiseño">Vista de Lógica/Diseño</a>
 <ul class="sectlevel2">
 <li><a href="#arquitectura">Arquitectura</a></li>
@@ -29,7 +29,9 @@
 <li><a href="#paquete-tictactoe-views-menus">Paquete <em>tictactoe.views.menus</em></a></li>
 <li><a href="#paquete-tictactoe-views-models">Paquete <em>tictactoe.views.models</em></a></li>
 <li><a href="#paquete-tictactoe-models">Paquete <em>tictactoe.models</em></a></li>
-<li><a href="#paquete-tictactoe-models-DAO">Paquete <em>tictactoe.models.DAO</em></a></li>
+<li><a href="#paquete-tictactoe-models-dao">Paquete <em>tictactoe.models.DAO</em></a></li>
+<li><a href="#paquete-tictactoe-models-database">Paquete <em>tictactoe.models.database</em></a></li>
+<li><a href="#paquete-tictactoe-models-files">Paquete <em>tictactoe.models.Files</em></a></li>
 <li><a href="#paquete-tictactoe-types">Paquete <em>tictactoe.types</em></a></li>
 <li><a href="#paquete-tictactoe-controllers">Paquete <em>tictactoe.controllers</em></a></li>
 <li><a href="#paquete-tictactoe-controllers-implementation">Paquete <em>tictactoe.controllers.implementation</em></a></li>
@@ -55,7 +57,7 @@
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="requisitos-4-clienteservidor">Requisitos 5. <strong>Ficheros</strong></h2>
+<h2 id="requisitos-5-ficheros">Requisitos 5. <strong>Ficheros</strong></h2>
 <div class="sectionbody">
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -156,10 +158,26 @@
 </div>
 </div>
 <div class="sect2">
-<h3 id="paquete-tictactoe-models-DAO">Paquete <em>tictactoe.models.DAO</em></h3>
+<h3 id="paquete-tictactoe-models-dao">Paquete <em>tictactoe.models.DAO</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/tictactoeModelsDAO.svg" alt="tictactoeModelsDAO" width="1200" height="1300">
+<img src="build/docs/asciidoc/images/tictactoeModelsDAO.svg" alt="tictactoeModelsDAO" width="800" height="600">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="paquete-tictactoe-models-database">Paquete <em>tictactoe.models.database</em></h3>
+<div class="imageblock">
+<div class="content">
+<img src="build/docs/asciidoc/images/tictactoeModelsDatabase.svg" alt="tictactoeModelsDatabase" width="1200" height="1000">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="paquete-tictactoe-models-files">Paquete <em>tictactoe.models.Files</em></h3>
+<div class="imageblock">
+<div class="content">
+<img src="build/docs/asciidoc/images/tictactoeModelsFiles.svg" alt="tictactoeModelsFiles" width="1200" height="1000">
 </div>
 </div>
 </div>
@@ -234,9 +252,9 @@
 <div class="sectionbody">
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/diagramaImplementacion.svg" alt="diagramaImplementacion" width="1000" height="200">
-<img src="build/docs/asciidoc/images/diagramaImplementacionClient.svg" alt="diagramaImplementacionClient" width="1000" height="207">
-<img src="build/docs/asciidoc/images/diagramaImplementacionServer.svg" alt="diagramaImplementacionServer" width="1000" height="207">
+<img src="build/docs/asciidoc/images/diagramaImplementacion.svg" alt="diagramaImplementacion" width="1200" height="200">
+<img src="build/docs/asciidoc/images/diagramaImplementacionClient.svg" alt="diagramaImplementacionClient" width="1300" height="207">
+<img src="build/docs/asciidoc/images/diagramaImplementacionServer.svg" alt="diagramaImplementacionServer" width="1300" height="207">
 </div>
 </div>
 </div>
@@ -267,7 +285,7 @@
 <div id="footer">
 <div id="footer-text">
 Version 0.12.0<br>
-Last updated 2020-08-25 21:30:00 +0200
+Last updated 2020-08-27 21:30:00 +0200
 </div>
 </div>
 </html>
