@@ -387,7 +387,7 @@ class  tictactoe.views.graphics.MachinePlayerView{
 }
 tictactoe.views.PlayerView <|-down- tictactoe.views.graphics.MachinePlayerView
 
-class  mastermind.views.graphics.ResumeDialog{
+class  tictactoe.views.graphics.ResumeDialog{
 - resume: boolean
 ~ ResumeDialog()
 ~ isResumed(): boolean
@@ -609,7 +609,7 @@ class  utils.WithConsoleView{
 }
 utils.WithConsoleView *-down-> utils.Console
 
-class  mastermind.utils.YesNoDialog{
+class  tictactoe.utils.YesNoDialog{
 - {static} AFIRMATIVE: char
 - {static} NEGATIVE: char
 - {static} QUESTION: String
@@ -619,7 +619,7 @@ class  mastermind.utils.YesNoDialog{
 - {static} isNegative(char): boolean
 - {static} isAfirmative(char): boolean
 }
-mastermind.utils.WithConsoleView <|-down- mastermind.utils.YesNoDialog
+tictactoe.utils.WithConsoleView <|-down- tictactoe.utils.YesNoDialog
 
 ....
 
