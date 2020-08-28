@@ -10,17 +10,20 @@ public abstract class View {
 	}
 
 	public void interact() {
-		this.start();
-		boolean finished;
+		boolean newGame;
 		do {
-			finished = this.play();
-		} while (!finished);
-		this.result();
+			this.start();
+			boolean finished;
+			do {
+				finished = this.play();
+			} while (!finished);
+			newGame = this.isNewGame();
+		} while (newGame);
 	}
 
 	protected abstract void start();
 
 	protected abstract boolean play();
 
-	protected abstract void result();
+	protected abstract boolean isNewGame();
 }

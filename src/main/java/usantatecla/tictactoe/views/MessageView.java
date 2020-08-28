@@ -12,7 +12,8 @@ public enum MessageView {
 	CHOOSE_PLAYERS("Number of users [0-" + Turn.NUM_PLAYERS + "] "),
 	READ_ROW("Row: "),
 	READ_COLUMN("Column: "),
-	ERROR("ERROR");
+	ERROR("ERROR"),
+	RESUME("Do you want to continue");
 
 	private String message;
 

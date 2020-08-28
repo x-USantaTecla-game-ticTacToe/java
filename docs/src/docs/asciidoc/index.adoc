@@ -117,6 +117,7 @@ enum  tictactoe.views.MessageView{
 +	READ_ROW: MessageView
 +	READ_COLUMN: MessageView
 +	ERROR: MessageView
++ RESUME: MessageView
 - message: String
 - MessageView(String)
 + getMessage(): String
@@ -138,7 +139,7 @@ class  tictactoe.views.View{
 + interact(): void
 # {abstract} start(): void
 # {abstract} play(): boolean
-# {abstract} result(): void
+# {abstract} isNewGame(): boolean
 }
 tictactoe.views.View *-down-> tictactoe.models.Game
 
@@ -162,11 +163,11 @@ utils.WithConsoleView <|-down- tictactoe.views.console.BoardView
 class  tictactoe.views.console.ConsoleView{
 - startView: StartView
 - playView: PlayView
-- resultView: ResultView
+- resumeView: ResumeView
 + ConsoleView(Game)
 # start(): void
 # play(): boolean
-# result(): void
+# isNewGame(): boolean
 }
 tictactoe.views.View <|-down- tictactoe.views.console.ConsoleView
 tictactoe.views.console.ConsoleView *-down-> tictactoe.views.console.StartView
@@ -198,12 +199,19 @@ class  tictactoe.views.console.PlayView{
 }
 tictactoe.views.console.PlayView ..> tictactoe.views.console.BoardView
 tictactoe.views.console.PlayView ..> tictactoe.views.PlayerView
+tictactoe.views.console.PlayView ..> tictactoe.views.ResultView
+tictactoe.views.console.PlayView ..> tictactoe.views.BoardView
 
 class tictactoe.views.console.ResultView{
-~ game: Game
-~ ResultView(Game)
-~ interact(): void
+~ writeln(int): void
 }
+utils.WithConsoleView <|-down- tictactoe.views.console.ResultView
+
+class  tictactoe.views.console.ResumeView{
+~ ResumeView()
+~ interact(Game): boolean
+}
+tictactoe.views.console.ResumeView ..> tictactoe.models.Game
 
 class tictactoe.views.console.StartView{
 ~ game: Game
@@ -317,7 +325,7 @@ class  tictactoe.views.graphics.GameView{
 ~ GameView(Game)
 ~ start(): void
 ~ play(): boolean
-~ result(): void
+- result(): void
 }
 javax.swing.JFrame <|-down- tictactoe.views.graphics.GameView
 tictactoe.views.graphics.GameView ..> tictactoe.views.graphics.ChoosePlayersView
@@ -330,10 +338,11 @@ class  tictactoe.views.graphics.GraphicsView{
 + GraphicsView(Game)
 # start(): void
 # play(): boolean
-# result(): void
+# isNewGame(): boolean
 }
 tictactoe.views.View <|-down- tictactoe.views.graphics.GraphicsView
 tictactoe.views.graphics.GraphicsView *-down-> tictactoe.views.graphics.GameView
+tictactoe.views.graphics.GraphicsView ..> tictactoe.views.graphics.ResumeDialog
 
 class  tictactoe.views.graphics.MachinePlayerView{
 ~ MachinePlayerView(Player)
@@ -341,6 +350,12 @@ class  tictactoe.views.graphics.MachinePlayerView{
 + readCoordinatesToMove(): Coordinate[]
 }
 tictactoe.views.PlayerView <|-down- tictactoe.views.graphics.MachinePlayerView
+
+class  mastermind.views.graphics.ResumeDialog{
+- resume: boolean
+~ ResumeDialog()
+~ isResumed(): boolean
+}
 
 class  tictactoe.views.graphics.UserPlayerView{
 ~ {static} ENTER_COORDINATE_TO_PUT: String
@@ -420,7 +435,8 @@ class  tictactoe.models.Game{
 + getTokenPlayerFromTurn(int): Player
 + changeTurn(): void
 + isTicTacToe(): boolean
-+ getOtherValueFromTurn(): int
++ getValueFromTurn(): int
++ newGame(): void
 }
 tictactoe.models.Game *-down-> tictactoe.models.Board
 tictactoe.models.Game *-down-> tictactoe.models.Player
@@ -467,7 +483,8 @@ class  tictactoe.models.Turn{
 + Turn(Player[])
 ~ change(): void
 ~ getPlayer(): Player
-~ getOtherValue(): int
++ getValue(): int
+- getOtherValue(): int
 ~ getOtherPlayer(): Player
 }
 tictactoe.models.Turn *-down-> tictactoe.models.Player

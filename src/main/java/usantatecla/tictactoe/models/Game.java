@@ -9,9 +9,7 @@ public class Game {
     private Turn turn;
     
     public Game() {
-        this.board = new Board();
-        this.players = new Player[Turn.NUM_PLAYERS];
-        this.turn = new Turn(this.players);
+        this.newGame();
     }
 
     public void createPlayers(int numberOfUsers) {
@@ -48,10 +46,16 @@ public class Game {
     }
 
     public boolean isTicTacToe() {
-        return this.board.isTicTacToe(this.turn.getOtherPlayer().getToken());
+        return this.board.isTicTacToe(this.turn.getPlayer().getToken());
     }
 
-    public int getOtherValueFromTurn() {
-        return this.turn.getOtherValue();
+    public int getValueFromTurn() {
+        return this.turn.getValue();
     }
+
+    public void newGame() {
+		this.board = new Board();
+        this.players = new Player[Turn.NUM_PLAYERS];
+        this.turn = new Turn(this.players);
+	}
 }
