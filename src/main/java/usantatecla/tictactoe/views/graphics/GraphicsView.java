@@ -23,8 +23,18 @@ public class GraphicsView extends View {
 	}
 
 	@Override
-	protected void result() {
-		this.gameView.result();
+	protected boolean isNewGame() {
+		ResumeDialog resumeDialog = new ResumeDialog();
+		boolean newGame = resumeDialog.isNewGame();
+		if (newGame) {
+			this.game.newGame();
+			this.gameView = new GameView(this.game);
+			return true;
+		} else {
+			this.gameView.setVisible(false);
+			System.exit(0);
+			return false;
+		}
 	}
 
 }

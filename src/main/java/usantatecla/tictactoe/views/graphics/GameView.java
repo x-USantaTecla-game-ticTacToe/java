@@ -62,18 +62,22 @@ class GameView extends JFrame {
 			Coordinate[] coordinates = playerView.readCoordinatesToMove();
 			this.game.moveTokenPlayerFromTurn(coordinates);
 		}
+		if (this.game.isTicTacToe()) {
+			this.result();
+			return true;
+		}
 		this.game.changeTurn();
-		return this.game.isTicTacToe();
+		return false;
 	}
 
-	void result() {
+	private void result() {
 		Container container = this.getContentPane();
 		container.removeAll();
 		container.add(new BoardView(game.getBoard()), new Constraints(0, 0, 1, 1));
 		container.revalidate();
 		container.repaint();
-		int otherValue = this.game.getOtherValueFromTurn();
-		String message = Token.values()[otherValue].getChar() + " "
+		int value = this.game.getValueFromTurn();
+		String message = Token.values()[value].getChar() + " "
 				+ MessageView.PLAYER_WIN.getMessage();
 		JOptionPane.showMessageDialog(null, message, GameView.GAME_OVER, JOptionPane.WARNING_MESSAGE);
 	}
