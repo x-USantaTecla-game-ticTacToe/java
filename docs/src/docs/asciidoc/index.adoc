@@ -148,11 +148,13 @@ class  tictactoe.TicTacToe{
 - playUntilTicTacToe(): void
 - createPlayers(): void
 - readUsersNumber(): int
+- newGame(): void;
 + main(String[]): void
 }
 utils.WithConsoleModel <|-down- tictactoe.TicTacToe
 tictactoe.TicTacToe ..> tictactoe.Error
 tictactoe.TicTacToe ..> utils.PlayersDialog
+tictactoe.TicTacToe ..> utils.YesNoDialog
 tictactoe.TicTacToe *-down-> tictactoe.Board
 tictactoe.TicTacToe *-down-> tictactoe.Player
 tictactoe.TicTacToe *-down-> tictactoe.Turn
@@ -247,6 +249,18 @@ class  utils.WithConsoleModel{
 # WithConsoleModel()
 }
 utils.WithConsoleModel *-down-> utils.Console
+
+class  mastermind.utils.YesNoDialog{
+- {static} AFIRMATIVE: char
+- {static} NEGATIVE: char
+- {static} QUESTION: String
+- {static} MESSAGE: String
++ YesNoDialog()
++ read(String): boolean
+- {static} isNegative(char): boolean
+- {static} isAfirmative(char): boolean
+}
+mastermind.utils.WithConsoleModel <|-down- mastermind.utils.YesNoDialog
 
 ....
 

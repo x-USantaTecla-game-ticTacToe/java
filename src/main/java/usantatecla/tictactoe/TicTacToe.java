@@ -2,6 +2,7 @@ package usantatecla.tictactoe;
 
 import usantatecla.utils.PlayersDialog;
 import usantatecla.utils.WithConsoleModel;
+import usantatecla.utils.YesNoDialog;
 
 class TicTacToe extends WithConsoleModel{
 
@@ -12,18 +13,24 @@ class TicTacToe extends WithConsoleModel{
 	private Turn turn;
 
 	TicTacToe() {
-		this.board = new Board();
-		this.players = new Player[Turn.NUM_PLAYERS];
-		this.turn = new Turn(this.players);
+		this.newGame();
 	}
 
 	private void play() {
-		Message.START_GAME.writeln();
-		this.createPlayers();
-		this.board.write();
-		this.playUntilTicTacToe();
-		int otherValue = this.turn.getOtherValue();
-		this.turn.getOtherPlayer().writeWin(Token.values()[otherValue]);
+		boolean newGame;
+		do {
+			Message.START_GAME.writeln();
+			this.createPlayers();
+			this.board.write();
+			this.playUntilTicTacToe();
+			int otherValue = this.turn.getOtherValue();
+			this.turn.getOtherPlayer().writeWin(Token.values()[otherValue]);
+			Message.RESUME.write();
+			newGame = new YesNoDialog().read();
+			if (newGame) {
+				this.newGame();
+			}
+		} while (newGame);
 	}
 
 	private void playUntilTicTacToe() {
@@ -46,6 +53,12 @@ class TicTacToe extends WithConsoleModel{
 		for (int i = users; i < Turn.NUM_PLAYERS; i++) {
 			this.players[i] = new MachinePlayer(Token.values()[i], this.board);
 		}
+	}
+
+	private void newGame() {
+		this.board = new Board();
+		this.players = new Player[Turn.NUM_PLAYERS];
+		this.turn = new Turn(this.players);
 	}
 
 	public static void main(String[] args) {

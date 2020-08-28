@@ -9,7 +9,8 @@ enum Message {
     VERTICAL_LINE_CENTERED(" | "),
 	VERTICAL_LINE_LEFT("| "),
 	PLAYER_WIN(" Player: You win!!! :-)"),
-	START_GAME("-------------------- TIC TAC TOE --------------------");
+	START_GAME("-------------------- TIC TAC TOE --------------------"),
+	RESUME("Do you want to continue");
 
 	private String message;
 	
