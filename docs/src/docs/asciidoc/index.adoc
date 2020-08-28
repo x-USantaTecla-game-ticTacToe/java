@@ -200,8 +200,7 @@ class  tictactoe.views.console.PlayView{
 }
 tictactoe.views.console.PlayView ..> tictactoe.views.console.BoardView
 tictactoe.views.console.PlayView ..> tictactoe.views.PlayerView
-tictactoe.views.console.PlayView ..> tictactoe.views.ResultView
-tictactoe.views.console.PlayView ..> tictactoe.views.BoardView
+tictactoe.views.console.PlayView ..> tictactoe.views.console.ResultView
 
 class tictactoe.views.console.ResultView{
 ~ writeln(int): void
