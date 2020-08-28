@@ -1,6 +1,7 @@
 package usantatecla.tictactoe.views;
 
 import usantatecla.tictactoe.controllers.PlayController;
+import usantatecla.tictactoe.models.Coordinate;
 import usantatecla.tictactoe.types.Error;
 
 public abstract class PlayerView {
@@ -11,18 +12,18 @@ public abstract class PlayerView {
         this.playController = playController;
     }
   
-    public abstract int[] readCoordinateToPut();
-    public abstract int[][] readCoordinatesToMove();
+    public abstract Coordinate readCoordinateToPut();
+    public abstract Coordinate[] readCoordinatesToMove();
 
-    public Error getErrorsPutCoordinate(int row, int column) {
-        return this.playController.getErrorsPutCoordinate(row, column);
+    public Error getPutCoordinateError(Coordinate coordinate) {
+        return this.playController.getPutCoordinateError(coordinate);
 	}
 
-	public Error getErrorsMoveOriginCoordinate(int originRow, int originColumn) {
-		return this.playController.getErrorsMoveOriginCoordinate(originRow, originColumn);
+	public Error getMoveOriginCoordinateError(Coordinate originCoordinate) {
+		return this.playController.getMoveOriginCoordinateError(originCoordinate);
 	}
 
-	public Error getErrorsMoveTargetCoordinate(int originRow, int originColumn, int targetRow, int targetColumn) {
-		return this.playController.getErrorsMoveTargetCoordinate(originRow, originColumn, targetRow, targetColumn);
+	public Error getMoveTargetCoordinateError(Coordinate originCoordinate, Coordinate targetCoordinate) {
+		return this.playController.getMoveTargetCoordinateError(originCoordinate, targetCoordinate);
 	}
 }
