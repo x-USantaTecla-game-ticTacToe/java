@@ -113,6 +113,7 @@ class  tictactoe.views.MessageView{
 +	PLAYER_WIN: MessageView
 +	START_GAME: MessageView
 +	CHOOSE_PLAYER: MessageView
++ RESUME: MessageView
 - message: String
 - console: Console
 - MessageView(String)
@@ -139,15 +140,21 @@ class  tictactoe.views.PlayView{
 }
 tictactoe.views.PlayView ..> tictactoe.models.Game
 tictactoe.views.PlayView ..> tictactoe.views.PlayerView
+tictactoe.views.PlayView ..> tictactoe.views.ResultView
+tictactoe.views.PlayView ..> tictactoe.views.BoardView
 
 class tictactoe.views.ResultView{
-~ game: Game
-~ ResultView(Game)
-~ interact(): void
+~ writeln(int): void
 }
-tictactoe.views.ResultView ..> tictactoe.models.Game
 tictactoe.views.ResultView ..> tictactoe.views.TokenView
 tictactoe.views.ResultView ..> tictactoe.views.MessageView
+
+class  mastermind.views.ResumeView{
+~ ResumeView()
+~ interact(Game): boolean
+}
+mastermind.views.ResumeView ..> mastermind.models.Game
+mastermind.views.ResumeView ..> mastermind.views.Message
 
 class tictactoe.views.StartView{
 ~ game: Game
@@ -181,14 +188,14 @@ class  tictactoe.views.View{
 # game: Game
 - startView: StartView
 - playView: PlayView
-- ResultView: ResultView
+- resumeView: ResumeView
 + View(Game)
 + interact(): void
 }
 tictactoe.views.View *-down-> tictactoe.models.Game
 tictactoe.views.View *-down-> tictactoe.views.StartView
 tictactoe.views.View *-down-> tictactoe.views.PlayView
-tictactoe.views.View *-down-> tictactoe.views.ResultView
+tictactoe.views.View *-down-> tictactoe.views.ResumeView
 
 ....
 
@@ -252,7 +259,8 @@ class  tictactoe.models.Game{
 + getTokenPlayerFromTurn(int): Player
 + changeTurn(): void
 + isTicTacToe(): boolean
-+ getOtherValueFromTurn(): int
++ getValueFromTurn(): int
++ newGame(): void
 }
 tictactoe.models.Game *-down-> tictactoe.models.Board
 tictactoe.models.Game *-down-> tictactoe.models.Player
@@ -299,7 +307,8 @@ class  tictactoe.models.Turn{
 + Turn(Player[])
 ~ change(): void
 ~ getPlayer(): Player
-~ getOtherValue(): int
+~ getValue(): int
+- getOtherValue(): int
 ~ getOtherPlayer(): Player
 }
 tictactoe.models.Turn *-down-> tictactoe.models.Player
@@ -361,6 +370,18 @@ class  utils.WithConsoleView{
 # WithConsoleView()
 }
 utils.WithConsoleView *-down-> utils.Console
+
+class  mastermind.utils.YesNoDialog{
+- {static} AFIRMATIVE: char
+- {static} NEGATIVE: char
+- {static} QUESTION: String
+- {static} MESSAGE: String
++ YesNoDialog()
++ read(String): boolean
+- {static} isAfirmative(char): boolean
+- {static} isNegative(char): boolean
+}
+mastermind.utils.WithConsoleView <|-down- mastermind.utils.YesNoDialog
 
 ....
 

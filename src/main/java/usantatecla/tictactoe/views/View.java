@@ -9,21 +9,24 @@ public class View {
 
 	private PlayView playView;
 
-	private ResultView resultView;
+	private ResumeView resumeView;
 
 	public View(Game game) {
 		this.game = game;
 		this.startView = new StartView(this.game);
 		this.playView = new PlayView(this.game);
-		this.resultView = new ResultView(this.game);
+		this.resumeView = new ResumeView(this.game);
 	}
 
 	public void interact() {
-		this.startView.interact();
-		boolean finished;
+		boolean newGame;
 		do {
-			finished = this.playView.interact();
-		} while (!finished);
-		this.resultView.interact();
+			this.startView.interact();
+			boolean finished;
+			do {
+				finished = this.playView.interact();
+			} while (!finished);
+			newGame = this.resumeView.interact();
+		} while (newGame);
 	}
 }
