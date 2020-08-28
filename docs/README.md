@@ -126,7 +126,7 @@
 <h3 id="paquete-tictactoe-views-console">Paquete <em>tictactoe.views.console</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/tictactoeViewsConsoleVersion3.svg" alt="tictactoeViewsConsoleVersion3" width="800" height="800">
+<img src="build/docs/asciidoc/images/tictactoeViewsConsoleVersion3.svg" alt="tictactoeViewsConsoleVersion3" width="800" height="600">
 </div>
 </div>
 </div>

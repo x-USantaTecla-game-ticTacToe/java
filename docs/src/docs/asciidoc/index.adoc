@@ -172,7 +172,8 @@ class  tictactoe.views.console.ConsoleView{
 tictactoe.views.View <|-down- tictactoe.views.console.ConsoleView
 tictactoe.views.console.ConsoleView *-down-> tictactoe.views.console.StartView
 tictactoe.views.console.ConsoleView *-down-> tictactoe.views.console.PlayView
-tictactoe.views.console.ConsoleView *-down-> tictactoe.views.console.ResultView
+tictactoe.views.console.ConsoleView *-down-> tictactoe.views.console.ResumeView
+tictactoe.views.console.ConsoleView ..> utils.YesNoDialog
 
 class  tictactoe.views.console.CoordinateView{
 ~ read(String): Coordinate
@@ -546,6 +547,18 @@ class  utils.WithConsoleView{
 # WithConsoleView()
 }
 utils.WithConsoleView *-down-> utils.Console
+
+class  mastermind.utils.YesNoDialog{
+- {static} AFIRMATIVE: char
+- {static} NEGATIVE: char
+- {static} QUESTION: String
+- {static} MESSAGE: String
++ YesNoDialog()
++ read(String): boolean
+- {static} isNegative(char): boolean
+- {static} isAfirmative(char): boolean
+}
+mastermind.utils.WithConsoleView <|-down- mastermind.utils.YesNoDialog
 
 ....
 
