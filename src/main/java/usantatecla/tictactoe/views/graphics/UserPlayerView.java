@@ -37,7 +37,7 @@ class UserPlayerView extends PlayerView {
             System.out.println("");
             if (this.coordinatePutView.getCoordinate() != null) {
                 coordinate = this.coordinatePutView.getCoordinate();
-                error = getErrorsPutCoordinate(coordinate);
+                error = getPutCoordinateError(coordinate);
                 if (error != null) {
                     JOptionPane.showMessageDialog(null, ErrorView.MESSAGES[error.ordinal() - 1], MessageView.ERROR.getMessage(),
                             JOptionPane.WARNING_MESSAGE);
@@ -56,13 +56,13 @@ class UserPlayerView extends PlayerView {
             System.out.println("");
             if (this.coordinateMoveView.getCoordinates() != null) {
                 coordinates = this.coordinateMoveView.getCoordinates();
-                error = getErrorsMoveOriginCoordinate(coordinates[0]);
+                error = getMoveOriginCoordinateError(coordinates[0]);
                 if (error != null) {
                     JOptionPane.showMessageDialog(null, ErrorView.MESSAGES[error.ordinal() - 1], MessageView.ERROR.getMessage(),
                             JOptionPane.WARNING_MESSAGE);
                     this.coordinateMoveView.resetCoordinates();
                 }
-                error = getErrorsMoveTargetCoordinate(coordinates[0], coordinates[1]);
+                error = getMoveTargetCoordinateError(coordinates[0], coordinates[1]);
                 if (error != null) {
                     JOptionPane.showMessageDialog(null, ErrorView.MESSAGES[error.ordinal() - 1], MessageView.ERROR.getMessage(),
                             JOptionPane.WARNING_MESSAGE);
