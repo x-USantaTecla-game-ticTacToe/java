@@ -149,12 +149,12 @@ class tictactoe.views.ResultView{
 tictactoe.views.ResultView ..> tictactoe.views.TokenView
 tictactoe.views.ResultView ..> tictactoe.views.MessageView
 
-class  mastermind.views.ResumeView{
+class  tictactoe.views.ResumeView{
 ~ ResumeView()
 ~ interact(Game): boolean
 }
-mastermind.views.ResumeView ..> mastermind.models.Game
-mastermind.views.ResumeView ..> mastermind.views.Message
+tictactoe.views.ResumeView ..> tictactoe.models.Game
+tictactoe.views.ResumeView ..> tictactoe.views.Message
 
 class tictactoe.views.StartView{
 ~ game: Game
