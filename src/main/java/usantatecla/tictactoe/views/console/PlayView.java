@@ -25,11 +25,12 @@ class PlayView {
             Coordinate[] coordinates = playerView.readCoordinatesToMove();
             this.playController.moveTokenPlayerFromTurn(coordinates[0], coordinates[1]);
         }
-        this.playController.changeTurn();
-        boolean isTicTacToe = this.playController.isTicTacToe();
-        if (isTicTacToe) {
-            new BoardView(this.playController).write();
+        new BoardView(this.playController).write();
+        if (this.playController.isTicTacToe()) {
+            new ResultView().writeln(this.playController.getValueFromTurn());
+            return true;
         }
-        return isTicTacToe;
+        this.playController.changeTurn();
+        return false;
     }
 }

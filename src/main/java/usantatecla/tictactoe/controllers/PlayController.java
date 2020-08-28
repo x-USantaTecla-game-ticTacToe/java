@@ -67,6 +67,10 @@ public class PlayController extends Controller {
 		return Coordinate.DIMENSION;
 	}
 
+	public int getValueFromTurn() {
+        return this.game.getValueFromTurn();
+    }
+
 	public boolean isTicTacToe() {
 		return this.game.isTicTacToe();
 	}

@@ -81,13 +81,13 @@ tictactoe.views.graphics .down.> javax.swing
 
 class  tictactoe.ConsoleTicTacToe{
 + {static} main(String[]): void
-# createView(StartController, PlayController, ResultController): View
+# createView(StartController, PlayController, ResumeController): View
 }
 tictactoe.TicTacToe <|-down- tictactoe.ConsoleTicTacToe
 
 class  tictactoe.GraphicsTicTacToe{
 + {static} main(String[]): void
-# createView(StartController, PlayController, ResultController): View
+# createView(StartController, PlayController, ResumeController): View
 }
 tictactoe.TicTacToe <|-down- tictactoe.GraphicsTicTacToe
 
@@ -95,17 +95,17 @@ class  tictactoe.TicTacToe{
 - game: Game
 - startController: StartController
 - playController: PlayController
-- resultController: ResultController
+- resumeController: ResumeController
 - view: View
 # TicTacToe()
-# {abstract} createView(StartController, PlayController, ResultController): View
+# {abstract} createView(StartController, PlayController, ResumeController): View
 # play(): void
 }
 tictactoe.TicTacToe --> tictactoe.views.View
 tictactoe.TicTacToe --> tictactoe.models.Game
 tictactoe.TicTacToe --> tictactoe.controllers.StartController
 tictactoe.TicTacToe --> tictactoe.controllers.PlayController
-tictactoe.TicTacToe --> tictactoe.controllers.ResultController
+tictactoe.TicTacToe --> tictactoe.controllers.ResumeController
 
 ....
 
@@ -132,6 +132,7 @@ enum  tictactoe.views.MessageView{
 +	READ_ROW: MessageView
 +	READ_COLUMN: MessageView
 +	ERROR: MessageView
++ RESUME: MessageView
 - message: String
 - MessageView(String)
 + getMessage(): String
@@ -151,16 +152,16 @@ tictactoe.views.PlayerView ..> tictactoe.controllers.PlayController
 class  tictactoe.views.View{
 # startController: StartController
 # playController: PlayController
-# resultController: ResultController
-+ View(StartController, PlayController, ResultController)
+# resumeController: ResumeController
++ View(StartController, PlayController, ResumeController)
 + interact(): void
 # {abstract} start(): void
 # {abstract} play(): boolean
-# {abstract} result(): void
+# {abstract} isNewGame(): boolean
 }
 tictactoe.views.View *-down-> tictactoe.controllers.StartController
 tictactoe.views.View *-down-> tictactoe.controllers.PlayController
-tictactoe.views.View *-down-> tictactoe.controllers.ResultController
+tictactoe.views.View *-down-> tictactoe.controllers.ResumeController
 
 ....
 
@@ -183,16 +184,17 @@ tictactoe.views.console.BoardView ..> tictactoe.controllers.PlayController
 class  tictactoe.views.console.ConsoleView{
 - startView: StartView
 - playView: PlayView
-- resultView: ResultView
-+ ConsoleView(StartController, PlayController, ResultController)
+- resumeView: ResumeView
++ ConsoleView(StartController, PlayController, ResumeController)
 # start(): void
 # play(): boolean
-# result(): void
+# isNewGame(): boolean
 }
 tictactoe.views.View <|-down- tictactoe.views.console.ConsoleView
 tictactoe.views.console.ConsoleView *-down-> tictactoe.views.console.StartView
 tictactoe.views.console.ConsoleView *-down-> tictactoe.views.console.PlayView
-tictactoe.views.console.ConsoleView *-down-> tictactoe.views.console.ResultView
+tictactoe.views.console.ConsoleView *-down-> tictactoe.views.console.ResumeView
+tictactoe.views.console.ConsoleView ..> utils.YesNoDialog
 
 class  tictactoe.views.console.CoordinateView{
 ~ playController: PlayController
@@ -223,13 +225,19 @@ class  tictactoe.views.console.PlayView{
 tictactoe.views.console.PlayView ..> tictactoe.views.console.BoardView
 tictactoe.views.console.PlayView ..> tictactoe.views.PlayerView
 tictactoe.views.console.PlayView ..> tictactoe.controllers.PlayController
+tictactoe.views.console.PlayView ..> tictactoe.views.console.ResultView
 
 class tictactoe.views.console.ResultView{
-~ resultController: ResultController
-~ ResultView(ResultController)
-~ interact(): void
+~ writeln(int): void
 }
-tictactoe.views.console.ResultView..> tictactoe.controllers.ResultController
+utils.WithConsoleView <|-down- tictactoe.views.console.ResultView
+
+class  tictactoe.views.console.ResumeView{
+- resumeController: ResumeController
+~ ResumeView(ResumeController)
+~ interact(): boolean
+}
+tictactoe.views.console.ResumeView ..> tictactoe.controllers.ResumeController
 
 class tictactoe.views.console.StartView{
 ~ startController: StartController
@@ -345,17 +353,17 @@ class  tictactoe.views.graphics.GameView{
 - {static} GAME_OVER: String
 - startController: StartController
 - playController: PlayController
-- resultController: ResultController
+- resumeController: ResumeController
 - choosePlayersView: ChoosePlayersView
-~ GameView(StartController, PlayController, ResultController)
+~ GameView(StartController, PlayController, ResumeController)
 ~ start(): void
 ~ play(): boolean
-~ result(): void
+- result(): void
 }
 javax.swing.JFrame <|-down- tictactoe.views.graphics.GameView
 tictactoe.views.graphics.GameView ..> tictactoe.controllers.StartController
 tictactoe.views.graphics.GameView ..> tictactoe.controllers.PlayController
-tictactoe.views.graphics.GameView ..> tictactoe.controllers.ResultController
+tictactoe.views.graphics.GameView ..> tictactoe.controllers.ResumeController
 tictactoe.views.graphics.GameView ..> tictactoe.views.graphics.ChoosePlayersView
 tictactoe.views.graphics.GameView ..> tictactoe.views.PlayerView
 tictactoe.views.graphics.GameView ..> tictactoe.views.graphics.BoardView
@@ -363,13 +371,14 @@ tictactoe.views.graphics.GameView ..> tictactoe.views.graphics.Constraints
 
 class  tictactoe.views.graphics.GraphicsView{
 - gameView: GameView
-+ GraphicsView(StartController, PlayController, ResultController)
++ GraphicsView(StartController, PlayController, ResumeController)
 # start(): void
 # play(): boolean
-# result(): void
+# isNewGame(): boolean
 }
 tictactoe.views.View <|-down- tictactoe.views.graphics.GraphicsView
 tictactoe.views.graphics.GraphicsView *-down-> tictactoe.views.graphics.GameView
+tictactoe.views.graphics.GraphicsView ..> tictactoe.views.graphics.ResumeDialog
 
 class  tictactoe.views.graphics.MachinePlayerView{
 ~ MachinePlayerView(PlayController)
@@ -377,6 +386,12 @@ class  tictactoe.views.graphics.MachinePlayerView{
 + readCoordinatesToMove(): Coordinate[]
 }
 tictactoe.views.PlayerView <|-down- tictactoe.views.graphics.MachinePlayerView
+
+class  mastermind.views.graphics.ResumeDialog{
+- resume: boolean
+~ ResumeDialog()
+~ isResumed(): boolean
+}
 
 class  tictactoe.views.graphics.UserPlayerView{
 ~ {static} ENTER_COORDINATE_TO_PUT: String
@@ -452,7 +467,8 @@ class  tictactoe.models.Game{
 + getToken(Coordinate): Token
 + changeTurn(): void
 + isTicTacToe(): boolean
-+ getOtherValueFromTurn(): int
++ getValueFromTurn(): int
++ newGame(): void
 }
 tictactoe.models.Game *-down-> tictactoe.models.Board
 tictactoe.models.Game *-down-> tictactoe.models.Player
@@ -482,7 +498,8 @@ class  tictactoe.models.Turn{
 + Turn(Player[])
 ~ change(): void
 ~ getPlayer(): Player
-~ getOtherValue(): int
++ getValue(): int
+- getOtherValue(): int
 ~ getOtherPlayer(): Player
 }
 tictactoe.models.Turn *-down-> tictactoe.models.Player
@@ -516,16 +533,17 @@ class  tictactoe.controllers.PlayController{
 + getTokenChar(Coordinate): char
 + isEmptyToken(Coordinate): boolean
 + getCoordinateDimension(): int
++ getValueFromTurn(): int
 + isTicTacToe(): boolean
 }
 tictactoe.controllers.Controller <|-down- tictactoe.controllers.PlayController
 tictactoe.controllers.PlayController ..> tictactoe.models.Coordinate
 
-class  tictactoe.controllers.ResultController{
-+ ResultController(Game)
-+ getOtherValueFromTurn(): int
+class  tictactoe.controllers.ResumeController{
++ ResumeController(Game)
++ newGame(): void
 }
-tictactoe.controllers.Controller <|-down- tictactoe.controllers.ResultController
+tictactoe.controllers.Controller <|-down- tictactoe.controllers.ResumeController
 
 class  tictactoe.controllers.StartController{
 + StartController(Game)
@@ -590,6 +608,18 @@ class  utils.WithConsoleView{
 # WithConsoleView()
 }
 utils.WithConsoleView *-down-> utils.Console
+
+class  mastermind.utils.YesNoDialog{
+- {static} AFIRMATIVE: char
+- {static} NEGATIVE: char
+- {static} QUESTION: String
+- {static} MESSAGE: String
++ YesNoDialog()
++ read(String): boolean
+- {static} isNegative(char): boolean
+- {static} isAfirmative(char): boolean
+}
+mastermind.utils.WithConsoleView <|-down- mastermind.utils.YesNoDialog
 
 ....
 

@@ -6,7 +6,6 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import usantatecla.tictactoe.controllers.PlayController;
-import usantatecla.tictactoe.controllers.ResultController;
 import usantatecla.tictactoe.controllers.StartController;
 import usantatecla.tictactoe.models.Coordinate;
 import usantatecla.tictactoe.types.PlayerType;
@@ -23,13 +22,10 @@ class GameView extends JFrame {
 
 	private PlayController playController;
 
-	private ResultController resultController;
-
-	GameView(StartController startController, PlayController playController, ResultController resultController) {
+	GameView(StartController startController, PlayController playController) {
 		super(MessageView.START_GAME.getMessage());
 		this.startController = startController;
 		this.playController = playController;
-		this.resultController = resultController;
 		this.getContentPane().setLayout(new GridBagLayout());
 		this.setSize(400, 500);
 		this.setLocationRelativeTo(null);
@@ -68,7 +64,6 @@ class GameView extends JFrame {
 			Coordinate[] coordinates = playerView.readCoordinatesToMove();
 			this.playController.moveTokenPlayerFromTurn(coordinates[0], coordinates[1]);
 		}
-		this.playController.changeTurn();
 		if (this.playController.isTicTacToe()) {
 			Container container = this.getContentPane();
 			container.removeAll();
@@ -76,12 +71,22 @@ class GameView extends JFrame {
 			container.revalidate();
 			container.repaint();
 		}
-		return this.playController.isTicTacToe();
+		if (this.playController.isTicTacToe()) {
+			this.result();
+			return true;
+		}
+		this.playController.changeTurn();
+		return false;
 	}
 
-	void result() {
-		int otherValue = this.resultController.getOtherValueFromTurn();
-		String message = Token.values()[otherValue].getChar() + " "
+	private void result() {
+		Container container = this.getContentPane();
+		container.removeAll();
+		container.add(new BoardView(playController), new Constraints(0, 0, 1, 1));
+		container.revalidate();
+		container.repaint();
+		int value = this.playController.getValueFromTurn();
+		String message = Token.values()[value].getChar() + " "
 				+ MessageView.PLAYER_WIN.getMessage();
 		JOptionPane.showMessageDialog(null, message, GameView.GAME_OVER, JOptionPane.WARNING_MESSAGE);
 	}
