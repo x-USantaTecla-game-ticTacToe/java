@@ -1,6 +1,7 @@
 package usantatecla.tictactoe.views.console;
 
 import usantatecla.tictactoe.controllers.Logic;
+import usantatecla.tictactoe.models.Coordinate;
 import usantatecla.tictactoe.types.PlayerType;
 import usantatecla.tictactoe.views.PlayerView;
 
@@ -18,17 +19,18 @@ class PlayView {
                 ? new UserPlayerView(this.logic)
                 : new MachinePlayerView(this.logic);
         if (!this.logic.isBoardComplete()) {
-            int[] coordinate = playerView.readCoordinateToPut();
-            this.logic.putTokenPlayerFromTurn(coordinate[0], coordinate[1]);
+            Coordinate coordinate = playerView.readCoordinateToPut();
+            this.logic.putTokenPlayerFromTurn(coordinate);
         } else {
-            int[][] coordinates = playerView.readCoordinatesToMove();
-            this.logic.moveTokenPlayerFromTurn(coordinates[0][0], coordinates[0][1], coordinates[1][0], coordinates[1][1]);
+            Coordinate[] coordinates = playerView.readCoordinatesToMove();
+            this.logic.moveTokenPlayerFromTurn(coordinates[0], coordinates[1]);
+        }
+        new BoardView(this.logic).write();
+        if (this.logic.isTicTacToe()) {
+            new ResultView().writeln(this.logic.getValueFromTurn());
+            return true;
         }
         this.logic.changeTurn();
-        boolean isTicTacToe = this.logic.isTicTacToe();
-        if (isTicTacToe) {
-            new BoardView(this.logic).write();
-        }
-        return isTicTacToe;
+        return false;
     }
 }

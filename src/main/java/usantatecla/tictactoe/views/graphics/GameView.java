@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import usantatecla.tictactoe.controllers.Logic;
+import usantatecla.tictactoe.models.Coordinate;
 import usantatecla.tictactoe.types.PlayerType;
 import usantatecla.tictactoe.types.Token;
 import usantatecla.tictactoe.views.MessageView;
@@ -49,18 +50,16 @@ class GameView extends JFrame {
 					? new UserPlayerView(this.logic, false, this.getContentPane())
 					: new MachinePlayerView(this.logic);
 			this.setVisible(true);
-			int[] coordinate = playerView.readCoordinateToPut();
-			this.logic.putTokenPlayerFromTurn(coordinate[0], coordinate[1]);
+			Coordinate coordinate = playerView.readCoordinateToPut();
+			this.logic.putTokenPlayerFromTurn(coordinate);
 		} else {
 			PlayerView playerView = this.logic.getTypeOfTokenPlayerFromTurn() == PlayerType.USER_PLAYER
 					? new UserPlayerView(this.logic, true, this.getContentPane())
 					: new MachinePlayerView(this.logic);
 			this.setVisible(true);
-			int[][] coordinates = playerView.readCoordinatesToMove();
-			this.logic.moveTokenPlayerFromTurn(coordinates[0][0], coordinates[0][1], coordinates[1][0],
-					coordinates[1][1]);
+			Coordinate[] coordinates = playerView.readCoordinatesToMove();
+			this.logic.moveTokenPlayerFromTurn(coordinates[0], coordinates[1]);
 		}
-		this.logic.changeTurn();
 		if (this.logic.isTicTacToe()) {
 			Container container = this.getContentPane();
 			container.removeAll();
@@ -68,12 +67,22 @@ class GameView extends JFrame {
 			container.revalidate();
 			container.repaint();
 		}
-		return this.logic.isTicTacToe();
+		if (this.logic.isTicTacToe()) {
+			this.result();
+			return true;
+		}
+		this.logic.changeTurn();
+		return false;
 	}
 
-	void result() {
-		int otherValue = this.logic.getOtherValueFromTurn();
-		String message = Token.values()[otherValue].getChar() + " "
+	private void result() {
+		Container container = this.getContentPane();
+		container.removeAll();
+		container.add(new BoardView(logic), new Constraints(0, 0, 1, 1));
+		container.revalidate();
+		container.repaint();
+		int value = this.logic.getValueFromTurn();
+		String message = Token.values()[value].getChar() + " "
 				+ MessageView.PLAYER_WIN.getMessage();
 		JOptionPane.showMessageDialog(null, message, GameView.GAME_OVER, JOptionPane.WARNING_MESSAGE);
 	}

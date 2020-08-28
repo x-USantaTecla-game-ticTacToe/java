@@ -1,6 +1,7 @@
 package usantatecla.tictactoe.views.graphics;
 
 import usantatecla.tictactoe.controllers.Logic;
+import usantatecla.tictactoe.models.Coordinate;
 import usantatecla.tictactoe.types.Error;
 import usantatecla.tictactoe.views.PlayerView;
 
@@ -11,27 +12,27 @@ class MachinePlayerView extends PlayerView {
 	}
 
 	@Override
-	public int[] readCoordinateToPut() {
-		int[] coordinate = new int[2];
+	public Coordinate readCoordinateToPut() {
+		Coordinate coordinate;
 		Error error;
 		do {
 			coordinate = this.logic.generateRandomCoordinate();
-			error = getErrorsPutCoordinate(coordinate[0], coordinate[1]);
+			error = getPutCoordinateError(coordinate);
 		} while (error != null);
 		return coordinate;
 	}
 
 	@Override
-	public int[][] readCoordinatesToMove() {
-		int[][] coordinates = new int[2][2];
+	public Coordinate[] readCoordinatesToMove() {
+		Coordinate[] coordinates = new Coordinate[2];
 		Error error;
 		do {
 			coordinates[0] = this.logic.generateRandomCoordinate();
-			error = getErrorsMoveOriginCoordinate(coordinates[0][0], coordinates[0][1]);
+			error = getMoveOriginCoordinateError(coordinates[0]);
 		} while (error != null);
 		do {
 			coordinates[1] = this.logic.generateRandomCoordinate();
-			error = getErrorsMoveTargetCoordinate(coordinates[0][0], coordinates[0][1], coordinates[1][0], coordinates[1][1]);
+			error = getMoveTargetCoordinateError(coordinates[0], coordinates[1]);
 		} while (error != null);
 		return coordinates;
 	}

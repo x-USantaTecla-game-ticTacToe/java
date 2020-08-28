@@ -5,6 +5,7 @@ import javax.swing.JOptionPane;
 import java.awt.Container;
 
 import usantatecla.tictactoe.controllers.Logic;
+import usantatecla.tictactoe.models.Coordinate;
 import usantatecla.tictactoe.types.Error;
 import usantatecla.tictactoe.views.ErrorView;
 import usantatecla.tictactoe.views.MessageView;
@@ -29,14 +30,14 @@ class UserPlayerView extends PlayerView {
     }
 
     @Override
-    public int[] readCoordinateToPut() {
-        int[] coordinate = new int[2];
+    public Coordinate readCoordinateToPut() {
+        Coordinate coordinate = new Coordinate();
         Error error;
         do {
             System.out.println("");
             if (this.coordinatePutView.getCoordinate() != null) {
                 coordinate = this.coordinatePutView.getCoordinate();
-                error = getErrorsPutCoordinate(coordinate[0], coordinate[1]);
+                error = getPutCoordinateError(coordinate);
                 if (error != null) {
                     JOptionPane.showMessageDialog(null, ErrorView.MESSAGES[error.ordinal() - 1],
                             MessageView.ERROR.getMessage(), JOptionPane.WARNING_MESSAGE);
@@ -48,21 +49,20 @@ class UserPlayerView extends PlayerView {
     }
 
     @Override
-    public int[][] readCoordinatesToMove() {
-        int[][] coordinates = new int[2][2];
+    public Coordinate[] readCoordinatesToMove() {
+        Coordinate[] coordinates = new Coordinate[2];
         Error error;
         do {
             System.out.println("");
             if (this.coordinateMoveView.getCoordinates() != null) {
                 coordinates = this.coordinateMoveView.getCoordinates();
-                error = getErrorsMoveOriginCoordinate(coordinates[0][0], coordinates[0][1]);
+                error = getMoveOriginCoordinateError(coordinates[0]);
                 if (error != null) {
                     JOptionPane.showMessageDialog(null, ErrorView.MESSAGES[error.ordinal() - 1],
                             MessageView.ERROR.getMessage(), JOptionPane.WARNING_MESSAGE);
                     this.coordinateMoveView.resetCoordinates();
                 }
-                error = getErrorsMoveTargetCoordinate(coordinates[0][0], coordinates[0][1], coordinates[1][0],
-                        coordinates[1][1]);
+                error = getMoveTargetCoordinateError(coordinates[0], coordinates[1]);
                 if (error != null) {
                     JOptionPane.showMessageDialog(null, ErrorView.MESSAGES[error.ordinal() - 1],
                             MessageView.ERROR.getMessage(), JOptionPane.WARNING_MESSAGE);

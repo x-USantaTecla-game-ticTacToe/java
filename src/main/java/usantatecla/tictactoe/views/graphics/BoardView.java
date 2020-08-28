@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import usantatecla.tictactoe.controllers.Logic;
+import usantatecla.tictactoe.models.Coordinate;
 import usantatecla.tictactoe.views.MessageView;
 
 @SuppressWarnings("serial")
@@ -25,19 +26,19 @@ class BoardView extends JPanel {
         String boardRowToPresent = "";
         boardRowToPresent += MessageView.VERTICAL_LINE_LEFT.getMessage();
         for (int j = 0; j < logic.getCoordinateDimension(); j++) {
-            boardRowToPresent += this.getSquareBoardText(logic, row, j);
+            boardRowToPresent += this.getSquareBoardText(logic, new Coordinate(row, j));
         }
         JLabel label = new JLabel(boardRowToPresent);
         label.setHorizontalAlignment(SwingConstants.CENTER);
         this.add(label, new Constraints(0, row + 1, 10, 1));
 }
 
-	private String getSquareBoardText(Logic logic, int row, int column) {
+	private String getSquareBoardText(Logic logic, Coordinate coordinate) {
         String squareBoardToPresent = "";
-		if (logic.isEmptyToken(row, column)) {
+		if (logic.isEmptyToken(coordinate)) {
             squareBoardToPresent += MessageView.EMPTY.getMessage();
         } else {
-            squareBoardToPresent += logic.getTokenChar(row, column);
+            squareBoardToPresent += logic.getTokenChar(coordinate);
         }
         squareBoardToPresent += MessageView.VERTICAL_LINE_CENTERED.getMessage();
         return squareBoardToPresent;

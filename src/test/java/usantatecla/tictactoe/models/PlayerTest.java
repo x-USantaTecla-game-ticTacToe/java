@@ -28,43 +28,43 @@ public class PlayerTest {
     @Test
     public void testGivenNewPlayerWhenPutNewTokenThenReturnErrorNotOwner() {
         this.board.put(this.coordinate00, Token.TOKEN_O);
-        assertEquals(Error.NOT_OWNER, this.player.getErrorsPutCoordinate(this.coordinate00));
+        assertEquals(Error.NOT_OWNER, this.player.getPutCoordinateError(this.coordinate00));
     }
 
     @Test
     public void testGivenNewPlayerWhenPutNewTokenThenNotReturnErrorNull() {
         this.board.put(this.coordinate00, Token.TOKEN_O);
-        assertTrue(this.player.getErrorsPutCoordinate(this.coordinate01) == null);
+        assertTrue(this.player.getPutCoordinateError(this.coordinate01) == null);
     }
 
     @Test
     public void testGivenNewPlayerWhenRemoveTokenThenReturnErrorNotOwner() {
         this.board.put(this.coordinate00, Token.TOKEN_O);
-        assertEquals(Error.NOT_OWNER, this.player.getErrorsMoveOriginCoordinate(this.coordinate01));
+        assertEquals(Error.NOT_OWNER, this.player.getMoveOriginCoordinateError(this.coordinate01));
     }
 
     @Test
     public void testGivenNewPlayerWhenRemoveTokenThenNotReturnErrorNull() {
         this.board.put(this.coordinate00, Token.TOKEN_O);
-        assertTrue(this.player.getErrorsMoveOriginCoordinate(this.coordinate00) == null);
+        assertTrue(this.player.getMoveOriginCoordinateError(this.coordinate00) == null);
     }
 
     @Test
     public void testGivenNewPlayerWhenMoveTokenThenReturnErrorSameCoordinates() {
         this.board.put(this.coordinate00, Token.TOKEN_O);
-        assertEquals(Error.SAME_COORDINATES, this.player.getErrorsMoveTargetCoordinate(this.coordinate00, this.coordinate00));
+        assertEquals(Error.SAME_COORDINATES, this.player.getMoveTargetCoordinateError(this.coordinate00, this.coordinate00));
     }
 
     @Test
     public void testGivenNewPlayerWhenMoveTokenThenReturnErrorNotEmpty() {
         this.board.put(this.coordinate00, Token.TOKEN_O);
         this.board.put(this.coordinate01, Token.TOKEN_O);
-        assertEquals(Error.NOT_EMPTY, this.player.getErrorsMoveTargetCoordinate(this.coordinate00, this.coordinate01));
+        assertEquals(Error.NOT_EMPTY, this.player.getMoveTargetCoordinateError(this.coordinate00, this.coordinate01));
     }
 
     @Test
     public void testGivenNewPlayerWhenMoveTokenThenNotReturnErrorNull() {
         this.board.put(this.coordinate00, Token.TOKEN_O);
-        assertTrue(this.player.getErrorsMoveTargetCoordinate(this.coordinate00, this.coordinate01) == null);
+        assertTrue(this.player.getMoveTargetCoordinateError(this.coordinate00, this.coordinate01) == null);
     }
 }

@@ -1,5 +1,6 @@
 package usantatecla.tictactoe.controllers;
 
+import usantatecla.tictactoe.models.Coordinate;
 import usantatecla.tictactoe.models.Game;
 import usantatecla.tictactoe.types.Error;
 import usantatecla.tictactoe.types.PlayerType;
@@ -12,13 +13,13 @@ public class Logic {
 
 	private PlayController playController;
 
-	private ResultController resultController;
+	private ResumeController resumeController;
 
 	public Logic() {
 		this.game = new Game();
 		this.startController = new StartController(this.game);
 		this.playController = new PlayController(this.game);
-		this.resultController = new ResultController(this.game);
+		this.resumeController = new ResumeController(this.game);
     }
 
     public void createPlayers(int numberOfUsers) {
@@ -33,44 +34,44 @@ public class Logic {
 		return this.playController.getTypeOfTokenPlayerFromTurn();
 	}
 
-	public Error getErrorsPutCoordinate(int row, int column) {
-		return this.playController.getErrorsPutCoordinate(row, column);
+	public Error getPutCoordinateError(Coordinate coordinate) {
+		return this.playController.getPutCoordinateError(coordinate);
 	}
 
-	public Error getErrorsMoveOriginCoordinate(int originRow, int originColumn) {
-		return this.playController.getErrorsMoveOriginCoordinate(originRow, originColumn);
+	public Error getMoveOriginCoordinateError(Coordinate coordinate) {
+		return this.playController.getMoveOriginCoordinateError(coordinate);
 	}
 
-	public Error getErrorsMoveTargetCoordinate(int originRow, int originColumn, int targetRow, int targetColumn) {
-		return this.playController.getErrorsMoveTargetCoordinate(originRow, originColumn, targetRow, targetColumn);
+	public Error getMoveTargetCoordinateError(Coordinate originCoordinate, Coordinate targetCoordinate) {
+		return this.playController.getMoveTargetCoordinateError(originCoordinate, targetCoordinate);
 	}
 
-	public boolean isCoordinateValid(int row, int column) {
-		return this.playController.isCoordinateValid(row, column);
+	public boolean isCoordinateValid(Coordinate coordinate) {
+		return this.playController.isCoordinateValid(coordinate);
 	}
 
-	public int[] generateRandomCoordinate() {
+	public Coordinate generateRandomCoordinate() {
 		return this.playController.generateRandomCoordinate();
 	}
 
-	public void putTokenPlayerFromTurn(int originRow, int originColumn) {
-		this.playController.putTokenPlayerFromTurn(originRow, originColumn);
+	public void putTokenPlayerFromTurn(Coordinate coordinate) {
+		this.playController.putTokenPlayerFromTurn(coordinate);
 	}
 
-	public void moveTokenPlayerFromTurn(int originRow, int originColumn, int targetRow, int targetColumn) {
-		this.playController.moveTokenPlayerFromTurn(originRow, originColumn, targetRow, targetColumn);
+	public void moveTokenPlayerFromTurn(Coordinate originCoordinate, Coordinate targetCoordinate) {
+		this.playController.moveTokenPlayerFromTurn(originCoordinate, targetCoordinate);
 	}
 
 	public void changeTurn() {
 		this.playController.changeTurn();
 	}
 
-	public char getTokenChar(int row, int column) {
-		return this.playController.getTokenChar(row, column);
+	public char getTokenChar(Coordinate coordinate) {
+		return this.playController.getTokenChar(coordinate);
 	}
 
-	public boolean isEmptyToken(int row, int column) {
-		return this.playController.isEmptyToken(row, column);
+	public boolean isEmptyToken(Coordinate coordinate) {
+		return this.playController.isEmptyToken(coordinate);
 	}
 
 	public int getCoordinateDimension() {
@@ -81,8 +82,12 @@ public class Logic {
 		return this.playController.isTicTacToe();
     }
     
-    public int getOtherValueFromTurn() {
-		return this.resultController.getOtherValueFromTurn();
+    public int getValueFromTurn() {
+		return this.playController.getValueFromTurn();
+	}
+
+	public void newGame() {
+		this.resumeController.newGame();
 	}
     
 }

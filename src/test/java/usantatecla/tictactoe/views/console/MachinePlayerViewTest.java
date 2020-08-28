@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNotNull;
 import org.junit.Test;
 
 import usantatecla.tictactoe.controllers.Logic;
+import usantatecla.tictactoe.models.Coordinate;
 
 public class MachinePlayerViewTest {
 
@@ -20,17 +21,17 @@ public class MachinePlayerViewTest {
 
     @Test
     public void testGivenNewCoordinateViewWhenReadCoordinateThenIsCorrect() {
-        int[] coordinate = this.machinePlayerView.readCoordinateToPut();
+        Coordinate coordinate = this.machinePlayerView.readCoordinateToPut();
         assertNotNull(coordinate);
     }
 
     @Test
     public void testGivenNewCoordinateViewWhenReadCoordinateThenIsCorrec() {
-        int[] coordinate1 = this.machinePlayerView.readCoordinateToPut();
-        this.logic.putTokenPlayerFromTurn(coordinate1[0], coordinate1[1]);
-        int[] coordinate2 = this.machinePlayerView.readCoordinateToPut();
-        this.logic.putTokenPlayerFromTurn(coordinate2[0], coordinate2[1]);
-        int[][] coordinates = this.machinePlayerView.readCoordinatesToMove();
+        Coordinate coordinate1 = this.machinePlayerView.readCoordinateToPut();
+        this.logic.putTokenPlayerFromTurn(coordinate1);
+        Coordinate coordinate2 = this.machinePlayerView.readCoordinateToPut();
+        this.logic.putTokenPlayerFromTurn(coordinate2);
+        Coordinate[] coordinates = this.machinePlayerView.readCoordinatesToMove();
         assertNotNull(coordinates[0]);
         assertNotNull(coordinates[1]);
     }

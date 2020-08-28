@@ -9,13 +9,13 @@ public class ConsoleView extends View {
 
 	private PlayView playView;
 
-	private ResultView resultView;
+	private ResumeView resumeView;
 
 	public ConsoleView(Logic logic) {
 		super(logic);
 		this.startView = new StartView(this.logic);
 		this.playView = new PlayView(this.logic);
-		this.resultView = new ResultView(this.logic);
+		this.resumeView = new ResumeView(this.logic);
 	}
 
 	@Override
@@ -29,7 +29,7 @@ public class ConsoleView extends View {
 	}
 
 	@Override
-	protected void result() {
-		this.resultView.interact();
+	protected boolean isNewGame() {
+		return this.resumeView.interact();
 	}
 }
