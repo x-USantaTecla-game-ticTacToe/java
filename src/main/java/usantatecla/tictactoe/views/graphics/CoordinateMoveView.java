@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import usantatecla.tictactoe.controllers.PlayController;
+import usantatecla.tictactoe.models.Coordinate;
 import usantatecla.tictactoe.types.Error;
 import usantatecla.tictactoe.views.ErrorView;
 import usantatecla.tictactoe.views.MessageView;
@@ -23,7 +24,7 @@ public class CoordinateMoveView extends CoordinateView {
     private final JTextField textFieldRowToMove;
     private final JTextField textFieldColumnToMove;
 
-    private int[][] coordinates;
+    private Coordinate[] coordinates;
 
     CoordinateMoveView(PlayController playController) {
         super(playController);
@@ -51,20 +52,20 @@ public class CoordinateMoveView extends CoordinateView {
         this.coordinates = null;
     }
 
-    int[][] getCoordinates() {
+    Coordinate[] getCoordinates() {
         return this.coordinates;
     }
 
     public void actionPerformed(final ActionEvent event) {
-        int[] originCoordinate = new int[2];
-        originCoordinate[0] = Integer.parseInt(this.textFieldRow.getText()) - 1;
-        originCoordinate[1] = Integer.parseInt(this.textFieldColumn.getText()) - 1;
-        int[] targetCoordinate = new int[2];
-        targetCoordinate[0] = Integer.parseInt(this.textFieldRowToMove.getText()) - 1;
-        targetCoordinate[1] = Integer.parseInt(this.textFieldColumnToMove.getText()) - 1;
-        if (this.playController.isCoordinateValid(originCoordinate[0], originCoordinate[1])
-                && this.playController.isCoordinateValid(targetCoordinate[0], targetCoordinate[1])) {
-            this.coordinates = new int[2][2];
+        int originCoordinateRow = Integer.parseInt(this.textFieldRow.getText()) - 1;
+        int originCoordinateColumn = Integer.parseInt(this.textFieldColumn.getText()) - 1;
+        Coordinate originCoordinate = new Coordinate(originCoordinateRow, originCoordinateColumn);
+        int targetCoordinateRow = Integer.parseInt(this.textFieldRowToMove.getText()) - 1;
+        int targetCoordinateColumn = Integer.parseInt(this.textFieldColumnToMove.getText()) - 1;
+        Coordinate targetCoordinate = new Coordinate(targetCoordinateRow, targetCoordinateColumn);
+        if (this.playController.isCoordinateValid(originCoordinate)
+                && this.playController.isCoordinateValid(targetCoordinate)) {
+            this.coordinates = new Coordinate[2];
             this.coordinates[0] = originCoordinate;
             this.coordinates[1] = targetCoordinate;
         } else {

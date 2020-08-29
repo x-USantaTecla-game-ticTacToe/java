@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import usantatecla.tictactoe.controllers.PlayController;
+import usantatecla.tictactoe.models.Coordinate;
 import usantatecla.tictactoe.views.MessageView;
 
 @SuppressWarnings("serial")
@@ -25,19 +26,19 @@ class BoardView extends JPanel {
         String boardRowToPresent = "";
         boardRowToPresent += MessageView.VERTICAL_LINE_LEFT.getMessage();
         for (int j = 0; j < playController.getCoordinateDimension(); j++) {
-            boardRowToPresent += this.getSquareBoardText(playController, row, j);
+            boardRowToPresent += this.getSquareBoardText(playController, new Coordinate(row, j));
         }
         JLabel label = new JLabel(boardRowToPresent);
         label.setHorizontalAlignment(SwingConstants.CENTER);
         this.add(label, new Constraints(0, row + 1, 10, 1));
 }
 
-	private String getSquareBoardText(PlayController playController, int row, int column) {
+	private String getSquareBoardText(PlayController playController, Coordinate coordinate) {
         String squareBoardToPresent = "";
-		if (playController.isEmptyToken(row, column)) {
+		if (playController.isEmptyToken(coordinate)) {
             squareBoardToPresent += MessageView.EMPTY.getMessage();
         } else {
-            squareBoardToPresent += playController.getTokenChar(row, column);
+            squareBoardToPresent += playController.getTokenChar(coordinate);
         }
         squareBoardToPresent += MessageView.VERTICAL_LINE_CENTERED.getMessage();
         return squareBoardToPresent;

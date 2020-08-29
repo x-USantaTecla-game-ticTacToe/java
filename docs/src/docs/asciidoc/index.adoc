@@ -124,6 +124,7 @@ enum  tictactoe.views.MessageView{
 +	READ_ROW: MessageView
 +	READ_COLUMN: MessageView
 +	ERROR: MessageView
++ RESUME: MessageView
 - message: String
 - MessageView(String)
 + getMessage(): String
@@ -132,11 +133,11 @@ enum  tictactoe.views.MessageView{
 class  tictactoe.views.PlayerView{
 # playController: PlayController
 + PlayerView(PlayController)
-+ {abstract} readCoordinateToPut(): int[]
-+ {abstract} readCoordinatesToMove(): int[][]
-+ getErrorsPutCoordinate(int, int): Error
-+ getErrorsMoveOriginCoordinate(int, int): Error
-+ getErrorsMoveTargetCoordinate(int, int, int, int): Error
++ {abstract} readCoordinateToPut(): Coordinate
++ {abstract} readCoordinatesToMove(): Coordinate[]
++ getPutCoordinateError(Coordinate): Error
++ getMoveOriginCoordinateError(Coordinate): Error
++ getMoveTargetCoordinateError(Coordinate, Coordinate): Error
 }
 tictactoe.views.PlayerView ..> tictactoe.controllers.PlayController
 
@@ -158,7 +159,7 @@ class  tictactoe.views.console.BoardView{
 ~ BoardView(PlayController)
 ~ write(): void
 - printRowBoard(int): void
-- printSquareValueBoard(int, int): void
+- printSquareValueBoard(Coordinate): void
 }
 utils.WithConsoleView <|-down- tictactoe.views.console.BoardView
 tictactoe.views.console.BoardView ..> tictactoe.controllers.PlayController
@@ -166,22 +167,22 @@ tictactoe.views.console.BoardView ..> tictactoe.controllers.PlayController
 class  tictactoe.views.console.ConsoleView{
 - startView: StartView
 - playView: PlayView
-- resultView: ResultView
+- resumeView: ResumeView
 + ConsoleView()
-# interact(Controller): void
++ interact(Controller): void
 }
 tictactoe.views.View <|-down- tictactoe.views.console.ConsoleView
 tictactoe.views.console.ConsoleView *-down-> tictactoe.views.console.StartView
 tictactoe.views.console.ConsoleView *-down-> tictactoe.views.console.PlayView
-tictactoe.views.console.ConsoleView *-down-> tictactoe.views.console.ResultView
-tictactoe.views.console.ConsoleView ..> tictactoe.controllers.ResultController
+tictactoe.views.console.ConsoleView *-down-> tictactoe.views.console.ResumeView
+tictactoe.views.console.ConsoleView ..> tictactoe.controllers.ResumeController
 tictactoe.views.console.ConsoleView ..> tictactoe.controllers.StartController
 tictactoe.views.console.ConsoleView ..> tictactoe.controllers.PlayController
 
 class  tictactoe.views.console.CoordinateView{
 ~ playController: PlayController
 ~ CoordinateView(PlayController)
-~ read(String): int[]
+~ read(String): Coordinate
 }
 utils.WithConsoleView <|-down- tictactoe.views.console.CoordinateView
 tictactoe.views.console.CoordinateView ..> tictactoe.controllers.PlayController
@@ -194,8 +195,8 @@ tictactoe.views.ErrorView <|-down- tictactoe.views.console.ErrorView
 
 class  tictactoe.views.console.MachinePlayerView{
 ~ MachinePlayerView(PlayController)
-~ readCoordinateToPut(): int[]
-~ readCoordinatesToMove(): int[][]
++ readCoordinateToPut(): Coordinate
++ readCoordinatesToMove(): Coordinate[]
 }
 tictactoe.views.PlayerView <|-down- tictactoe.views.console.MachinePlayerView
 
@@ -204,12 +205,19 @@ class  tictactoe.views.console.PlayView{
 }
 tictactoe.views.console.PlayView ..> tictactoe.views.console.BoardView
 tictactoe.views.console.PlayView ..> tictactoe.views.PlayerView
+tictactoe.views.console.PlayView ..> tictactoe.views.console.ResultView
 tictactoe.views.console.PlayView ..> tictactoe.controllers.PlayController
 
 class tictactoe.views.console.ResultView{
-~ interact(ResultController): void
+~ writeln(int): void
 }
-tictactoe.views.console.ResultView ..> tictactoe.controllers.ResultController
+utils.WithConsoleView <|-down- tictactoe.views.console.ResultView
+
+class tictactoe.views.console.ResumeView{
+~ interact(ResumeController): void
+}
+tictactoe.views.console.ResumeView ..> tictactoe.controllers.ResumeController
+tictactoe.views.console.ResumeView ..> utils.YesNoDialog
 
 class tictactoe.views.console.StartView{
 ~ interact(StartController): void
@@ -221,12 +229,11 @@ class  tictactoe.views.console.UserPlayerView{
 ~ {static} ENTER_COORDINATE_TO_PUT: String
 ~ {static} ENTER_COORDINATE_TO_REMOVE: String
 ~ UserPlayerView(PlayController)
-~ readCoordinateToPut(): int[]
-~ readCoordinatesToMove(): int[][]
++ readCoordinateToPut(): int[]
++ readCoordinatesToMove(): int[][]
 }
 tictactoe.views.PlayerView <|-down- tictactoe.views.console.UserPlayerView
 tictactoe.views.console.UserPlayerView ..> tictactoe.views.console.ErrorView
-tictactoe.views.console.UserPlayerView ..> tictactoe.views.console.CoordinateView
 
 ....
 
@@ -239,7 +246,7 @@ tictactoe.views.console.UserPlayerView ..> tictactoe.views.console.CoordinateVie
 class  tictactoe.views.graphics.BoardView{
 ~ BoardView(PlayController)
 - printRowBoard(PlayController, int): void
-- getSquareBoardText(PlayController, int, int): String
+- getSquareBoardText(PlayController, Coordinate): String
 }
 javax.swing.JPanel <|-down- tictactoe.views.graphics.BoardView
 tictactoe.views.graphics.BoardView *-down-> javax.swing.JLabel
@@ -279,20 +286,20 @@ class  tictactoe.views.graphics.CoordinateMoveView{
 - titleLabelToMove: JLabel
 - textFieldRowToMove: JTextField
 - textFieldColumnToMove: JTextField
-- coordinates: int[][]
+- coordinates: Coordinate[]
 ~ CoordinateMoveView(PlayController)
 ~ resetCoordinates(): void
-~ getCoordinates(): int[][]
+~ getCoordinates(): Coordinate[]
 + actionPerformed(ActionEvent): void
 }
 tictactoe.views.graphics.CoordinateView <|-down- tictactoe.views.graphics.CoordinateMoveView
 tictactoe.views.graphics.CoordinateMoveView ..> tictactoe.controllers.PlayController
 
 class  tictactoe.views.graphics.CoordinatePutView{
-- coordinates: int[]
+- coordinates: Coordinate
 ~ CoordinatePutView(PlayController)
 ~ resetCoordinate(): void
-~ getCoordinate(): int[]
+~ getCoordinate(): Coordinate
 + actionPerformed(ActionEvent): void
 }
 tictactoe.views.graphics.CoordinateView <|-down- tictactoe.views.graphics.CoordinatePutView
@@ -324,12 +331,13 @@ class  tictactoe.views.graphics.GameView{
 ~ GameView()
 ~ interact(StartController): void
 ~ interact(PlayController): void
-~ interact(ResultController): void
+~ interact(ResumeController): void
+- result(PlayController): void
 }
 javax.swing.JFrame <|-down- tictactoe.views.graphics.GameView
 tictactoe.views.graphics.GameView ..> tictactoe.controllers.StartController
 tictactoe.views.graphics.GameView ..> tictactoe.controllers.PlayController
-tictactoe.views.graphics.GameView ..> tictactoe.controllers.ResultController
+tictactoe.views.graphics.GameView ..> tictactoe.controllers.ResumeController
 tictactoe.views.graphics.GameView ..> tictactoe.views.graphics.ChoosePlayersView
 tictactoe.views.graphics.GameView ..> tictactoe.views.PlayerView
 tictactoe.views.graphics.GameView ..> tictactoe.views.graphics.BoardView
@@ -343,13 +351,20 @@ class  tictactoe.views.graphics.GraphicsView{
 tictactoe.views.View <|-down- tictactoe.views.graphics.GraphicsView
 tictactoe.views.graphics.GraphicsView *-down-> tictactoe.views.graphics.GameView
 tictactoe.views.graphics.GraphicsView ..> tictactoe.controllers.Controller
+tictactoe.views.graphics.GraphicsView ..> tictactoe.views.graphics.ResumeDialog
 
 class  tictactoe.views.graphics.MachinePlayerView{
 ~ MachinePlayerView(PlayController)
-+ readCoordinateToPut(): int[]
-+ readCoordinatesToMove(): int[][]
++ readCoordinateToPut(): Coordinate
++ readCoordinatesToMove(): Coordinate[]
 }
 tictactoe.views.PlayerView <|-down- tictactoe.views.graphics.MachinePlayerView
+
+class  tictactoe.views.graphics.ResumeDialog{
+- newGame: boolean
+~ ResumeDialog()
+~ isNewGame(): boolean
+}
 
 class  tictactoe.views.graphics.UserPlayerView{
 ~ {static} ENTER_COORDINATE_TO_PUT: String
@@ -357,8 +372,8 @@ class  tictactoe.views.graphics.UserPlayerView{
 ~ coordinatePutView: CoordinatePutView
 ~ coordinateMoveView: CoordinateMoveView
 ~ UserPlayerView(PlayController, boolean, Container)
-+ readCoordinateToPut(): int[]
-+ readCoordinatesToMove(): int[][]
++ readCoordinateToPut(): Coordinate
++ readCoordinatesToMove(): Coordinate[]
 }
 tictactoe.views.PlayerView <|-down- tictactoe.views.graphics.UserPlayerView
 tictactoe.views.graphics.UserPlayerView *-down-> tictactoe.views.graphics.CoordinatePutView
@@ -419,17 +434,19 @@ class  tictactoe.models.Game{
 + putTokenPlayerFromTurn(Coordinate): void
 + moveTokenPlayerFromTurn(Coordinate[]): void
 + getTypeOfTokenPlayerFromTurn(): PlayerType
-+ controlErrorsPutCoordinate(Coordinate): Error
-+ controlErrorsMoveOriginCoordinate(Coordinate): Error
-+ controlErrorsMoveTargetCoordinate(Coordinate, Coordinate): Error
-+ getToken(int, int): Token
++ getPutCoordinateError(Coordinate): Error
++ getMoveOriginCoordinateError(Coordinate): Error
++ getMoveTargetCoordinateError(Coordinate, Coordinate): Error
++ getToken(Coordinate): Token
 + changeTurn(): void
 + isTicTacToe(): boolean
-+ getOtherValueFromTurn(): int
++ getValueFromTurn(): int
++ newGame(): void
 }
 tictactoe.models.Game *-down-> tictactoe.models.Board
 tictactoe.models.Game *-down-> tictactoe.models.Player
 tictactoe.models.Game *-down-> tictactoe.models.Turn
+tictactoe.models.Game ..> tictactoe.models.Coordinate
 
 class  tictactoe.models.Player{
 - token: Token
@@ -440,9 +457,9 @@ class  tictactoe.models.Player{
 ~ getToken(): Token
 ~ put(Coordinate): void
 ~ move(Coordinate[]): void
-+ getErrorsPutCoordinate(Coordinate): Error
-+ getErrorsMoveOriginCoordinate(Coordinate): Error
-+ getErrorsMoveTargetCoordinate(Coordinate, Coordinate): Error
++ getPutCoordinateError(Coordinate): Error
++ getMoveOriginCoordinateError(Coordinate): Error
++ getMoveTargetCoordinateError(Coordinate, Coordinate): Error
 }
 tictactoe.models.Player *-down-> tictactoe.models.Board
 tictactoe.models.Player ..> tictactoe.models.Coordinate
@@ -451,6 +468,7 @@ class  tictactoe.models.State{
 - stateValue: StateValue
 + State()
 + next(): void
++ reset(): void
 + getValueState(): StateValue
 }
 tictactoe.models.State *-down-> tictactoe.types.StateValue
@@ -462,7 +480,8 @@ class  tictactoe.models.Turn{
 + Turn(Player[])
 ~ change(): void
 ~ getPlayer(): Player
-~ getOtherValue(): int
+~ getValue(): int
+- getOtherValue(): int
 ~ getOtherPlayer(): Player
 }
 tictactoe.models.Turn *-down-> tictactoe.models.Player
@@ -500,28 +519,30 @@ class  tictactoe.controllers.PlayController{
 + PlayController(Game, State)
 + getTokenPlayerFromTurn(): Player
 + getTypeOfTokenPlayerFromTurn(): PlayerType
-+ controlErrorsPutCoordinate(int, int): Error
-+ controlErrorsMoveOriginCoordinate(int, int): Error
-+ controlErrorsMoveTargetCoordinate(int, int, int, int): Error
-+ isCoordinateValid(int, int): boolean
-+ generateRandomCoordinate(): int[]
++ getPutCoordinateError(Coordinate): Error
++ getMoveOriginCoordinateError(Coordinate): Error
++ getMoveTargetCoordinateError(Coordinate, Coordinate): Error
++ isCoordinateValid(Coordinate): boolean
++ generateRandomCoordinate(): Coordinate
 + isBoardComplete(): boolean
-+ putTokenPlayerFromTurn(int, int): void
-+ moveTokenPlayerFromTurn(int, int, int, int): void
++ putTokenPlayerFromTurn(Coordinate): void
++ moveTokenPlayerFromTurn(Coordinate, Coordinate): void
 + changeTurn(): void
-+ getTokenChar(int, int): char
-+ isEmptyToken(int, int): boolean
++ getTokenChar(Coordinate): char
++ isEmptyToken(Coordinate): boolean
 + getCoordinateDimension(): int
++ getValueFromTurn(): int
 + isTicTacToe(): boolean
++ continueState(): void
 }
 tictactoe.controllers.Controller <|-down- tictactoe.controllers.PlayController
 tictactoe.controllers.PlayController ..> tictactoe.models.Coordinate
 
-class  tictactoe.controllers.ResultController{
-~ ResultController(Game, State)
-~ getOtherValueFromTurn(): int
+class  tictactoe.controllers.ResumeController{
++ ResumeController(Game, State)
++ resume(boolean): void
 }
-tictactoe.controllers.Controller <|-down- tictactoe.controllers.ResultController
+tictactoe.controllers.Controller <|-down- tictactoe.controllers.ResumeController
 
 class  tictactoe.controllers.StartController{
 ~ StartController(Game, State)
@@ -586,6 +607,18 @@ class  utils.WithConsoleView{
 # WithConsoleView()
 }
 utils.WithConsoleView *-down-> utils.Console
+
+class  utils.YesNoDialog{
+- {static} AFIRMATIVE: char
+- {static} NEGATIVE: char
+- {static} QUESTION: String
+- {static} MESSAGE: String
++ YesNoDialog()
++ read(String): boolean
+- {static} isNegative(char): boolean
+- {static} isAfirmative(char): boolean
+}
+utils.WithConsoleView <|-down- utils.YesNoDialog
 
 ....
 

@@ -13,9 +13,7 @@ public class Game {
     private Turn turn;
     
     public Game() {
-        this.board = new Board();
-        this.players = new Player[Turn.NUM_PLAYERS];
-        this.turn = new Turn(this.players);
+        this.newGame();
     }
 
     public void createPlayers(int numberOfUsers) {
@@ -43,21 +41,21 @@ public class Game {
         return this.turn.getPlayer().getType();
     }
 
-    public Error getErrorsPutCoordinate(Coordinate coordinate) {
+    public Error getPutCoordinateError(Coordinate coordinate) {
         if (!board.isEmpty(coordinate)) {
 			return Error.NOT_OWNER;
 		}
 		return null;
     }
 
-    public Error getErrorsMoveOriginCoordinate(Coordinate originCoordinate) {
+    public Error getMoveOriginCoordinateError(Coordinate originCoordinate) {
         if (!board.isOccupied(originCoordinate, this.turn.getPlayer().getToken())) {
 			return Error.NOT_OWNER;
 		}
 		return null;
     }
 
-    public Error getErrorsMoveTargetCoordinate(Coordinate originCoordinate, Coordinate targetCoordinate) {
+    public Error getMoveTargetCoordinateError(Coordinate originCoordinate, Coordinate targetCoordinate) {
         if (originCoordinate.equals(targetCoordinate)) {
 			return Error.SAME_COORDINATES;
 		} else if (!board.isEmpty(targetCoordinate)) {
@@ -66,8 +64,8 @@ public class Game {
 		return null;
     }
 
-    public Token getToken(int row, int column) {
-        return this.board.getToken(new Coordinate(row, column));
+    public Token getToken(Coordinate coordinate) {
+        return this.board.getToken(coordinate);
     }
 
     public void changeTurn() {
@@ -75,10 +73,16 @@ public class Game {
     }
 
     public boolean isTicTacToe() {
-        return this.board.isTicTacToe(this.turn.getOtherPlayer().getToken());
+        return this.board.isTicTacToe(this.turn.getPlayer().getToken());
     }
 
-    public int getOtherValueFromTurn() {
-        return this.turn.getOtherValue();
+    public int getValueFromTurn() {
+        return this.turn.getValue();
     }
+
+    public void newGame() {
+		this.board = new Board();
+        this.players = new Player[Turn.NUM_PLAYERS];
+        this.turn = new Turn(this.players);
+	}
 }
