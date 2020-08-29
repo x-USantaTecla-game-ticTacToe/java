@@ -1,4 +1,4 @@
-= Master Mind. Solución 5.2. *modelViewPresenter.presentationModel*
+= TicTacToe. Solución 5.2. *modelViewPresenter.presentationModel*
 Santa Tecla <parqueNaturalSantaTecla@gmail.com>
 :toc-title: Índice
 :toc: left
