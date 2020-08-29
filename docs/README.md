@@ -115,7 +115,7 @@
 <h3 id="arquitectura">Arquitectura</h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/arquitecturaVersion9.svg" alt="arquitecturaVersion9" width="700" height="600">
+<img src="build/docs/asciidoc/images/arquitecturaVersion9.svg" alt="arquitecturaVersion9" width="400" height="400">
 </div>
 </div>
 </div>
@@ -139,7 +139,7 @@
 <h3 id="paquete-tictactoe-models">Paquete <em>tictactoe.models</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/tictactoeModelsVersion9.svg" alt="tictactoeModelsVersion5" width="800" height="1000">
+<img src="build/docs/asciidoc/images/tictactoeModelsVersion9.svg" alt="tictactoeModelsVersion9" width="800" height="1000">
 </div>
 </div>
 </div>

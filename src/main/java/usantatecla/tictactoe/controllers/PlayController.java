@@ -40,56 +40,69 @@ public class PlayController extends AcceptorController {
 		return this.movementController.getTypeOfTokenPlayerFromTurn();
 	}
 
-	public Error getErrorsPutCoordinate(int row, int column) {
-		return this.movementController.getErrorsPutCoordinate(row, column);
+	public Error getPutCoordinateError(Coordinate coordinate) {
+		return this.movementController.getPutCoordinateError(coordinate);
 	}
 
-	public Error getErrorsMoveOriginCoordinate(int originRow, int originColumn) {
-		return this.movementController.getErrorsMoveOriginCoordinate(originRow, originColumn);
+	public Error getMoveOriginCoordinateError(Coordinate originCoordinate) {
+		return this.movementController.getMoveOriginCoordinateError(originCoordinate);
 	}
 
-	public Error getErrorsMoveTargetCoordinate(int originRow, int originColumn, int targetRow, int targetColumn) {
-		return this.movementController.getErrorsMoveTargetCoordinate(originRow, originColumn, targetRow, targetColumn);
+	public Error getMoveTargetCoordinateError(Coordinate originCoordinate, Coordinate targetCoordinate) {
+		return this.movementController.getMoveTargetCoordinateError(originCoordinate, targetCoordinate);
 	}
 
-	public boolean isCoordinateValid(int row, int column) {
-		return this.movementController.isCoordinateValid(row, column);
+	public boolean isCoordinateValid(Coordinate coordinate) {
+		return coordinate.isValid();
 	}
 
-	public int[] generateRandomCoordinate() {
-		return this.movementController.generateRandomCoordinate();
+	public Coordinate generateRandomCoordinate() {
+		Coordinate coordinateRandom = new Coordinate();
+		coordinateRandom.random();
+		return coordinateRandom;
 	}
 
 	public boolean isBoardComplete() {
 		return this.movementController.isBoardComplete();
 	}
 
-	public void putTokenPlayerFromTurn(int originRow, int originColumn) {
-		this.movementController.putTokenPlayerFromTurn(originRow, originColumn);
+	public void putTokenPlayerFromTurn(Coordinate coordinate) {
+		this.movementController.putTokenPlayerFromTurn(coordinate);
 	}
 
-	public void moveTokenPlayerFromTurn(int originRow, int originColumn, int targetRow, int targetColumn) {
-		this.movementController.moveTokenPlayerFromTurn(originRow, originColumn, targetRow, targetColumn);
+	public void moveTokenPlayerFromTurn(Coordinate originCoordinate, Coordinate targetCoordinate) {
+		Coordinate[] coordinates = new Coordinate[2];
+		coordinates[0] = originCoordinate;
+		coordinates[1] = targetCoordinate;
+		this.movementController.moveTokenPlayerFromTurn(coordinates);
 	}
 
 	public void changeTurn() {
 		this.movementController.changeTurn();
 	}
 
-	public char getTokenChar(int row, int column) {
-		return this.movementController.getTokenChar(row, column);
+	public char getTokenChar(Coordinate coordinate) {
+		return this.movementController.getTokenChar(coordinate);
 	}
 
-	public boolean isEmptyToken(int row, int column) {
-		return this.movementController.isEmptyToken(row, column);
+	public boolean isEmptyToken(Coordinate coordinate) {
+		return this.movementController.isEmptyToken(coordinate);
 	}
 
 	public int getCoordinateDimension() {
 		return Coordinate.DIMENSION;
 	}
 
-	public void isTicTacToe() {
-		this.movementController.isTicTacToe();
+	public int getValueFromTurn() {
+        return this.movementController.getValueFromTurn();
+    }
+
+	public boolean isTicTacToe() {
+		return this.movementController.isTicTacToe();
+	}
+
+	public void continueState() {
+		this.movementController.continueState();
 	}
 
 	@Override

@@ -26,7 +26,11 @@ public class Turn {
 		return this.players[this.value];
 	}
 
-	int getOtherValue() {
+	int getValue() {
+		return this.value;
+	}
+
+	private int getOtherValue() {
 		return (this.value + 1) % Turn.NUM_PLAYERS;
 	}
 

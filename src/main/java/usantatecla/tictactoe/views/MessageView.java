@@ -15,7 +15,8 @@ public enum MessageView {
 	ERROR("ERROR"),
 	PROPOSE_COMMAND("Do a movement"), 
 	UNDO_COMMAND("Undo previous movement"), 
-	REDO_COMMAND("Redo previous movement");
+	REDO_COMMAND("Redo previous movement"),
+	RESUME("Do you want to continue");
 
 	private String message;
 

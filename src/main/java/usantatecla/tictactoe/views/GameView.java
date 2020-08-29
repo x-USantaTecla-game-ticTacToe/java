@@ -5,9 +5,11 @@ import usantatecla.tictactoe.controllers.PlayController;
 public class GameView {
 
     GameView(PlayController playController) {
-        playController.changeTurn();
         new BoardView(playController).write();
-        playController.isTicTacToe();
+        if (playController.isTicTacToe()) {
+            new ResultView().writeln(playController.getValueFromTurn());
+            playController.continueState();
+        }
     }
     
 }
