@@ -9,13 +9,14 @@ public enum MessageView {
 	VERTICAL_LINE_LEFT("| "),
 	PLAYER_WIN(" Player: You win!!! :-)"),
 	START_GAME("-------------------- TIC TAC TOE --------------------"),
-	CHOOSE_PLAYERS("Number of users [0-" + Turn.PLAYERS + "] "),
+	CHOOSE_PLAYERS("Number of users [0-" + Turn.NUM_PLAYERS + "] "),
 	READ_ROW("Row: "),
 	READ_COLUMN("Column: "),
 	ERROR("ERROR"),
 	PROPOSE_COMMAND("Do a movement"), 
 	UNDO_COMMAND("Undo previous movement"), 
-	REDO_COMMAND("Redo previous movement");
+	REDO_COMMAND("Redo previous movement"),
+	RESUME("Do you want to continue");
 
 	private String message;
 

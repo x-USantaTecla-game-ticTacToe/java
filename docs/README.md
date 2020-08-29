@@ -130,7 +130,7 @@
 <h3 id="paquete-tictactoe-models">Paquete <em>tictactoe.models</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/tictactoeModelsVersion9.svg" alt="tictactoeModelsVersion5" width="800" height="1000">
+<img src="build/docs/asciidoc/images/tictactoeModelsVersion9.svg" alt="tictactoeModelsVersion9" width="800" height="1000">
 </div>
 </div>
 </div>
@@ -178,7 +178,7 @@
 <h3 id="paquete-utils">Paquete <em>utils</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/utilsVersion9.svg" alt="utilsVersion9" width="456" height="548">
+<img src="build/docs/asciidoc/images/utilsVersion9.svg" alt="utilsVersion9" width="800" height="600">
 </div>
 </div>
 </div>

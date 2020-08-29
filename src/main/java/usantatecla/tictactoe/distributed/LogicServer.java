@@ -3,6 +3,7 @@ package usantatecla.tictactoe.distributed;
 import usantatecla.tictactoe.controllers.Logic;
 import usantatecla.tictactoe.distributed.dispatchers.BoardCompleteDispatcher;
 import usantatecla.tictactoe.distributed.dispatchers.ChangeTurnDispatcher;
+import usantatecla.tictactoe.distributed.dispatchers.ContinueStateDispatcher;
 import usantatecla.tictactoe.distributed.dispatchers.CoordinateValidDispatcher;
 import usantatecla.tictactoe.distributed.dispatchers.CreatePlayersDispatcher;
 import usantatecla.tictactoe.distributed.dispatchers.DimensionDispatcher;
@@ -13,14 +14,14 @@ import usantatecla.tictactoe.distributed.dispatchers.errors.ErrorsMoveTargetDisp
 import usantatecla.tictactoe.distributed.dispatchers.errors.ErrorsPutDispatcher;
 import usantatecla.tictactoe.distributed.dispatchers.FrameType;
 import usantatecla.tictactoe.distributed.dispatchers.MoveTokenDispatcher;
-import usantatecla.tictactoe.distributed.dispatchers.OtherValueTurnDispatcher;
+import usantatecla.tictactoe.distributed.dispatchers.ValueTurnDispatcher;
 import usantatecla.tictactoe.distributed.dispatchers.PlayerTypeDispatcher;
 import usantatecla.tictactoe.distributed.dispatchers.PutTokenDispatcher;
 import usantatecla.tictactoe.distributed.dispatchers.RandomCoordinateDispatcher;
-import usantatecla.tictactoe.distributed.dispatchers.ResultDispatcher;
+import usantatecla.tictactoe.distributed.dispatchers.ResumeDispatcher;
 import usantatecla.tictactoe.distributed.dispatchers.StartDispatcher;
 import usantatecla.tictactoe.distributed.dispatchers.StateDispatcher;
-import usantatecla.tictactoe.distributed.dispatchers.TicTactToeDispatcher;
+import usantatecla.tictactoe.distributed.dispatchers.TicTacToeDispatcher;
 import usantatecla.tictactoe.distributed.dispatchers.TokenCharDispatcher;
 import usantatecla.tictactoe.distributed.dispatchers.undoredo.RedoDispatcher;
 import usantatecla.tictactoe.distributed.dispatchers.undoredo.RedoableDispatcher;
@@ -48,15 +49,16 @@ public class LogicServer extends Logic {
 		dispatcherPrototype.add(FrameType.TOKEN_CHAR, new TokenCharDispatcher(this.playController));
 		dispatcherPrototype.add(FrameType.EMPTY_TOKEN, new EmptyTokenDispatcher(this.playController));
 		dispatcherPrototype.add(FrameType.DIMENSION, new DimensionDispatcher(this.playController));
-		dispatcherPrototype.add(FrameType.TICTACTOE, new TicTactToeDispatcher(this.playController));
+		dispatcherPrototype.add(FrameType.TICTACTOE, new TicTacToeDispatcher(this.playController));
 		dispatcherPrototype.add(FrameType.RANDOM_COORDINATE, new RandomCoordinateDispatcher(this.playController));
 		dispatcherPrototype.add(FrameType.ERRORS_PUT, new ErrorsPutDispatcher(this.playController));
 		dispatcherPrototype.add(FrameType.ERRORS_MOVE_ORIGIN, new ErrorsMoveOriginDispatcher(this.playController));
 		dispatcherPrototype.add(FrameType.ERRORS_MOVE_TARGET, new ErrorsMoveTargetDispatcher(this.playController));
 		dispatcherPrototype.add(FrameType.PUT_TOKEN, new PutTokenDispatcher(this.playController));
 		dispatcherPrototype.add(FrameType.MOVE_TOKEN, new MoveTokenDispatcher(this.playController));
-		dispatcherPrototype.add(FrameType.RESULT, new ResultDispatcher(this.resultController));
-		dispatcherPrototype.add(FrameType.OTHER_VALUE_TURN, new OtherValueTurnDispatcher(this.resultController));
+		dispatcherPrototype.add(FrameType.VALUE_TURN, new ValueTurnDispatcher(this.playController));
+		dispatcherPrototype.add(FrameType.CONTINUE_STATE, new ContinueStateDispatcher(this.playController));
+		dispatcherPrototype.add(FrameType.NEW_GAME, new ResumeDispatcher(this.resumeController));
 	}
 
 }

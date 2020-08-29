@@ -1,6 +1,7 @@
 package usantatecla.tictactoe.distributed.dispatchers;
 
 import usantatecla.tictactoe.controllers.PlayController;
+import usantatecla.tictactoe.models.Coordinate;
 
 public class RandomCoordinateDispatcher extends Dispatcher {
 
@@ -10,9 +11,9 @@ public class RandomCoordinateDispatcher extends Dispatcher {
 
 	@Override
 	public void dispatch() {
-        int[] coordinate = ((PlayController)this.acceptorController).generateRandomCoordinate();
-        this.tcpip.send(coordinate[0]);
-        this.tcpip.send(coordinate[1]);
+        Coordinate coordinate = ((PlayController)this.acceptorController).generateRandomCoordinate();
+        this.tcpip.send(coordinate.getRow());
+        this.tcpip.send(coordinate.getColumn());
 	}
     
 }

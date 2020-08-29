@@ -10,7 +10,6 @@ public enum FrameType {
 	REDOABLE,
 	CLOSE,
 	PLAYER_TYPE,
-	RESULT,
 	COORDINATE_VALID,
 	BOARD_COMPLETE,
 	RANDOM_COORDINATE,
@@ -24,7 +23,9 @@ public enum FrameType {
 	ERRORS_MOVE_TARGET,
 	PUT_TOKEN,
 	MOVE_TOKEN,
-	OTHER_VALUE_TURN;
+	VALUE_TURN,
+	CONTINUE_STATE,
+	NEW_GAME;
 
 	public static FrameType parser(String string) {
 		for(FrameType frameType : FrameType.values()) {

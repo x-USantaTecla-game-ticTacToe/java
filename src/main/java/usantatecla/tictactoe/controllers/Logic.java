@@ -17,7 +17,7 @@ public class Logic {
 
 	protected PlayController playController;
 
-	protected ResultController resultController;
+	protected ResumeController resumeController;
 	
 	private TCPIP tcpip;
 
@@ -33,8 +33,8 @@ public class Logic {
 		this.acceptorControllers.put(StateValue.INITIAL, this.startController);
 		this.playController = new PlayController(this.session, this.tcpip);
 		this.acceptorControllers.put(StateValue.IN_GAME, this.playController);
-		this.resultController = new ResultController(this.session, this.tcpip);
-		this.acceptorControllers.put(StateValue.RESULT, this.resultController);
+		this.resumeController = new ResumeController(this.session, this.tcpip);
+		this.acceptorControllers.put(StateValue.RESUME, this.resumeController);
 		this.acceptorControllers.put(StateValue.EXIT, null);
 	}
 	

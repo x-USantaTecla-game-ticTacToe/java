@@ -10,7 +10,7 @@ class StartView extends WithConsoleView {
     void interact(StartController startController) {
 		startController.start();
 		this.console.writeln(MessageView.START_GAME.getMessage());
-		int numberOfUsers = new PlayersDialog().read(Turn.PLAYERS);
+		int numberOfUsers = new PlayersDialog().read(Turn.NUM_PLAYERS);
 		startController.createPlayers(numberOfUsers);
 	}
 }
