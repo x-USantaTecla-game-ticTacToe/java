@@ -528,7 +528,7 @@ tictactoe.controllers.Logic *-down-> tictactoe.models.Game
 tictactoe.controllers.Logic *-down-> tictactoe.models.State
 tictactoe.controllers.Logic --> tictactoe.controllers.Controller
 tictactoe.controllers.Logic *-down-> tictactoe.models.StateValue
-mastermind.controllers.Logic *-down-> java.util.Map
+tictactoe.controllers.Logic *-down-> java.util.Map
 
 class  tictactoe.controllers.PlayController{
 + PlayController(Game, State)
