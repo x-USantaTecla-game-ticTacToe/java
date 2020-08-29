@@ -1,7 +1,7 @@
 package usantatecla.tictactoe.views.console;
 
 import usantatecla.tictactoe.controllers.PlayController;
-import usantatecla.tictactoe.controllers.ResultController;
+import usantatecla.tictactoe.controllers.ResumeController;
 import usantatecla.tictactoe.controllers.StartController;
 import usantatecla.tictactoe.views.View;
 
@@ -11,12 +11,12 @@ public class ConsoleView extends View {
 
 	private PlayView playView;
 
-	private ResultView resultView;
+	private ResumeView resumeView;
 
 	public ConsoleView() {
 		this.startView = new StartView();
 		this.playView = new PlayView();
-		this.resultView = new ResultView();
+		this.resumeView = new ResumeView();
 	}
 
 	public void visit(StartController startController) {
@@ -27,7 +27,7 @@ public class ConsoleView extends View {
 		this.playView.interact(playController);
 	}
 	
-	public void visit(ResultController resultController) {
-		this.resultView.interact(resultController);
+	public void visit(ResumeController resumeController) {
+		this.resumeView.interact(resumeController);
 	}
 }

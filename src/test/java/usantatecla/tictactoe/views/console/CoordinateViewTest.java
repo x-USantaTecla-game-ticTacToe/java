@@ -30,10 +30,10 @@ public class CoordinateViewTest {
     public void testGivenNewCoordinateViewWhenReadCoordinateThenIsCorrect() {
         when(this.console.readInt("Row: ")).thenReturn(1);
         when(this.console.readInt("Column: ")).thenReturn(1);
-        int[] coordinateRead = this.coordinateView.read(ENTER_COORDINATE_TO_PUT);
+        Coordinate coordinateRead = this.coordinateView.read(ENTER_COORDINATE_TO_PUT);
         Coordinate coordinateExpected = new Coordinate(0, 0);
-        assertEquals(coordinateExpected.getRow(), coordinateRead[0]);
-        assertEquals(coordinateExpected.getColumn(), coordinateRead[1]);
+        assertEquals(coordinateExpected.getRow(), coordinateRead.getRow());
+        assertEquals(coordinateExpected.getColumn(), coordinateRead.getColumn());
     }
 
     @Test(expected = AssertionError.class)

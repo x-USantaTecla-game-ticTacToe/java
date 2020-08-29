@@ -144,7 +144,7 @@
 <h3 id="paquete-tictactoe-models">Paquete <em>tictactoe.models</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/tictactoeModelsVersion7.svg" alt="tictactoeModelsVersion5" width="800" height="1000">
+<img src="build/docs/asciidoc/images/tictactoeModelsVersion8.svg" alt="tictactoeModelsVersion5" width="800" height="1000">
 </div>
 </div>
 </div>
