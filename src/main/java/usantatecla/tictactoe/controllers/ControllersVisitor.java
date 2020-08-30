@@ -8,6 +8,6 @@ public interface ControllersVisitor {
 
 	void visit(SaveController saveController);
 	
-	void visit(ResultController resultController);
+	void visit(ResumeController resumeController);
     
 }

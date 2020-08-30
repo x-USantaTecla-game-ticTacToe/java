@@ -6,17 +6,20 @@ import usantatecla.tictactoe.models.SessionImplementation;
 
 public class StartControllerImplementation extends StartController {
 
+	SessionImplementation sessionImplementation;
+
 	public StartControllerImplementation(Session session) {
 		super(session);
+		this.sessionImplementation = ((SessionImplementation) this.session);
 	}
 
 	public void createPlayers(int numberOfUsers) {
-		((SessionImplementation) this.session).createPlayers(numberOfUsers);
+		this.sessionImplementation.createPlayers(numberOfUsers);
 	}
 
 	@Override
 	public void start() {
-		((SessionImplementation) this.session).next();		
+		this.sessionImplementation.next();		
 	}
 
 	@Override

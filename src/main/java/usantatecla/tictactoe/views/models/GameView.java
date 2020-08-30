@@ -6,7 +6,10 @@ public class GameView {
 
     public GameView(PlayController playController) {
         new BoardView(playController).write();
-        playController.isTicTacToe();
+        if (playController.isTicTacToe()) {
+            new ResultView().writeln(playController.getValueFromTurn());
+            playController.continueState();
+        }
     }
     
 }

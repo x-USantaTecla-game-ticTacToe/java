@@ -1,6 +1,7 @@
 package usantatecla.tictactoe.distributed.dispatchers;
 
 import usantatecla.tictactoe.controllers.PlayController;
+import usantatecla.tictactoe.models.Coordinate;
 
 public class EmptyTokenDispatcher extends Dispatcher {
     
@@ -12,6 +13,6 @@ public class EmptyTokenDispatcher extends Dispatcher {
 	public void dispatch() {
         int row = this.tcpip.receiveInt();
         int column = this.tcpip.receiveInt();
-		this.tcpip.send(((PlayController)this.acceptorController).isEmptyToken(row, column));
+		this.tcpip.send(((PlayController)this.acceptorController).isEmptyToken(new Coordinate(row, column)));
     }
 }
