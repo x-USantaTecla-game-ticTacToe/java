@@ -278,6 +278,7 @@ tictactoe.views.menus.PlayMenu *-down-> tictactoe.views.menus.RedoCommand
 tictactoe.views.menus.PlayMenu *-down-> tictactoe.views.menus.ExitCommand
 
 class tictactoe.views.menus.RedoCommand{
+- playController: PlayController
 ~ RedoCommand(PlayController)
 # execute(): void
 # isActive(): boolean
@@ -294,6 +295,7 @@ tictactoe.views.menus.StartMenu*-down-> tictactoe.views.menus.NewGameCommand
 tictactoe.views.menus.StartMenu*-down-> tictactoe.views.menus.OpenGameCommand
 
 class tictactoe.views.menus.UndoCommand{
+- playController: PlayController
 ~ UndoCommand(PlayController)
 # execute(): void
 # isActive(): boolean

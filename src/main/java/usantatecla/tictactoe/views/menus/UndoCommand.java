@@ -6,19 +6,22 @@ import usantatecla.tictactoe.views.models.MessageView;
 
 class UndoCommand extends Command {
 
+	private PlayController playController;
+
 	UndoCommand(PlayController playController) {
 		super(MessageView.UNDO_COMMAND.getMessage(), playController);
+		this.playController = (PlayController) this.acceptorController;
 	}
 
 	
 	protected void execute() {
-		((PlayController) this.acceptorController).undo();
-		new GameView(((PlayController) this.acceptorController));
+		(this.playController).undo();
+		new GameView((this.playController));
 	}
 
 	
 	protected boolean isActive() {
-		return ((PlayController) this.acceptorController).undoable();
+		return (this.playController).undoable();
 	}
 	
 }
