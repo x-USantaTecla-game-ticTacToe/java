@@ -119,6 +119,10 @@ public class Game {
         return this.turn;
     }
 
+    public void setTurnWithValue(int value) {
+        this.turn = new Turn(this.players, value);
+    }
+
     public void newGame() {
 		this.board = new Board();
         this.players = new Player[Turn.NUM_PLAYERS];
