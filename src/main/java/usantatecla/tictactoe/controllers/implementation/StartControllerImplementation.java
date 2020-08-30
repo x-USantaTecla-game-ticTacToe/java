@@ -22,12 +22,13 @@ public class StartControllerImplementation extends StartController {
 
 	@Override
 	public void start() {
-		this.sessionImplementationDAO.associate((SessionImplementation)this.session);
-		this.sessionImplementation.next();		
+		this.sessionImplementationDAO.associate(this.sessionImplementation);
+		this.sessionImplementation.next();
 	}
 
 	@Override
 	public void start(String name) {
+		this.sessionImplementationDAO.associate(this.sessionImplementation);
 		this.sessionImplementationDAO.load(name);
 	}
 

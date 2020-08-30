@@ -1,4 +1,4 @@
-<h1 align="center">Welcome to TicTacToe. Versión 14.6. ** mvp.pm.withoutPrototype ** 👋</h1>
+<h1 align="center">Welcome to TicTacToe. Versión 15.6. ** mvp.pm.withPrototype ** 👋</h1>
 <p>
   <a href="/docs" target="_blank">
     <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
@@ -8,7 +8,7 @@
   </a>
 </p>
 
-> TicTacToe. Solución mvp.pm.withoutPrototype
+> TicTacToe. Solución mvp.pm.withPrototype
 
 ## Install
 

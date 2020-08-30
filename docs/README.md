@@ -15,7 +15,7 @@
 <div class="details">
 <span id="author" class="author">Santa Tecla</span><br>
 <span id="email" class="email"><a href="mailto:parqueNaturalSantaTecla@gmail.com">parqueNaturalSantaTecla@gmail.com</a></span><br>
-<span id="revnumber">version 0.13.0</span>
+<span id="revnumber">version 0.14.0</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Índice</div>
@@ -113,7 +113,7 @@
 <h3 id="arquitectura">Arquitectura</h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/arquitecturaVersion13.svg" alt="arquitecturaVersion13" width="1000" height="600">
+<img src="build/docs/asciidoc/images/arquitecturaVersion14.svg" alt="arquitecturaVersion14" width="1000" height="600">
 </div>
 </div>
 </div>
@@ -121,7 +121,7 @@
 <h3 id="paquete-tictactoe">Paquete <em>tictactoe</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/tictactoeVersion13.svg" alt="tictactoeVersion13" width="500" height="400">
+<img src="build/docs/asciidoc/images/tictactoeVersion14.svg" alt="tictactoeVersion14" width="500" height="400">
 </div>
 </div>
 </div>
@@ -129,7 +129,7 @@
 <h3 id="paquete-tictactoe-views">Paquete <em>tictactoe.views</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/tictactoeViewsVersion13.svg" alt="tictactoeViewsVersion13" width="1200" height="600">
+<img src="build/docs/asciidoc/images/tictactoeViewsVersion14.svg" alt="tictactoeViewsVersion14" width="1200" height="600">
 </div>
 </div>
 </div>
@@ -153,7 +153,7 @@
 <h3 id="paquete-tictactoe-models">Paquete <em>tictactoe.models</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/tictactoeModelsVersion13.svg" alt="tictactoeModelsVersion13" width="1200" height="1300">
+<img src="build/docs/asciidoc/images/tictactoeModelsVersion14.svg" alt="tictactoeModelsVersion14" width="1200" height="1300">
 </div>
 </div>
 </div>
@@ -185,7 +185,7 @@
 <h3 id="paquete-tictactoe-controllers">Paquete <em>tictactoe.controllers</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/tictactoeControllersVersion13.svg" alt="tictactoeControllersVersion13" width="1000" height="600">
+<img src="build/docs/asciidoc/images/tictactoeControllersVersion14.svg" alt="tictactoeControllersVersion14" width="1000" height="600">
 </div>
 </div>
 </div>
@@ -241,7 +241,7 @@
 <h3 id="paquete-utils">Paquete <em>utils</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/utilsVersion13.svg" alt="utilsVersion13" width="700" height="548">
+<img src="build/docs/asciidoc/images/utilsVersion14.svg" alt="utilsVersion14" width="700" height="548">
 </div>
 </div>
 </div>
@@ -284,7 +284,7 @@
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 0.13.0<br>
+Version 0.14.0<br>
 Last updated 2020-08-30 21:30:00 +0200
 </div>
 </div>

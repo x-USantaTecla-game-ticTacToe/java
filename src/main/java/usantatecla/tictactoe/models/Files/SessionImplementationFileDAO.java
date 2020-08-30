@@ -22,12 +22,10 @@ public class SessionImplementationFileDAO extends SessionImplementationDAO {
 		SessionImplementationFileDAO.directory = new File(SessionImplementationFileDAO.DIRECTORY);
 	}
 
-    private SessionImplementation sessionImplementation;
-
 	private GameFileDAO gameDAO;
 	
 	public void associate(SessionImplementation sessionImplementation) {
-		this.sessionImplementation = sessionImplementation;
+		super.associate(sessionImplementation);
 		this.gameDAO = new GameFileDAO(this.sessionImplementation.getGame());
 	}
 

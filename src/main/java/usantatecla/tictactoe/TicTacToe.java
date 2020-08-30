@@ -6,16 +6,13 @@ import usantatecla.tictactoe.views.View;
 
 public abstract class TicTacToe {
 
-    private Logic logic;
+    protected Logic logic;
 
     private View view;
 
     protected TicTacToe() {
-        this.logic = this.createLogic();
 		this.view = new View();
 	}
-	
-	protected abstract Logic createLogic();
 
     protected void play() {
 		AcceptorController acceptorController;
