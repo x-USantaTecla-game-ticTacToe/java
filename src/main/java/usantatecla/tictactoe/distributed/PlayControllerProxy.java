@@ -1,6 +1,7 @@
 package usantatecla.tictactoe.distributed;
 
 import usantatecla.tictactoe.controllers.PlayController;
+import usantatecla.tictactoe.models.Coordinate;
 import usantatecla.tictactoe.models.Session;
 import usantatecla.tictactoe.types.Error;
 import usantatecla.tictactoe.types.PlayerType;
@@ -45,46 +46,45 @@ public class PlayControllerProxy extends PlayController {
 	}
 
 	@Override
-	public Error controlErrorsPutCoordinate(int row, int column) {
+	public Error getPutCoordinateError(Coordinate coordinate) {
 		this.tcpip.send(FrameType.ERRORS_PUT.name());
-		this.tcpip.send(row);
-		this.tcpip.send(column);
+		this.tcpip.send(coordinate.getRow());
+		this.tcpip.send(coordinate.getColumn());
 		return this.tcpip.receiveError();
 	}
 
 	@Override
-	public Error controlErrorsMoveOriginCoordinate(int originRow, int originColumn) {
+	public Error getMoveOriginCoordinateError(Coordinate coordinate) {
 		this.tcpip.send(FrameType.ERRORS_MOVE_ORIGIN.name());
-		this.tcpip.send(originRow);
-		this.tcpip.send(originColumn);
+		this.tcpip.send(coordinate.getRow());
+		this.tcpip.send(coordinate.getColumn());
 		return this.tcpip.receiveError();
 	}
 
 	@Override
-	public Error controlErrorsMoveTargetCoordinate(int originRow, int originColumn, int targetRow, int targetColumn) {
+	public Error getMoveTargetCoordinateError(Coordinate originCoordinate, Coordinate targetCoordinate) {
 		this.tcpip.send(FrameType.ERRORS_MOVE_TARGET.name());
-		this.tcpip.send(originRow);
-		this.tcpip.send(originColumn);
-		this.tcpip.send(targetRow);
-		this.tcpip.send(targetColumn);
+		this.tcpip.send(originCoordinate.getRow());
+		this.tcpip.send(originCoordinate.getColumn());
+		this.tcpip.send(targetCoordinate.getRow());
+		this.tcpip.send(targetCoordinate.getColumn());
 		return this.tcpip.receiveError();
 	}
 
 	@Override
-	public boolean isCoordinateValid(int row, int column) {
+	public boolean isCoordinateValid(Coordinate coordinate) {
 		this.tcpip.send(FrameType.COORDINATE_VALID.name());
-		this.tcpip.send(row);
-		this.tcpip.send(column);
+		this.tcpip.send(coordinate.getRow());
+		this.tcpip.send(coordinate.getColumn());
 		return this.tcpip.receiveBoolean();
 	}
 
 	@Override
-	public int[] generateRandomCoordinate() {
+	public Coordinate generateRandomCoordinate() {
 		this.tcpip.send(FrameType.RANDOM_COORDINATE.name());
-		int[] coordinate = new int[2];
-		coordinate[0] = this.tcpip.receiveInt();
-		coordinate[1] = this.tcpip.receiveInt();
-		return coordinate;
+		int rowCoordinate = this.tcpip.receiveInt();
+		int columnCoordinate = this.tcpip.receiveInt();
+		return new Coordinate(rowCoordinate, columnCoordinate);
 	}
 
 	@Override
@@ -94,19 +94,19 @@ public class PlayControllerProxy extends PlayController {
 	}
 
 	@Override
-	public void putTokenPlayerFromTurn(int originRow, int originColumn) {
+	public void putTokenPlayerFromTurn(Coordinate coordinate) {
 		this.tcpip.send(FrameType.PUT_TOKEN.name());
-		this.tcpip.send(originRow);
-		this.tcpip.send(originColumn);
+		this.tcpip.send(coordinate.getRow());
+		this.tcpip.send(coordinate.getColumn());
 	}
 
 	@Override
-	public void moveTokenPlayerFromTurn(int originRow, int originColumn, int targetRow, int targetColumn) {
+	public void moveTokenPlayerFromTurn(Coordinate[] coordinates) {
 		this.tcpip.send(FrameType.MOVE_TOKEN.name());
-		this.tcpip.send(originRow);
-		this.tcpip.send(originColumn);
-		this.tcpip.send(targetRow);
-		this.tcpip.send(targetColumn);
+		this.tcpip.send(coordinates[0].getRow());
+		this.tcpip.send(coordinates[0].getColumn());
+		this.tcpip.send(coordinates[1].getRow());
+		this.tcpip.send(coordinates[1].getColumn());
 	}
 
 	@Override
@@ -115,18 +115,18 @@ public class PlayControllerProxy extends PlayController {
 	}
 
 	@Override
-	public char getTokenChar(int row, int column) {
+	public char getTokenChar(Coordinate coordinate) {
 		this.tcpip.send(FrameType.TOKEN_CHAR.name());
-		this.tcpip.send(row);
-		this.tcpip.send(column);
+		this.tcpip.send(coordinate.getRow());
+		this.tcpip.send(coordinate.getColumn());
 		return this.tcpip.receiveChar();
 	}
 
 	@Override
-	public boolean isEmptyToken(int row, int column) {
+	public boolean isEmptyToken(Coordinate coordinate) {
 		this.tcpip.send(FrameType.EMPTY_TOKEN.name());
-		this.tcpip.send(row);
-		this.tcpip.send(column);
+		this.tcpip.send(coordinate.getRow());
+		this.tcpip.send(coordinate.getColumn());
 		return this.tcpip.receiveBoolean();
 	}
 
@@ -137,8 +137,20 @@ public class PlayControllerProxy extends PlayController {
 	}
 
 	@Override
-	public void isTicTacToe() {
+	public int getValueFromTurn() {
+		this.tcpip.send(FrameType.VALUE_TURN.name());
+		return this.tcpip.receiveInt();
+	}
+
+	@Override
+	public void continueState() {
+		this.tcpip.send(FrameType.CONTINUE_STATE.name());
+	}
+
+	@Override
+	public boolean isTicTacToe() {
 		this.tcpip.send(FrameType.TICTACTOE.name());
+		return tcpip.receiveBoolean();
 	}
 
 }

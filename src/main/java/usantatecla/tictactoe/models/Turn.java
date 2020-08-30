@@ -2,7 +2,7 @@ package usantatecla.tictactoe.models;
 
 public class Turn {
 
-	public static final int PLAYERS = 2;
+	public static final int NUM_PLAYERS = 2;
 
 	private int value;
 
@@ -26,8 +26,12 @@ public class Turn {
 		return this.players[this.value];
 	}
 
-	int getOtherValue() {
-		return (this.value + 1) % Turn.PLAYERS;
+	int getValue() {
+		return this.value;
+	}
+
+	private int getOtherValue() {
+		return (this.value + 1) % Turn.NUM_PLAYERS;
 	}
 
 	Player getOtherPlayer() {

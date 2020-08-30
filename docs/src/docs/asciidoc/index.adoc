@@ -120,7 +120,7 @@ class  tictactoe.views.BoardView{
 ~ BoardView(PlayController)
 ~ write(): void
 - printRowBoard(int): void
-- printSquareValueBoard(int, int): void
+- printSquareBoard(Coordinate): void
 }
 utils.WithConsoleView <|-down- tictactoe.views.BoardView
 tictactoe.views.BoardView ..> tictactoe.controllers.PlayController
@@ -131,24 +131,10 @@ class  tictactoe.views.Command{
 }
 utils.Command <|-down- tictactoe.views.Command
 
-class  tictactoe.views.ConsoleView{
-- startView: StartView
-- playView: PlayView
-- resultView: ResultView
-+ ConsoleView()
-+ visit(StartController): void
-+ visit(PlayController): void
-+ visit(ResultController): void
-}
-tictactoe.views.View <|-down- tictactoe.views.ConsoleView
-tictactoe.views.ConsoleView ..> tictactoe.views.StartView
-tictactoe.views.ConsoleView ..> tictactoe.views.PlayView
-tictactoe.views.ConsoleView ..> tictactoe.views.ResultView
-
 class  tictactoe.views.CoordinateView{
 ~ playController: PlayController
 ~ CoordinateView(PlayController)
-~ read(String): int[]
+~ read(String): Coordinate
 }
 utils.WithConsoleView <|-down- tictactoe.views.CoordinateView
 tictactoe.views.CoordinateView ..> tictactoe.views.ErrorView
@@ -167,11 +153,12 @@ class  tictactoe.views.GameView{
 }
 tictactoe.views.GameView ..> tictactoe.controllers.PlayController
 tictactoe.views.GameView ..> tictactoe.views.BoardView
+tictactoe.views.GameView ..> tictactoe.views.ResultView
 
 class  tictactoe.views.MachinePlayerView{
 ~ MachinePlayerView(PlayController)
-+ readCoordinateToPut(): int[]
-+ readCoordinatesToMove(): int[][]
++ readCoordinateToPut(): Coordinate
++ readCoordinatesToMove(): Coordinate[]
 }
 tictactoe.views.PlayerView <|-down- tictactoe.views.MachinePlayerView
 tictactoe.views.MachinePlayerView ..> tictactoe.controllers.PlayController
@@ -190,6 +177,7 @@ enum  tictactoe.views.MessageView{
 + PROPOSE_COMMAND: MessageView
 + UNDO_COMMAND: MessageView
 + REDO_COMMAND: MessageView
++ RESUME: MessageView
 - message: String
 - MessageView(String)
 + getMessage(): String
@@ -203,15 +191,16 @@ class  tictactoe.views.MovementCommand{
 tictactoe.views.MovementCommand ..> tictactoe.controllers.PlayController
 tictactoe.views.MovementCommand ..> tictactoe.views.MessageView
 tictactoe.views.MovementCommand ..> tictactoe.views.GameView
+tictactoe.views.MovementCommand ..> tictactoe.views.PlayerView
 
 class  tictactoe.views.PlayerView{
 # playController: PlayController
 + PlayerView(PlayController)
-+ {abstract} readCoordinateToPut(): int[]
-+ {abstract} readCoordinatesToMove(): int[][]
-+ getErrorsPutCoordinate(int, int): Error
-+ getErrorsMoveOriginCoordinate(int, int): Error
-+ getErrorsMoveTargetCoordinate(int, int, int, int): Error
++ {abstract} readCoordinateToPut(): Coordinate
++ {abstract} readCoordinatesToMove(): Coordinate[]
++ getPutCoordinateError(Coordinate): Error
++ getMoveOriginCoordinateError(Coordinate): Error
++ getMoveTargetCoordinateError(Coordinate, Coordinate): Error
 }
 tictactoe.views.PlayerView ..> tictactoe.controllers.PlayController
 
@@ -238,11 +227,17 @@ class tictactoe.views.RedoCommand{
 tictactoe.views.Command <|-down- tictactoe.views.RedoCommand
 
 class tictactoe.views.ResultView{
-~ interact(ResultController): void
+~ writeln(int): void
 }
 utils.WithConsoleView <|-down- tictactoe.views.ResultView
-tictactoe.views.ResultView ..> tictactoe.controllers.ResultController
 tictactoe.views.ResultView ..> tictactoe.views.MessageView
+
+class tictactoe.views.ResumeView{
+~ interact(ResumeController): void
+}
+tictactoe.views.ResumeView ..> tictactoe.controllers.ResumeController
+tictactoe.views.ResumeView ..> utils.YesNoDialog
+tictactoe.views.ResumeView ..> tictactoe.views.MessageView
 
 class tictactoe.views.StartView{
 ~ interact(StartController): void
@@ -266,8 +261,8 @@ class  tictactoe.views.UserPlayerView{
 ~ {static} ENTER_COORDINATE_TO_PUT: String
 ~ {static} ENTER_COORDINATE_TO_REMOVE: String
 ~ UserPlayerView(PlayController)
-+ readCoordinateToPut(): int[]
-+ readCoordinatesToMove(): int[][]
++ readCoordinateToPut(): Coordinate
++ readCoordinatesToMove(): Coordinate[]
 }
 tictactoe.views.PlayerView <|-down- tictactoe.views.UserPlayerView
 tictactoe.views.UserPlayerView ..> tictactoe.views.CoordinateView
@@ -275,18 +270,18 @@ tictactoe.views.UserPlayerView ..> tictactoe.views.CoordinateView
 class  tictactoe.views.View{
 - startView: StartView
 - playView: PlayView
-- resultView: ResultView
+- resumeView: ResumeView
 + View()
 + interact(AcceptorController): void
 + visit(StartController): void
 + visit(PlayController): void
-+ visit(ResultController): void
++ visit(ResumeController): void
 }
 tictactoe.controllers.ControllersVisitor <|-down- tictactoe.views.View
 tictactoe.views.View ..> tictactoe.controllers.AcceptorController
 tictactoe.views.View *-down-> tictactoe.views.StartView
 tictactoe.views.View *-down-> tictactoe.views.PlayView
-tictactoe.views.View *-down-> tictactoe.views.ResultView
+tictactoe.views.View *-down-> tictactoe.views.ResumeView
 
 ....
 
@@ -346,13 +341,14 @@ class  tictactoe.models.Game{
 + putTokenPlayerFromTurn(Coordinate): void
 + moveTokenPlayerFromTurn(Coordinate[]): void
 + getTypeOfTokenPlayerFromTurn(): PlayerType
-+ getErrorsPutCoordinate(Coordinate): Error
-+ getErrorsMoveOriginCoordinate(Coordinate): Error
-+ getErrorsMoveTargetCoordinate(Coordinate, Coordinate): Error
-+ getToken(int, int): Token
++ getPutCoordinateError(Coordinate): Error
++ getMoveOriginCoordinateError(Coordinate): Error
++ getMoveTargetCoordinateError(Coordinate, Coordinate): Error
++ getToken(Coordinate): Token
 + changeTurn(): void
 + isTicTacToe(): boolean
-+ getOtherValueFromTurn(): int
++ getValueFromTurn(): int
++ newGame(): void
 }
 tictactoe.models.Game *-down-> tictactoe.models.Board
 tictactoe.models.Game *-down-> tictactoe.models.Player
@@ -381,9 +377,9 @@ class  tictactoe.models.Player{
 ~ getToken(): Token
 ~ put(Coordinate): void
 ~ move(Coordinate[]): void
-+ getErrorsPutCoordinate(Coordinate): Error
-+ getErrorsMoveOriginCoordinate(Coordinate): Error
-+ getErrorsMoveTargetCoordinate(Coordinate, Coordinate): Error
++ getPutCoordinateError(Coordinate): Error
++ getMoveOriginCoordinateError(Coordinate): Error
++ getMoveTargetCoordinateError(Coordinate, Coordinate): Error
 }
 tictactoe.models.Player *-down-> tictactoe.models.Board
 tictactoe.models.Player ..> tictactoe.models.Coordinate
@@ -427,10 +423,11 @@ class  tictactoe.models.SessionImplementation{
 + putTokenPlayerFromTurn(Coordinate): void
 + moveTokenPlayerFromTurn(Coordinate[]): void
 + changeTurn(): void
-+ getToken(int, int): Token
++ getToken(Coordinate): Token
 + isTicTacToe(): boolean
-+ getOtherValueFromTurn(): int
++ getValueFromTurn(): int
 + getValueState(): StateValue
++ newGame(): void
 }
 tictactoe.models.Session <|-down- tictactoe.models.SessionImplementation
 tictactoe.models.SessionImplementation *-down-> tictactoe.models.State
@@ -441,6 +438,7 @@ class  tictactoe.models.State{
 - stateValue: StateValue
 + State()
 + next(): void
++ reset(): void
 + getValueState(): StateValue
 }
 tictactoe.models.State *-down-> tictactoe.types.StateValue
@@ -453,7 +451,8 @@ class  tictactoe.models.Turn{
 + Turn(Player[], int)
 ~ change(): void
 ~ getPlayer(): Player
-~ getOtherValue(): int
+~ getValue(): int
+- getOtherValue(): int
 ~ getOtherPlayer(): Player
 ~ copy(Player[]): Turn
 }
@@ -485,9 +484,9 @@ tictactoe.controllers.Controller ..> tictactoe.models.StateValue
 interface  tictactoe.controllers.ControllersVisitor{
 ~ {abstract} visit(StartController): void
 ~ {abstract} visit(PlayController): void
-~ {abstract} visit(ResultController): void
+~ {abstract} visit(ResumeController): void
 }
-tictactoe.controllers.ControllersVisitor ..> tictactoe.controllers.ResultController
+tictactoe.controllers.ControllersVisitor ..> tictactoe.controllers.ResumeController
 tictactoe.controllers.ControllersVisitor ..> tictactoe.controllers.StartController
 tictactoe.controllers.ControllersVisitor ..> tictactoe.controllers.PlayController
 
@@ -504,20 +503,23 @@ tictactoe.controllers.Logic *-down-> java.util.Map
 tictactoe.controllers.Logic *-down-> tictactoe.controllers.Controller
 
 class  tictactoe.controllers.MovementController{
+- sessionImplementation: SessionImplementation
 + MovementController(Session)
 + getTypeOfTokenPlayerFromTurn(): PlayerType
-+ getErrorsPutCoordinate(int, int): Error
-+ getErrorsMoveOriginCoordinate(int, int): Error
-+ getErrorsMoveTargetCoordinate(int, int, int, int): Error
-+ isCoordinateValid(int, int): boolean
-+ generateRandomCoordinate(): int[]
++ controlErrorsPutCoordinate(Coordinate): Error
++ controlErrorsMoveOriginCoordinate(Coordinate): Error
++ controlErrorsMoveTargetCoordinate(Coordinate, Coordinate): Error
++ isCoordinateValid(Coordinate): boolean
++ generateRandomCoordinate(): Coordinate
 + isBoardComplete(): boolean
-+ putTokenPlayerFromTurn(int, int): void
-+ moveTokenPlayerFromTurn(int, int, int, int): void
++ putTokenPlayerFromTurn(Coordinate): void
++ moveTokenPlayerFromTurn(Coordinate[]): void
 + changeTurn(): void
-+ getTokenChar(int, int): char
-+ isEmptyToken(int, int): boolean
++ getTokenChar(Coordinate): char
++ isEmptyToken(Coordinate): boolean
 + getCoordinateDimension(): int
++ getValueFromTurn(): int
++ continueState(): void
 + isTicTacToe(): boolean
 }
 tictactoe.controllers.Controller <|-down- tictactoe.controllers.MovementController
@@ -530,24 +532,27 @@ class  tictactoe.controllers.PlayController{
 + {abstract} undoable(): boolean
 + {abstract} redoable(): boolean
 + {abstract} getTypeOfTokenPlayerFromTurn(): PlayerType
-+ {abstract} getErrorsPutCoordinate(int, int): Error
-+ {abstract} getErrorsMoveOriginCoordinate(int, int): Error
-+ {abstract} getErrorsMoveTargetCoordinate(int, int, int, int): Error
-+ {abstract} isCoordinateValid(int, int): boolean
-+ {abstract} generateRandomCoordinate(): int[]
++ {abstract} getErrorsPutCoordinate(Coordinate): Error
++ {abstract} getErrorsMoveOriginCoordinate(Coordinate): Error
++ {abstract} getErrorsMoveTargetCoordinate(Coordinate, Coordinate): Error
++ {abstract} isCoordinateValid(Coordinate): boolean
++ {abstract} generateRandomCoordinate(): Coordinate
 + {abstract} isBoardComplete(): boolean
-+ {abstract} putTokenPlayerFromTurn(int, int): void
-+ {abstract} moveTokenPlayerFromTurn(int, int, int, int): void
++ {abstract} putTokenPlayerFromTurn(Coordinate): void
++ {abstract} moveTokenPlayerFromTurn(Coordinate, Coordinate): void
 + {abstract} changeTurn(): void
-+ {abstract} getTokenChar(int, int): char
-+ {abstract} isEmptyToken(int, int): boolean
++ {abstract} getTokenChar(Coordinate): char
++ {abstract} isEmptyToken(Coordinate): boolean
 + {abstract} getCoordinateDimension(): int
++ {abstract} getValueFromTurn(): int
 + {abstract} isTicTacToe(): boolean
++ {abstract} continueState(): void
 + accept(ControllersVisitor): void
 }
 tictactoe.controllers.AcceptorController <|-down- tictactoe.controllers.PlayController
 
 class  tictactoe.controllers.RedoController{
+- sessionImplementation: SessionImplementation
 + RedoController(Session)
 + redo(): void
 + redoable(): boolean
@@ -555,14 +560,13 @@ class  tictactoe.controllers.RedoController{
 tictactoe.controllers.Controller <|-down- tictactoe.controllers.RedoController
 tictactoe.controllers.RedoController ..> tictactoe.models.Session
 
-class  tictactoe.controllers.ResultController{
-+ ResultController(Session)
-+ {abstract} finish(): void
-+ {abstract} getOtherValueFromTurn(): int
+class  tictactoe.controllers.ResumeController{
++ ResumeController(Session)
++ {abstract} resume(boolean): void
 + accept(ControllersVisitor): void
 }
-tictactoe.controllers.AcceptorController <|-down- tictactoe.controllers.ResultController
-tictactoe.controllers.ResultController ..> tictactoe.models.Session
+tictactoe.controllers.AcceptorController <|-down- tictactoe.controllers.ResumeController
+tictactoe.controllers.ResumeController ..> tictactoe.models.Session
 
 class  tictactoe.controllers.StartController{
 + StartController(Session)
@@ -574,6 +578,7 @@ tictactoe.controllers.AcceptorController <|-down- tictactoe.controllers.StartCon
 tictactoe.controllers.StartController ..> tictactoe.models.Session
 
 class  tictactoe.controllers.UndoController{
+- sessionImplementation: SessionImplementation
 + UndoController(Session)
 + undo(): void
 + undoable(): boolean
@@ -591,12 +596,12 @@ tictactoe.controllers.Controller <|-down- tictactoe.controllers.UndoController
 class  tictactoe.controllers.implementation.LogicImplementation{
 # startControllerImplementation: StartControllerImplementation
 # playControllerImplementation: PlayControllerImplementation
-# resultControllerImplementation: ResultControllerImplementation
+# resumeControllerImplementation: ResumeControllerImplementation
 + LogicImplementation()
 }
 tictactoe.controllers.Logic <|-down- tictactoe.controllers.implementation.LogicImplementation
 tictactoe.controllers.implementation.LogicImplementation *-down-> tictactoe.controllers.implementation.StartControllerImplementation
-tictactoe.controllers.implementation.LogicImplementation *-down-> tictactoe.controllers.implementation.ResultControllerImplementation
+tictactoe.controllers.implementation.LogicImplementation *-down-> tictactoe.controllers.implementation.ResumeControllerImplementation
 tictactoe.controllers.implementation.LogicImplementation *-down-> tictactoe.controllers.implementation.PlayControllerImplementation
 
 class  tictactoe.controllers.implementation.PlayControllerImplementation{
@@ -609,18 +614,20 @@ class  tictactoe.controllers.implementation.PlayControllerImplementation{
 + undoable(): boolean
 + redoable(): boolean
 + getTypeOfTokenPlayerFromTurn(): PlayerType
-+ getErrorsPutCoordinate(int, int): Error
-+ getErrorsMoveOriginCoordinate(int, int): Error
-+ getErrorsMoveTargetCoordinate(int, int, int, int): Error
-+ isCoordinateValid(int, int): boolean
-+ generateRandomCoordinate(): int[]
++ getErrorsPutCoordinate(Coordinate): Error
++ getErrorsMoveOriginCoordinate(Coordinate): Error
++ getErrorsMoveTargetCoordinate(Coordinate, Coordinate): Error
++ isCoordinateValid(Coordinate): boolean
++ generateRandomCoordinate(): Coordinate
 + isBoardComplete(): boolean
-+ putTokenPlayerFromTurn(int, int): void
-+ moveTokenPlayerFromTurn(int, int, int, int): void
++ putTokenPlayerFromTurn(Coordinate): void
++ moveTokenPlayerFromTurn(Coordinate, Coordinate): void
 + changeTurn(): void
-+ getTokenChar(int, int): char
-+ isEmptyToken(int, int): boolean
++ getTokenChar(Coordinate): char
++ isEmptyToken(Coordinate): boolean
++ getValueFromTurn(): int
 + getCoordinateDimension(): int
++ continueState(): void
 + isTicTacToe(): boolean
 }
 tictactoe.controllers.PlayController <|-down- tictactoe.controllers.implementation.PlayControllerImplementation
@@ -628,14 +635,15 @@ tictactoe.controllers.implementation.PlayControllerImplementation *-down-> ticta
 tictactoe.controllers.implementation.PlayControllerImplementation *-down-> tictactoe.controllers.UndoController
 tictactoe.controllers.implementation.PlayControllerImplementation *-down-> tictactoe.controllers.RedoController
 
-class  tictactoe.controllers.implementation.ResultControllerImplementation{
-+ ResultControllerImplementation(Session)
-+ finish(): void
-+ getOtherValueFromTurn(): int
+class  tictactoe.controllers.implementation.ResumeControllerImplementation{
+- sessionImplementation: SessionImplementation
++ ResumeControllerImplementation(Session)
++ resume(boolean): void
 }
-tictactoe.controllers.ResultController <|-down- tictactoe.controllers.implementation.ResultControllerImplementation
+tictactoe.controllers.ResumeController <|-down- tictactoe.controllers.implementation.ResumeControllerImplementation
 
 class  tictactoe.controllers.implementation.StartControllerImplementation{
+- sessionImplementation: SessionImplementation
 + StartControllerImplementation(Session)
 + start(): void
 + createPlayers(int): void
@@ -666,7 +674,7 @@ class  tictactoe.distributed.LogicProxy{
 tictactoe.controllers.Logic <|-down- tictactoe.distributed.LogicProxy
 tictactoe.distributed.LogicProxy *-down-> utils.TCPIP
 tictactoe.distributed.LogicProxy *-down-> tictactoe.distributed.SessionProxy
-tictactoe.distributed.LogicProxy *-down-> tictactoe.distributed.ResultControllerProxy
+tictactoe.distributed.LogicProxy *-down-> tictactoe.distributed.ResumeControllerProxy
 tictactoe.distributed.LogicProxy *-down-> tictactoe.distributed.StartControllerProxy
 tictactoe.distributed.LogicProxy *-down-> tictactoe.distributed.PlayControllerProxy
 
@@ -678,17 +686,19 @@ class  tictactoe.distributed.PlayControllerProxy{
 + undoable(): boolean
 + redoable(): boolean
 + getTypeOfTokenPlayerFromTurn(): PlayerType
-+ getErrorsPutCoordinate(int, int): Error
-+ getErrorsMoveOriginCoordinate(int, int): Error
-+ getErrorsMoveTargetCoordinate(int, int, int, int): Error
-+ isCoordinateValid(int, int): boolean
-+ generateRandomCoordinate(): int[]
++ getErrorsPutCoordinate(Coordinate): Error
++ getErrorsMoveOriginCoordinate(Coordinate): Error
++ getErrorsMoveTargetCoordinate(Coordinate, Coordinate): Error
++ isCoordinateValid(Coordinate): boolean
++ generateRandomCoordinate(): Coordinate
 + isBoardComplete(): boolean
-+ putTokenPlayerFromTurn(int, int): void
-+ moveTokenPlayerFromTurn(int, int, int, int): void
++ putTokenPlayerFromTurn(Coordinate): void
++ moveTokenPlayerFromTurn(Coordinate, Coordinate): void
 + changeTurn(): void
-+ getTokenChar(int, int): char
-+ isEmptyToken(int, int): boolean
++ getTokenChar(Coordinate): char
++ isEmptyToken(Coordinate): boolean
++ getValueFromTurn(): int
++ continueState(): void
 + getCoordinateDimension(): int
 + isTicTacToe(): boolean
 }
@@ -696,15 +706,15 @@ tictactoe.controllers.PlayController <|-down- tictactoe.distributed.PlayControll
 tictactoe.distributed.PlayControllerProxy *-down-> utils.TCPIP
 tictactoe.distributed.PlayControllerProxy ..> tictactoe.distributed.dispatchers.FrameType
 
-class  tictactoe.distributed.ResultControllerProxy{
+class  tictactoe.distributed.ResumeControllerProxy{
 - tcpip: TCPIP
-+ ResultControllerProxy(TCPIP, Session)
++ ResumeControllerProxy(TCPIP, Session)
 + finish(): void
 + getOtherValueFromTurn(): int
 }
-tictactoe.controllers.ResultController <|-down- tictactoe.distributed.ResultControllerProxy
-tictactoe.distributed.ResultControllerProxy *-down-> utils.TCPIP
-tictactoe.distributed.ResultControllerProxy ..> tictactoe.distributed.dispatchers.FrameType
+tictactoe.controllers.ResumeController <|-down- tictactoe.distributed.ResumeControllerProxy
+tictactoe.distributed.ResumeControllerProxy *-down-> utils.TCPIP
+tictactoe.distributed.ResumeControllerProxy ..> tictactoe.distributed.dispatchers.FrameType
 
 class  tictactoe.distributed.SessionProxy{
 - tcpip: TCPIP
@@ -734,7 +744,7 @@ class  tictactoe.distributed.TicTacToeClient{
 # play(): void
 }
 tictactoe.TicTacToe <|-down- tictactoe.distributed.TicTacToeClient
-mastermind.distributed.TicTacToeClient *-down-> mastermind.distributed.LogicProxy
+tictactoe.distributed.TicTacToeClient *-down-> tictactoe.distributed.LogicProxy
 
 class  tictactoe.distributed.TicTacToeServer{
 - dispatcherPrototype: DispatcherPrototype
@@ -767,6 +777,13 @@ class  tictactoe.distributed.dispatchers.ChangeTurnDispatcher{
 }
 tictactoe.distributed.dispatchers.Dispatcher <|-down- tictactoe.distributed.dispatchers.ChangeTurnDispatcher
 tictactoe.distributed.dispatchers.ChangeTurnDispatcher ..> tictactoe.controllers.PlayController
+
+class  tictactoe.distributed.dispatchers.ContinueStateDispatcher{
++ ContinueStateDispatcher(PlayController)
++ dispatch(): void
+}
+tictactoe.distributed.dispatchers.Dispatcher <|-down- tictactoe.distributed.dispatchers.ContinueStateDispatcher
+tictactoe.distributed.dispatchers.ContinueStateDispatcher ..> tictactoe.controllers.PlayController
 
 class  tictactoe.distributed.dispatchers.CoordinateValidDispatcher{
 + CoordinateValidDispatcher(PlayController)
@@ -843,6 +860,9 @@ class  tictactoe.distributed.dispatchers.FrameType{
 + {static} PUT_TOKEN: FrameType
 + {static} MOVE_TOKEN: FrameType
 + {static} CLOSE: FrameType
++ {static} VALUE_TURN: FrameType
++ {static} CONTINUE_STATE: FrameType
++ {static} NEW_GAME: FrameType
 - FrameType()
 + {static} parser(String): FrameType
 }
@@ -882,12 +902,12 @@ class  tictactoe.distributed.dispatchers.RandomCoordinateDispatcher{
 tictactoe.distributed.dispatchers.Dispatcher <|-down- tictactoe.distributed.dispatchers.RandomCoordinateDispatcher
 tictactoe.distributed.dispatchers.RandomCoordinateDispatcher ..> tictactoe.controllers.PlayController
 
-class  tictactoe.distributed.dispatchers.ResultDispatcher{
-+ ResultDispatcher(ResultController)
+class  tictactoe.distributed.dispatchers.ResumeDispatcher{
++ ResumeDispatcher(ResumeController)
 + dispatch(): void
 }
-tictactoe.distributed.dispatchers.Dispatcher <|-down- tictactoe.distributed.dispatchers.ResultDispatcher
-tictactoe.distributed.dispatchers.ResultDispatcher ..> tictactoe.controllers.ResultController
+tictactoe.distributed.dispatchers.Dispatcher <|-down- tictactoe.distributed.dispatchers.ResumeDispatcher
+tictactoe.distributed.dispatchers.ResumeDispatcher ..> tictactoe.controllers.ResumeController
 
 class  tictactoe.distributed.dispatchers.StartDispatcher{
 + StartDispatcher(StartController)
@@ -945,12 +965,12 @@ class  tictactoe.distributed.dispatchers.StateDispatcher{
 tictactoe.distributed.dispatchers.Dispatcher <|-down- tictactoe.distributed.dispatchers.StateDispatcher
 tictactoe.distributed.dispatchers.StateDispatcher ..> tictactoe.controllers.PlayController
 
-class  tictactoe.distributed.dispatchers.TicTactToeDispatcher{
-+ TicTactToeDispatcher(PlayController)
+class  tictactoe.distributed.dispatchers.TicTacToeDispatcher{
++ TicTacToeDispatcher(PlayController)
 + dispatch(): void
 }
-tictactoe.distributed.dispatchers.Dispatcher <|-down- tictactoe.distributed.dispatchers.TicTactToeDispatcher
-tictactoe.distributed.dispatchers.TicTactToeDispatcher ..> tictactoe.controllers.PlayController
+tictactoe.distributed.dispatchers.Dispatcher <|-down- tictactoe.distributed.dispatchers.TicTacToeDispatcher
+tictactoe.distributed.dispatchers.TicTacToeDispatcher ..> tictactoe.controllers.PlayController
 
 class  tictactoe.distributed.dispatchers.TCPIP{
 + {static} createClientSocket(): TCPIP
@@ -971,6 +991,13 @@ class  tictactoe.distributed.dispatchers.TokenCharDispatcher{
 }
 tictactoe.distributed.dispatchers.Dispatcher <|-down- tictactoe.distributed.dispatchers.TokenCharDispatcher
 tictactoe.distributed.dispatchers.TokenCharDispatcher ..> tictactoe.controllers.PlayController
+
+class  tictactoe.distributed.dispatchers.ValueTurnDispatcher{
++ ValueTurnDispatcher(PlayController)
++ dispatch(): void
+}
+tictactoe.distributed.dispatchers.Dispatcher <|-down- tictactoe.distributed.dispatchers.ValueTurnDispatcher
+tictactoe.distributed.dispatchers.ValueTurnDispatcher ..> tictactoe.controllers.PlayController
 
 ....
 
@@ -1139,13 +1166,24 @@ utils.TCPIP *-down-> java.net.ServerSocket
 utils.TCPIP *-down-> java.io.PrintWriter
 utils.TCPIP *-down-> java.net.Socket
 utils.TCPIP *-down-> java.io.BufferedReader
-utils.TCPIP ..> mastermind.utils.TCPIP
 
 class  utils.WithConsoleView{
 # console: Console
 # WithConsoleView()
 }
 utils.WithConsoleView *-down-> utils.Console
+
+class  utils.YesNoDialog{
+- {static} AFIRMATIVE: char
+- {static} NEGATIVE: char
+- {static} QUESTION: String
+- {static} MESSAGE: String
++ YesNoDialog()
++ read(String): boolean
+- {static} isNegative(char): boolean
+- {static} isAfirmative(char): boolean
+}
+utils.WithConsoleView <|-down- utils.YesNoDialog
 
 ....
 

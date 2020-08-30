@@ -1,6 +1,7 @@
 package usantatecla.tictactoe.views;
 
 import usantatecla.tictactoe.controllers.PlayController;
+import usantatecla.tictactoe.models.Coordinate;
 import usantatecla.tictactoe.types.PlayerType;
 
 public class MovementCommand extends Command {
@@ -16,11 +17,11 @@ public class MovementCommand extends Command {
                 ? new UserPlayerView(this.playController)
                 : new MachinePlayerView(this.playController);
         if (!this.playController.isBoardComplete()) {
-            int[] coordinate = playerView.readCoordinateToPut();
-            this.playController.putTokenPlayerFromTurn(coordinate[0], coordinate[1]);
+            Coordinate coordinate = playerView.readCoordinateToPut();
+            this.playController.putTokenPlayerFromTurn(coordinate);
         } else {
-            int[][] coordinates = playerView.readCoordinatesToMove();
-            this.playController.moveTokenPlayerFromTurn(coordinates[0][0], coordinates[0][1], coordinates[1][0], coordinates[1][1]);
+            Coordinate[] coordinates = playerView.readCoordinatesToMove();
+            this.playController.moveTokenPlayerFromTurn(coordinates);
         }
         new GameView(this.playController);
     }

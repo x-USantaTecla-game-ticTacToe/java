@@ -1,6 +1,7 @@
 package usantatecla.tictactoe.distributed.dispatchers;
 
 import usantatecla.tictactoe.controllers.PlayController;
+import usantatecla.tictactoe.models.Coordinate;
 
 public class MoveTokenDispatcher extends Dispatcher {
 
@@ -14,7 +15,9 @@ public class MoveTokenDispatcher extends Dispatcher {
 		int originColumn = this.tcpip.receiveInt();
 		int targetRow = this.tcpip.receiveInt();
 		int targetColumn = this.tcpip.receiveInt();
-		((PlayController) this.acceptorController).moveTokenPlayerFromTurn(originRow, originColumn, targetRow,
-				targetColumn);
+		Coordinate[] coordinates = new Coordinate[2];
+		coordinates[0] = new Coordinate(originRow, originColumn);
+		coordinates[1] = new Coordinate(targetRow, targetColumn);
+		((PlayController) this.acceptorController).moveTokenPlayerFromTurn(coordinates);
 	}
 }

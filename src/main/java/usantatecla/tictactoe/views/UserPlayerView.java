@@ -1,6 +1,7 @@
 package usantatecla.tictactoe.views;
 
 import usantatecla.tictactoe.controllers.PlayController;
+import usantatecla.tictactoe.models.Coordinate;
 import usantatecla.tictactoe.types.Error;
 
 class UserPlayerView extends PlayerView {
@@ -12,12 +13,12 @@ class UserPlayerView extends PlayerView {
     }
 
     @Override
-    public int[] readCoordinateToPut() {
-        int[] coordinate = new int[2];
+    public Coordinate readCoordinateToPut() {
+        Coordinate coordinate;
         Error error;
         do {
             coordinate = new CoordinateView(this.playController).read(ENTER_COORDINATE_TO_PUT);
-            error = controlErrorsPutCoordinate(coordinate[0], coordinate[1]);
+            error = this.getPutCoordinateError(coordinate);
             if (error != null) {
                 new ErrorView(error).writeln();
             }
@@ -26,28 +27,23 @@ class UserPlayerView extends PlayerView {
     }
 
     @Override
-    public int[][] readCoordinatesToMove() {
-        int[] originCoordinate = new int[2];
+    public Coordinate[] readCoordinatesToMove() {
+        Coordinate[] coordinates = new Coordinate[2];
         Error error;
         do {
-            originCoordinate = new CoordinateView(this.playController).read(ENTER_COORDINATE_TO_REMOVE);
-            error = controlErrorsMoveOriginCoordinate(originCoordinate[0], originCoordinate[1]);
+            coordinates[0] = new CoordinateView(this.playController).read(ENTER_COORDINATE_TO_REMOVE);
+            error = this.getMoveOriginCoordinateError(coordinates[0]);
             if (error != null) {
                 new ErrorView(error).writeln();
             }
         } while (error != null);
-        int[] targetCoordinate = new int[2];
         do {
-            targetCoordinate = new CoordinateView(this.playController).read(ENTER_COORDINATE_TO_PUT);
-            error = controlErrorsMoveTargetCoordinate(originCoordinate[0], originCoordinate[1], targetCoordinate[0],
-                    targetCoordinate[1]);
+            coordinates[1] = new CoordinateView(this.playController).read(ENTER_COORDINATE_TO_PUT);
+            error = this.getMoveTargetCoordinateError(coordinates[0], coordinates[1]);
             if (error != null) {
                 new ErrorView(error).writeln();
             }
         } while (error != null);
-        int[][] coordinates = new int[2][2];
-        coordinates[0] = originCoordinate;
-        coordinates[1] = targetCoordinate;
         return coordinates;
     }
 }
