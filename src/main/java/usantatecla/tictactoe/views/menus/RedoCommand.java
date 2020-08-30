@@ -5,21 +5,24 @@ import usantatecla.tictactoe.views.models.GameView;
 import usantatecla.tictactoe.views.models.MessageView;
 
 class RedoCommand extends Command{
+
+	private PlayController playController;
 	
 	RedoCommand(PlayController playController) {
 		super(MessageView.REDO_COMMAND.getMessage(), playController);
+		this.playController = (PlayController) this.acceptorController;
 	}
 
 	@Override
 	protected void execute() {
-		((PlayController) this.acceptorController).redo();
-		new GameView(((PlayController) this.acceptorController));
+		(this.playController).redo();
+		new GameView((this.playController));
 		
 	}
 
 	@Override
 	protected boolean isActive() {
-		return ((PlayController) this.acceptorController).redoable();
+		return (this.playController).redoable();
 	}
 
 }

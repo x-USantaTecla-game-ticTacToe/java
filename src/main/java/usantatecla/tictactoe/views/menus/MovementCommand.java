@@ -18,18 +18,19 @@ public class MovementCommand extends Command {
 
     @Override
     protected void execute() {
-        new BoardView((PlayController) this.acceptorController).write();
-        PlayerView playerView = ((PlayController) this.acceptorController).getTypeOfTokenPlayerFromTurn() == PlayerType.USER_PLAYER
-                ? new UserPlayerView(((PlayController) this.acceptorController))
-                : new MachinePlayerView(((PlayController) this.acceptorController));
-        if (!((PlayController) this.acceptorController).isBoardComplete()) {
+        PlayController playController = (PlayController) this.acceptorController;
+        new BoardView(playController).write();
+        PlayerView playerView = (playController).getTypeOfTokenPlayerFromTurn() == PlayerType.USER_PLAYER
+                ? new UserPlayerView((playController))
+                : new MachinePlayerView((playController));
+        if (!(playController).isBoardComplete()) {
             Coordinate coordinate = playerView.readCoordinateToPut();
-            ((PlayController) this.acceptorController).putTokenPlayerFromTurn(coordinate);
+            (playController).putTokenPlayerFromTurn(coordinate);
         } else {
             Coordinate[] coordinates = playerView.readCoordinatesToMove();
-            ((PlayController) this.acceptorController).moveTokenPlayerFromTurn(coordinates);
+            (playController).moveTokenPlayerFromTurn(coordinates);
         }
-        new GameView(((PlayController) this.acceptorController));
+        new GameView((playController));
     }
 
     @Override
