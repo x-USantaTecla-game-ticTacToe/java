@@ -23,17 +23,17 @@ public class MachinePlayerViewTest {
 
     @Test
     public void testGivenNewCoordinateViewWhenReadCoordinateThenIsCorrect() {
-        int[] coordinate = this.machinePlayerView.readCoordinateToPut();
+        Coordinate coordinate = this.machinePlayerView.readCoordinateToPut();
         assertNotNull(coordinate);
     }
 
     @Test
     public void testGivenNewCoordinateViewWhenReadCoordinateThenIsCorrec() {
-        int[] coordinate1 = this.machinePlayerView.readCoordinateToPut();
-        ((SessionImplementation) this.session).putTokenPlayerFromTurn(new Coordinate(coordinate1[0], coordinate1[1]));
-        int[] coordinate2 = this.machinePlayerView.readCoordinateToPut();
-        ((SessionImplementation) this.session).putTokenPlayerFromTurn(new Coordinate(coordinate2[0], coordinate2[1]));
-        int[][] coordinates = this.machinePlayerView.readCoordinatesToMove();
+        Coordinate coordinate1 = this.machinePlayerView.readCoordinateToPut();
+        ((SessionImplementation) this.session).putTokenPlayerFromTurn(coordinate1);
+        Coordinate coordinate2 = this.machinePlayerView.readCoordinateToPut();
+        ((SessionImplementation) this.session).putTokenPlayerFromTurn(coordinate2);
+        Coordinate[] coordinates = this.machinePlayerView.readCoordinatesToMove();
         assertNotNull(coordinates[0]);
         assertNotNull(coordinates[1]);
     }

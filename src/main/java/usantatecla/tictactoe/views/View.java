@@ -3,7 +3,7 @@ package usantatecla.tictactoe.views;
 import usantatecla.tictactoe.controllers.AcceptorController;
 import usantatecla.tictactoe.controllers.ControllersVisitor;
 import usantatecla.tictactoe.controllers.PlayController;
-import usantatecla.tictactoe.controllers.ResultController;
+import usantatecla.tictactoe.controllers.ResumeController;
 import usantatecla.tictactoe.controllers.SaveController;
 import usantatecla.tictactoe.controllers.StartController;
 
@@ -15,13 +15,13 @@ public class View implements ControllersVisitor {
 
 	private SaveView saveView;
 
-	private ResultView resultView;
+	private ResumeView resumeView;
 
 	public View() {
 		this.startView = new StartView();
 		this.playView = new PlayView();
 		this.saveView = new SaveView();
-		this.resultView = new ResultView();
+		this.resumeView = new ResumeView();
 	}
 
 	public void interact(AcceptorController acceptorController) {
@@ -42,7 +42,7 @@ public class View implements ControllersVisitor {
 		this.saveView.interact(saveController);
 	}
 	
-	public void visit(ResultController resultController) {
-		this.resultView.interact(resultController);
+	public void visit(ResumeController resumeController) {
+		this.resumeView.interact(resumeController);
 	}
 }

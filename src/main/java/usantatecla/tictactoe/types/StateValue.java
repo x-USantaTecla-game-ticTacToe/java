@@ -4,7 +4,7 @@ public enum StateValue {
     INITIAL,
     IN_GAME,
     SAVING,
-    RESULT,
+    RESUME,
     EXIT;
     
 }

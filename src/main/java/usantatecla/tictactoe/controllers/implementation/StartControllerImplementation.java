@@ -8,19 +8,22 @@ import usantatecla.tictactoe.models.DAO.SessionImplementationDAO;
 public class StartControllerImplementation extends StartController {
 	private SessionImplementationDAO sessionImplementationDAO;
 
+	private SessionImplementation sessionImplementation;
+
 	public StartControllerImplementation(Session session, SessionImplementationDAO sessionImplementationDAO) {
 		super(session);
 		this.sessionImplementationDAO = sessionImplementationDAO;
+		this.sessionImplementation = ((SessionImplementation) this.session);
 	}
 
 	public void createPlayers(int numberOfUsers) {
-		((SessionImplementation) this.session).createPlayers(numberOfUsers);
+		this.sessionImplementation.createPlayers(numberOfUsers);
 	}
 
 	@Override
 	public void start() {
 		this.sessionImplementationDAO.associate((SessionImplementation)this.session);
-		((SessionImplementation) this.session).next();		
+		this.sessionImplementation.next();		
 	}
 
 	@Override

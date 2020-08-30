@@ -4,13 +4,15 @@ import usantatecla.tictactoe.controllers.Logic;
 import usantatecla.tictactoe.controllers.implementation.LogicImplementation;
 import usantatecla.tictactoe.models.DAO.SessionImplementationDAO;
 
-public abstract class TicTacToeStandalone extends TicTacToe {
+public class TicTacToeStandalone extends TicTacToe {
 
     @Override
 	protected Logic createLogic() {
-		return new LogicImplementation(this.createDAO());
+		return new LogicImplementation(new SessionImplementationDAO());
 	}
-
-	protected abstract SessionImplementationDAO createDAO();
+	
+	public static void main(String[] args) {
+		new TicTacToeStandalone().play();
+	}
     
 }

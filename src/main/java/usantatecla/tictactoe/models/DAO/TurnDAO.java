@@ -1,4 +1,4 @@
-package usantatecla.tictactoe.models.Files;
+package usantatecla.tictactoe.models.DAO;
 
 import java.io.BufferedReader;
 import java.io.FileWriter;
@@ -6,11 +6,11 @@ import java.io.IOException;
 
 import usantatecla.tictactoe.models.Turn;
 
-class TurnFileDAO implements FileDAO {
+class TurnDAO implements DAO {
 
-	private Turn turn;
+    private Turn turn;
 
-    TurnFileDAO(Turn turn) {
+    TurnDAO(Turn turn) {
 		this.turn = turn;
     }
     

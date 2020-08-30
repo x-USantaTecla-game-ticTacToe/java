@@ -13,18 +13,16 @@ public class Game {
     private Turn turn;
 
     public Game() {
-        this.board = new Board();
-        this.players = new Player[Turn.PLAYERS];
-        this.turn = new Turn(this.players);
+        this.newGame();
     }
 
     public void createPlayers(int numberOfUsers) {
-        for (int i = 0; i < numberOfUsers; i++) {
-            this.players[i] = new Player(Token.values()[i], this.board, PlayerType.USER_PLAYER);
-        }
-        for (int i = numberOfUsers; i < Turn.PLAYERS; i++) {
-            this.players[i] = new Player(Token.values()[i], this.board, PlayerType.MACHINE_PLAYER);
-        }
+		for (int i = 0; i < numberOfUsers; i++) {
+			this.players[i] = new Player(Token.values()[i], this.board, PlayerType.USER_PLAYER);
+		}
+		for (int i = numberOfUsers; i < Turn.NUM_PLAYERS; i++) {
+			this.players[i] = new Player(Token.values()[i], this.board, PlayerType.MACHINE_PLAYER);
+		}
     }
 
     Memento createMemento() {
@@ -40,7 +38,7 @@ public class Game {
 
     private Player[] createCopyOfPlayers(Player[] players, Board board) {
         Player[] playersCopy = new Player[2];
-        for (int i = 0; i < Turn.PLAYERS; i++) {
+        for (int i = 0; i < Turn.NUM_PLAYERS; i++) {
             playersCopy[i] = new Player(players[i].getToken(), board, players[i].getType());
         }
         return playersCopy;
@@ -62,21 +60,21 @@ public class Game {
         return this.turn.getPlayer().getType();
     }
 
-    public Error getErrorsPutCoordinate(Coordinate coordinate) {
+    public Error getPutCoordinateError(Coordinate coordinate) {
         if (!board.isEmpty(coordinate)) {
             return Error.NOT_OWNER;
         }
         return null;
     }
 
-    public Error getErrorsMoveOriginCoordinate(Coordinate originCoordinate) {
+    public Error getMoveOriginCoordinateError(Coordinate originCoordinate) {
         if (!board.isOccupied(originCoordinate, this.turn.getPlayer().getToken())) {
             return Error.NOT_OWNER;
         }
         return null;
     }
 
-    public Error getErrorsMoveTargetCoordinate(Coordinate originCoordinate, Coordinate targetCoordinate) {
+    public Error getMoveTargetCoordinateError(Coordinate originCoordinate, Coordinate targetCoordinate) {
         if (originCoordinate.equals(targetCoordinate)) {
             return Error.SAME_COORDINATES;
         } else if (!board.isEmpty(targetCoordinate)) {
@@ -85,8 +83,8 @@ public class Game {
         return null;
     }
 
-    public Token getToken(int row, int column) {
-        return this.board.getToken(new Coordinate(row, column));
+    public Token getToken(Coordinate coordinate) {
+        return this.board.getToken(coordinate);
     }
 
     public void changeTurn() {
@@ -97,8 +95,8 @@ public class Game {
         return this.board.isTicTacToe(this.turn.getOtherPlayer().getToken());
     }
 
-    public int getOtherValueFromTurn() {
-        return this.turn.getOtherValue();
+    public int getValueFromTurn() {
+        return this.turn.getValue();
     }
 
     public int getPlayerOrdinalTokenByIndex(int playerIndex) {
@@ -121,8 +119,10 @@ public class Game {
         return this.turn;
     }
 
-    public void setTurnWithValue(int value) {
-        this.turn = new Turn(this.players, value);
-    }
+    public void newGame() {
+		this.board = new Board();
+        this.players = new Player[Turn.NUM_PLAYERS];
+        this.turn = new Turn(this.players);
+	}
 
 }

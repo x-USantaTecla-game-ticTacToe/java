@@ -59,27 +59,27 @@ public class PlayControllerImplementation extends PlayController {
 	}
 
 	@Override
-	public Error controlErrorsPutCoordinate(int row, int column) {
-		return this.movementController.getErrorsPutCoordinate(row, column);
+	public Error getPutCoordinateError(Coordinate coordinate) {
+		return this.movementController.getPutCoordinateError(coordinate);
 	}
 
 	@Override
-	public Error controlErrorsMoveOriginCoordinate(int originRow, int originColumn) {
-		return this.movementController.getErrorsMoveOriginCoordinate(originRow, originColumn);
+	public Error getMoveOriginCoordinateError(Coordinate coordinate) {
+		return this.movementController.getMoveOriginCoordinateError(coordinate);
 	}
 
 	@Override
-	public Error controlErrorsMoveTargetCoordinate(int originRow, int originColumn, int targetRow, int targetColumn) {
-		return this.movementController.getErrorsMoveTargetCoordinate(originRow, originColumn, targetRow, targetColumn);
+	public Error getMoveTargetCoordinateError(Coordinate originCoordinate, Coordinate targetCoordinate) {
+		return this.movementController.getMoveTargetCoordinateError(originCoordinate, targetCoordinate);
 	}
 
 	@Override
-	public boolean isCoordinateValid(int row, int column) {
-		return this.movementController.isCoordinateValid(row, column);
+	public boolean isCoordinateValid(Coordinate coordinate) {
+		return this.movementController.isCoordinateValid(coordinate);
 	}
 
 	@Override
-	public int[] generateRandomCoordinate() {
+	public Coordinate generateRandomCoordinate() {
 		return this.movementController.generateRandomCoordinate();
 	}
 
@@ -89,13 +89,13 @@ public class PlayControllerImplementation extends PlayController {
 	}
 
 	@Override
-	public void putTokenPlayerFromTurn(int originRow, int originColumn) {
-		this.movementController.putTokenPlayerFromTurn(originRow, originColumn);
+	public void putTokenPlayerFromTurn(Coordinate coordinate) {
+		this.movementController.putTokenPlayerFromTurn(coordinate);
 	}
 
 	@Override
-	public void moveTokenPlayerFromTurn(int originRow, int originColumn, int targetRow, int targetColumn) {
-		this.movementController.moveTokenPlayerFromTurn(originRow, originColumn, targetRow, targetColumn);
+	public void moveTokenPlayerFromTurn(Coordinate[] coordinates) {
+		this.movementController.moveTokenPlayerFromTurn(coordinates);
 	}
 
 	@Override
@@ -104,13 +104,18 @@ public class PlayControllerImplementation extends PlayController {
 	}
 
 	@Override
-	public char getTokenChar(int row, int column) {
-		return this.movementController.getTokenChar(row, column);
+	public char getTokenChar(Coordinate coordinate) {
+		return this.movementController.getTokenChar(coordinate);
 	}
 
 	@Override
-	public boolean isEmptyToken(int row, int column) {
-		return this.movementController.isEmptyToken(row, column);
+	public boolean isEmptyToken(Coordinate coordinate) {
+		return this.movementController.isEmptyToken(coordinate);
+	}
+
+	@Override
+	public int getValueFromTurn() {
+		return this.movementController.getValueFromTurn();
 	}
 
 	@Override
@@ -119,8 +124,13 @@ public class PlayControllerImplementation extends PlayController {
 	}
 
 	@Override
-	public void isTicTacToe() {
-		this.movementController.isTicTacToe();
+	public void continueState() {
+		this.movementController.continueState();
+	}
+
+	@Override
+	public boolean isTicTacToe() {
+		return this.movementController.isTicTacToe();
 	}
 
 }

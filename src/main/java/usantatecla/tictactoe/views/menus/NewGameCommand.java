@@ -14,7 +14,7 @@ class NewGameCommand extends Command {
 	@Override
 	protected void execute() {
 		((StartController) this.acceptorController).start();
-		int numberOfUsers = new PlayersDialog().read(Turn.PLAYERS);
+		int numberOfUsers = new PlayersDialog().read(Turn.NUM_PLAYERS);
 		((StartController) this.acceptorController).createPlayers(numberOfUsers);
 	}
 

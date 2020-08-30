@@ -1,9 +1,9 @@
-package usantatecla.tictactoe.models.Files;
+package usantatecla.tictactoe.models.DAO;
 
 import java.io.BufferedReader;
 import java.io.FileWriter;
 
-interface FileDAO {
+interface DAO {
 
 	void save (FileWriter fileWriter);
 	
