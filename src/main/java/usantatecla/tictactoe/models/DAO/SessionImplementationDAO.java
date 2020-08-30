@@ -44,7 +44,7 @@ public class SessionImplementationDAO {
         }
         this.sessionImplementation.setValueState(StateValue.IN_GAME);
 		if (this.sessionImplementation.isTicTacToe()) {
-            this.sessionImplementation.setValueState(StateValue.RESULT);
+            this.sessionImplementation.setValueState(StateValue.RESUME);
 		}
 	}
 

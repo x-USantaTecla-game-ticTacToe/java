@@ -9,7 +9,7 @@ public enum MessageView {
 	VERTICAL_LINE_LEFT("| "),
 	PLAYER_WIN(" Player: You win!!! :-)"),
 	START_GAME("-------------------- TIC TAC TOE --------------------"),
-	CHOOSE_PLAYERS("Number of users [0-" + Turn.PLAYERS + "] "),
+	CHOOSE_PLAYERS("Number of users [0-" + Turn.NUM_PLAYERS + "] "),
 	READ_ROW("Row: "),
 	READ_COLUMN("Column: "),
 	ERROR("ERROR"),
@@ -21,7 +21,8 @@ public enum MessageView {
 	OPENGAME_COMMAND("Open a saved game"),
 	NAME("Name: "),
 	EXIT_COMMAND("Exit game"),
-	ALREADY_EXIST("The proposed name already exists");
+	ALREADY_EXIST("The proposed name already exists"),
+	RESUME("Do you want to continue");
 
 	private String message;
 

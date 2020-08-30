@@ -34,7 +34,7 @@ class BoardDAO implements DAO {
 
 	public void load(BufferedReader bufferedReader) {
 		try {
-			for (int i = 0; i < Turn.PLAYERS; i++) {
+			for (int i = 0; i < Turn.NUM_PLAYERS; i++) {
 				for (int j = 0; j < Coordinate.DIMENSION; j++) {
 					String tokenCoordinate = bufferedReader.readLine();
 					if ("-".equals(tokenCoordinate)) {

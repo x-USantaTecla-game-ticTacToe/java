@@ -2,6 +2,7 @@ package usantatecla.tictactoe.distributed.dispatchers.errors;
 
 import usantatecla.tictactoe.controllers.PlayController;
 import usantatecla.tictactoe.distributed.dispatchers.Dispatcher;
+import usantatecla.tictactoe.models.Coordinate;
 
 public class ErrorsMoveTargetDispatcher extends Dispatcher {
 
@@ -15,7 +16,7 @@ public class ErrorsMoveTargetDispatcher extends Dispatcher {
 		int originColumn = this.tcpip.receiveInt();
 		int targetRow = this.tcpip.receiveInt();
 		int targetColumn = this.tcpip.receiveInt();
-		this.tcpip.send(((PlayController) this.acceptorController).controlErrorsMoveTargetCoordinate(originRow,
-				originColumn, targetRow, targetColumn));
+		this.tcpip.send(((PlayController) this.acceptorController).getMoveTargetCoordinateError(
+				new Coordinate(originRow, originColumn), new Coordinate(targetRow, targetColumn)));
 	}
 }

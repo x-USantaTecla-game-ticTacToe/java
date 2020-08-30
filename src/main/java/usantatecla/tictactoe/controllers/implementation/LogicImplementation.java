@@ -15,7 +15,7 @@ public class LogicImplementation extends Logic {
 
 	protected SaveControllerImplementation saveControllerImplementation;
 
-	protected ResultControllerImplementation resultControllerImplementation;
+	protected ResumeControllerImplementation resumeControllerImplementation;
 
 	public LogicImplementation(SessionImplementationDAO sessionImplementationDAO) {
 		this.session = new SessionImplementation();
@@ -24,11 +24,11 @@ public class LogicImplementation extends Logic {
 		this.startControllerImplementation = new StartControllerImplementation(this.session, this.sessionImplementationDAO);
 		this.playControllerImplementation = new PlayControllerImplementation(this.session);
 		this.saveControllerImplementation = new SaveControllerImplementation(this.session, this.sessionImplementationDAO);
-		this.resultControllerImplementation = new ResultControllerImplementation(this.session);
+		this.resumeControllerImplementation = new ResumeControllerImplementation(this.session);
 		this.acceptorControllers.put(StateValue.INITIAL, this.startControllerImplementation);
 		this.acceptorControllers.put(StateValue.IN_GAME, this.playControllerImplementation);
 		this.acceptorControllers.put(StateValue.SAVING, this.saveControllerImplementation);
-		this.acceptorControllers.put(StateValue.RESULT, this.resultControllerImplementation);
+		this.acceptorControllers.put(StateValue.RESUME, this.resumeControllerImplementation);
 		this.acceptorControllers.put(StateValue.EXIT, null);
 	}
 

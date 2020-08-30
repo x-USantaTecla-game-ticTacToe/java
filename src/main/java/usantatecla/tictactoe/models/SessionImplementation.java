@@ -50,16 +50,16 @@ public class SessionImplementation implements Session {
 		return this.game.getTypeOfTokenPlayerFromTurn();
 	}
 
-	public Error getErrorsPutCoordinate(Coordinate coordinate) {
-		return this.game.getErrorsPutCoordinate(coordinate);
+	public Error getPutCoordinateError(Coordinate coordinate) {
+		return this.game.getPutCoordinateError(coordinate);
 	}
 
-	public Error getErrorsMoveOriginCoordinate(Coordinate originCoordinate) {
-		return this.game.getErrorsMoveOriginCoordinate(originCoordinate);
+	public Error getMoveOriginCoordinateError(Coordinate originCoordinate) {
+		return this.game.getMoveOriginCoordinateError(originCoordinate);
 	}
 
-	public Error getErrorsMoveTargetCoordinate(Coordinate originCoordinate, Coordinate targetCoordinate) {
-		return this.game.getErrorsMoveTargetCoordinate(originCoordinate, targetCoordinate);
+	public Error getMoveTargetCoordinateError(Coordinate originCoordinate, Coordinate targetCoordinate) {
+		return this.game.getMoveTargetCoordinateError(originCoordinate, targetCoordinate);
 	}
 
     public boolean isBoardComplete() {
@@ -82,16 +82,16 @@ public class SessionImplementation implements Session {
         this.game.changeTurn();
     }
 
-    public Token getToken(int row, int column) {
-		return this.game.getToken(row, column);
+    public Token getToken(Coordinate coordinate) {
+		return this.game.getToken(coordinate);
 	}
 
     public boolean isTicTacToe() {
         return this.game.isTicTacToe();
     }
 
-    public int getOtherValueFromTurn() {
-        return this.game.getOtherValueFromTurn();
+    public int getValueFromTurn() {
+        return this.game.getValueFromTurn();
     }
 
     public StateValue getValueState() {
@@ -124,6 +124,12 @@ public class SessionImplementation implements Session {
 
 	public void registry() {
 		this.registry.registry();
+	}
+
+	public void newGame() {
+		this.game.newGame();
+		this.state.reset();	
+		this.registry.reset();
 	}
 
 }

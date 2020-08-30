@@ -37,7 +37,7 @@ public class StateTest {
         this.state.next();
         this.state.next();
         this.state.next();
-        assertEquals(StateValue.RESULT, this.state.getValueState());
+        assertEquals(StateValue.RESUME, this.state.getValueState());
     }
 
     @Test
