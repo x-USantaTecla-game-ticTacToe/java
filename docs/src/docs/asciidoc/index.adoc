@@ -83,11 +83,6 @@ class  tictactoe.views.BoardView{
 }
 utils.WithConsoleView <|-down- tictactoe.views.BoardView
 
-class  tictactoe.views.Command{
-~ read(String): Coordinate
-}
-utils.Command <|-down- tictactoe.views.Command
-
 class  tictactoe.views.CoordinateView{
 ~ read(String): Coordinate
 }
@@ -144,6 +139,7 @@ class tictactoe.views.RedoCommand{
 + setActive(boolean): void
 }
 tictactoe.views.Command <|-down- tictactoe.views.RedoCommand
+tictactoe.views.RedoCommand ..> tictactoe.views.MessageView
 
 class tictactoe.views.ResultView{
 ~ write(char): void
@@ -165,7 +161,6 @@ tictactoe.views.StartView ..> tictactoe.views.MessageView
 
 class tictactoe.views.UndoCommand{
 + UndoCommand(PlayController)
-# execute(): void
 + setActive(boolean): void
 }
 tictactoe.views.Command <|-down- tictactoe.views.UndoCommand
