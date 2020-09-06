@@ -4,79 +4,84 @@ import usantatecla.tictactoe.models.Coordinate;
 import usantatecla.tictactoe.models.Session;
 import usantatecla.tictactoe.types.Error;
 import usantatecla.tictactoe.types.PlayerType;
+import usantatecla.tictactoe.views.ErrorView;
+import usantatecla.tictactoe.views.UserPlayerView;
 
-public class MovementController extends Controller {
-    
-    public MovementController(Session session) {
+public class MovementController extends InGameController {
+	static final String ENTER_COORDINATE_TO_PUT = "Enter a coordinate to put a token:";
+	static final String ENTER_COORDINATE_TO_REMOVE = "Enter a coordinate to remove a token:";
+
+	public MovementController(Session session) {
 		super(session);
 	}
 
-	public PlayerType getTypeOfTokenPlayerFromTurn() {
-		return this.session.getTypeOfTokenPlayerFromTurn();
+	@Override
+	public void inGameControl() {
+		Error error;
+		if (!this.session.isBoardComplete()) {
+			Coordinate coordinate;
+			do {
+				coordinate = this.readCoordinateToPut();
+				error = this.session.putTokenPlayerFromTurn(coordinate);
+				if (error != null && this.isUserPlayerType()) {
+					new ErrorView(error).writeln();
+				}
+			} while (error != null);
+		} else {
+			Coordinate[] coordinates = new Coordinate[2];
+			do {
+				coordinates = this.readCoordinateToMove();
+				error = this.session.moveTokenPlayerFromTurn(coordinates);
+				if (error != null && this.isUserPlayerType()) {
+					new ErrorView(error).writeln();
+				}
+			} while (error != null);
+		}
 	}
 
-	public Error getPutCoordinateError(Coordinate coordinate) {
-		return this.session.getPutCoordinateError(coordinate);
+	private boolean isUserPlayerType() {
+		return this.session.getTypeOfTokenPlayerFromTurn() == PlayerType.USER_PLAYER;
 	}
 
-	public Error getMoveOriginCoordinateError(Coordinate coordinate) {
-		return this.session.getMoveOriginCoordinateError(coordinate);
-	}
-
-	public Error getMoveTargetCoordinateError(Coordinate originCoordinate, Coordinate targetCoordinate) {
-		return this.session.getMoveTargetCoordinateError(originCoordinate, targetCoordinate);
-	}
-
-	public boolean isCoordinateValid(int row, int column) {
-		return new Coordinate(row, column).isValid();
-	}
-
-	public int[] generateRandomCoordinate() {
-		Coordinate coordinateRandom = new Coordinate();
-		coordinateRandom.random();
-		int[] coordinate = new int[2];
-		coordinate[0] = coordinateRandom.getRow();
-		coordinate[1] = coordinateRandom.getColumn();
+	private Coordinate readCoordinateToPut() {
+		Coordinate coordinate;
+		do {
+			coordinate = this.isUserPlayerType()
+					? new UserPlayerView().readCoordinate(MovementController.ENTER_COORDINATE_TO_PUT)
+					: this.generateRandomCoordinate();
+			if (!coordinate.isValid() && this.isUserPlayerType()) {
+				new ErrorView(Error.WRONG_COORDINATES).writeln();
+			}
+		} while (!coordinate.isValid());
 		return coordinate;
 	}
 
-	public boolean isBoardComplete() {
-		return this.session.isBoardComplete();
+	private Coordinate generateRandomCoordinate() {
+		Coordinate coordinateRandom = new Coordinate();
+		coordinateRandom.random();
+		return coordinateRandom;
 	}
 
-	public void putTokenPlayerFromTurn(Coordinate coordinate) {
-		this.session.putTokenPlayerFromTurn(coordinate);
-	}
-
-	public void moveTokenPlayerFromTurn(Coordinate[] coordinates) {
-		this.session.moveTokenPlayerFromTurn(coordinates);
-	}
-
-	public void changeTurn() {
-		this.session.changeTurn();
-	}
-
-	public char getTokenChar(Coordinate coordinate) {
-		return this.session.getToken(coordinate).getChar();
-	}
-
-	public boolean isEmptyToken(Coordinate coordinate) {
-		return this.session.getToken(coordinate) == null;
-	}
-
-	public int getCoordinateDimension() {
-		return Coordinate.DIMENSION;
-	}
-
-	public int getValueFromTurn() {
-		return this.session.getValueFromTurn();
-	}
-
-	public void continueState() {
-		this.session.next();
-	}
-
-	public boolean isTicTacToe() {
-		return this.session.isTicTacToe();
+	private Coordinate[] readCoordinateToMove() {
+		Coordinate[] coordinates = new Coordinate[2];
+		do {
+			coordinates[0] = this.isUserPlayerType()
+					? new UserPlayerView().readCoordinate(MovementController.ENTER_COORDINATE_TO_REMOVE)
+					: this.generateRandomCoordinate();
+			assert coordinates[0].isValid();
+			if (!coordinates[0].isValid() && this.isUserPlayerType()) {
+				new ErrorView(Error.WRONG_COORDINATES).writeln();
+			}
+		} while (!coordinates[0].isValid());
+		do {
+			coordinates[1] = this.isUserPlayerType()
+					? new UserPlayerView().readCoordinate(MovementController.ENTER_COORDINATE_TO_PUT)
+					: this.generateRandomCoordinate();
+			assert coordinates[1].isValid();
+			if (!coordinates[1].isValid() && this.isUserPlayerType()) {
+				new ErrorView(Error.WRONG_COORDINATES).writeln();
+			}
+		} while (!coordinates[1].isValid());
+		return coordinates;
 	}
 }

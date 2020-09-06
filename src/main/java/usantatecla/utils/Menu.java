@@ -1,22 +1,23 @@
 package usantatecla.utils;
 
 import java.util.ArrayList;
+import java.util.Set;
 
-public abstract class Menu extends WithConsoleView {
+public class Menu extends WithConsoleView {
 
 	private static final String OPTION = "----- Choose one option -----";
 	
-	private ArrayList<Command> commandList;
+	private ArrayList<Command> commandSet;
 
-	public Menu() {
-		this.commandList = new ArrayList<Command>();
+	public Menu(Set<Command> commandSet) {
+		this.commandSet = new ArrayList<Command>(commandSet);
 	}
 
-	public void execute() {
+	public Command execute() {
 		ArrayList<Command> commands = new ArrayList<Command>();
-		for (int i = 0; i < this.commandList.size(); i++) {
-			if (this.commandList.get(i).isActive()) {
-				commands.add(this.commandList.get(i));
+		for (int i = 0; i < this.commandSet.size(); i++) {
+			if (this.commandSet.get(i).isActive()) {
+				commands.add(this.commandSet.get(i));
 			}
 		}
 		boolean error;
@@ -33,11 +34,7 @@ public abstract class Menu extends WithConsoleView {
 				error = true;
 			} 				
 		} while (error);
-		commands.get(option).execute();
-	}
-
-	protected void addCommand(Command command) {
-		this.commandList.add(command);
+		return commands.get(option);
 	}
 
 }

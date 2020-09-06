@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.8">
 <meta name="author" content="Santa Tecla">
-<title>Master Mind. Solución 9.3. mvp.pm.withComposite</title>
+<title>Master Mind. Solución 16.1. mvp.pv</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -439,7 +439,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="book">
 <div id="header">
-<h1>Master Mind. Solución 9.3. <strong>mvp.pm.withComposite</strong></h1>
+<h1>Master Mind. Solución 16.1. <strong>mvp.pv</strong></h1>
 <div class="details">
 <span id="author" class="author">Santa Tecla</span><br>
 <span id="email" class="email"><a href="mailto:parqueNaturalSantaTecla@gmail.com">parqueNaturalSantaTecla@gmail.com</a></span><br>
@@ -448,8 +448,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toc" class="toc">
 <div id="toctitle">Índice</div>
 <ul class="sectlevel1">
-<li><a href="#requisitos-2-gráficos">Requisitos 2. <strong>Gráficos</strong></a></li>
-<li><a href="#vista-de-lógicadiseño">Vista de Lógica/Diseño</a>
+<li><a href="#requisitos-2-gráficos">Requisitos 2. <strong>Gráficos</strong></a>
 <ul class="sectlevel2">
 <li><a href="#arquitectura">Arquitectura</a></li>
 <li><a href="#paquete-tictactoe">Paquete <em>tictactoe</em></a></li>
@@ -486,7 +485,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p><em>Funcionalidad: <strong>Básica</strong> + <strong class="lime-background">undo/redo</strong></em></p>
 </li>
 <li>
-<p><em>Interfaz: <strong class="lime-background">Gráfica</strong> y <strong>Texto</strong></em></p>
+<p><em>Interfaz: <strong>Texto</strong></em></p>
 </li>
 <li>
 <p><em>Distribución: <strong>Standalone</strong></em></p>
@@ -507,36 +506,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </tr>
 </tbody>
 </table>
-</div>
-</div>
-<div class="sect1">
-<h2 id="vista-de-lógicadiseño">Vista de Lógica/Diseño</h2>
-<div class="sectionbody">
-<div class="ulist">
-<ul>
-<li>
-<p><strong>Modelo/Vista/Presentador</strong> con <strong>Presentador del Modelo</strong>  con <strong>Vista Achicada</strong></p>
-<div class="ulist">
-<ul>
-<li>
-<p><strong class="lime-background">Patrón Command</strong>, para el menú</p>
-</li>
-<li>
-<p><strong class="lime-background">Patrón Composite</strong>, para multi-controladores</p>
-</li>
-<li>
-<p><strong class="lime-background">Patrón Memento</strong>, para la funcionalidad undo/redo</p>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
 <div class="sect2">
 <h3 id="arquitectura">Arquitectura</h3>
 <div class="imageblock">
 <div class="content">
-<img src="images/arquitecturaVersion9.svg" alt="arquitecturaVersion9" width="301" height="648">
+<img src="images/arquitecturaVersion15.svg" alt="arquitecturaVersion15" width="477" height="533">
 </div>
 </div>
 </div>
@@ -544,7 +518,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h3 id="paquete-tictactoe">Paquete <em>tictactoe</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="images/tictactoeVersion9.svg" alt="tictactoeVersion9" width="342" height="311">
+<img src="images/tictactoeVersion15.svg" alt="tictactoeVersion15" width="352" height="311">
 </div>
 </div>
 </div>
@@ -552,7 +526,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h3 id="paquete-tictactoe-views">Paquete <em>tictactoe.views</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="images/tictactoeViewsVersion9.svg" alt="tictactoeViewsVersion9" width="1905" height="1512">
+<img src="images/tictactoeViewsVersion15.svg" alt="tictactoeViewsVersion15" width="1802" height="766">
 </div>
 </div>
 </div>
@@ -560,7 +534,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h3 id="paquete-tictactoe-models">Paquete <em>tictactoe.models</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="images/tictactoeModelsVersion9.svg" alt="tictactoeModelsVersion9" width="934" height="2465">
+<img src="images/tictactoeModelsVersion15.svg" alt="tictactoeModelsVersion15" width="934" height="2507">
 </div>
 </div>
 </div>
@@ -568,7 +542,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h3 id="paquete-tictactoe-controllers">Paquete <em>tictactoe.controllers</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="images/tictactoeControllersVersion9.svg" alt="tictactoeControllersVersion9" width="1254" height="1380">
+<img src="images/tictactoeControllersVersion15.svg" alt="tictactoeControllersVersion15" width="2136" height="749">
 </div>
 </div>
 </div>
@@ -576,7 +550,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h3 id="paquete-utils">Paquete <em>utils</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="images/utilsVersion9.svg" alt="utilsVersion9" width="1218" height="721">
+<img src="images/utilsVersion15.svg" alt="utilsVersion15" width="1217" height="735">
 </div>
 </div>
 </div>
@@ -618,7 +592,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1<br>
-Last updated 2020-08-29 16:54:57 +0200
+Last updated 2020-09-06 17:58:23 +0200
 </div>
 </div>
 <script>

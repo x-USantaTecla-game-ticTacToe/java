@@ -28,4 +28,12 @@ public enum MessageView {
 		return this.message;
 	}
 
+	void write() {
+		System.out.print(this.message);
+	}
+	
+	void writeln() {
+		System.out.println(this.message);
+	}
+
 }

@@ -83,4 +83,25 @@ public class CoordinateTest {
     public void testGivenNewCoordinatesWhenCompareOneCoordinateWithAnObjectThenIsFalse() {
         assertFalse(this.coordinate00.equals(new Object()));
     }
+
+    @Test
+    public void testGivenNewPlayControllerWhenACoordinateRow0Column0ThenIsValid() {
+        assertTrue(this.coordinate00.isValid());
+    }
+
+    @Test
+    public void testGivenNewPlayControllerWhenACoordinateRow2Column2ThenIsValid() {
+        assertTrue(new Coordinate(2, 2).isValid());
+    }
+
+    @Test
+    public void testGivenNewPlayControllerWhenACoordinateRow3Column3ThenIsNotValid() {
+        assertFalse(new Coordinate(3, 3).isValid());
+    }
+
+    @Test
+    public void testGivenNewPlayControllerWhenACoordinateRowNegativeColumnNegativeThenIsNotValid() {
+        assertFalse(new Coordinate(-1, -1).isValid());
+    }
+
 }

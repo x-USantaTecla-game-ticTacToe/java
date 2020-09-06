@@ -1,14 +1,15 @@
 package usantatecla.tictactoe.controllers;
 
 import usantatecla.tictactoe.models.Session;
+import usantatecla.tictactoe.views.ResumeView;
 
-public class ResumeController extends AcceptorController {
+public class ResumeController extends Controller {
 
 	public ResumeController(Session session) {
 		super(session);
 	}
 
-	public void resume(boolean newGame) {
+	private void resume(boolean newGame) {
 		if (newGame) {
 			this.session.newGame();
 		} else {
@@ -17,8 +18,8 @@ public class ResumeController extends AcceptorController {
 	}
 
 	@Override
-	public void accept(ControllersVisitor controllersVisitor) {
-		controllersVisitor.visit(this);
+	public void control() {
+		this.resume(new ResumeView().read());
 	}
 
 }

@@ -10,9 +10,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import usantatecla.tictactoe.controllers.PlayController;
 import usantatecla.tictactoe.models.Coordinate;
-import usantatecla.tictactoe.models.Session;
 import usantatecla.utils.Console;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -23,7 +21,7 @@ public class CoordinateViewTest {
     Console console;
 
     @InjectMocks
-    CoordinateView coordinateView = new CoordinateView(new PlayController(new Session()));
+    CoordinateView coordinateView = new CoordinateView();
 
     @Test
     public void testGivenNewCoordinateViewWhenReadCoordinateThenIsCorrect() {
@@ -33,24 +31,6 @@ public class CoordinateViewTest {
         Coordinate coordinateExpected = new Coordinate(0, 0);
         assertEquals(coordinateExpected.getRow(), coordinateRead.getRow());
         assertEquals(coordinateExpected.getColumn(), coordinateRead.getColumn());
-    }
-
-    @Test(expected = AssertionError.class)
-    public void testGivenNewCoordinatesWhenRow4AndColumn4ThenAssertionException() {
-        when(this.console.readInt("Row: ")).thenReturn(4);
-        when(this.console.readInt("Column: ")).thenReturn(4);
-        this.coordinateView.read("Title");
-        verify(this.console).readInt("Row: ");
-        verify(this.console).readInt("Column: ");
-    }
-
-    @Test(expected = AssertionError.class)
-    public void testGivenNewCoordinatesWhenRow0AndColumn0ThenAssertionException() {
-        when(this.console.readInt("Row: ")).thenReturn(0);
-        when(this.console.readInt("Column: ")).thenReturn(0);
-        this.coordinateView.read("Title");
-        verify(this.console).readInt("Row: ");
-        verify(this.console).readInt("Column: ");
     }
 
     @Test

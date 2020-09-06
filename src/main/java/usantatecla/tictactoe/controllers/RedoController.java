@@ -2,18 +2,19 @@ package usantatecla.tictactoe.controllers;
 
 import usantatecla.tictactoe.models.Session;
 
-public class RedoController extends Controller {
+class RedoController extends InGameController {
 
-    RedoController(Session session) {
+	RedoController(Session session) {
 		super(session);
-	}
-
-	void redo() {
-		this.session.redo();
 	}
 
 	boolean redoable() {
 		return this.session.redoable();
 	}
-    
+
+	@Override
+	public void inGameControl() {
+		this.session.redo();
+	}
+
 }

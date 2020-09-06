@@ -1,22 +1,16 @@
 package usantatecla.tictactoe.views;
 
-import usantatecla.tictactoe.controllers.PlayController;
+import usantatecla.utils.Command;
 
-class UndoCommand extends Command {
+public class UndoCommand extends Command {
 
-	UndoCommand(PlayController playController) {
-		super(MessageView.UNDO_COMMAND.getMessage(), playController);
+	public UndoCommand() {
+		super(MessageView.UNDO_COMMAND.getMessage());
 	}
 
-	
-	protected void execute() {
-		this.playController.undo();
-		new GameView(this.playController);
-	}
-
-	
-	protected boolean isActive() {
-		return this.playController.undoable();
+	@Override
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
 	}
 	
 }

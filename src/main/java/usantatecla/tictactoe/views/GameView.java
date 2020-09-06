@@ -1,15 +1,33 @@
 package usantatecla.tictactoe.views;
 
-import usantatecla.tictactoe.controllers.PlayController;
-
 public class GameView {
 
-    GameView(PlayController playController) {
-        new BoardView(playController).write();
-        if (playController.isTicTacToe()) {
-            new ResultView().writeln(playController.getValueFromTurn());
-            playController.continueState();
-        }
+    public void writeSeparator() {
+        MessageView.SEPARATOR.writeln();
+    }
+
+    public void writeVerticalLineLeft() {
+        MessageView.VERTICAL_LINE_LEFT.write();
+    }
+
+    public void writeVerticalLineCentered() {
+        MessageView.VERTICAL_LINE_CENTERED.write();
+    }
+
+    public void writeEmpty() {
+        MessageView.EMPTY.write();
+    }
+
+    public void writeLineBreak() {
+        new BoardView().writeln();
+    }
+
+    public void writeToken(char token) {
+        new BoardView().write(token);
+    }
+
+    public void writeWinner(char winner) {
+        new ResultView().write(winner);
     }
     
 }

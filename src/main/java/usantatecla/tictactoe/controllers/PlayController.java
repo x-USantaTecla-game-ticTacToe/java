@@ -1,112 +1,54 @@
 package usantatecla.tictactoe.controllers;
 
-import usantatecla.tictactoe.models.Coordinate;
-import usantatecla.tictactoe.models.Session;
-import usantatecla.tictactoe.types.Error;
-import usantatecla.tictactoe.types.PlayerType;
+import java.util.HashMap;
+import java.util.Map;
 
-public class PlayController extends AcceptorController {
+import usantatecla.tictactoe.models.Session;
+import usantatecla.tictactoe.views.MovementCommand;
+import usantatecla.tictactoe.views.RedoCommand;
+import usantatecla.tictactoe.views.UndoCommand;
+import usantatecla.utils.Command;
+import usantatecla.utils.Menu;
+
+public class PlayController extends Controller {
+
+	private Map<Command, Controller> controllers;
+
+	private MovementCommand movementCommand;
 
 	private MovementController movementController;
 
+	private UndoCommand undoCommand;
+
 	private UndoController undoController;
 
+	private RedoCommand redoCommand;
+
 	private RedoController redoController;
+
+	private Menu menu;
     
     public PlayController(Session session) {
 		super(session);
+		this.controllers = new HashMap<Command, Controller>();
 		this.movementController = new MovementController(this.session);
+		this.movementCommand = new MovementCommand();
+		this.controllers.put(this.movementCommand, this.movementController);
+		this.undoCommand = new UndoCommand();
 		this.undoController = new UndoController(this.session);
+		this.controllers.put(this.undoCommand, this.undoController);
+		this.redoCommand = new RedoCommand();
 		this.redoController = new RedoController(this.session);
-	}
-
-	public void undo() {
-		this.undoController.undo();
-	}
-
-	public void redo() {
-		this.redoController.redo();
-	}
-
-	public boolean undoable() {
-		return this.undoController.undoable();
-	}
-
-	public boolean redoable() {
-		return this.redoController.redoable();
-	}
-
-	public PlayerType getTypeOfTokenPlayerFromTurn() {
-		return this.movementController.getTypeOfTokenPlayerFromTurn();
-	}
-
-	public Error getPutCoordinateError(Coordinate coordinate) {
-		return this.movementController.getPutCoordinateError(coordinate);
-	}
-
-	public Error getMoveOriginCoordinateError(Coordinate originCoordinate) {
-		return this.movementController.getMoveOriginCoordinateError(originCoordinate);
-	}
-
-	public Error getMoveTargetCoordinateError(Coordinate originCoordinate, Coordinate targetCoordinate) {
-		return this.movementController.getMoveTargetCoordinateError(originCoordinate, targetCoordinate);
-	}
-
-	public boolean isCoordinateValid(Coordinate coordinate) {
-		return coordinate.isValid();
-	}
-
-	public Coordinate generateRandomCoordinate() {
-		Coordinate coordinateRandom = new Coordinate();
-		coordinateRandom.random();
-		return coordinateRandom;
-	}
-
-	public boolean isBoardComplete() {
-		return this.movementController.isBoardComplete();
-	}
-
-	public void putTokenPlayerFromTurn(Coordinate coordinate) {
-		this.movementController.putTokenPlayerFromTurn(coordinate);
-	}
-
-	public void moveTokenPlayerFromTurn(Coordinate originCoordinate, Coordinate targetCoordinate) {
-		Coordinate[] coordinates = new Coordinate[2];
-		coordinates[0] = originCoordinate;
-		coordinates[1] = targetCoordinate;
-		this.movementController.moveTokenPlayerFromTurn(coordinates);
-	}
-
-	public void changeTurn() {
-		this.movementController.changeTurn();
-	}
-
-	public char getTokenChar(Coordinate coordinate) {
-		return this.movementController.getTokenChar(coordinate);
-	}
-
-	public boolean isEmptyToken(Coordinate coordinate) {
-		return this.movementController.isEmptyToken(coordinate);
-	}
-
-	public int getCoordinateDimension() {
-		return Coordinate.DIMENSION;
-	}
-
-	public int getValueFromTurn() {
-        return this.movementController.getValueFromTurn();
-    }
-
-	public boolean isTicTacToe() {
-		return this.movementController.isTicTacToe();
-	}
-
-	public void continueState() {
-		this.movementController.continueState();
+		this.controllers.put(this.redoCommand, this.redoController);
+		this.menu = new Menu(this.controllers.keySet());
 	}
 
 	@Override
-	public void accept(ControllersVisitor controllersVisitor) {
-		controllersVisitor.visit(this);
+	public void control() {
+		this.movementCommand.setActive(true);
+		this.undoCommand.setActive(this.undoController.undoable());
+		this.redoCommand.setActive(this.redoController.redoable());
+		this.controllers.get(this.menu.execute()).control();
 	}
+	
 }

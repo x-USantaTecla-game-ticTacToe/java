@@ -9,4 +9,6 @@ public abstract class Controller {
 	Controller(Session session) {
 		this.session = session;
 	}
+
+	public abstract void control();
 }

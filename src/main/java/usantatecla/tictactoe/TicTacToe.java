@@ -1,28 +1,38 @@
 package usantatecla.tictactoe;
 
-import usantatecla.tictactoe.controllers.AcceptorController;
-import usantatecla.tictactoe.controllers.Logic;
-import usantatecla.tictactoe.views.View;
+import java.util.HashMap;
+import java.util.Map;
+
+import usantatecla.tictactoe.controllers.Controller;
+import usantatecla.tictactoe.controllers.PlayController;
+import usantatecla.tictactoe.controllers.ResumeController;
+import usantatecla.tictactoe.controllers.StartController;
+import usantatecla.tictactoe.models.Session;
+import usantatecla.tictactoe.types.StateValue;
 
 public class TicTacToe {
 
-    private Logic logic;
+    private Session session;
 
-    private View view;
+	private Map<StateValue, Controller> controllers;
 
-    protected TicTacToe() {
-        this.logic = new Logic();
-		this.view = new View();
+    TicTacToe() {
+        this.session = new Session();
+		this.controllers = new HashMap<StateValue, Controller>();
+		this.controllers.put(StateValue.INITIAL, new StartController(this.session));
+		this.controllers.put(StateValue.IN_GAME, new PlayController(this.session));
+		this.controllers.put(StateValue.RESUME, new ResumeController(this.session));
+		this.controllers.put(StateValue.EXIT, null);
     }
 
-    protected void play() {
-		AcceptorController acceptorController;
+    void play() {
+		Controller controller;
 		do {
-			acceptorController = this.logic.getController();
-			if (acceptorController != null){
-				this.view.interact(acceptorController);
+			controller = this.controllers.get(this.session.getValueState());
+			if (controller != null) {
+				controller.control();
 			}
-		} while (acceptorController != null); 
+		} while (controller != null);
 	}
 
     public static void main(String[] args) {
