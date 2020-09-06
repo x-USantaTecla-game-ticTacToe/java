@@ -1,16 +1,16 @@
 package usantatecla.tictactoe.views;
 
-import usantatecla.utils.Command;
+import usantatecla.tictactoe.models.Session;
 
-public class RedoCommand extends Command{
+public class RedoCommand extends Command {
 	
-	public RedoCommand() {
-		super(MessageView.REDO_COMMAND.getMessage());
+	public RedoCommand(Session session) {
+		super(MessageView.REDO_COMMAND.getMessage(), session);
 	}
 
 	@Override
-	public void setActive(boolean isActive) {
-		this.isActive = isActive;
+	public void updateIsActive() {
+		this.isActive = this.session.redoable();
 	}
 
 }

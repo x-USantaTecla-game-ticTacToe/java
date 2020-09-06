@@ -11,7 +11,7 @@ public abstract class Command extends WithConsoleView {
 		this.isActive = false;
 	}
 
-	public abstract void setActive(boolean isActive);
+	public abstract void updateIsActive();
 
 	protected boolean isActive() {
 		return this.isActive;

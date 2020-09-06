@@ -1,16 +1,16 @@
 package usantatecla.tictactoe.views;
 
-import usantatecla.utils.Command;
+import usantatecla.tictactoe.models.Session;
 
 public class MovementCommand extends Command {
 
-    public MovementCommand() {
-		super(MessageView.PROPOSE_COMMAND.getMessage());
+    public MovementCommand(Session session) {
+		super(MessageView.PROPOSE_COMMAND.getMessage(), session);
 	}
 
     @Override
-	public void setActive(boolean isActive) {
-		this.isActive = isActive;
+	public void updateIsActive() {
+		this.isActive = true;
 	}
     
 }
