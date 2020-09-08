@@ -1,17 +1,10 @@
 package usantatecla.utils;
 
-public abstract class Command extends WithConsoleView {
+public abstract class Command extends Observed {
 
 	protected String title;
 
 	protected boolean isActive;
-
-	protected Command(String title) {
-		this.title = title;
-		this.isActive = false;
-	}
-
-	public abstract void updateIsActive();
 
 	protected boolean isActive() {
 		return this.isActive;
@@ -20,5 +13,9 @@ public abstract class Command extends WithConsoleView {
 	String getTitle() {
 		return this.title;
 	}
+	
+	public abstract void updateIsActive();
+
+	public abstract void execute();
 
 }

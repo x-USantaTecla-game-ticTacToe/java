@@ -1,17 +1,16 @@
 package usantatecla.tictactoe.views;
 
-import usantatecla.tictactoe.models.Session;
+import usantatecla.tictactoe.models.TicTacToe;
+import usantatecla.utils.Observer;
 
-public abstract class Command extends usantatecla.utils.Command {
+abstract class Command extends usantatecla.utils.Command {
 	
-	protected Session session;
+	protected TicTacToe tictactoe;
 	
-	protected Command(String title, Session session) {
-		super(title);
-		this.session = session;
+	protected Command(String title, TicTacToe tictactoe, Observer observer) {
+		this.title = title;
+		this.tictactoe = tictactoe;
+		this.addObserver(observer);
 	}
-
-	@Override
-	public abstract void updateIsActive();
 
 }

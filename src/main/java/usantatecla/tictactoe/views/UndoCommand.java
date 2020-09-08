@@ -1,16 +1,23 @@
 package usantatecla.tictactoe.views;
 
-import usantatecla.tictactoe.models.Session;
+import usantatecla.tictactoe.events.UndoEvent;
+import usantatecla.tictactoe.models.TicTacToe;
+import usantatecla.utils.Observer;
 
 public class UndoCommand extends Command {
 
-	public UndoCommand(Session session) {
-		super(MessageView.UNDO_COMMAND.getMessage(), session);
+	UndoCommand(TicTacToe tictactoe, Observer observer) {
+		super(MessageView.UNDO_COMMAND.getMessage(), tictactoe, observer);
 	}
 
 	@Override
 	public void updateIsActive() {
-		this.isActive = this.session.undoable();
+		this.isActive = this.tictactoe.undoable();
+	}
+
+	@Override
+	public void execute() {
+		this.notify(new UndoEvent());
 	}
 	
 }

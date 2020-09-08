@@ -1,16 +1,23 @@
 package usantatecla.tictactoe.views;
 
-import usantatecla.tictactoe.models.Session;
+import usantatecla.tictactoe.events.RedoEvent;
+import usantatecla.tictactoe.models.TicTacToe;
+import usantatecla.utils.Observer;
 
 public class RedoCommand extends Command {
 	
-	public RedoCommand(Session session) {
-		super(MessageView.REDO_COMMAND.getMessage(), session);
+	RedoCommand(TicTacToe tictactoe, Observer observer) {
+		super(MessageView.REDO_COMMAND.getMessage(), tictactoe, observer);
 	}
 
 	@Override
 	public void updateIsActive() {
-		this.isActive = this.session.redoable();
+		this.isActive = this.tictactoe.redoable();
+	}
+
+	@Override
+	public void execute() {
+		this.notify(new RedoEvent());		
 	}
 
 }

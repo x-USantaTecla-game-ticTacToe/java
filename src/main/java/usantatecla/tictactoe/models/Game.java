@@ -48,12 +48,31 @@ public class Game {
         return this.board.isCompleted();
     }
 
-    public void putTokenPlayerFromTurn(Coordinate coordinate) {
+    public Error putTokenPlayerFromTurn(Coordinate coordinate) {
+        Error error = this.getPutCoordinateError(coordinate);
+        assert error == null;
+        if (error != null) {
+            return error;
+        }
         this.turn.getPlayer().put(coordinate);
+        this.changeTurn();
+        return null;
     }
 
-    public void moveTokenPlayerFromTurn(Coordinate[] coordinates) {
+    public Error moveTokenPlayerFromTurn(Coordinate[] coordinates) {
+        Error error = this.getMoveOriginCoordinateError(coordinates[0]);
+        assert error == null;
+        if (error != null) {
+            return error;
+        }
+        error = this.getMoveTargetCoordinateError(coordinates[0], coordinates[1]);
+        assert error == null;
+        if (error != null) {
+            return error;
+        }
         this.turn.getPlayer().move(coordinates);
+        this.changeTurn();
+        return null;
     }
 
     public PlayerType getTypeOfTokenPlayerFromTurn() {
@@ -97,6 +116,18 @@ public class Game {
 
     public int getValueFromTurn() {
         return this.turn.getValue();
+    }
+
+    public int getCoordinateDimension() {
+        return Coordinate.DIMENSION;
+    }
+
+    public boolean isEmptyToken(Coordinate coordinate) {
+        return this.getToken(coordinate) == null;
+    }
+
+    public char getTokenChar(Coordinate coordinate) {
+        return this.getToken(coordinate).getChar();
     }
 
     public void newGame() {

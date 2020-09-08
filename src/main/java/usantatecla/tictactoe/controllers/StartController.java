@@ -1,22 +1,15 @@
 package usantatecla.tictactoe.controllers;
 
-import usantatecla.tictactoe.models.Session;
 import usantatecla.tictactoe.models.Turn;
 import usantatecla.tictactoe.views.StartView;
 import usantatecla.utils.PlayersDialog;
 
-public class StartController extends Controller {
-    
-    public StartController(Session session) {
-		super(session);
-	}
+class StartController {
 
-	@Override
-	public void control() {
-		this.session.next();
+	int read() {
 		new StartView().write();
 		int numberOfUsers = new PlayersDialog().read(Turn.NUM_PLAYERS);
-		session.createPlayers(numberOfUsers);
+		return numberOfUsers;
 	}
 	
 }
