@@ -156,6 +156,7 @@ class  tictactoe.views.MovementCommand{
 # execute(): void
 # isActive(): boolean
 }
+tictactoe.views.Command <|-down- tictactoe.views.MovementCommand
 tictactoe.views.MovementCommand ..> tictactoe.controllers.PlayController
 tictactoe.views.MovementCommand ..> tictactoe.types.PlayerType
 tictactoe.views.MovementCommand ..> tictactoe.views.MessageView
