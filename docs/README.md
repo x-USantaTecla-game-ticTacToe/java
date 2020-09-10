@@ -11,7 +11,7 @@
 </head>
 <body class="book">
 <div id="header">
-<h1>TicTacToe. Solución 14.6. <strong>mvp.pm.withoutPrototype</strong></h1>
+<h1>TicTacToe. Solución 15.6. <strong>mvp.pm.withPrototype</strong></h1>
 <div class="details">
 <span id="author" class="author">Santa Tecla</span><br>
 <span id="email" class="email"><a href="mailto:parqueNaturalSantaTecla@gmail.com">parqueNaturalSantaTecla@gmail.com</a></span><br>
