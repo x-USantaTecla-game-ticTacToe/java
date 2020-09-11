@@ -1,4 +1,4 @@
-<h1 align="center">Welcome to TicTacToe. Versión 17.1. ** mvp.sc ** 👋</h1>
+<h1 align="center">Welcome to TicTacToe. Versión 18.1. ** mvc ** 👋</h1>
 <p>
   <a href="/docs" target="_blank">
     <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
@@ -8,7 +8,7 @@
   </a>
 </p>
 
-> TicTacToe. Solución mvp.sc
+> TicTacToe. Solución mvc
 
 ## Install
 

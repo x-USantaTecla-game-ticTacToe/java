@@ -1,4 +1,4 @@
-= Master Mind. Solución 17.1. *mvp.sc*
+= Master Mind. Solución 18.1. *mvc*
 Santa Tecla <parqueNaturalSantaTecla@gmail.com>
 :toc-title: Índice
 :toc: left
@@ -7,7 +7,7 @@ Santa Tecla <parqueNaturalSantaTecla@gmail.com>
 :idseparator: -
 :imagesdir: images
 
-== Requisitos 2. *Gráficos*
+== Requisitos 1. *Básica*
 
 [cols="50,50"]
 |===
@@ -27,23 +27,23 @@ image::Dibujo.jpg[]
 
 === Arquitectura
 
-[plantuml,arquitecturaVersion16,svg]
+[plantuml,arquitecturaVersion17,svg]
 ....
-
-package tictactoe #DDDDDD { } 
-tictactoe .down.> tictactoe.models
-tictactoe .down.> tictactoe.controllers
 
 package tictactoe.controllers #DDDDDD { } 
 tictactoe.controllers .down.> tictactoe.models
 tictactoe.controllers .down.> tictactoe.views
-tictactoe.controllers .down.> java.util
+tictactoe.controllers .down.> tictactoe.events
 tictactoe.controllers .down.> utils
+
+package tictactoe.events #DDDDDD { }
+tictactoe.events .down.> utils
 
 package tictactoe.models #DDDDDD { }
 package java.util{ }
 tictactoe.models .down.> java.util
 tictactoe.models .down.> utils
+tictactoe.models .down.> tictactoe.events
 
 package utils #DDDDDD { } 
 package java.io{ }
@@ -51,29 +51,14 @@ utils .down.> java.io
 
 package tictactoe.views #DDDDDD { } 
 tictactoe.views .down.> utils
-
-....
-
-=== Paquete _tictactoe_
-
-[plantuml,tictactoeVersion16,svg]
-....
-
-class  tictactoe.TicTacToe{
-- session: Session
-- controllers: Map<StateValue, Controller>
-~ TicTacToe()
-~ play(): void
-+ {static} main(String[]): void
-}
-tictactoe.TicTacToe *-down-> tictactoe.models.Session
-tictactoe.TicTacToe *-down-> tictactoe.controllers.Controller
+tictactoe.views .down.> tictactoe.models
+tictactoe.views .down.> tictactoe.events
 
 ....
 
 === Paquete _tictactoe.views_
 
-[plantuml,tictactoeViewsVersion16,svg]
+[plantuml,tictactoeViewsVersion17,svg]
 
 ....
 
@@ -84,9 +69,8 @@ class  tictactoe.views.BoardView{
 utils.WithConsoleView <|-down- tictactoe.views.BoardView
 
 class  tictactoe.views.Command{
-# session: Session
-# Command(String, Session)
-~ {abstract} updateIsActive(): void
+# ticTacToe: TicTacToe
+# Command(String, TicTacToe, Observer)
 }
 utils.Command <|-down- tictactoe.views.Command
 
@@ -115,6 +99,12 @@ tictactoe.views.GameView ..> tictactoe.views.MessageView
 tictactoe.views.GameView ..> tictactoe.views.BoardView
 tictactoe.views.GameView ..> tictactoe.views.ResultView
 
+class  tictactoe.views.Menu{
++ Menu(TicTacToe, Observer)
+}
+utils.Menu <|-down- tictactoe.views.Menu
+tictactoe.views.MovementCommand ..> tictactoe.views.MessageView
+
 enum  tictactoe.views.MessageView{
 + EMPTY: MessageView 
 + SEPARATOR: MessageView
@@ -136,18 +126,20 @@ enum  tictactoe.views.MessageView{
 }
 
 class  tictactoe.views.MovementCommand{
-+ MovementCommand()
++ MovementCommand(TicTacToe, Observer)
 + updateIsActive(): void
++ execute(): void
 }
+tictactoe.views.Command <|-down- tictactoe.views.MovementCommand
 tictactoe.views.MovementCommand ..> tictactoe.views.MessageView
 
 class tictactoe.views.RedoCommand{
-~ RedoCommand()
+~ RedoCommand(TicTacToe, Observer)
 + updateIsActive(): void
++ execute(): void
 }
 tictactoe.views.Command <|-down- tictactoe.views.RedoCommand
 tictactoe.views.RedoCommand ..> tictactoe.views.MessageView
-tictactoe.views.RedoCommand ..> tictactoe.models.Session
 
 class tictactoe.views.ResultView{
 ~ write(char): void
@@ -167,13 +159,30 @@ class tictactoe.views.StartView{
 utils.WithConsoleView <|-down- tictactoe.views.StartView
 tictactoe.views.StartView ..> tictactoe.views.MessageView
 
+class tictactoe.views.TicTacToeView{
+- ticTacToe: TicTacToe
+- menu: Menu
++ TicTacToeView(TicTacToe, Observer)
++ write(): void
++ update(Observed, Event): void
+- resume(): void
+}
+utils.Observed <|-down- tictactoe.views.TicTacToeView
+utils.Observer <|-down- tictactoe.views.TicTacToeView
+tictactoe.views.TicTacToeView ..> tictactoe.views.MessageView
+tictactoe.views.TicTacToeView ..> tictactoe.events.OPlayerWinnerEvent
+tictactoe.views.TicTacToeView ..> tictactoe.events.XPlayerWinnerEvent
+tictactoe.views.TicTacToeView ..> tictactoe.models.TicTacToe
+tictactoe.views.TicTacToeView *-down-> tictactoe.views.Menu
+tictactoe.views.TicTacToeView ..> utils.YesNoDialog
+
 class tictactoe.views.UndoCommand{
-+ UndoCommand(PlayController)
++ UndoCommand(TicTacToe, Observer)
 + updateIsActive(): void
++ execute(): void
 }
 tictactoe.views.Command <|-down- tictactoe.views.UndoCommand
 tictactoe.views.UndoCommand ..> tictactoe.views.MessageView
-tictactoe.views.UndoCommand ..> tictactoe.models.Session
 
 class  tictactoe.views.UserPlayerView{
 + readCoordinate(String): Coordinate
@@ -184,7 +193,7 @@ tictactoe.views.UserPlayerView ..> tictactoe.views.CoordinateView
 
 === Paquete _tictactoe.models_
 
-[plantuml,tictactoeModelsVersion16,svg]
+[plantuml,tictactoeModelsVersion17,svg]
 
 ....
 
@@ -235,8 +244,8 @@ class  tictactoe.models.Game{
 ~ set(Memento): void
 - createCopyOfPlayers(Player[], Board): Player[]
 + isBoardComplete(): boolean
-+ putTokenPlayerFromTurn(Coordinate): void
-+ moveTokenPlayerFromTurn(Coordinate[]): void
++ putTokenPlayerFromTurn(Coordinate): Error
++ moveTokenPlayerFromTurn(Coordinate[]): Error
 + getTypeOfTokenPlayerFromTurn(): PlayerType
 + getPutCoordinateError(Coordinate): Error
 + getMoveOriginCoordinateError(Coordinate): Error
@@ -245,7 +254,10 @@ class  tictactoe.models.Game{
 + changeTurn(): void
 + isTicTacToe(): boolean
 + getValueFromTurn(): int
-+ newGame(): void
++ getCoordinateDimension(): int
++ isEmptyToken(Coordinate): boolean
++ getValueFromTurn(): int
++ getTokenChar(Coordinate): char
 }
 tictactoe.models.Game *-down-> tictactoe.models.Board
 tictactoe.models.Game *-down-> tictactoe.models.Player
@@ -298,47 +310,6 @@ tictactoe.models.Registry *-down-> tictactoe.models.Game
 tictactoe.models.Registry *-down-> tictactoe.models.Memento
 tictactoe.models.Registry *-down-> java.util.ArrayList
 
-class  tictactoe.models.Session{
-- state: State
-- game: Game
-- registry: Registry
-+ Session()
-+ next(): void
-+ undoable(): boolean
-+ redoable(): boolean
-+ undo(): void
-+ redo(): void
-+ createPlayers(int): void
-+ getTypeOfTokenPlayerFromTurn(): PlayerType
-+ getPutCoordinateError(Coordinate): Error
-+ getMoveOriginCoordinateError(Coordinate): Error
-+ getMoveTargetCoordinateError(Coordinate, Coordinate): Error
-+ isBoardComplete(): boolean
-+ putTokenPlayerFromTurn(Coordinate): Error
-+ moveTokenPlayerFromTurn(Coordinate[]): Error
-+ changeTurn(): void
-+ getToken(Coordinate): Token
-+ getTokenChar(Coordinate): char
-+ isEmptyToken(Coordinate): boolean
-+ isTicTacToe(): boolean
-+ getValueFromTurn(): int
-+ getValueState(): StateValue
-+ getCoordinateDimension(): int
-+ newGame(): void
-}
-tictactoe.models.Session *-down-> tictactoe.models.State
-tictactoe.models.Session *-down-> tictactoe.models.Game
-tictactoe.models.Session *-down-> tictactoe.models.Registry
-
-class  tictactoe.models.State{
-- stateValue: StateValue
-+ State()
-+ next(): void
-+ reset(): void
-+ getValueState(): StateValue
-}
-tictactoe.models.State *-down-> tictactoe.types.StateValue
-
 class  tictactoe.models.Turn{
 + {static} NUM_PLAYERS: int
 - value: int
@@ -354,103 +325,115 @@ class  tictactoe.models.Turn{
 }
 tictactoe.models.Turn *-down-> tictactoe.models.Player
 
+class  tictactoe.models.TicTacToe{
+- game: Game
+- registry: Registry
++ TicTacToe(Game)
++ createPlayers(int): void
++ undoable(): boolean
++ redoable(): boolean
++ isTicTacToe(): boolean
++ undo(): void
++ redo(): void
++ registry(): void
++ newGame(): void
+}
+utils.Observed <|-down- tictactoe.models.TicTacToe
+tictactoe.models.TicTacToe *-down-> tictactoe.models.Registry
+tictactoe.models.TicTacToe ..> tictactoe.models.Game
+
 ....
 
 === Paquete _tictactoe.controllers_
 
-[plantuml,tictactoeControllersVersion16,svg]
+[plantuml,tictactoeControllersVersion17,svg]
 
 ....
 
-class  tictactoe.controllers.Controller{
-# session: Session
-~ Controller(Session)
-+ {abstract} control(): void
-}
-tictactoe.controllers.Controller -down-> tictactoe.models.Session
-
-class  tictactoe.controllers.InGameController{
-- gameView: GameView
-~ InGameController(Session)
-+ control(): void
-- writeBoard(): void
-- printRowBoard(int): void
-- printSquareBoard(Coordinate): void
-# {abstract} inGameControl(): void
-}
-tictactoe.controllers.Controller <|-down- tictactoe.controllers.InGameController
-tictactoe.controllers.InGameController *-down-> tictactoe.views.GameView
-
-class  tictactoe.controllers.MovementController{
+class  tictactoe.controllers.GameController{
 ~ {static} ENTER_COORDINATE_TO_PUT: String
 ~ {static} ENTER_COORDINATE_TO_REMOVE: String
-+ MovementController(Session)
-+ inGameControl(): void
+- gameView: GameView
+- game: Game
+~ GameController()
+~ getGame(): Game
+~ doMovement(): void
 - isUserPlayerType(): boolean
 - readCoordinateToPut(): Coordinate
 - generateRandomCoordinate(): Coordinate
 - readCoordinateToMove(): Coordinate[]
+~ writeBoard(): void
+- printRowBoard(int): void
+- printSquareBoard(Coordinate): void
 }
-tictactoe.controllers.InGameController <|-down- tictactoe.controllers.MovementController
-tictactoe.controllers.MovementController ..> tictactoe.models.Coordinate
-
-class  tictactoe.controllers.PlayController{
-- controllers: Map<Command, Controller>
-- movementCommand: MovementCommand
-- movementController: MovementController
-- undoCommand: UndoCommand
-- undoController: UndoController
-- redoCommand: RedoCommand
-- redoController: RedoController
-- menu: Menu
-+ PlayController(Session)
-+ control(): void
-}
-tictactoe.controllers.Controller <|-down- tictactoe.controllers.PlayController
-tictactoe.controllers.PlayController *-down-> utils.Command
-tictactoe.controllers.PlayController *-down-> tictactoe.controllers.Controller
-tictactoe.controllers.PlayController *-down-> tictactoe.controllers.MovementController
-tictactoe.controllers.PlayController *-down-> tictactoe.controllers.UndoController
-tictactoe.controllers.PlayController *-down-> tictactoe.controllers.RedoController
-tictactoe.controllers.PlayController *-down-> tictactoe.views.MovementCommand
-tictactoe.controllers.PlayController *-down-> tictactoe.views.UndoCommand
-tictactoe.controllers.PlayController *-down-> tictactoe.views.RedoCommand
-
-class  tictactoe.controllers.RedoController{
-+ RedoController(Session)
-~ redoable(): boolean
-+ inGameControl(): void
-}
-tictactoe.controllers.InGameController <|-down- tictactoe.controllers.RedoController
-
-class  tictactoe.controllers.ResumeController{
-+ ResumeController(Session)
-- resume(boolean): void
-+ control(): void
-}
-tictactoe.controllers.Controller <|-down- tictactoe.controllers.ResumeController
-tictactoe.controllers.ResumeController ..> tictactoe.views.ResumeView
+tictactoe.controllers.GameController *-down-> tictactoe.views.GameView
+tictactoe.controllers.GameController *-down-> tictactoe.models.Game
+tictactoe.controllers.GameController ..> tictactoe.views.ErrorView
+tictactoe.controllers.GameController ..> tictactoe.views.UserPlayerView
 
 class  tictactoe.controllers.StartController{
-+ StartController(Session)
-+ control(): void
+~ read(): int
 }
-tictactoe.controllers.Controller <|-down- tictactoe.controllers.StartController
 tictactoe.controllers.StartController ..> tictactoe.views.StartView
 tictactoe.controllers.StartController ..> utils.PlayersDialog
 
-class  tictactoe.controllers.UndoController{
-~ UndoController(Session)
-~ undoable(): boolean
-+ inGameControl(): void
+class  tictactoe.controllers.TicTacToeController{
+- gameController: GameController
+- tictactoe: TicTacToe
+- tictactoeView: TicTacToeView
+~ TicTacToeController()
+~ clear(): void
+~ play(): void
++ update(Observed, Event): void
++ {static} main(String[]): void
 }
-tictactoe.controllers.InGameController <|-down- tictactoe.controllers.UndoController
+utils.Observer <|-down- tictactoe.controllers.TicTacToeController
+tictactoe.controllers.TicTacToeController *-down-> tictactoe.controllers.GameController
+tictactoe.controllers.TicTacToeController *-down-> tictactoe.models.TicTacToe
+tictactoe.controllers.TicTacToeController *-down-> tictactoe.views.TicTacToeView
+tictactoe.controllers.TicTacToeController ..> tictactoe.controllers.StartController
+tictactoe.controllers.TicTacToeController ..> tictactoe.events.MoveEvent
+tictactoe.controllers.TicTacToeController ..> tictactoe.events.UndoEvent
+tictactoe.controllers.TicTacToeController ..> tictactoe.events.RedoEvent
+tictactoe.controllers.TicTacToeController ..> tictactoe.events.NewGameEvent
+
+....
+
+=== Paquete _tictactoe.events_
+
+[plantuml,tictactoeEvents,svg]
+
+....
+
+class  tictactoe.controllers.MoveEvent{
+}
+utils.Event <|-down- tictactoe.controllers.MoveEvent
+
+class  tictactoe.controllers.NewGameEvent{
+}
+utils.Event <|-down- tictactoe.controllers.NewGameEvent
+
+class  tictactoe.controllers.OPlayerWinnerEvent{
+}
+utils.Event <|-down- tictactoe.controllers.OPlayerWinnerEvent
+
+class  tictactoe.controllers.RedoEvent{
+}
+utils.Event <|-down- tictactoe.controllers.RedoEvent
+
+class  tictactoe.controllers.UndoEvent{
+}
+utils.Event <|-down- tictactoe.controllers.UndoEvent
+
+class  tictactoe.controllers.XPlayerWinnerEvent{
+}
+utils.Event <|-down- tictactoe.controllers.XPlayerWinnerEvent
 
 ....
 
 === Paquete _utils_
 
-[plantuml,utilsVersion16,svg]
+[plantuml,utilsVersion17,svg]
 
 ....
 
@@ -464,12 +447,15 @@ class  utils.ClosedInterval{
 class  utils.Command{
 # title: String
 # isActive: boolean
-# Command(String)
-# {abstract} updateIsActive(): void
 # {abstract} isActive(): boolean
 ~ getTitle(): String
++ {abstract} updateIsActive(): void
++ {abstract} execute(): void
 }
-utils.WithConsoleView <|-down- utils.Command
+utils.Observed <|-down- utils.Command
+
+class  utils.Event{
+}
 
 class  utils.Console{
 - bufferedReader: BufferedReader
@@ -511,13 +497,24 @@ enum  utils.Direction{
 
 class  utils.Menu{
 - {static} OPTION: String
-- commandSet: ArrayList<Command>
-+ Menu(Set<Command>)
-+ execute(): Command
+# commands: ArrayList<Command>
++ execute(): void
 }
 utils.WithConsoleView <|-down- utils.Menu
 utils.Menu *-down-> utils.Command
 utils.Menu ..> utils.CloseInterval
+
+class  utils.Observed{
+- observers: ArrayList<Observer>
++ Observed()
++ addObserver(Observer): void
++ notify(Event): void
+}
+utils.Observed *-down-> utils.Observer
+
+interface  utils.Observer{
++ update(Observed, Event): void
+}
 
 class  utils.PlayersDialog{
 - {static} USERS_ERROR: String
@@ -556,6 +553,8 @@ package "  "  as tictactoe.models {
 }
 package "  "  as tictactoe.controllers {
 }
+package "  "  as tictactoe.events {
+}
 package "  "  as tictactoe.views {
 }
 package "  "  as utils {
@@ -570,6 +569,7 @@ package "  "  as java.util {
 jar *--> tictactoe
 jar *--> tictactoe.models
 jar *--> tictactoe.controllers
+jar *--> tictactoe.events
 jar *--> tictactoe.views
 jar *--> utils
 jar *--> java.io

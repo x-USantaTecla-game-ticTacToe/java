@@ -11,22 +11,23 @@
 </head>
 <body class="book">
 <div id="header">
-<h1>TicTacToe. Solución 17.1. <strong>mvp.sc</strong></h1>
+<h1>TicTacToe. Solución 18.1. <strong>mvc</strong></h1>
 <div class="details">
 <span id="author" class="author">Santa Tecla</span><br>
 <span id="email" class="email"><a href="mailto:parqueNaturalSantaTecla@gmail.com">parqueNaturalSantaTecla@gmail.com</a></span><br>
-<span id="revnumber">version 0.16.0</span>
+<span id="revnumber">version 0.17.0</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Índice</div>
 <ul class="sectlevel1">
-<li><a href="#requisitos-3-undoredo">Requisitos 1. <strong>Básica</strong></a></li>
+<li><a href="#requisitos-1-basica">Requisitos 1. <strong>Básica</strong></a></li>
 <li><a href="#vista-de-lógicadiseño">Vista de Lógica/Diseño</a>
 <ul class="sectlevel2">
 <li><a href="#arquitectura">Arquitectura</a></li>
 <li><a href="#paquete-tictactoe">Paquete <em>tictactoe</em></a></li>
 <li><a href="#paquete-tictactoe-views">Paquete <em>tictactoe.views</em></a></li>
 <li><a href="#paquete-tictactoe-models">Paquete <em>tictactoe.models</em></a></li>
+<li><a href="#paquete-tictactoe-events">Paquete <em>tictactoe.events</em></a></li>
 <li><a href="#paquete-tictactoe-types">Paquete <em>tictactoe.types</em></a></li>
 <li><a href="#paquete-tictactoe-controllers">Paquete <em>tictactoe.controllers</em></a></li>
 <li><a href="#paquete-utils">Paquete <em>utils</em></a></li>
@@ -92,15 +93,7 @@
 <h3 id="arquitectura">Arquitectura</h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/arquitecturaVersion16.svg" alt="arquitecturaVersion16" width="400" height="400">
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="paquete-tictactoe">Paquete <em>tictactoe</em></h3>
-<div class="imageblock">
-<div class="content">
-<img src="build/docs/asciidoc/images/tictactoeVersion16.svg" alt="tictactoeVersion16" width="500" height="400">
+<img src="build/docs/asciidoc/images/arquitecturaVersion17.svg" alt="arquitecturaVersion17" width="400" height="400">
 </div>
 </div>
 </div>
@@ -108,7 +101,7 @@
 <h3 id="paquete-tictactoe-views">Paquete <em>tictactoe.views</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/tictactoeViewsVersion16.svg" alt="tictactoeViewsVersion16" width="1200" height="1000">
+<img src="build/docs/asciidoc/images/tictactoeViewsVersion17.svg" alt="tictactoeViewsVersion17" width="1300" height="1400">
 </div>
 </div>
 </div>
@@ -116,7 +109,15 @@
 <h3 id="paquete-tictactoe-models">Paquete <em>tictactoe.models</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/tictactoeModelsVersion16.svg" alt="tictactoeModelsVersion16" width="800" height="1500">
+<img src="build/docs/asciidoc/images/tictactoeModelsVersion17.svg" alt="tictactoeModelsVersion17" width="800" height="1500">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="paquete-tictactoe-events">Paquete <em>tictactoe.events</em></h3>
+<div class="imageblock">
+<div class="content">
+<img src="build/docs/asciidoc/images/tictactoeEvents.svg" alt="tictactoeEvents" width="500" height="500">
 </div>
 </div>
 </div>
@@ -124,7 +125,7 @@
 <h3 id="paquete-tictactoe-controllers">Paquete <em>tictactoe.controllers</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/tictactoeControllersVersion16.svg" alt="tictactoeControllersVersion16" width="1000" height="600">
+<img src="build/docs/asciidoc/images/tictactoeControllersVersion17.svg" alt="tictactoeControllersVersion17" width="1000" height="600">
 </div>
 </div>
 </div>
@@ -132,7 +133,7 @@
 <h3 id="paquete-utils">Paquete <em>utils</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/utilsVersion16.svg" alt="utilsVersion16" width="456" height="548">
+<img src="build/docs/asciidoc/images/utilsVersion17.svg" alt="utilsVersion17" width="456" height="548">
 </div>
 </div>
 </div>
@@ -173,8 +174,8 @@
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 0.16.0<br>
-Last updated 2020-09-06 17:15:00 +0200
+Version 0.17.0<br>
+Last updated 2020-09-11 19:15:00 +0200
 </div>
 </div>
 </html>
