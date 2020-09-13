@@ -9,21 +9,20 @@ class Turn {
 	private int active;
 
 	Turn(Board board) {
-		int numberUsers = new LimitedIntDialog(Turn.NUMBER_PLAYERS)
+		assert board != null;
+		
+		Message.TITTLE.writeln();
+		int numberUsers = new LimitedIntDialog(0, Turn.NUMBER_PLAYERS)
 			.read(Message.NUMBER_PLAYERS.toString());
 		this.players = new Player[Turn.NUMBER_PLAYERS];
 		for (int i = 0; i < Turn.NUMBER_PLAYERS; i++) {
-			this.players[i] = this.createPlayer(i < numberUsers, Token.get(i), board);
+			if (i < numberUsers){
+				this.players[i] = new UserPlayer(Token.get(i), board);
+			} else {
+				this.players[i] = new MachinePlayer(Token.get(i), board);
+			}
 		}
 		this.active = Turn.NUMBER_PLAYERS-1;
-	}
-
-	private Player createPlayer(boolean userPlayer, Token token, Board board){
-		if (userPlayer){
-			return new UserPlayer(token, board);
-		} else {
-			return new MachinePlayer(token, board);
-		}
 	}
 
 	void play(){

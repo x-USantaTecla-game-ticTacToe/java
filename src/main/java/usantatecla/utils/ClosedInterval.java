@@ -1,22 +1,24 @@
 package usantatecla.utils;
 
 public class ClosedInterval {
-  
-  private final int MIN;
-  private final int MAX;
 
-  public ClosedInterval(int min, int max){
-    this.MIN = min;
-    this.MAX = max;
-  }
+	private int min;
+	private int max;
 
-  public ClosedInterval(int max){
-    this(0, max);
-  }
-  
+	public ClosedInterval(int min, int max) {
+		assert min <= max;
+		
+		this.min = min;
+		this.max = max;
+	}
 
-  public boolean isIncluded(int value){
-    return this.MIN <= value && value <= this.MAX;
-  }
+	public boolean isIncluded(int value) {
+		return this.min <= value && value <= this.max;
+	}
+	
+	@Override
+	public String toString() {
+		return "[" + this.min + ", " + this.max + "]";
+	}
 
 }

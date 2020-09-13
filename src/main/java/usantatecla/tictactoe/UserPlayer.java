@@ -6,15 +6,17 @@ class UserPlayer extends Player {
 		super(token, board);
 	}
 
-	@Override
-	Coordinate getCoordinateToPut() {
-		return this.getCoordinate(Message.ENTER_COORDINATE_TO_PUT);
-	}
-
 	private Coordinate getCoordinate(Message message){
+		assert message != null;
+		
 		Coordinate coordinate = new ConcreteCoordinate();
 		coordinate.read(message.toString());
 		return coordinate;
+	}
+	
+	@Override
+	Coordinate getCoordinateToPut() {
+		return this.getCoordinate(Message.ENTER_COORDINATE_TO_PUT);
 	}
 
 	@Override
@@ -29,6 +31,8 @@ class UserPlayer extends Player {
 	
 	@Override
 	Error checkPutCoordinateError(Coordinate coordinate) {
+		assert coordinate != null;
+		
 		Error error = super.checkPutCoordinateError(coordinate);
 		error.writeln();
 		return error;
@@ -36,6 +40,8 @@ class UserPlayer extends Player {
 	
 	@Override
 	Error checkMoveOriginCoordinateError(Coordinate originCoordinate) {
+		assert originCoordinate != null;
+		
 		Error error = super.checkMoveOriginCoordinateError(originCoordinate);
 		error.writeln();
 		return error;
@@ -43,6 +49,9 @@ class UserPlayer extends Player {
 
 	@Override
 	Error checkMoveTargetCoordinateError(Coordinate originCoordinate, Coordinate targetCoordinate) {
+		assert originCoordinate != null;
+		assert targetCoordinate != null;
+		
 		Error error = super.checkMoveTargetCoordinateError(originCoordinate, targetCoordinate);
 		error.writeln();
 		return error;

@@ -2,7 +2,7 @@ package usantatecla.tictactoe;
 
 class MachinePlayer extends Player {
 
-	MachinePlayer(Token token, Board board) {
+	MachinePlayer(Token token, Board board) {		
 		super(token, board);
 	}
 
@@ -12,6 +12,8 @@ class MachinePlayer extends Player {
 	}
 
 	private Coordinate getCoordinate(Message message){
+		assert message != null;
+		
 		Coordinate coordinate = new ConcreteCoordinate();
 		coordinate.random();
 		return coordinate;
@@ -26,5 +28,5 @@ class MachinePlayer extends Player {
 	Coordinate getCoordinateTargetToMove() {
 		return this.getCoordinate(Message.COORDINATE_TO_MOVE);
 	}
-
+	
 }

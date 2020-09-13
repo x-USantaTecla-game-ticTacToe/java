@@ -41,9 +41,10 @@ public class Coordinate {
 	}
 
 	protected void read(String title) {
-		Console.instance().writeln(title);
-		this.row = Console.instance().readInt(Coordinate.ROW) - 1;
-		this.column = Console.instance().readInt(Coordinate.COLUMN) - 1;
+		Console console = Console.instance();
+		console.writeln(title);
+		this.row = console.readInt(Coordinate.ROW) - 1;
+		this.column = console.readInt(Coordinate.COLUMN) - 1;
 	}
 
 	public int getRow() {

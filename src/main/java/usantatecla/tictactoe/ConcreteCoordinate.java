@@ -16,10 +16,19 @@ class ConcreteCoordinate extends usantatecla.utils.Coordinate implements Coordin
 
 	ConcreteCoordinate(int row, int column) {
 		super(row, column);
+		assert ConcreteCoordinate.LIMITS.isIncluded(row);
+		assert ConcreteCoordinate.LIMITS.isIncluded(column);
+	}
+	
+	@Override
+	public boolean isNull() {
+		return false;
 	}
 
 	@Override
 	public Direction getDirection(Coordinate coordinate) {
+		assert coordinate != null && !coordinate.isNull();
+		
 		Direction direction = super.getDirection((usantatecla.utils.Coordinate)coordinate);
 		if (direction != Direction.NULL_DIRECTION) {
 			return direction;
@@ -36,6 +45,8 @@ class ConcreteCoordinate extends usantatecla.utils.Coordinate implements Coordin
 
 	@Override
 	public void read(String message) {
+		assert message != null;
+		
 		boolean error;
 		do {
 			super.read(message);
@@ -51,7 +62,5 @@ class ConcreteCoordinate extends usantatecla.utils.Coordinate implements Coordin
 		this.row = random.nextInt(Coordinate.DIMENSION);
 		this.column = random.nextInt(Coordinate.DIMENSION);
 	}
-	
-	
 
 }

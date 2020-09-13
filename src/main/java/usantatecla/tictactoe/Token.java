@@ -1,5 +1,6 @@
 package usantatecla.tictactoe;
 
+import usantatecla.utils.ClosedInterval;
 import usantatecla.utils.Console;
 
 enum Token {
@@ -9,18 +10,23 @@ enum Token {
 	NULL_TOKEN(' ');
 
 	private char symbol;
-	private static Console console = new Console();
 
 	private Token(char symbol){
 		this.symbol = symbol;
 	}
-
-	void write() {
-		Token.console.write(this.symbol);
+	
+	public boolean isNull() {
+		return this.equals(Token.NULL_TOKEN);
 	}
 
-	static Token get(int position){
-		return Token.values()[position];
+	void write() {
+		Console.instance().write(this.symbol);
+	}
+
+	static Token get(int ordinal){
+		assert new ClosedInterval(0, Token.values().length).isIncluded(ordinal);
+		
+		return Token.values()[ordinal];
 	}
 
 }

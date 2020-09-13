@@ -9,6 +9,7 @@ class Board {
 
 	Board(int numberPlayers) {
 		assert numberPlayers > 0;
+		
 		this.NUMBER_PLAYERS = numberPlayers;
 		this.coordinates = new Coordinate[this.NUMBER_PLAYERS][Coordinate.DIMENSION];
 		for (int i = 0; i < this.NUMBER_PLAYERS; i++) {
@@ -26,14 +27,14 @@ class Board {
 				this.getToken(new ConcreteCoordinate(i, j)).write();
 				Message.VERTICAL_LINE_CENTERED.write();
 			}
-			Message.LINE_BREAK.writeln();
+			Message.VERTICAL_LINE_RIGHT.writeln();
 		}
 		Message.SEPARATOR.writeln();
 	}
 
 	private Token getToken(Coordinate coordinate) {
-		assert coordinate != null;
-		assert !coordinate.equals(NullCoordinate.NULL_COORDINATE);
+		assert coordinate != null && !coordinate.isNull();
+		
 		for (int i = 0; i < this.NUMBER_PLAYERS; i++) {
 			for (int j = 0; j < Coordinate.DIMENSION; j++) {
 				if (this.coordinates[i][j].equals(coordinate)) {
@@ -46,23 +47,29 @@ class Board {
 
 	boolean isCompleted() {
 		for (int i = 0; i < this.NUMBER_PLAYERS; i++) {
-			for (int j = 0; j < Coordinate.DIMENSION; j++) {
-				if (this.coordinates[i][j].equals(NullCoordinate.NULL_COORDINATE)) {
-					return false;
-				}
+			if (!this.isCompleted(i)) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	boolean isCompleted(int player) {
+		for (int j = 0; j < Coordinate.DIMENSION; j++) {
+			if (this.coordinates[player][j].isNull()) {
+				return false;
 			}
 		}
 		return true;
 	}
 
 	void put(Coordinate coordinate, Token token) {
-		assert coordinate != null;
-		assert !coordinate.equals(NullCoordinate.NULL_COORDINATE);
-		assert token != null;
-		assert !token.equals(Token.NULL_TOKEN);
+		assert coordinate != null && !coordinate.isNull();
+		assert token != null && !token.equals(Token.NULL_TOKEN);
+		
 		Coordinate[] coordinates = this.coordinates[token.ordinal()];
 		int i = 0;
-		while (!coordinates[i].equals(NullCoordinate.NULL_COORDINATE)) {
+		while (!coordinates[i].isNull()) {
 			i++;
 		}
 		coordinates[i] = coordinate;
@@ -70,9 +77,10 @@ class Board {
 
 	void move(Coordinate originCoordinate, Coordinate targetCoordinate) {
 		assert originCoordinate != null;
-		assert !originCoordinate.equals(NullCoordinate.NULL_COORDINATE);
+		assert !originCoordinate.isNull();
 		assert targetCoordinate != null;
-		assert !targetCoordinate.equals(NullCoordinate.NULL_COORDINATE);
+		assert !targetCoordinate.isNull();
+		
 		Token token = this.getToken(originCoordinate);
 		this.remove(originCoordinate);
 		this.put(targetCoordinate, token);
@@ -80,7 +88,8 @@ class Board {
 
 	private void remove(Coordinate coordinate) {
 		assert coordinate != null;
-		assert !coordinate.equals(NullCoordinate.NULL_COORDINATE);
+		assert !coordinate.isNull();
+		
 		for (int i = 0; i < this.NUMBER_PLAYERS; i++) {
 			for (int j = 0; j < Coordinate.DIMENSION; j++) {
 				if (this.coordinates[i][j].equals(coordinate)) {
@@ -92,25 +101,26 @@ class Board {
 
 	boolean isOccupied(Coordinate coordinate, Token token) {
 		assert coordinate != null;
-		assert !coordinate.equals(NullCoordinate.NULL_COORDINATE);
+		assert !coordinate.isNull();
+		
 		return this.getToken(coordinate) == token;
 	}
 
 	boolean isEmpty(Coordinate coordinate) {
 		assert coordinate != null;
-		assert !coordinate.equals(NullCoordinate.NULL_COORDINATE);
+		assert !coordinate.isNull();
+		
 		return this.isOccupied(coordinate, Token.NULL_TOKEN);
 	}
 
 	boolean isTicTacToe(Token token) {
 		assert token != null;
 		assert !token.equals(Token.NULL_TOKEN);
-		Coordinate[] coordinates = this.coordinates[token.ordinal()];
-		for(int i=0; i<Coordinate.DIMENSION; i++){
-			if (coordinates[i].equals(NullCoordinate.NULL_COORDINATE)) {
-				return false;
-			}
+		
+		if (!this.isCompleted(token.ordinal())) {
+			return false;
 		}
+		Coordinate[] coordinates = this.coordinates[token.ordinal()];
 		Direction direction = coordinates[0].getDirection(coordinates[1]);
 		if (direction == Direction.NULL_DIRECTION){
 			return false;

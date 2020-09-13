@@ -14,6 +14,11 @@ class NullCoordinate implements Coordinate {
 	}
 	
 	@Override
+	public boolean isNull() {
+		return true;
+	}
+	
+	@Override
 	public Direction getDirection(Coordinate coordinate) {
 		return Direction.NULL_DIRECTION;
 	}

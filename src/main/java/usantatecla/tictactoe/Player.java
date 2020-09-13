@@ -6,6 +6,9 @@ abstract class Player {
 	protected Board board;
 
 	Player(Token token, Board board) {
+		assert token != null && !token.isNull();
+		assert board != null;
+		
 		this.token = token;
 		this.board = board;
 	}
@@ -58,6 +61,8 @@ abstract class Player {
 	abstract Coordinate getCoordinateTargetToMove();
 
 	Error checkMoveOriginCoordinateError(Coordinate originCoordinate) {
+		assert originCoordinate != null;
+		
 		Error error = Error.NULL_ERROR;
 		if (!this.board.isOccupied(originCoordinate, this.token)) {
 			error = Error.NOT_OWNER;
@@ -66,6 +71,8 @@ abstract class Player {
 	}
 
 	Error checkMoveTargetCoordinateError(Coordinate originCoordinate, Coordinate targetCoordinate) {
+		assert originCoordinate != null;
+		
 		Error error = Error.NULL_ERROR;
 		if (originCoordinate.equals(targetCoordinate)) {
 			error = Error.SAME_COORDINATES;
