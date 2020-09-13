@@ -18,24 +18,24 @@ import usantatecla.utils.Direction;
 @RunWith(MockitoJUnitRunner.class)
 public class CoordinateTest {
 
-    private Coordinate coordinate00;
-    private Coordinate coordinate01;
-    private Coordinate coordinate11;
-    private Coordinate coordinate02;
-    private Coordinate coordinate12;
+    private ConcreteCoordinate coordinate00;
+    private ConcreteCoordinate coordinate01;
+    private ConcreteCoordinate coordinate11;
+    private ConcreteCoordinate coordinate02;
+    private ConcreteCoordinate coordinate12;
 
     @Mock
     private Console console;
 
     @InjectMocks
-    private Coordinate coordinate = new Coordinate();
+    private ConcreteCoordinate coordinate = new ConcreteCoordinate();
 
     public CoordinateTest() {
-        this.coordinate00 = new Coordinate(0, 0);
-        this.coordinate01 = new Coordinate(0, 1);
-        this.coordinate11 = new Coordinate(1, 1);
-        this.coordinate02 = new Coordinate(0, 2);
-        this.coordinate12 = new Coordinate(1, 2);
+        this.coordinate00 = new ConcreteCoordinate(0, 0);
+        this.coordinate01 = new ConcreteCoordinate(0, 1);
+        this.coordinate11 = new ConcreteCoordinate(1, 1);
+        this.coordinate02 = new ConcreteCoordinate(0, 2);
+        this.coordinate12 = new ConcreteCoordinate(1, 2);
     }
 
     @Test
@@ -60,25 +60,23 @@ public class CoordinateTest {
 
     @Test
     public void testGivenNewCoordinatesWhenCompareCoordinates00And12ThenDirectionIsNull() {
-        assertEquals(null, this.coordinate00.getDirection(this.coordinate12));
+        assertEquals(Direction.NULL_DIRECTION, this.coordinate00.getDirection(this.coordinate12));
     }
 
     @Test(expected = AssertionError.class)
     public void testGivenNewCoordinatesWhenRow4AndColumn4ThenAssertionException() {
-        when(this.console.readInt("Row: ")).thenReturn(4);
-        when(this.console.readInt("Column: ")).thenReturn(4);
+        when(this.console.readInt("Row: ")).thenReturn(4).thenReturn(2);
+        when(this.console.readInt("Column: ")).thenReturn(4).thenReturn(2);
         this.coordinate.read("Title");
-        verify(this.console).readInt("Row: ");
-        verify(this.console).readInt("Column: ");
+        assertTrue(new ConcreteCoordinate(2,2).equals(this.coordinate));
     }
 
-    @Test(expected = AssertionError.class)
+    @Test
     public void testGivenNewCoordinatesWhenRow0AndColumn0ThenAssertionException() {
-        when(this.console.readInt("Row: ")).thenReturn(0);
-        when(this.console.readInt("Column: ")).thenReturn(0);
+        when(this.console.readInt("Row: ")).thenReturn(0).thenReturn(2);
+        when(this.console.readInt("Column: ")).thenReturn(0).thenReturn(2);
         this.coordinate.read("Title");
-        verify(this.console).readInt("Row: ");
-        verify(this.console).readInt("Column: ");
+        assertFalse(new ConcreteCoordinate(2,2).equals(this.coordinate));
     }
 
     @Test
@@ -101,24 +99,40 @@ public class CoordinateTest {
 
     @Test
     public void testGivenNewCoordinatesWhenCompareTwoCoordinateEqualsThenIsTrue() {
-        Coordinate coordinate00Copy = new Coordinate(0, 0);
+        ConcreteCoordinate coordinate00Copy = new ConcreteCoordinate(0, 0);
         assertTrue(this.coordinate00.equals(coordinate00Copy));
     }
 
     @Test
     public void testGivenNewCoordinatesWhenCompareTwoCoordinateNotEqualsRowThenIsTrue() {
-        Coordinate coordinate01Copy = new Coordinate(1, 0);
+        ConcreteCoordinate coordinate01Copy = new ConcreteCoordinate(1, 0);
         assertTrue(!this.coordinate00.equals(coordinate01Copy));
     }
 
     @Test
-    public void testGivenNewCoordinatesWhenCompareTwoCoordinateNotEqualsColumnThenIsTrue() {
-        Coordinate coordinate01Copy = new Coordinate(0, 1);
-        assertTrue(!this.coordinate00.equals(coordinate01Copy));
+    public void testGivenNewCoordinatesWhenCompareTwoCoordinateNotEqualsColumnThenIsFalse() {
+        ConcreteCoordinate coordinate01Copy = new ConcreteCoordinate(0, 1);
+        assertFalse(this.coordinate00.equals(coordinate01Copy));
     }
-
+    
+    @Test
+    public void testGivenNewCoordinatesWhenCompareNullCoordinatehenIsFalse() {
+        assertFalse(this.coordinate00.equals(NullCoordinate.NULL_COORDINATE));
+    }
+    
+    @Test
+    public void testGivenNullCoordinatesWhenCompareNullCoordinatehenIsTrue() {
+        assertTrue(NullCoordinate.instance().equals(NullCoordinate.instance()));
+    }
+    
+    @Test
+    public void testGivenNullCoordinatesWhenCompareConcreteCoordinatehenIsFalse() {
+        assertFalse(NullCoordinate.instance().equals(this.coordinate00));
+    }
+    
     @Test
     public void testGivenNewCoordinatesWhenCompareOneCoordinateWithAnObjectThenIsFalse() {
         assertFalse(this.coordinate00.equals(new Object()));
     }
+    
 }

@@ -1,11 +1,9 @@
 package usantatecla.utils;
 
-public class Coordinate extends WithConsoleModel {
+public class Coordinate {
 
 	protected int row;
-
 	protected int column;
-
 	static final String ROW = "Row: ";
 	static final String COLUMN = "Column: ";
 
@@ -17,7 +15,7 @@ public class Coordinate extends WithConsoleModel {
 		this.column = column;
 	}
 
-	protected Direction getMainDirection(Coordinate coordinate) {
+	protected Direction getDirection(Coordinate coordinate) {
 		if (this.inHorizontal(coordinate)) {
 			return Direction.HORIZONTAL;
 		}
@@ -27,25 +25,25 @@ public class Coordinate extends WithConsoleModel {
 		if (this.inMainDiagonal() && coordinate.inMainDiagonal()) {
 			return Direction.MAIN_DIAGONAL;
 		}
-		return null;
-	}
-
-	private boolean inMainDiagonal() {
-		return this.row - this.column == 0;
-	}
-
-	private boolean inVertical(Coordinate coordinate) {
-		return this.column == coordinate.column;
+		return Direction.NULL_DIRECTION;
 	}
 
 	private boolean inHorizontal(Coordinate coordinate) {
 		return this.row == coordinate.row;
 	}
 
+	private boolean inVertical(Coordinate coordinate) {
+		return this.column == coordinate.column;
+	}
+
+	private boolean inMainDiagonal() {
+		return this.row - this.column == 0;
+	}
+
 	protected void read(String title) {
-		this.console.writeln(title);
-		this.row = this.console.readInt(Coordinate.ROW) - 1;
-		this.column = this.console.readInt(Coordinate.COLUMN) - 1;
+		Console.instance().writeln(title);
+		this.row = Console.instance().readInt(Coordinate.ROW) - 1;
+		this.column = Console.instance().readInt(Coordinate.COLUMN) - 1;
 	}
 
 	public int getRow() {
@@ -66,14 +64,26 @@ public class Coordinate extends WithConsoleModel {
 	}
 
 	@Override
-	public boolean equals(Object coordinateObject) {
-		if (!(coordinateObject instanceof Coordinate)) {
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
 			return false;
-		}
-		Coordinate coordinate = (Coordinate) coordinateObject;
-		return this.column == coordinate.column && this.row == coordinate.row;
+		if (getClass() != obj.getClass())
+			return false;
+		Coordinate other = (Coordinate) obj;
+		if (column != other.column)
+			return false;
+		if (row != other.row)
+			return false;
+		return true;
 	}
 
+	@Override
+	public String toString() {
+		return "Coordinate [row=" + row + ", column=" + column + "]";
+	}
+	
 	
 
 }

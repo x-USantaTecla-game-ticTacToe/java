@@ -11,14 +11,14 @@ public class PlayerTest {
 
     private Player player;
 
-    private Coordinate coordinate00;
-    private Coordinate coordinate01;
+    private ConcreteCoordinate coordinate00;
+    private ConcreteCoordinate coordinate01;
 
     public PlayerTest() {
         this.board = new Board();
         this.player = new UserPlayer(Token.TOKEN_O, this.board);
-        this.coordinate00 = new Coordinate(0, 0);
-        this.coordinate01 = new Coordinate(0, 1);
+        this.coordinate00 = new ConcreteCoordinate(0, 0);
+        this.coordinate01 = new ConcreteCoordinate(0, 1);
     }
 
     @Test

@@ -1,32 +1,46 @@
 package usantatecla.tictactoe;
 
+import usantatecla.utils.LimitedIntDialog;
+
 class Turn {
-
-	static final int NUM_PLAYERS = 2;
-
-	private int value;
-
+	
+	static final int NUMBER_PLAYERS = 2;
 	private Player[] players;
+	private int active;
 
-	Turn(Player[] players) {
-		this.value = 0;
-		this.players = players;
+	Turn(Board board) {
+		int numberUsers = new LimitedIntDialog(Turn.NUMBER_PLAYERS)
+			.read(Message.NUMBER_PLAYERS.toString());
+		this.players = new Player[Turn.NUMBER_PLAYERS];
+		for (int i = 0; i < Turn.NUMBER_PLAYERS; i++) {
+			this.players[i] = this.createPlayer(i < numberUsers, board, Token.get(i));
+		}
+		this.active = Turn.NUMBER_PLAYERS-1;
 	}
 
-	void change() {
-		this.value = this.getOtherValue();
+	private Player createPlayer(boolean userPlayer, Board board, Token token){
+		if (userPlayer){
+			return new UserPlayer(token, board);
+		} else {
+			return new MachinePlayer(token, board);
+		}
 	}
 
-	Player getPlayer() {
-		return this.players[this.value];
+	void play(){
+		this.active = (this.active+1) % Turn.NUMBER_PLAYERS;
+		this.getPlayer().play();
 	}
 
-	int getOtherValue() {
-		return (this.value + 1) % Turn.NUM_PLAYERS;
+	private Player getPlayer() {
+		return this.players[this.active];
 	}
 
-	Player getOtherPlayer() {
-		return this.players[this.getOtherValue()];
+	void writeWinner(){
+		this.getPlayer().writeWinner();
+	}
+
+	Token getToken() {
+		return this.getPlayer().getToken();
 	}
 
 }

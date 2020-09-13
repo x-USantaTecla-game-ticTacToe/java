@@ -7,20 +7,24 @@ class MachinePlayer extends Player {
 	}
 
 	@Override
-	Error readCoordinateToPut(Coordinate coordinate) {
+	Coordinate getCoordinateToPut() {
+		return this.getCoordinate(Message.COORDINATE_TO_PUT);
+	}
+
+	private Coordinate getCoordinate(Message message){
+		Coordinate coordinate = new ConcreteCoordinate();
 		coordinate.random();
-		return this.getPutCoordinateError(coordinate);
+		return coordinate;
 	}
 
 	@Override
-	Error readCoordinateOriginToRemove(Coordinate coordinate) {
-		coordinate.random();
-		return this.getMoveOriginCoordinateError(coordinate);
+	Coordinate getCoordinateOriginToRemove() {
+		return this.getCoordinate(Message.COORDINATE_TO_REMOVE);
 	}
 
 	@Override
-	Error readCoordinateTargetToMove(Coordinate originCoordinate, Coordinate targetCoordinate) {
-		targetCoordinate.random();
-		return this.getMoveTargetCoordinateError(originCoordinate, targetCoordinate);
+	Coordinate getCoordinateTargetToMove() {
+		return this.getCoordinate(Message.COORDINATE_TO_MOVE);
 	}
+
 }

@@ -4,17 +4,23 @@ import usantatecla.utils.Console;
 
 enum Token {
 
-	TOKEN_X('X'),
-	TOKEN_O('O');
+	X_TOKEN('X'),
+	Y_TOKEN('O'),
+	NULL_TOKEN(' ');
 
-	private char character;
+	private char symbol;
+	private static Console console = new Console();
 
-	Token(char character){
-		this.character = character;
+	private Token(char symbol){
+		this.symbol = symbol;
 	}
 
 	void write() {
-		new Console().write(this.character);
+		Token.console.write(this.symbol);
+	}
+
+	static Token get(int position){
+		return Token.values()[position];
 	}
 
 }
