@@ -13,12 +13,12 @@ class Turn {
 			.read(Message.NUMBER_PLAYERS.toString());
 		this.players = new Player[Turn.NUMBER_PLAYERS];
 		for (int i = 0; i < Turn.NUMBER_PLAYERS; i++) {
-			this.players[i] = this.createPlayer(i < numberUsers, board, Token.get(i));
+			this.players[i] = this.createPlayer(i < numberUsers, Token.get(i), board);
 		}
 		this.active = Turn.NUMBER_PLAYERS-1;
 	}
 
-	private Player createPlayer(boolean userPlayer, Board board, Token token){
+	private Player createPlayer(boolean userPlayer, Token token, Board board){
 		if (userPlayer){
 			return new UserPlayer(token, board);
 		} else {

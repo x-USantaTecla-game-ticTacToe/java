@@ -45,15 +45,14 @@ class Board {
 	}
 
 	boolean isCompleted() {
-		int tokens = 0;
 		for (int i = 0; i < this.NUMBER_PLAYERS; i++) {
 			for (int j = 0; j < Coordinate.DIMENSION; j++) {
-				if (!this.coordinates[i][j].equals(NullCoordinate.NULL_COORDINATE)) {
-					tokens++;
+				if (this.coordinates[i][j].equals(NullCoordinate.NULL_COORDINATE)) {
+					return false;
 				}
 			}
 		}
-		return tokens == this.NUMBER_PLAYERS * Coordinate.DIMENSION;
+		return true;
 	}
 
 	void put(Coordinate coordinate, Token token) {
