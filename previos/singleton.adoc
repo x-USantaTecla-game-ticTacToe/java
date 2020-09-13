@@ -1,0 +1,94 @@
+= Singleton
+
+==== *Nombre*
+
+===== Nombre
+ 
+
+- _Ejemplo_: *_Singleton_* 
+* _Solitario, solo, solterón, , ..._ (https://www.wordreference.com/es/translation.asp?tranword=singleton[*wordreference*])
+
+===== Sinónimos
+
+- _Ejemplo_: *_Singleton_* 
+* _No tiene_
+
+==== *Problema*
+ 
+===== Motivación
+
+
+- _Ejemplo_: *_Singleton_* 
+* _Para algunas clases es importante tener exactamente una instancia._ 
+** _Aunque haya muchas impresoras en un sistema, debería haber una única cola de impresión._ 
+** _Debería haber un solo sistema de ficheros y un solo gestor de ventanas._
+** _Un filtro digital tendría un único convertidor analógico/digital._ 
+** _Un sistema de cuentas bancarias será dedicado para servir a una compañía_
+
+===== Intención
+
+- _Ejemplo_: *_Singleton_* 
+
+[quote, Gamma et al, Patrones de Diseño]
+*Asegurar que una clase tenga una sola instancia y proveer un punto de acceso global para ésta.*
+
+===== Aplicabilidad
+
+- _Ejemplo_: *_Singleton_*  
+* _Debe ser exactamente una única instancia de la clase y debe ser accesible a los clientes desde un punto de acceso bien conocido._
+* _Cuando la única instancia debería ser extensible por sub-clasificación y los clientes deberían ser capaces de usar la instancia extendida sin modificar su código_
+
+
+==== *Solución*
+
+- La solución describe los elementos que llevan a cabo el diseño, sus relaciones, responsabilidades y colaboraciones.
+- La solución no describe un diseño o implementación concreta particular porque un patrón es como una plantilla que puede ser aplicada en muchas situaciones diferentes
+- En lugar de ello, el patrón proporciona una descripción abstracta de un problema de diseño y cómo la estructura general de elementos resuelve (clases y objetos en nuestro caso).
+
+===== Estructura
+
+- _Ejemplo_: *_Singleton_* 
+
+===== Participantes
+
+- _Ejemplo_: *_Singleton_* 
+* _Singleton define una operación Instance que permite a los clientes acceder a su única instancia._ 
+** _Instance es una operación de clase (o sea, un método de clase en Smalltalk y un función miembro estática en C++)_
+
+===== Colaboraciones
+
+- _Ejemplo_: *_Singleton_*
+* _Los clientes acceden a la instancia única a través de la operación Instance de Singleton_
+
+===== Implementación
+
+- _Ejemplo_: *_Singleton_* 
+
+===== Código de ejemplo
+
+- _Ejemplo_: *_Singleton_* 
+
+===== Usos conocidos
+
+- _Ejemplo_: *_Singleton_* 
+* _ChangeSet int Smalltalk-80_
+* _Session y WidgetKit en InterViews_
+
+===== Patrones relacionados
+
+- _Ejemplo_: *_Singleton_* 
+* _Abstract Factory_
+* _Builder_
+* _Prototype_
+
+
+==== *Consecuencias*
+
+- _Ejemplo_: *_Singleton_*
+* _Acceso controlado a una única instancia. Como la clase encapsula su única instancia, puede tener un control estricto sobre cómo y cuándo los clientes acceden a ésta._
+* _Reducir el espacio de nombres. Es una mejora sobre las variables globales ya que  se evita contaminar el espacio de nombres con las variables globales que almacenen las instancias únicas._
+* _Permite el refinamiento de operaciones y su representación. Se pueden tener subclases y es fácil configurar una aplicación con una instancia de esta clase extendida que se necesite en tiempo de ejecución._
+* _Permite un número variable de instancias. Facilita cambiar de opinión y permitir más de una instancia de la clase. Además, se puede utilizar el mismo enfoque para controlar el número de instancias que utiliza la aplicación._
+* _Más flexible que operaciones de clase (static). Esta técnica hace que sea difícil cambiar un diseño para permitir más de una instancia de una clase. Y  las subclases no pueden redefinirlas polimórficamente_
+
+ 

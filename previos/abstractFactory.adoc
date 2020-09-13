@@ -1,0 +1,235 @@
+= *Abstract Factory*
+
+== Problema
+
+=== Motivación: ¿Por qué?
+
+*_Ejemplo_*: _Un cirujano realiza una intervención siguiendo un algoritmo y dependiendo del lugar (quirófano, selva, …), la realizará con unos instrumentos u otros (bisturí vs navaja, pulsómetro vs contando pulsaciones, ...)_
+
+[plantuml,abstractFactoryBad,svg]
+....
+skinparam packageStyle rect
+
+class Cirurjano  {
+ + prepararBisturi()
+ + prepararNavaja()
+ + prepararCompresa()
+  + preparaTrapo()
+ +intervenir()
+ } 
+ 
+Cirurjano -right->Bisturi
+Cirurjano -right->Navaja
+Cirurjano -right->Compresa
+Cirurjano -right->Trapo
+
+abstract class Cortante 
+class Bisturi 
+class Navaja 
+
+abstract class Secador 
+class Compresa
+class Trapo
+
+Cirurjano -right-> Cortante
+Cirurjano -right->Secador
+
+Cortante<|-down-Bisturi
+Cortante<|-down-Navaja
+
+Secador<|-down-Compresa
+Secador<|-down-Trapo
+....
+
+*_Ejemplo_*: _Si la responsabilidad del cirujano incluye la preparación del instrumental en cualquier contexto, ésta se complica y tiende a crecer más y más dependiendo del número de contextos mezclando dos asuntos innecesariamente: preparación del instrumental y cirugía._
+
+[cols="10, 70, 20", options="header"]
+|===
+| Diseño
+| Descripción
+| Smell code
+
+| *Cohesión* 
+| _Cirujano tiene 2 responsabilidades_
+| Baja cohesión
+
+| *Acoplamiento*
+| _Cirujano está acoplado a cada instrumental de cada contexto_ 
+| Alto acoplamiento
+
+| *Tamaño*
+| _Cirujano tiende a crecer según el número de contextos y tipos de instrumental_
+| Clase grande
+|===
+
+=== Intención: ¿Para qué?
+
+*_Ejemplo_*: _La responsabilidad del cirujano incluye solamente la solicitud del instrumental abstracto (algo cortante, contador de pulsaciones, …) a otros que se especialicen por separado en la preparación del instrumental según su contexto._
+
+[quote, Gamma et al, Patrones de Diseño]
+*Provee una interfaz para crear familias de objetos relacionados o dependientes sin especificar sus clases concretas*
+
+[plantuml,abstractFactoryGood,svg]
+....
+skinparam packageStyle rect
+
+class Cirurjano <<Client>> {
+ +intervenir()
+}
+
+abstract class Instrumentalista <<AbstractFactory>> {
+ {abstract}+crearCortante()
+ {abstract}+crearSecador()
+}
+class "Instrumentalista en Quirófano" as InstrumentalistaEnQuirofano <<ConcreteFactoryA>> {
+ +crearCortante()                                                                                                                                                                                                               
+ +crearSecador()
+}
+class "Instrumentalista en Selva" as InstrumentalistaEnSelva <<ConcreteFactoryB>> {
+ +crearCortante()
+ +crearSecador
+}
+
+abstract class Cortante <<AbstractProductA>>
+class Bisturi <<ConcreteProductAA>>
+class Navaja <<ConcreteProductAB>>
+
+abstract class Secador <<AbstractProductB>>
+class Compresa <<ConcreteProductBA>>
+class Trapo <<ConcreteProductBB>>
+
+Cirurjano -down->Instrumentalista
+Cirurjano -right-> Cortante
+Cirurjano -right->Secador
+
+Instrumentalista<|-down-InstrumentalistaEnQuirofano
+Instrumentalista<|-down-InstrumentalistaEnSelva
+
+Cortante<|-down-Bisturi
+Cortante<|-down-Navaja
+
+Secador<|-down-Compresa
+Secador<|-down-Trapo
+
+InstrumentalistaEnQuirofano -right-> Bisturi
+InstrumentalistaEnQuirofano -right-> Compresa
+
+InstrumentalistaEnSelva -right-> Navaja
+InstrumentalistaEnSelva -right-> Trapo
+
+....
+
+[cols="10, 90", options="header"]
+|===
+| Diseño
+| Descripción
+
+| *Cohesión* 
+| _Cirujano tiene una única responsabilidad, intervenir quirúrjicamente_
+
+| *Acoplamiento*
+| _Cirujano está acoplado unicamente al instrumental abstracto_
+
+| *Tamaño*
+| _Cirujano solo tiende a crecer según los tipos de instrumental que realmente necesite_
+|===
+
+=== Aplicabilidad: ¿Cuándo?
+
+- Un sistema debe ser independiente de cómo se crean, componen y representan sus productos
+- Un sistema debe ser configurado con una familia de productos de entre varias
+- Una familia de objetos producto relacionados está diseñada para ser usada conjuntamente, y es necesario hacer cumplir esta restricción
+- Quiere proporcionar una biblioteca de clases de productos, y sólo quiere revelar sus interfaces, no sus implementaciones
+
+== Solución: ¿Cómo?
+
+=== Estructura
+
+[plantuml,abstractFactoryPattern,svg]
+....
+skinparam packageStyle rect
+
+class Client {
+ +intervenir()
+}
+
+abstract class "Abstract Factory" as  AbstractFactory{
+ {abstract}+createProductA()
+ {abstract}+createProductB()
+}
+class "Concrete Factory A" as ConcreteFactoryA {
+ +createProductA()                                                                                                                                                                                                               
+ +createProductB()
+}
+class "Concrete Factory B" as ConcreteFactoryB{
+ +createProductA()
+ +createProductB()
+}
+
+abstract class "Abstract Product A" as AbstractProductA
+class "Concrete Product AA"  as ConcreteProductAA
+class "Concrete Product AB" as ConcreteProductAB
+
+abstract class "Abstract Product B" as AbstractProductB
+class "Concrete Product BA" as ConcreteProductBA
+class "Concrete Product BB" as  ConcreteProductBB
+
+Client -down-> AbstractFactory
+Client -right-> AbstractProductA
+Client -right-> AbstractProductB
+
+AbstractFactory <|-down-ConcreteFactoryA
+AbstractFactory <|-down-ConcreteFactoryB
+
+AbstractProductA <|-down-ConcreteProductAA
+AbstractProductA <|-down-ConcreteProductAB
+
+AbstractProductB <|-down-ConcreteProductBA
+AbstractProductB <|-down-ConcreteProductBB
+
+ConcreteFactoryA -right-> ConcreteProductAA
+ConcreteFactoryA -right-> ConcreteProductBA
+
+ConcreteFactoryB -right-> ConcreteProductAB
+ConcreteFactoryB -right-> ConcreteProductBB
+....
+
+=== Participantes
+
+- Definiendo una clase FabricaDeProductos que declara una interfaz para crear cada tipo básico de producto. También hay una clase abstracta para cada tipo de producto, y las subclases concretas implementan útiles para un estándar concreto de interfaz de usuario. 
+
+* La interfaz FabricaDeProductos tiene una operación que devuelve un nuevo objeto para cada clase abstracta de producto. Los clientes llaman a estas operaciones para obtener instancias de productos, pero no son conscientes de las clases concretas que están usando. De esta manera los clientes son independientes de la interfaz de usuario. En otras palabras, los clientes no tienen que atarse a una clase concreta, sino sólo a una interfaz definida por una clase abstracta.
+
+- AbstractFactory solo declara una interfaz para crear productos. Se deja a las subclases ConcreteFactory el crearlos realmente. El modo más común de hacer esto es definiendo un método de fabricación para cada producto.
+
+- AbstractFactory por lo general define una operación diferente para cada tipo de producto que puede producir. Los tipos de producto está codificados en las signaturas de las operaciones. Añadir un nuevo tipo de producto requiere cambiar la interfaz de AbstractFactory y todas las clases que dependen de ella.
+
+* Un diseño más flexible, aunque menos seguro, es añadir un parámetro a las operaciones que crean los objetos. Este parámetro especifica el tipo de objeto a ser creado. Podría tratarse de un identificador de clase, un entero, una cadena de texto o cualquier otra cosa que identifique el tipo de producto. De hecho, con este enfoque, AbstractFactory solo necesita una única operación “Hacer” con un parámetro que indique el tipo de objeto a crear. 
+
+=== Relaciones
+
+Singleton:: para una aplicación que sólo necesita una instancia de una FabricaConcreta por cada familia de productos. 
+
+Factory Method:: para que una fábrica concreta especifique sus productos. Si bien esta implementación es sencilla, requiere una nueva subclase fábrica concreta para cada familia de productos, incluso aunque las familias de productos difieran ligeramente.
+
+Prototype:: para el caso de que sea posible tener muchas familias de productos. La fábrica concreta se inicializa con una instancia prototípica de cada producto de la familia, y crea un nuevo producto clonando su prototipo. El enfoque basado en prototipos elimina la necesidad de una nueva clase de fábrica concreta para cada nueva familia de productos.
+
+==== Comparativa
+
+Abstract Factory vs Builder:: 
+Se parecen en que pueden construir objetos complejos. 
+La principal diferencia es que el patrón Builder se centra en construir un objeto complejo paso a paso. Abstract Factory hace hincapié en familias de objetos “producto” (simples o complejos). 
+Builder devuelve el producto como paso final, mientras que Abstract Factory lo devuelve inmediatamente.
+
+Abstract Factory vs Facade:: 
+Abstract Factory también puede ser una alternativa a Facade para ocultar clases específicas de una plataforma proporcionando una interfaz para crear el subsistema de objetos de forma independiente a otros subsistemas. 
+
+== Consecuencias
+
+- El patrón Abstract Factory ayuda a controlar las clases de objetos que crea una aplicación. Como una fábrica encapsula la responsabilidad y el proceso de creación de objetos producto, aísla a los clientes de las clases de implementación. Los clientes manipulan las instancias a través de sus interfaces abstractas. Los nombre de las clases producto quedan aisladas en la implementación de la fábrica concreta; no aparecen en el código cliente.
+
+- La clase de una fábrica concreta sólo aparece una vez en una aplicación – cuando se crea-. Esto facilita cambiar la fábrica concreta que usa una aplicación. Como una fábrica abstracta crea una familia completa de productos, toda la familia de productos cambia de una vez.
+
+- Cuando se diseñan objetos producto en una familia para trabajar juntos, es importante que una aplicación use objetos de una sola familia a la vez. Abstract Factory facilita que se cumpla esta restricción.
+
+- Ampliar las fábricas abstractas para producir nuevos tipo de productos no es fácil. Esto se debe a que la interfaz AbstractFactory fija el conjunto de productos que se pueden crear. Permitir nuevos tipos de productos requiere ampliar la interfaz de la fábrica, lo que a su vez implica cambiar la clase AbstractFactory y todas sus subclases.

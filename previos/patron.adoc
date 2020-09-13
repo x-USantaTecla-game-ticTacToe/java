@@ -1,0 +1,158 @@
+= *XXX*
+
+== Problema
+
+=== Motivación: ¿Por qué?
+
+*_Ejemplo_*: _xxx_
+
+[plantuml,xxxBad,svg]
+....
+class xxx
+....
+
+*_Ejemplo_*: _xxx_
+
+[cols="10, 70, 20", options="header"]
+|===
+| Diseño
+| Descripción
+| Smell code
+
+| *Cohesión* 
+| _xxx_
+| xxx
+
+| *Acoplamiento*
+| _xxx_ 
+| xxx
+
+| *Tamaño*
+| _xxx_
+| xxx
+|===
+
+[cols="53,47"]
+|===
+a| *Problemas de Diseño*
+a| el diseño es _difícil_ y _reutilizable_ es incluso _más difícil_
+
+| Encontrar objetos apropiados 
+| Cohesión 
+
+| Relacionar Estructuras del Tiempo de Compilación y de Ejecución
+| Acoplamiento
+
+| Determinar la granularidad de los objetos 
+| Tamaño 
+
+| Especificar interfaces de objetos 
+| Abstracción 
+
+| Especificar la Implementación de Objetos
+| Implementación
+
+| Poner a funcionar los mecanismos de reutilización
+| Reusabilidad por composición, herencia y/o parametrización
+
+|===
+
+[cols="45,55"]
+|===
+a| *Problemas de Rediseño*
+a| el diseño debería ser _específico_ para el problema _actual_ pero también en _general_ para direccionar _futuros_ problemas y requisitos y, así, evitar rediseños o al menos minimizarlos
+
+| Crear un objeto _especificando su clase explícitamente_ 
+| Acoplamiento 
+
+| _Dependencias de las representaciones o implementaciones_ de objetos
+| Acoplamiento
+
+| _Dependencias de plataformas_ hardware o software
+| Acoplamiento 
+
+| _Dependencias de operaciones_ concretas
+| Acoplamiento 
+
+| _Dependencias algorítmicas_
+| Acoplamiento
+
+| _Fuerte acoplamiento_
+| Acoplamiento
+
+| Añadir _funcionalidad mediante herencia_
+| Principio Abierto/Cerrardo
+
+| _Incapacidad para modificar las clases_ convenientemente
+| Principio Abierto/Cerrardo
+
+|===
+
+=== Intención: ¿Para qué?
+
+*_Ejemplo_*: _xxx_
+
+[plantuml,xxxGood,svg]
+....
+class xxx
+....
+
+[cols="10, 90", options="header"]
+|===
+| Diseño
+| Descripción
+
+| *Cohesión* 
+| _xxx_
+
+| *Acoplamiento*
+| _xxx_
+
+| *Tamaño*
+| _xxx_
+|===
+
+[cols="20,80"]
+|===
+a| *Propósito* 
+| qué hace
+
+| Patrón Creacional
+| creación de objetos 
+
+| Patrón Estructural
+| composición estrucutras complejas
+
+| Patrón de Comportamiento
+| composición interaccones complejas
+
+|===
+
+=== Aplicabilidad: ¿Cuándo?
+
+- xxx
+
+== Solución: ¿Cómo?
+
+=== Estructura
+
+[plantuml,xxxPattern,svg]
+....
+class xxx
+....
+
+=== Participantes
+- xxx 
+
+=== Relaciones
+
+xxx:: xxx
+
+==== Comparativa
+
+xxx vs xxx:: 
+xxx
+
+== Consecuencias
+
+- xxx

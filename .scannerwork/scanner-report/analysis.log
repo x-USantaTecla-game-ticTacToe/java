@@ -1,0 +1,41 @@
+SonarQube plugins:
+  - Python Code Quality and Security 2.13.0.7236 (python)
+  - SonarCSS 1.2.0.1325 (cssfamily)
+  - JaCoCo 1.1.0.898 (jacoco)
+  - SonarGo 1.6.0.719 (go)
+  - SonarKotlin 1.5.0.315 (kotlin)
+  - Svn 1.10.0.1917 (scmsvn)
+  - SonarJS 6.2.1.12157 (javascript)
+  - SonarRuby 1.5.0.315 (ruby)
+  - SonarScala 1.5.0.315 (sonarscala)
+  - C# Code Quality and Security 8.9.0.19135 (csharp)
+  - Java Code Quality and Security 6.5.1.22586 (java)
+  - SonarHTML 3.2.0.2082 (web)
+  - Git 1.12.0.2034 (scmgit)
+  - SonarFlex 2.5.1.1831 (flex)
+  - SonarXML 2.0.1.2020 (xml)
+  - PHP Code Quality and Security 3.5.0.5655 (php)
+  - SonarTS 2.1.0.4359 (typescript)
+  - VB.NET Code Quality and Security 8.9.0.19135 (vbnet)
+Global server settings:
+  - sonar.core.id=BF41A1F2-AXP9Mru-T8SC0G-yKp6-
+  - sonar.core.startTime=2020-08-19T20:46:36+0200
+Project server settings:
+Project scanner properties:
+  - sonar.host.url=http://localhost:9000
+  - sonar.jacoco.reportPath=target/jacoco.exec
+  - sonar.java.binaries=target/classes
+  - sonar.java.coveragePlugin=jacoco
+  - sonar.junit.reportsPath=target/my-reports
+  - sonar.language=java
+  - sonar.projectBaseDir=C:\Users\victo\Pictures\tictactoe2
+  - sonar.projectKey=usantatecla:tictactoe-mvp.pm.withoutProxy
+  - sonar.projectName=tictactoe-mvp.pm.withoutProxy
+  - sonar.projectVersion=1.0
+  - sonar.scanner.app=ScannerCLI
+  - sonar.scanner.appVersion=4.4.0.2170
+  - sonar.sourceEncoding=windows-1252
+  - sonar.sources=./src/main/java
+  - sonar.tests=src/test
+  - sonar.verbose=true
+  - sonar.working.directory=C:\Users\victo\Pictures\tictactoe2\.scannerwork
