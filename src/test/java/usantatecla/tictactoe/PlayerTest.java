@@ -1,16 +1,16 @@
 package usantatecla.tictactoe;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+// import static org.junit.Assert.assertEquals;
+// import static org.junit.Assert.assertTrue;
 
-import org.junit.Test;
+// import org.junit.Test;
 
-public class PlayerTest {
+// public class PlayerTest {
     
-    private Board board;
-    private Player player;
-    private ConcreteCoordinate coordinate00;
-    private ConcreteCoordinate coordinate01;
+//     private Board board;
+//     private Player player;
+//     private Coordinate coordinate00;
+//     private Coordinate coordinate01;
 
 //    public PlayerTest() {
 //        this.board = new Board();
@@ -61,4 +61,4 @@ public class PlayerTest {
 //        this.board.put(this.coordinate00, Token.TOKEN_O);
 //        assertTrue(this.player.getMoveTargetCoordinateError(this.coordinate00, this.coordinate01) == null);
 //    }
-}
+// }

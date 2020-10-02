@@ -15,7 +15,7 @@ public class LimitedIntDialog {
 		boolean error;
 		int value;
 		do {
-			value = Console.instance().readInt(message + "? " + this.LIMITS);
+			value = Console.instance().readInt(message + "? " + this.LIMITS + ": ");
 			error = !this.LIMITS.isIncluded(value);
 			if (error) {
 				Console.instance().writeln(LimitedIntDialog.ERROR_MESSAGE);

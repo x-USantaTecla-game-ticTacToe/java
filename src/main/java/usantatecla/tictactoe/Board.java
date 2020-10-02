@@ -14,7 +14,7 @@ class Board {
 		this.coordinates = new Coordinate[this.NUMBER_PLAYERS][Coordinate.DIMENSION];
 		for (int i = 0; i < this.NUMBER_PLAYERS; i++) {
 			for (int j = 0; j < Coordinate.DIMENSION; j++) {
-				this.coordinates[i][j] = NullCoordinate.instance();
+				this.coordinates[i][j] = Coordinate.NULL_COORDINATE;
 			}
 		}
 	}
@@ -24,7 +24,7 @@ class Board {
 		for (int i = 0; i<Coordinate.DIMENSION; i++) {
 			Message.VERTICAL_LINE_LEFT.write();
 			for (int j = 0; j<Coordinate.DIMENSION; j++) {
-				this.getToken(new ConcreteCoordinate(i, j)).write();
+				this.getToken(new Coordinate(i, j)).write();
 				Message.VERTICAL_LINE_CENTERED.write();
 			}
 			Message.VERTICAL_LINE_RIGHT.writeln();
@@ -54,7 +54,7 @@ class Board {
 		return true;
 	}
 	
-	boolean isCompleted(int player) {
+	private boolean isCompleted(int player) {
 		for (int j = 0; j < Coordinate.DIMENSION; j++) {
 			if (this.coordinates[player][j].isNull()) {
 				return false;
@@ -65,7 +65,7 @@ class Board {
 
 	void put(Coordinate coordinate, Token token) {
 		assert coordinate != null && !coordinate.isNull();
-		assert token != null && !token.equals(Token.NULL_TOKEN);
+		assert token != null && !token.isNull();
 		
 		Coordinate[] coordinates = this.coordinates[token.ordinal()];
 		int i = 0;
@@ -93,7 +93,7 @@ class Board {
 		for (int i = 0; i < this.NUMBER_PLAYERS; i++) {
 			for (int j = 0; j < Coordinate.DIMENSION; j++) {
 				if (this.coordinates[i][j].equals(coordinate)) {
-					this.coordinates[i][j] = NullCoordinate.NULL_COORDINATE;
+					this.coordinates[i][j] = Coordinate.NULL_COORDINATE;
 				}
 			}
 		}

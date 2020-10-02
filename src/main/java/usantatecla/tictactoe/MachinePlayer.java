@@ -6,27 +6,12 @@ class MachinePlayer extends Player {
 		super(token, board);
 	}
 
-	@Override
-	Coordinate getCoordinateToPut() {
-		return this.getCoordinate(Message.COORDINATE_TO_PUT);
-	}
-
-	private Coordinate getCoordinate(Message message){
+	protected Coordinate getCoordinate(Message message){
 		assert message != null;
 		
-		Coordinate coordinate = new ConcreteCoordinate();
+		Coordinate coordinate = new Coordinate();
 		coordinate.random();
 		return coordinate;
-	}
-
-	@Override
-	Coordinate getCoordinateOriginToRemove() {
-		return this.getCoordinate(Message.COORDINATE_TO_REMOVE);
-	}
-
-	@Override
-	Coordinate getCoordinateTargetToMove() {
-		return this.getCoordinate(Message.COORDINATE_TO_MOVE);
-	}
+	}	
 	
 }

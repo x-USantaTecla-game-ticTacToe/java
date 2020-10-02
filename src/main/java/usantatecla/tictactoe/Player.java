@@ -25,62 +25,55 @@ abstract class Player {
 		Error error;
 		Coordinate coordinate;
 		do {
-			coordinate = this.getCoordinateToPut();
+			coordinate = this.getCoordinate(Message.ENTER_COORDINATE_TO_PUT);
 			error = this.checkPutCoordinateError(coordinate);
 		} while (error != Error.NULL_ERROR);
 		this.board.put(coordinate, this.token);
 	}
-	
-	abstract Coordinate getCoordinateToPut();
 
-	Error checkPutCoordinateError(Coordinate coordinate) {
-		Error error = Error.NULL_ERROR;
+	protected abstract Coordinate getCoordinate(Message message);
+
+	protected Error checkPutCoordinateError(Coordinate coordinate) {
 		if (!this.board.isEmpty(coordinate)) {
-			error = Error.NOT_EMPTY;
+			return Error.NOT_EMPTY;
 		}
-		return error;
+		return Error.NULL_ERROR;
 	}
 
 	private void move() {
 		Error error;
 		Coordinate originCoordinate;
 		do {
-			originCoordinate = this.getCoordinateOriginToRemove();
+			originCoordinate = this.getCoordinate(Message.COORDINATE_TO_REMOVE);
 			error = this.checkMoveOriginCoordinateError(originCoordinate);
 		} while (error != Error.NULL_ERROR);
 		Coordinate targetCoordinate;
 		do {
-			targetCoordinate = this.getCoordinateTargetToMove();
+			targetCoordinate = this.getCoordinate(Message.COORDINATE_TO_MOVE);
 			error = this.checkMoveTargetCoordinateError(originCoordinate, targetCoordinate);
 		} while (error != Error.NULL_ERROR);
 		this.board.move(originCoordinate, targetCoordinate);
 	}
 
-	abstract Coordinate getCoordinateOriginToRemove();
-
-	abstract Coordinate getCoordinateTargetToMove();
-
-	Error checkMoveOriginCoordinateError(Coordinate originCoordinate) {
+	protected Error checkMoveOriginCoordinateError(Coordinate originCoordinate) {
 		assert originCoordinate != null;
-		
-		Error error = Error.NULL_ERROR;
+
 		if (!this.board.isOccupied(originCoordinate, this.token)) {
-			error = Error.NOT_OWNER;
+			return Error.NOT_OWNER;
 		}
-		return error;
+		return Error.NULL_ERROR;
 	}
 
-	Error checkMoveTargetCoordinateError(Coordinate originCoordinate, Coordinate targetCoordinate) {
+	protected Error checkMoveTargetCoordinateError(Coordinate originCoordinate, Coordinate targetCoordinate) {
 		assert originCoordinate != null;
 		
-		Error error = Error.NULL_ERROR;
 		if (originCoordinate.equals(targetCoordinate)) {
-			error = Error.SAME_COORDINATES;
+			return Error.SAME_COORDINATES;
 		} 
 		if (!this.board.isEmpty(targetCoordinate)) {
-			error = Error.NOT_EMPTY;
+			return Error.NOT_EMPTY;
 		}
-		return error;
+		return Error.NULL_ERROR;
 	}
 
 	void writeWinner() {
@@ -91,5 +84,5 @@ abstract class Player {
 	Token getToken() {
 		return this.token;
 	}
-
+	
 }

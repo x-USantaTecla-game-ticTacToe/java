@@ -1,19 +1,16 @@
 package usantatecla.tictactoe;
 
-import static org.junit.Assert.assertEquals;
 
-import org.junit.Test;
+// public class TurnTest {
 
-public class TurnTest {
+//     private Turn turn;
+//     private Player[] players;
 
-    private Turn turn;
-    private Player[] players;
-
-    public TurnTest() {
-    	final int NUMBER_PLAYER = 2;
-        Board board = new Board(NUMBER_PLAYER);
-        this.turn = new Turn(board);
-    }
+//     public TurnTest() {
+//     	final int NUMBER_PLAYER = 2;
+//         Board board = new Board(NUMBER_PLAYER);
+//         this.turn = new Turn(board);
+//     }
 
 //    @Test
 //    public void testGivenNewTurnWhenChangeTurnThenIsOtherTurn() {
@@ -35,4 +32,4 @@ public class TurnTest {
 //        assertEquals(this.players[0].getToken(), this.turn.getPlayer().getToken());
 //        assertEquals(this.players[1].getToken(), this.turn.getOtherPlayer().getToken());
 //    }
-}
+// }

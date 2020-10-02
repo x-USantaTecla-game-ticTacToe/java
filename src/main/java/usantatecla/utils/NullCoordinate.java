@@ -1,16 +1,14 @@
-package usantatecla.tictactoe;
+package usantatecla.utils;
 
-import usantatecla.utils.Direction;
+public class NullCoordinate implements Coordinate {
 
-class NullCoordinate implements Coordinate {
-
-	public static NullCoordinate NULL_COORDINATE;
+	public static NullCoordinate instance;
 	
 	public static Coordinate instance() {
-		if (NullCoordinate.NULL_COORDINATE == null) {
-			NullCoordinate.NULL_COORDINATE = new NullCoordinate();
+		if (NullCoordinate.instance == null) {
+			NullCoordinate.instance = new NullCoordinate();
 		}
-		return NullCoordinate.NULL_COORDINATE; 
+		return NullCoordinate.instance; 
 	}
 	
 	@Override
@@ -20,22 +18,29 @@ class NullCoordinate implements Coordinate {
 	
 	@Override
 	public Direction getDirection(Coordinate coordinate) {
+		assert coordinate != null;
+
 		return Direction.NULL_DIRECTION;
 	}
-
 	@Override
-	public void read(String message) {
-	}
+	public boolean inHorizontal(Coordinate coordinate) {
+		assert coordinate != null;
 
-	@Override
-	public void random() {
-	}
-
-	@Override
-	public boolean inInverseDiagonal() {
 		return false;
 	}
-	
+
+	@Override
+	public boolean inVertical(Coordinate coordinate) {
+		assert coordinate != null;
+
+		return false;
+	}
+
+	@Override
+	public boolean inMainDiagonal() {
+		return false;
+	}
+
 	@Override
 	public int hashCode() {
 		return 0;

@@ -6,31 +6,16 @@ class UserPlayer extends Player {
 		super(token, board);
 	}
 
-	private Coordinate getCoordinate(Message message){
+	protected Coordinate getCoordinate(Message message){
 		assert message != null;
 		
-		Coordinate coordinate = new ConcreteCoordinate();
+		Coordinate coordinate = new Coordinate();
 		coordinate.read(message.toString());
 		return coordinate;
 	}
-	
-	@Override
-	Coordinate getCoordinateToPut() {
-		return this.getCoordinate(Message.ENTER_COORDINATE_TO_PUT);
-	}
 
 	@Override
-	Coordinate getCoordinateOriginToRemove() {
-		return this.getCoordinate(Message.ENTER_COORDINATE_TO_REMOVE);
-	}
-
-	@Override
-	Coordinate getCoordinateTargetToMove() {
-		return this.getCoordinate(Message.ENTER_COORDINATE_TO_PUT);
-	}
-	
-	@Override
-	Error checkPutCoordinateError(Coordinate coordinate) {
+	protected Error checkPutCoordinateError(Coordinate coordinate) {
 		assert coordinate != null;
 		
 		Error error = super.checkPutCoordinateError(coordinate);
@@ -39,7 +24,7 @@ class UserPlayer extends Player {
 	}
 	
 	@Override
-	Error checkMoveOriginCoordinateError(Coordinate originCoordinate) {
+	protected Error checkMoveOriginCoordinateError(Coordinate originCoordinate) {
 		assert originCoordinate != null;
 		
 		Error error = super.checkMoveOriginCoordinateError(originCoordinate);
@@ -48,7 +33,7 @@ class UserPlayer extends Player {
 	}
 
 	@Override
-	Error checkMoveTargetCoordinateError(Coordinate originCoordinate, Coordinate targetCoordinate) {
+	protected Error checkMoveTargetCoordinateError(Coordinate originCoordinate, Coordinate targetCoordinate) {
 		assert originCoordinate != null;
 		assert targetCoordinate != null;
 		
