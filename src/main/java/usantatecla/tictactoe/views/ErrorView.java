@@ -1,9 +1,9 @@
 package usantatecla.tictactoe.views;
 
-import usantatecla.utils.WithConsoleView;
 import usantatecla.tictactoe.models.Error;
+import usantatecla.utils.Console;
 
-class ErrorView extends WithConsoleView {
+class ErrorView {
 
 	private static final String[] MESSAGES = { 
 		"The square is not empty",
@@ -18,7 +18,9 @@ class ErrorView extends WithConsoleView {
 	}
 	
 	void writeln() {
-		this.console.writeln(ErrorView.MESSAGES[this.error.ordinal()]);
+		if (!error.isNull()){
+			Console.instance().writeln(ErrorView.MESSAGES[this.error.ordinal()]);
+		}
 	}
 
 }

@@ -3,10 +3,9 @@ package usantatecla.tictactoe;
 import usantatecla.tictactoe.models.Game;
 import usantatecla.tictactoe.views.View;
 
-class TicTacToe{
+class TicTacToe {
 
 	private Game game;
-
 	private View view;
 
 	TicTacToe() {

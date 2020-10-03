@@ -1,21 +1,22 @@
 package usantatecla.tictactoe.views;
 
 import usantatecla.tictactoe.models.Game;
-import usantatecla.tictactoe.models.Turn;
-import usantatecla.utils.PlayersDialog;
+import usantatecla.utils.LimitedIntDialog;
 
 class StartView {
 
-	Game game;
+	private Game game;
 
 	StartView(Game game) {
 		this.game = game;
 	}
 
-    void interact() {
-		MessageView.START_GAME.writeln();
-		int numberOfPlayers = new PlayersDialog().read(Turn.NUM_PLAYERS);
-		this.game.createPlayers(numberOfPlayers);
-		new BoardView(this.game.getBoard()).write();
+  void interact() {
+		Message.TITTLE.writeln();
+		int users = new LimitedIntDialog(0, 
+			this.game.getMaxPlayers()).read(Message.NUMBER_PLAYERS.toString());
+		this.game.setUsers(users);
+		new GameView(this.game).write();
 	}
+
 }

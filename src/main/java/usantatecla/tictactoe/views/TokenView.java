@@ -1,10 +1,11 @@
 package usantatecla.tictactoe.views;
 
 import usantatecla.tictactoe.models.Token;
-import usantatecla.utils.WithConsoleView;
+import usantatecla.utils.Console;
 
-class TokenView extends WithConsoleView {
+class TokenView {
 
+	private static final char[] SYMBOLS = {'X', 'O', ' ' };
 	private Token token;
 
 	TokenView(Token token){
@@ -12,6 +13,7 @@ class TokenView extends WithConsoleView {
 	}
 
 	void write() {
-		this.console.write(this.token.getChar());
+		Console.instance().write(TokenView.SYMBOLS[token.ordinal()]);
 	}
+
 }
