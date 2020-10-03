@@ -25,15 +25,19 @@ public class Game {
         return this.board;
     }
 
+    public boolean isUser(){
+        return this.getTokenPlayerFromTurn().getType() == PlayerType.USER_PLAYER;
+    }
+
     public boolean isBoardComplete() {
         return this.board.isCompleted();
     }
 
-    public void putTokenPlayerFromTurn(Coordinate coordinate) {
+    public void put(Coordinate coordinate) {
         this.turn.getPlayer().put(coordinate);
     }
 
-    public void moveTokenPlayerFromTurn(Coordinate[] coordinates) {
+    public void move(Coordinate[] coordinates) {
         this.turn.getPlayer().move(coordinates);
     }
 

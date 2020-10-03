@@ -14,13 +14,12 @@ import usantatecla.tictactoe.views.MessageView;
 import usantatecla.tictactoe.views.PlayerView;
 
 @SuppressWarnings("serial")
-class GameView extends JFrame {
+class PlayView extends JFrame {
 
 	private static final String GAME_OVER = "Game Over";
-
 	private Game game;
 
-	GameView(Game game) {
+	PlayView(Game game) {
 		super(MessageView.START_GAME.getMessage());
 		this.game = game;
 		this.getContentPane().setLayout(new GridBagLayout());
@@ -45,41 +44,35 @@ class GameView extends JFrame {
 
 	boolean play() {
 		this.getContentPane().removeAll();
-		Player player = this.game.getTokenPlayerFromTurn();
 		this.getContentPane().add(new BoardView(this.game.getBoard()), new Constraints(0, 0, 1, 1));
+		PlayerView playerView = this.createPlayerView();
+		this.setVisible(true);
 		if (!this.game.isBoardComplete()) {
-			PlayerView playerView = player.getType() == PlayerType.USER_PLAYER
-					? new UserPlayerView(player, false, this.getContentPane())
-					: new MachinePlayerView(player);
-			this.setVisible(true);
 			Coordinate coordinate = playerView.readCoordinateToPut();
-			this.game.putTokenPlayerFromTurn(coordinate);
+			this.game.put(coordinate);
 		} else {
-			PlayerView playerView = player.getType() == PlayerType.USER_PLAYER
-					? new UserPlayerView(player, true, this.getContentPane())
-					: new MachinePlayerView(player);
-			this.setVisible(true);
 			Coordinate[] coordinates = playerView.readCoordinatesToMove();
-			this.game.moveTokenPlayerFromTurn(coordinates);
+			this.game.move(coordinates);
 		}
 		if (this.game.isTicTacToe()) {
-			this.result();
+			Container container = this.getContentPane();
+			container.removeAll();
+			container.add(new BoardView(game.getBoard()), new Constraints(0, 0, 1, 1));
+			container.revalidate();
+			container.repaint();
+			int value = this.game.getValueFromTurn();
+			String message = Token.values()[value].getChar() + " " + MessageView.PLAYER_WIN.getMessage();
+			JOptionPane.showMessageDialog(null, message, PlayView.GAME_OVER, JOptionPane.WARNING_MESSAGE);
 			return true;
 		}
 		this.game.changeTurn();
 		return false;
 	}
 
-	private void result() {
-		Container container = this.getContentPane();
-		container.removeAll();
-		container.add(new BoardView(game.getBoard()), new Constraints(0, 0, 1, 1));
-		container.revalidate();
-		container.repaint();
-		int value = this.game.getValueFromTurn();
-		String message = Token.values()[value].getChar() + " "
-				+ MessageView.PLAYER_WIN.getMessage();
-		JOptionPane.showMessageDialog(null, message, GameView.GAME_OVER, JOptionPane.WARNING_MESSAGE);
+	private PlayerView createPlayerView() {
+		return this.game.isUser()
+				? new UserPlayerView(this.game.getTokenPlayerFromTurn(), false, this.getContentPane())
+				: new MachinePlayerView(this.game.getTokenPlayerFromTurn());
 	}
 
 }

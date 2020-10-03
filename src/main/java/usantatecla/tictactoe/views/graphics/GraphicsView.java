@@ -5,21 +5,21 @@ import usantatecla.tictactoe.views.View;
 
 public class GraphicsView extends View {
 
-	private GameView gameView;
+	private PlayView playView;
 
 	public GraphicsView(Game game) {
 		super(game);
-		this.gameView = new GameView(this.game);
+		this.playView = new PlayView(this.game);
 	}
 
 	@Override
 	protected void start() {
-		this.gameView.start();
+		this.playView.start();
 	}
 
 	@Override
 	protected boolean play() {
-		return this.gameView.play();
+		return this.playView.play();
 	}
 
 	@Override
@@ -28,10 +28,10 @@ public class GraphicsView extends View {
 		boolean newGame = resumeDialog.isNewGame();
 		if (newGame) {
 			this.game.newGame();
-			this.gameView = new GameView(this.game);
+			this.playView = new PlayView(this.game);
 			return true;
 		} else {
-			this.gameView.setVisible(false);
+			this.playView.setVisible(false);
 			System.exit(0);
 			return false;
 		}

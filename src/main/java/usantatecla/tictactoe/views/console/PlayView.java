@@ -20,10 +20,10 @@ class PlayView {
                                                                              new MachinePlayerView(player);
         if (!this.game.isBoardComplete()) {
             Coordinate coordinate = playerView.readCoordinateToPut();
-            this.game.putTokenPlayerFromTurn(coordinate);
+            this.game.put(coordinate);
         } else {
             Coordinate[] coordinates = playerView.readCoordinatesToMove();
-            this.game.moveTokenPlayerFromTurn(coordinates);
+            this.game.move(coordinates);
         }
         new BoardView(this.game.getBoard()).write();
         if (this.game.isTicTacToe()) {

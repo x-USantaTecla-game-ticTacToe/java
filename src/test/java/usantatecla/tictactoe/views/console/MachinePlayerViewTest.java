@@ -31,9 +31,9 @@ public class MachinePlayerViewTest {
     @Test
     public void testGivenNewCoordinateViewWhenReadCoordinateThenIsCorrec() {
         Coordinate coordinate1 = this.machinePlayerView.readCoordinateToPut();
-        this.game.putTokenPlayerFromTurn(coordinate1);
+        this.game.put(coordinate1);
         Coordinate coordinate2 = this.machinePlayerView.readCoordinateToPut();
-        this.game.putTokenPlayerFromTurn(coordinate2);
+        this.game.put(coordinate2);
         Coordinate[] coordinates = this.machinePlayerView.readCoordinatesToMove();
         assertNotNull(coordinates[0]);
         assertNotNull(coordinates[1]);
