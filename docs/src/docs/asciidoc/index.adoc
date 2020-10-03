@@ -1,5 +1,5 @@
 = Master Mind. Solución 1.1. *domainModel*
-Santa Tecla <parqueNaturalSantaTecla@gmail.com>
+Universo Santa Tecla <USantaTecla@gmail.com>
 :toc-title: Índice
 :toc: left
 
