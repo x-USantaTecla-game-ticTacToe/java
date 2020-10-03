@@ -1,5 +1,5 @@
 = Mastermind. *Guión*
-Santa Tecla <parqueNaturalSantaTecla@gmail.com>
+Universo Santa Tecla <USantaTecla@gmail.com>
 :toc-title: Índice
 :toc: left
 
@@ -15,8 +15,8 @@ a| Requisitos
 a| Solución
 a| Incremento
 
-.2+a| [red]#*Modelo del Dominio*#
-.2+a| [red]#TicTacToe. Requisitos. Versión 1. **Básica**#
+a| [red]#*Modelo del Dominio*#
+a| [red]#TicTacToe. Requisitos. Versión 1. **Básica**#
 a| [red]#TicTacToe. Solucion. Versión 1.1. **domainModel**#
 a| [red]#Clases del Modelo del Dominio **pero acopladas a tecnologías de interfaz ahora y todas con la Ley del Cambio Continuo y de granos grueso con el advenimiento de nueva funcionalidad **#
 
