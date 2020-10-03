@@ -7,7 +7,7 @@ Universo Santa Tecla <USantaTecla@gmail.com>
 :idseparator: -
 :imagesdir: images
 
-[cols="15,15,30,35" options="header"]
+[cols="10,15,25,50" options="header"]
 |===
 
 a| Tema
@@ -15,88 +15,79 @@ a| Requisitos
 a| Solución
 a| Incremento
 
-a| [red]#*Modelo del Dominio*#
-a| [red]#TicTacToe. Requisitos. Versión 1. **Básica**#
+a| *Diseño*
+.2+a| [red]#TicTacToe. Requisitos. Versión 1. **Básica**#
 a| [red]#TicTacToe. Solucion. Versión 1.1. **domainModel**#
 a| [red]#Clases del Modelo del Dominio **pero acopladas a tecnologías de interfaz ahora y todas con la Ley del Cambio Continuo y de granos grueso con el advenimiento de nueva funcionalidad **#
 
+a| *Diseño Modular*
 a| [red]#TicTacToe. Solucion. Versión 2.1. **documentView**#
 a| [red]#Clases Vistas de Texto separadas de los Modelos del Dominio **pero con Modelos de grano grueso con el advenimiento de nueva funcionalidad**#
 
-.6+a| [blue]#*Diseño Modular y Orientado a Objetos*#
+.6+a| *Orientado a Objetos*
 .6+a| [blue]#TicTacToe. Requisitos. Versión 2. **Gráficos**#
 
-a| [blue]#TicTacToe. Solucion. Versión 3.2. **dv.withoutFactoryMethod**#
+a| [blue]#TicTacToe. Solucion. Versión 3.2. **dv. withoutFactoryMethod**#
 a| [blue]#Clase Vistas de Interfaz Gráfica de Usuario **pero con DRY en Vistas de tecnologías diferentes y con Modelos de grano grueso con el advenimiento de nueva funcionalidad**#
 
-
-
-a| [blue]#TicTacToe. Solucion. Versión 4.2. **dv.withFactoryMethod**#
+a| [blue]#TicTacToe. Solucion. Versión 4.2. **dv. withFactoryMethod**#
 a| [blue]#Clase Vista abstracta para Open/Close de sus tecnologías **pero con Modelos de grano grueso con el advenimiento de nueva funcionalidad**#
 
-
-
-a| [blue]#TicTacToe. Solucion. Versión 5.2. **modelViewPresenter.presentationModel**#
+a| [blue]#TicTacToe. Solucion. Versión 5.2. **modelViewPresenter. presentationModel**#
 a| [blue]#Clases Controladoras entre Vistas y Modelos por cada Caso de Uso **pero con la clase Principal y las Vistas acopladas a cada controlador actual y futuro**#
 
-
-
-a| [blue]#TicTacToe. Solucion. Versión 6.2. **mvp.pm.withFacade**#
+a| [blue]#TicTacToe. Solucion. Versión 6.2. **mvp. pm. withFacade**#
 a| [blue]#Clase Lógica que encapsula Controladores y Modelos **pero con Vistas con DRY en la Lógica de Control**#
 
-
-
-a| [blue]#TicTacToe. Solucion. Versión 7.2. **mvp.pm.withoutDoubleDispatching**#
+a| [blue]#TicTacToe. Solucion. Versión 7.2. **mvp. pm. withoutDoubleDispatching**#
 a| [blue]#Clase Estado para la Inversión de Control de Vistas a la Lógica **pero violando el Principio de Sustitución de Liskov**#
 
-
-
-a| [blue]#TicTacToe. Solucion. Versión 8.2. **mvp.pm.withDoubleDispatching**#
+a| [blue]#TicTacToe. Solucion. Versión 8.2. **mvp. pm. withDoubleDispatching**#
 a| [blue]#Clase Vistador de Controladores para Técnica de Doble Despacho#
 
 .7+a| *Patrones de Diseño*
 a| [green]#TicTacToe. Requisitos. Versión 3. **UndoRedo**#
-a| [green]#TicTacToe. Solucion. Versión 9.3. **mvp.pm.withComposite**#
+a| [green]#TicTacToe. Solucion. Versión 9.3. **mvp. pm. withComposite**#
 a| [green]#Clase Comando del menú y Controlador Compuesto de ciertos Estados para Open/Close con nuevos Casos de Uso#
 
 
 .2+a| [yellow]#TicTacToe. Requisitos. Versión 4. **ClienteServidor**#
-a| [yellow]#TicTacToe. Solucion. Versión 10.4. **mvp.pm.withoutProxy**#
+a| [yellow]#TicTacToe. Solucion. Versión 10.4. **mvp. pm. withoutProxy**#
 a| [yellow]#Clase TCP/IP para tecnología de Despliegue **pero con Controladores acoplados, poco cohesivos y grano grueso con cada nueva tecnología**#
 
 
 
-a| [yellow]#TicTacToe. Solucion. Versión 11.4. **mvp.pm.withProxy**#
+a| [yellow]#TicTacToe. Solucion. Versión 11.4. **mvp. pm. withProxy**#
 a| [yellow]#Clases Proxy para Open/Close para nuevas tecnologías de Despliegue#
 
 
 .2+a| [purple]#TicTacToe. Requisitos. Versión 5. **Ficheros**#
-a| [purple]#TicTacToe. Solucion. Versión 12.5. **mvp.pm.withoutDAO**#
+a| [purple]#TicTacToe. Solucion. Versión 12.5. **mvp. pm. withoutDAO**#
 a| [purple]#Clases Vistas y Controladores para la tecnología de persistencia **pero con Modelos de grano grueso, baja cohesión y alto acoplamiento a tecnologías de persistencia de ficheros**#
 
 
 
-a| [purple]#TicTacToe. Solucion. Versión 13.5. **mvp.pm.withDAO**#
+a| [purple]#TicTacToe. Solucion. Versión 13.5. **mvp. pm. withDAO**#
 a| [purple]#Patrón DAO#
 
 
 .2+a| [lime]#TicTacToe. Requisitos. Versión 6. **BasesDatos**#
-a| [lime]#TicTacToe. Solucion. Versión 14.6. **mvp.pm.withoutPrototype**#
+a| [lime]#TicTacToe. Solucion. Versión 14.6. **mvp. pm. withoutPrototype**#
 a| [lime]#Nuevas Vistas y DAOS para la nueva tecnología  **pero con clase Principal acoplada a las tecnologías actuales y futuras de persistencia**#
 
 
 
-a| [lime]#TicTacToe. Solucion. Versión 15.6. **mvp.pm.withPrototype**#
+a| [lime]#TicTacToe. Solucion. Versión 15.6. **mvp. pm. withPrototype**#
 a| [lime]#Open/Close para arranque con configuración de persistencia#
 
 .3+a| [red]#*Arquitectura del Software*#
 .3+a| [red]#TicTacToe. Requisitos. Versión 1. **Básica**#
-a| [red]#TicTacToe. Solucion. Versión 16.1. **mvp.pv**#
+a| [red]#TicTacToe. Solucion. Versión 16.1. **mvp. pv**#
 a| [red]#Baile de la Triada#
 
 
 
-a| [red]#TicTacToe. Solucion. Versión 17.1. **mvp.sc**#
+a| [red]#TicTacToe. Solucion. Versión 17.1. **mvp. sc**#
 a| [red]#Baile de la Triada#
 
 
