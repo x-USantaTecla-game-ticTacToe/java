@@ -12,7 +12,7 @@ class Coordinate extends ConcreteCoordinate {
 	static final int DIMENSION = 3;
 
 	static final ClosedInterval LIMITS = 
-		new ClosedInterval(0, Coordinate.DIMENSION);
+		new ClosedInterval(0, Coordinate.DIMENSION-1);
 
 	Coordinate() {
 		super();
