@@ -316,10 +316,6 @@ usantatecla.utils.Coordinate .down.> usantatecla.utils.Direction
 
 == Calidad del Software
 
-=== Diseño
-
-- [red]#_**Método largo**: Método "play" de TicTacToe,..._#
-
 === Rediseño
 
 - _Nueva interfaz: Gráfica_

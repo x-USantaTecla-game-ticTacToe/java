@@ -25,12 +25,10 @@
 <ul class="sectlevel2">
 <li><a href="#arquitectura">Arquitectura</a></li>
 <li><a href="#paquete-tictactoe">Paquete <em>tictactoe</em></a></li>
-<li><a href="#paquete-utils">Paquete <em>utils</em></a></li>
 </ul>
 </li>
 <li><a href="#calidad-del-software">Calidad del Software</a>
 <ul class="sectlevel2">
-<li><a href="#diseño">Diseño</a></li>
 <li><a href="#rediseño">Rediseño</a></li>
 </ul>
 </li>
@@ -106,15 +104,7 @@
 <h3 id="paquete-tictactoe">Paquete <em>tictactoe</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/version1TicTacToe.svg" alt="version1TicTacToe" width="2332" height="1311">
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="paquete-utils">Paquete <em>utils</em></h3>
-<div class="imageblock">
-<div class="content">
-<img src="build/docs/asciidoc/images/utils1.svg" alt="utils1" width="890" height="597">
+<img src="build/docs/asciidoc/images/version1TicTacToe.svg" alt="version1TicTacToe" width="2325" height="1395">
 </div>
 </div>
 </div>
@@ -123,16 +113,6 @@
 <div class="sect1">
 <h2 id="calidad-del-software">Calidad del Software</h2>
 <div class="sectionbody">
-<div class="sect2">
-<h3 id="diseño">Diseño</h3>
-<div class="ulist">
-<ul>
-<li>
-<p><span class="red"><em><strong>Método largo</strong>: Método "play" de TicTacToe,&#8230;&#8203;</em></span></p>
-</li>
-</ul>
-</div>
-</div>
 <div class="sect2">
 <h3 id="rediseño">Rediseño</h3>
 <div class="ulist">
@@ -210,7 +190,7 @@
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1<br>
-Last updated 2020-10-04 16:40:00 +0200
+Last updated 2020-10-04 17:52:28 +0200
 </div>
 </div>
 </html>
