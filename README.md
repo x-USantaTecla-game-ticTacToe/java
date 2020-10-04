@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.8">
-<meta name="author" content="Universo Santa Tecla">
+<meta name="author" content="Unive
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
@@ -64,7 +64,7 @@
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" rowspan="6"><div class="content"><div class="paragraph">
-<p><strong>Orientado a Objetos</strong></p>
+<p><strong>Diseño Orientado a Objetos</strong></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top" rowspan="6"><div class="content"><div class="paragraph">
 <p><span class="blue">TicTacToe. Requisitos. Versión 2. <strong>Gráficos</strong></span></p>
@@ -189,7 +189,7 @@
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" rowspan="3"><div class="content"><div class="paragraph">
-<p><span class="red"><strong>Arquitectura del Software</strong></span></p>
+<p><span class="red"><strong>Arquitectura MVC</strong></span></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top" rowspan="3"><div class="content"><div class="paragraph">
 <p><span class="red">TicTacToe. Requisitos. Versión 1. <strong>Básica</strong></span></p>
@@ -225,7 +225,7 @@
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1<br>
-Last updated 2020-10-03 19:30:29 +0200
+Last updated 2020-10-04 16:31:29 +0200
 </div>
 </div>
 </html>

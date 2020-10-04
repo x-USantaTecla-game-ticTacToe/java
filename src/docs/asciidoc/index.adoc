@@ -24,7 +24,7 @@ a| *Diseño Modular*
 a| [red]#TicTacToe. Solucion. Versión 2.1. **documentView**#
 a| [red]#Clases Vistas de Texto separadas de los Modelos del Dominio **pero con Modelos de grano grueso con el advenimiento de nueva funcionalidad**#
 
-.6+a| *Orientado a Objetos*
+.6+a| *Diseño Orientado a Objetos*
 .6+a| [blue]#TicTacToe. Requisitos. Versión 2. **Gráficos**#
 
 a| [blue]#TicTacToe. Solucion. Versión 3.2. **dv. withoutFactoryMethod**#
@@ -80,7 +80,7 @@ a| [lime]#Nuevas Vistas y DAOS para la nueva tecnología  **pero con clase Princ
 a| [lime]#TicTacToe. Solucion. Versión 15.6. **mvp. pm. withPrototype**#
 a| [lime]#Open/Close para arranque con configuración de persistencia#
 
-.3+a| [red]#*Arquitectura del Software*#
+.3+a| [red]#*Arquitectura MVC*#
 .3+a| [red]#TicTacToe. Requisitos. Versión 1. **Básica**#
 a| [red]#TicTacToe. Solucion. Versión 16.1. **mvp. pv**#
 a| [red]#Baile de la Triada#
