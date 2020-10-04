@@ -1,4 +1,4 @@
-= Mastermind. *Guión*
+= TicTacToe
 Universo Santa Tecla <USantaTecla@gmail.com>
 :toc-title: Índice
 :toc: left
@@ -50,32 +50,23 @@ a| [green]#TicTacToe. Requisitos. Versión 3. **UndoRedo**#
 a| [green]#TicTacToe. Solucion. Versión 9.3. **mvp. pm. withComposite**#
 a| [green]#Clase Comando del menú y Controlador Compuesto de ciertos Estados para Open/Close con nuevos Casos de Uso#
 
-
 .2+a| [yellow]#TicTacToe. Requisitos. Versión 4. **ClienteServidor**#
 a| [yellow]#TicTacToe. Solucion. Versión 10.4. **mvp. pm. withoutProxy**#
 a| [yellow]#Clase TCP/IP para tecnología de Despliegue **pero con Controladores acoplados, poco cohesivos y grano grueso con cada nueva tecnología**#
 
-
-
 a| [yellow]#TicTacToe. Solucion. Versión 11.4. **mvp. pm. withProxy**#
 a| [yellow]#Clases Proxy para Open/Close para nuevas tecnologías de Despliegue#
-
 
 .2+a| [purple]#TicTacToe. Requisitos. Versión 5. **Ficheros**#
 a| [purple]#TicTacToe. Solucion. Versión 12.5. **mvp. pm. withoutDAO**#
 a| [purple]#Clases Vistas y Controladores para la tecnología de persistencia **pero con Modelos de grano grueso, baja cohesión y alto acoplamiento a tecnologías de persistencia de ficheros**#
 
-
-
 a| [purple]#TicTacToe. Solucion. Versión 13.5. **mvp. pm. withDAO**#
 a| [purple]#Patrón DAO#
-
 
 .2+a| [lime]#TicTacToe. Requisitos. Versión 6. **BasesDatos**#
 a| [lime]#TicTacToe. Solucion. Versión 14.6. **mvp. pm. withoutPrototype**#
 a| [lime]#Nuevas Vistas y DAOS para la nueva tecnología  **pero con clase Principal acoplada a las tecnologías actuales y futuras de persistencia**#
-
-
 
 a| [lime]#TicTacToe. Solucion. Versión 15.6. **mvp. pm. withPrototype**#
 a| [lime]#Open/Close para arranque con configuración de persistencia#
@@ -85,12 +76,8 @@ a| [lime]#Open/Close para arranque con configuración de persistencia#
 a| [red]#TicTacToe. Solucion. Versión 16.1. **mvp. pv**#
 a| [red]#Baile de la Triada#
 
-
-
 a| [red]#TicTacToe. Solucion. Versión 17.1. **mvp. sc**#
 a| [red]#Baile de la Triada#
-
-
 
 a| [red]#TicTacToe. Solucion. Versión 18.1. **mvc**#
 a| [red]#Baile de la Triada#

@@ -5,13 +5,13 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.8">
-<meta name="author" content="Unive
+<meta name="author" content="Universo Santa Tecla">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body class="book">
 <div id="header">
-<h1>Mastermind. <strong>Guión</strong></h1>
+<h1>TicTacToe</h1>
 <div class="details">
 <span id="author" class="author">Universo Santa Tecla</span><br>
 <span id="email" class="email"><a href="mailto:USantaTecla@gmail.com">USantaTecla@gmail.com</a></span><br>
@@ -225,7 +225,7 @@
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1<br>
-Last updated 2020-10-04 16:31:29 +0200
+Last updated 2020-10-04 20:00:35 +0200
 </div>
 </div>
 </html>
