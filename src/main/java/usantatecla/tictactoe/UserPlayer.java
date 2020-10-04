@@ -24,20 +24,20 @@ class UserPlayer extends Player {
 	}
 	
 	@Override
-	protected Error checkMoveOriginCoordinateError(Coordinate originCoordinate) {
-		assert originCoordinate != null;
+	protected Error checkMoveOriginCoordinateError(Coordinate origin) {
+		assert origin != null;
 		
-		Error error = super.checkMoveOriginCoordinateError(originCoordinate);
+		Error error = super.checkMoveOriginCoordinateError(origin);
 		error.writeln();
 		return error;
 	}
 
 	@Override
-	protected Error checkMoveTargetCoordinateError(Coordinate originCoordinate, Coordinate targetCoordinate) {
-		assert originCoordinate != null;
+	protected Error checkMoveTargetCoordinateError(Coordinate origin, Coordinate targetCoordinate) {
+		assert origin != null;
 		assert targetCoordinate != null;
 		
-		Error error = super.checkMoveTargetCoordinateError(originCoordinate, targetCoordinate);
+		Error error = super.checkMoveTargetCoordinateError(origin, targetCoordinate);
 		error.writeln();
 		return error;
 	}

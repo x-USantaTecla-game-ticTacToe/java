@@ -42,32 +42,32 @@ abstract class Player {
 
 	private void move() {
 		Error error;
-		Coordinate originCoordinate;
+		Coordinate origin;
 		do {
-			originCoordinate = this.getCoordinate(Message.COORDINATE_TO_REMOVE);
-			error = this.checkMoveOriginCoordinateError(originCoordinate);
+			origin = this.getCoordinate(Message.COORDINATE_TO_REMOVE);
+			error = this.checkMoveOriginCoordinateError(origin);
 		} while (error != Error.NULL_ERROR);
-		Coordinate targetCoordinate;
+		Coordinate target;
 		do {
-			targetCoordinate = this.getCoordinate(Message.COORDINATE_TO_MOVE);
-			error = this.checkMoveTargetCoordinateError(originCoordinate, targetCoordinate);
+			target = this.getCoordinate(Message.COORDINATE_TO_MOVE);
+			error = this.checkMoveTargetCoordinateError(origin, target);
 		} while (error != Error.NULL_ERROR);
-		this.board.move(originCoordinate, targetCoordinate);
+		this.board.move(origin, target);
 	}
 
-	protected Error checkMoveOriginCoordinateError(Coordinate originCoordinate) {
-		assert originCoordinate != null;
+	protected Error checkMoveOriginCoordinateError(Coordinate origin) {
+		assert origin != null;
 
-		if (!this.board.isOccupied(originCoordinate, this.token)) {
+		if (!this.board.isOccupied(origin, this.token)) {
 			return Error.NOT_OWNER;
 		}
 		return Error.NULL_ERROR;
 	}
 
-	protected Error checkMoveTargetCoordinateError(Coordinate originCoordinate, Coordinate targetCoordinate) {
-		assert originCoordinate != null;
+	protected Error checkMoveTargetCoordinateError(Coordinate origin, Coordinate targetCoordinate) {
+		assert origin != null;
 		
-		if (originCoordinate.equals(targetCoordinate)) {
+		if (origin.equals(targetCoordinate)) {
 			return Error.SAME_COORDINATES;
 		} 
 		if (!this.board.isEmpty(targetCoordinate)) {

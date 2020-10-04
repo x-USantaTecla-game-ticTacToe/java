@@ -34,14 +34,14 @@ image::Dibujo.jpg[]
 [plantuml,version1Arquitectura,svg]
 ....
 
-package tictactoe #DDDDDD { } 
+package usantatecla.tictactoe #DDDDDD { } 
+package usantatecla.utils #DDDDDD { } 
 package java.util{ }
-tictactoe .down.> java.util
-tictactoe .down.> utils
-
-package utils #DDDDDD { } 
 package java.io{ }
-utils .down.> java.io
+
+usantatecla.tictactoe .down.> java.util
+usantatecla.tictactoe .down.> usantatecla.utils
+usantatecla.utils .down.> java.io
 
 ....
 
@@ -50,217 +50,267 @@ utils .down.> java.io
 [plantuml,version1TicTacToe,svg]
 ....
 
-class  tictactoe.Board{
-- coordinates: Coordinate[][]
-~ Board()
-~ write(): void
-- getToken(Coordinate): Token
-~ move(Coordinate, Coordinate): void
-~ put(Coordinate, Token): void
-- remove(Coordinate): void
-~ isTicTacToe(Token): boolean
-- numberOfCoordinates(Coordinate[]): int
-~ isCompleted(): boolean
-~ isEmpty(Coordinate): boolean
-~ isOccupied(Coordinate, Token): boolean
-- printRowBoard(int): void
-- printSquareValueBoard(int, int): void
-- checkNumberOfCoordinates(Coordinate[]): boolean
-- checkDirectionOfFirstCoordinates(Coordinate[]): boolean
-- checkDirectionOfAllCoordinates(Coordinate[]): boolean
-}
-tictactoe.Board *-down-> tictactoe.Coordinate
-tictactoe.Board ..> tictactoe.Token
-tictactoe.Board ..> tictactoe.Turn
-tictactoe.Board ..> utils.Direction
-tictactoe.Board ..> tictactoe.Message
-
-class  tictactoe.Coordinate{
-~ {static} DIMENSION: char
-~ Coordinate()
-~ Coordinate(int, int)
-~ inDirection(Coordinate): boolean
-~ getDirection(Coordinate): Direction
-- inInverseDiagonal(): boolean
-- isValid(): boolean
-# read(String): void
-~ random(): void
-}
-utils.Coordinate <|-down- tictactoe.Coordinate
-tictactoe.Coordinate ..> tictactoe.Error
-tictactoe.Coordinate ..> utils.Direction
-tictactoe.Coordinate ..> java.util.Random
-
-enum  tictactoe.Error{
-NOT_EMPTY
-NOT_OWNER
-SAME_COORDINATES
-- message: String
-~ Error(String)
-~ writeln(): void
-}
-tictactoe.Error ..> utils.Console
-
-class  tictactoe.MachinePlayer{
-~ MachinePlayer(Token, Board)
-~ readCoordinateToPut(Coordinate): Error
-~ readCoordinateOriginToRemove(Coordinate): Error
-~ readCoordinateTargetToMove(Coordinate, Coordinate): Error
-}
-tictactoe.Player <|-down- tictactoe.MachinePlayer
-
-enum  tictactoe.Message{
-- message: String
-- console: Console
-- Message(String)
-~ write(): void
-~ writeln(): void
-}
-tictactoe.Message ..> utils.Console
-
-class  tictactoe.Player{
-# token: Token
-# board: Board
-~ Player(Token, Board)
-~ put(): void
-~ move(): void
-~ {abstract} readCoordinateToPut(Coordinate): Error
-~ {abstract} readCoordinateOriginToRemove(Coordinate): Error
-~ {abstract} readCoordinateTargetToMove(Coordinate, Coordinate): Error
-~ writeWin(Token): void
-~ getToken(): Token
-~ getPutCoordinateError(Coordinate): Error
-~ getMoveOriginCoordinateError(Coordinate): Error
-~ getMoveTargetCoordinateError(Coordinate, Coordinate): Error
-}
-tictactoe.Player *-down-> tictactoe.Token
-tictactoe.Player *-down-> tictactoe.Board
-tictactoe.Player ..> tictactoe.Coordinate
-tictactoe.Player ..> tictactoe.Error
-tictactoe.Player ..> tictactoe.Message
-
-class  tictactoe.TicTacToe{
-- board: Board
-- players: Players
-- turn: Turn
-~ TicTacToe()
-- play(): void
-- playUntilTicTacToe(): void
-- createPlayers(): void
-- readUsersNumber(): int
-- newGame(): void;
-+ main(String[]): void
-}
-utils.WithConsoleModel <|-down- tictactoe.TicTacToe
-tictactoe.TicTacToe ..> tictactoe.Error
-tictactoe.TicTacToe ..> utils.PlayersDialog
-tictactoe.TicTacToe ..> utils.YesNoDialog
-tictactoe.TicTacToe *-down-> tictactoe.Board
-tictactoe.TicTacToe *-down-> tictactoe.Player
-tictactoe.TicTacToe *-down-> tictactoe.Turn
-
-enum  tictactoe.Token{
-TOKEN_X
-TOKEN_O
-- character: char
-~ Token(char)
-~ write(): void
-}
-tictactoe.Token..> utils.Console
-
-class  tictactoe.Turn{
-~ {static} NUM_PLAYERS: int
-- value: int
-- players: Player[]
-~ Turn(Player[])
-~ change(): void
-~ getPlayer(): Player
-~ getOtherValue(): int
-~ getOtherPlayer(): Player
+namespace usantatecla.tictactoe {
+class Board {
+	- {final} int NUMBER_PLAYERS;
+	Board(int)
+	void write()
+	private Token getToken(Coordinate)
+	boolean isCompleted() 
+	- boolean isCompleted(int) 
+	void put(Coordinate, Token) 
+	void move(Coordinate, Coordinate) 
+	private void remove(Coordinate ) 
+	boolean isOccupied(Coordinate, Token)
+	boolean isEmpty(Coordinate)
+	boolean isTicTacToe(Token) 
 }
 
-class  tictactoe.UserPlayer{
-~ {static} ENTER_COORDINATE_TO_PUT: String
-~ {static} ENTER_COORDINATE_TO_REMOVE: String
-~ UserPlayer(Token, Board)
-~ readCoordinateToPut(Coordinate): Error
-~ readCoordinateOriginToRemove(Coordinate): Error
-~ readCoordinateTargetToMove(Coordinate, Coordinate): Error
-- writeErrorWhenNotNull(Error): void
-}
-tictactoe.Player <|-down- tictactoe.UserPlayer
-
-....
-
-=== Paquete _utils_
-
-[plantuml,utils1,svg]
-
-....
-
-class  utils.Console{
-- bufferedReader: BufferedReader
-+ Console()
-+ write(char): void
-+ write(String): void
-+ readInt(String): int
-+ readChar(String): char
-+ readString(String): String
-+ writeln(int): void
-+ writeln(String): void
-+ writeln(): void
-- writeError(String): void
-}
-utils.Console *-down-> java.io.BufferedReader
-
-class  utils.Coordinate{
-# row: int
-# column: int
-# Coordinate()
-# Coordinate(int, int)
-# getMainDirection(Coordinate): Direction
-- inMainDiagonal(): boolean
-- inVertical(Coordinate): boolean
-- inHorizontal(Coordinate): boolean
-# read(String): void
-+ getRow(): int
-+ getColumn(): int
-+ hashCode(): int
-+ equals(Object): boolean
-}
-utils.WithConsoleModel <|-down- utils.Coordinate
-utils.Coordinate ..> utils.Direction
-
-enum  utils.Direction{
-  VERTICAL
-  HORIZONTAL
-  MAIN_DIAGONAL
-  INVERSE_DIAGONAL
+class Coordinate {
+	{static} {final} Coordinate NULL_COORDINATE
+	{static} {final} int DIMENSION
+	{static} {final} ClosedInterval LIMITS
+	Coordinate()
+	Coordinate(int, int)
+	+ boolean isNull() 
+	+ Direction getDirection(usantatecla.utils.Coordinate)
+	+ boolean inInverseDiagonal()
+	+ void read(String)
+	+ void random()
+	+ boolean equals(Object)
 }
 
-class  utils.PlayersDialog{
-- {static} USERS_ERROR: String
-+ read(int): int
-}
-utils.WithConsoleModel <|-down- utils.PlayersDialog
+enum Error {
 
-class  utils.WithConsoleModel{
-# console: Console
-# WithConsoleModel()
+	NOT_EMPTY
+	NOT_OWNER
+	SAME_COORDINATES
+	WRONG_COORDINATES
+	NULL_ERROR
+	- String message
+	Error()
+	Error(String)
+	void writeln()
 }
-utils.WithConsoleModel *-down-> utils.Console
 
-class  mastermind.utils.YesNoDialog{
-- {static} AFIRMATIVE: char
-- {static} NEGATIVE: char
-- {static} QUESTION: String
-- {static} MESSAGE: String
-+ YesNoDialog()
-+ read(String): boolean
-- {static} isNegative(char): boolean
-- {static} isAfirmative(char): boolean
+class MachinePlayer {
+	MachinePlayer(Token, Board)
+	~ Coordinate getCoordinate(Message)
 }
-mastermind.utils.WithConsoleModel <|-down- mastermind.utils.YesNoDialog
+
+enum Message {
+	TITTLE
+	NUMBER_PLAYERS
+	SEPARATOR
+	VERTICAL_LINE_LEFT
+	VERTICAL_LINE_CENTERED
+	VERTICAL_LINE_RIGHT
+	ENTER_COORDINATE_TO_PUT
+	ENTER_COORDINATE_TO_REMOVE
+	COORDINATE_TO_PUT
+	COORDINATE_TO_REMOVE
+	COORDINATE_TO_MOVE
+	PLAYER_WIN
+	RESUME
+	NULL_MESSAGE
+	- String message
+	- Message()
+	- Message(String)
+	void write() 
+	void writeln()
+	+ String toString()
+}
+
+
+abstract class Player {
+	~ Board board
+	~ Token token
+	Player(Token, Board)
+	void play() 
+	- void put()
+	~ abstract Coordinate getCoordinate(Message)
+	~ Error checkPutCoordinateError(Coordinate)
+	- void move()
+	~ Error checkMoveOriginCoordinateError(Coordinate)
+	~ Error checkMoveTargetCoordinateError(Coordinate, Coordinate)
+	void writeWinner() 
+	Token getToken()
+}
+
+class TicTacToe{
+	- void play() 
+	- boolean isResumedGame()
+	+ static void main(String[])
+}
+
+enum Token {
+	X_TOKEN
+	Y_TOKEN
+	NULL_TOKEN
+	- char symbol
+	- Token(char)
+	+ boolean isNull()
+	void write() 
+	{static} Token get(int)
+}
+
+class Turn {
+	{static} final int NUMBER_PLAYERS = 2;
+	- Player[] players;
+	- int active;
+	Turn(Board) 
+	void play()
+	- Player getPlayer()
+	void writeWinner()
+	Token getToken()
+}
+
+class UserPlayer extends Player {
+	UserPlayer(Token, Board)
+	~ Coordinate getCoordinate(Message message)
+	~ Error checkPutCoordinateError(Coordinate) 
+	~ Error checkMoveOriginCoordinateError(Coordinate)
+	~ Error checkMoveTargetCoordinateError(Coordinate, Coordinate)
+}
+
+TicTacToe *-down-> Board
+TicTacToe *-down-> Turn
+
+Board .down.> Token
+Turn .down.> Token
+Player *-down-> Token
+Turn *-down-> "2" Player
+Board *-down-> Coordinate
+Player <|-down- MachinePlayer
+Coordinate .down.> Error
+Player .down.> Error
+Board .down.> Message
+Player .down.> Message
+TicTacToe .down.> Message
+Turn .down.> Message
+
+}
+
+namespace usantatecla.utils {
+
+class Coordinate {
+	boolean isNull();
+	Direction getDirection(Coordinate)
+	boolean inHorizontal(Coordinate)
+	boolean inVertical(Coordinate)
+	boolean inMainDiagonal()
+}
+
+class ConcreteCoordinate {
+	~ int row;
+	~ int column;
+	{static} {final} String ROW
+	{static} {final}  String COLUMN
+	~ ConcreteCoordinate() 
+	~ ConcreteCoordinate(int, int) 
+	+ boolean isNull()
+	+ Direction getDirection(Coordinate)
+	+ boolean inHorizontal(Coordinate) 
+	+ boolean inVertical(Coordinate)
+	+ boolean inMainDiagonal()
+	~ void read(String)
+	+ int getRow() 
+	+ int getColumn()
+	+ int hashCode()
+	+ boolean equals(Object)
+	+ String toString()
+}
+class NullCoordinate {
+	+ {static} NullCoordinate instance
+	+ {static} Coordinate instance()
+	+ boolean isNull()
+	+ Direction getDirection(Coordinate)
+	+ boolean inHorizontal(Coordinate)
+	+ boolean inVertical(Coordinate) 
+	+ boolean inMainDiagonal()
+	+ int hashCode()
+	+ boolean equals(Object)
+	+ String toString() 
+}
+
+enum Direction {
+	VERTICAL
+	HORIZONTAL
+	MAIN_DIAGONAL
+	INVERSE_DIAGONAL
+	NULL_DIRECTION
+}
+
+class Console {
+	+ static Console console
+	+ static Console instance()
+	- BufferedReader bufferedReader
+	+ String readString(String) 
+	+ String readString()
+	+ int readInt(String)
+	+ char readChar(String) 
+	+ void writeln()
+	+ void write(String) 
+	+ void write(int)
+	+ void writeln(String)
+	+ void writeln(int) 
+	+ void write(char)
+	+ void writeError(String +) 
+}
+
+class ClosedInterval {
+	- int min;
+	- int max;
+	+ ClosedInterval(int, int)
+	+ boolean isIncluded(int)
+	+ String toString() 
+}
+
+class YesNoDialog {
+	- static final char AFFIRMATIVE
+	- static final char NEGATIVE
+	- static final String SUFFIX
+	- static final String MESSAGE
+	- char answer;
+	+ boolean read(String message)
+	- boolean isAfirmative()
+	- char getAnswer()
+	- boolean isNegative()
+}
+
+class LimitedIntDialog {
+	- {final} ClosedInterval LIMITS
+	- {static} {final} String ERROR_MESSAGE 
+	+ LimitedIntDialog(int, int)
+	+ int read(String)
+}
+
+Coordinate <|-down- ConcreteCoordinate
+Coordinate <|-down- NullCoordinate
+
+}
+
+usantatecla.utils.ConcreteCoordinate <|-down- usantatecla.tictactoe.Coordinate
+
+usantatecla.tictactoe.Coordinate .down.> usantatecla.utils.ClosedInterval
+usantatecla.tictactoe.Token .down.> usantatecla.utils.ClosedInterval
+usantatecla.utils.LimitedIntDialog .down.> usantatecla.utils.ClosedInterval
+
+
+usantatecla.tictactoe.Error .down.> usantatecla.utils.Console
+usantatecla.tictactoe.Message .down.> usantatecla.utils.Console
+usantatecla.tictactoe.Token .down.> usantatecla.utils.Console
+usantatecla.utils.ConcreteCoordinate .down.> usantatecla.utils.Console
+usantatecla.utils.LimitedIntDialog .down.> usantatecla.utils.Console
+usantatecla.utils.YesNoDialog .down.> usantatecla.utils.Console
+
+
+usantatecla.tictactoe.Turn .down.> usantatecla.utils.LimitedIntDialog
+usantatecla.tictactoe.TicTacToe .down.> usantatecla.utils.YesNoDialog
+
+usantatecla.tictactoe.Board .down.> usantatecla.utils.Direction
+usantatecla.tictactoe.Coordinate .down.> usantatecla.utils.Direction
+usantatecla.utils.Coordinate .down.> usantatecla.utils.Direction
 
 ....
 

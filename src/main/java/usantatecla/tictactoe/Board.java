@@ -75,20 +75,17 @@ class Board {
 		coordinates[i] = coordinate;
 	}
 
-	void move(Coordinate originCoordinate, Coordinate targetCoordinate) {
-		assert originCoordinate != null;
-		assert !originCoordinate.isNull();
-		assert targetCoordinate != null;
-		assert !targetCoordinate.isNull();
+	void move(Coordinate origin, Coordinate target) {
+		assert origin != null && !origin.isNull();
+		assert target != null && !target.isNull();
 		
-		Token token = this.getToken(originCoordinate);
-		this.remove(originCoordinate);
-		this.put(targetCoordinate, token);
+		Token token = this.getToken(origin);
+		this.remove(origin);
+		this.put(target, token);
 	}
 
 	private void remove(Coordinate coordinate) {
-		assert coordinate != null;
-		assert !coordinate.isNull();
+		assert coordinate != null && !coordinate.isNull();
 		
 		for (int i = 0; i < this.NUMBER_PLAYERS; i++) {
 			for (int j = 0; j < Coordinate.DIMENSION; j++) {
@@ -100,22 +97,19 @@ class Board {
 	}
 
 	boolean isOccupied(Coordinate coordinate, Token token) {
-		assert coordinate != null;
-		assert !coordinate.isNull();
+		assert coordinate != null && !coordinate.isNull();
 		
 		return this.getToken(coordinate) == token;
 	}
 
 	boolean isEmpty(Coordinate coordinate) {
-		assert coordinate != null;
-		assert !coordinate.isNull();
+		assert coordinate != null && !coordinate.isNull();
 		
 		return this.isOccupied(coordinate, Token.NULL_TOKEN);
 	}
 
 	boolean isTicTacToe(Token token) {
-		assert token != null;
-		assert !token.equals(Token.NULL_TOKEN);
+		assert token != null && !token.isNull();
 		
 		if (!this.isCompleted(token.ordinal())) {
 			return false;

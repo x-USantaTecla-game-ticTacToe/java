@@ -5,17 +5,17 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.8">
-<meta name="author" content="Santa Tecla">
+<meta name="author" content="Universo Santa Tecla">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body class="book">
 <div id="header">
-<h1>TicTacToe. Solución 1.1. <strong>domainModel</strong></h1>
+<h1>Master Mind. Solución 1.1. <strong>domainModel</strong></h1>
 <div class="details">
-<span id="author" class="author">Santa Tecla</span><br>
-<span id="email" class="email"><a href="mailto:parqueNaturalSantaTecla@gmail.com">parqueNaturalSantaTecla@gmail.com</a></span><br>
-<span id="revnumber">version 0.0.6</span>
+<span id="author" class="author">Universo Santa Tecla</span><br>
+<span id="email" class="email"><a href="mailto:USantaTecla@gmail.com">USantaTecla@gmail.com</a></span><br>
+<span id="revnumber">version 0.0.1</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Índice</div>
@@ -76,7 +76,7 @@
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/Dibujo.jpg" alt="Dibujo" width="300" height="300">
+<img src="build/docs/asciidoc/images/Dibujo.jpg" alt="Dibujo">
 </div>
 </div></div></td>
 </tr>
@@ -98,7 +98,7 @@
 <h3 id="arquitectura">Arquitectura</h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/version1Arquitectura.svg" alt="version1Arquitectura" width="274" height="305">
+<img src="build/docs/asciidoc/images/version1Arquitectura.svg" alt="version1Arquitectura" width="283" height="303">
 </div>
 </div>
 </div>
@@ -106,7 +106,7 @@
 <h3 id="paquete-tictactoe">Paquete <em>tictactoe</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/version1TicTacToe.svg" alt="version1TicTacToe" width="1100" height="1221">
+<img src="build/docs/asciidoc/images/version1TicTacToe.svg" alt="version1TicTacToe" width="2332" height="1311">
 </div>
 </div>
 </div>
@@ -114,7 +114,7 @@
 <h3 id="paquete-utils">Paquete <em>utils</em></h3>
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/utils1.svg" alt="utils1" width="600" height="548">
+<img src="build/docs/asciidoc/images/utils1.svg" alt="utils1" width="890" height="597">
 </div>
 </div>
 </div>
@@ -179,7 +179,7 @@
 <div class="sectionbody">
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/diagramaImplementacion.svg" alt="diagramaImplementacion" width="518" height="158">
+<img src="build/docs/asciidoc/images/diagramaImplementacion.svg" alt="diagramaImplementacion" width="456" height="167">
 </div>
 </div>
 </div>
@@ -189,7 +189,7 @@
 <div class="sectionbody">
 <div class="imageblock">
 <div class="content">
-<img src="build/docs/asciidoc/images/diagramaDespliegue.svg" alt="diagramaDespliegue" width="203" height="207">
+<img src="build/docs/asciidoc/images/diagramaDespliegue.svg" alt="diagramaDespliegue" width="213" height="223">
 </div>
 </div>
 </div>
@@ -209,8 +209,8 @@
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 0.0.6<br>
-Last updated 2020-08-17 15:30:00 +0200
+Version 0.0.1<br>
+Last updated 2020-10-04 16:40:00 +0200
 </div>
 </div>
 </html>
