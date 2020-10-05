@@ -16,7 +16,7 @@ a|
 - link:https://en.wikipedia.org/wiki/Tic-tac-toe[*Wiki*]
 * _Funcionalidad: **Básica**_
 * _Interfaz: **Texto**_
-* _Distribución: **Standalone**_
+* _Distribución: **Stand Alone**_
 * _Persistencia: **No**_
 
 a|
