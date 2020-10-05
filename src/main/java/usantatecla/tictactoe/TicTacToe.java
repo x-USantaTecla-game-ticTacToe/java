@@ -9,7 +9,12 @@ class TicTacToe{
 
 	private void play() {
 		do {
-			this.board = new Board(Turn.NUMBER_PLAYERS);
+			this.playGame();
+		} while (this.isResumedGame());
+	}
+
+	private void playGame() {
+		this.board = new Board(Turn.NUMBER_PLAYERS);
 			this.turn = new Turn(this.board);
 			this.board.write();
 			do {
@@ -17,10 +22,9 @@ class TicTacToe{
 				this.board.write();
 			} while (!this.board.isTicTacToe(this.turn.getToken()));
 			this.turn.writeWinner();
-		} while (this.isResumedGame());
 	}
 
-	private boolean isResumedGame(){
+	private boolean isResumedGame() {
 		return new YesNoDialog().read(Message.RESUME.toString());
 	}
 
