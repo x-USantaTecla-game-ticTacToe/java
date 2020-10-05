@@ -10,11 +10,8 @@ public class TurnTest {
     private Player[] players;
 
     public TurnTest() {
-        Board board = new Board();
-        this.players = new Player[2];
-        this.players[0] = new Player(Token.values()[0], board, PlayerType.USER_PLAYER);
-        this.players[1] = new Player(Token.values()[1], board, PlayerType.MACHINE_PLAYER);
-        this.turn = new Turn(this.players);
+        this.turn = new Turn(new Board(2));
+        this.turn.setUsers(2);
     }
 
     @Test

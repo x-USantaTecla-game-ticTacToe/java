@@ -6,12 +6,9 @@ import java.awt.Container;
 
 import usantatecla.tictactoe.models.Coordinate;
 import usantatecla.tictactoe.models.Error;
-import usantatecla.tictactoe.models.Player;
 import usantatecla.tictactoe.views.ErrorView;
-import usantatecla.tictactoe.views.MessageView;
-import usantatecla.tictactoe.views.PlayerView;
 
-class UserPlayerView extends PlayerView {
+class UserPlayerView {
     static final String ENTER_COORDINATE_TO_PUT = "Enter a coordinate to put a token:";
     static final String ENTER_COORDINATE_TO_REMOVE = "Enter a coordinate to remove a token:";
 

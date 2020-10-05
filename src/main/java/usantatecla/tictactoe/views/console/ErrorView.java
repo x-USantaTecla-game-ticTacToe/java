@@ -1,7 +1,7 @@
 package usantatecla.tictactoe.views.console;
 
-import usantatecla.utils.Console;
 import usantatecla.tictactoe.models.Error;
+import usantatecla.utils.Console;
 
 class ErrorView extends usantatecla.tictactoe.views.ErrorView {
 
@@ -10,7 +10,9 @@ class ErrorView extends usantatecla.tictactoe.views.ErrorView {
 	}
 	
 	void writeln() {
-		new Console().writeln(ErrorView.MESSAGES[this.error.ordinal()]);
+		if (!error.isNull()){
+			Console.instance().writeln(ErrorView.MESSAGES[this.error.ordinal()]);
+		}
 	}
 
 }

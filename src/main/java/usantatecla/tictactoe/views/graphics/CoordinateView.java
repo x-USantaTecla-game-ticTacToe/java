@@ -12,7 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import usantatecla.tictactoe.views.MessageView;
+import usantatecla.tictactoe.views.Message;
 
 @SuppressWarnings("serial")
 public abstract class CoordinateView extends JPanel implements ActionListener, KeyListener {
@@ -31,8 +31,8 @@ public abstract class CoordinateView extends JPanel implements ActionListener, K
 
 	CoordinateView() {
 		this.setLayout(new GridBagLayout());
-		this.labelRow = new JLabel(MessageView.READ_ROW.getMessage());
-		this.labelColumn = new JLabel(MessageView.READ_COLUMN.getMessage());
+		this.labelRow = new JLabel(Message.ROW.getMessage());
+		this.labelColumn = new JLabel(Message.READ_COLUMN.getMessage());
 		this.textFieldRow = new JTextField(1);
 		this.textFieldColumn = new JTextField(1);
 		this.add(labelRow, new Constraints(0, 1, 1, 1));

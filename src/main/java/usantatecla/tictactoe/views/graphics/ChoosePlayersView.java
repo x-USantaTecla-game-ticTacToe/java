@@ -14,7 +14,7 @@ import javax.swing.JRootPane;
 import javax.swing.JTextField;
 
 import usantatecla.tictactoe.views.ErrorView;
-import usantatecla.tictactoe.views.MessageView;
+import usantatecla.tictactoe.views.Message;
 import usantatecla.tictactoe.models.Error;
 
 @SuppressWarnings("serial")
@@ -32,7 +32,7 @@ class ChoosePlayersView extends JPanel implements ActionListener, KeyListener {
 
 	ChoosePlayersView(final JRootPane rootPane) {
 		this.setLayout(new GridBagLayout());
-		this.label = new JLabel(MessageView.CHOOSE_PLAYERS.getMessage());
+		this.label = new JLabel(Message.CHOOSE_PLAYERS.getMessage());
 		this.button = new JButton(ChoosePlayersView.ACCEPT);
 		this.textField = new JTextField(10);
 		this.resetPlayersNumber();
@@ -59,7 +59,7 @@ class ChoosePlayersView extends JPanel implements ActionListener, KeyListener {
 			this.playersNumber = usersInsertedText;
 		} else {
 			JOptionPane.showMessageDialog(null, ErrorView.MESSAGES[Error.USERS_ERROR.ordinal()],
-					MessageView.ERROR.getMessage(), JOptionPane.WARNING_MESSAGE);
+					Message.ERROR.getMessage(), JOptionPane.WARNING_MESSAGE);
 		}
 		this.textField.setText("");
 	}

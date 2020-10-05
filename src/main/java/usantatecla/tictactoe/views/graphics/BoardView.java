@@ -9,23 +9,23 @@ import javax.swing.SwingConstants;
 import usantatecla.tictactoe.models.Board;
 import usantatecla.tictactoe.models.Coordinate;
 import usantatecla.tictactoe.models.Token;
-import usantatecla.tictactoe.views.MessageView;
+import usantatecla.tictactoe.views.Message;
 
 @SuppressWarnings("serial")
 class BoardView extends JPanel {
 
     BoardView(Board board) {
         this.setLayout(new GridBagLayout());
-        this.add(new JLabel(MessageView.SEPARATOR.getMessage()), new Constraints(0, 0, 1, 1));
+        this.add(new JLabel(Message.SEPARATOR.getMessage()), new Constraints(0, 0, 1, 1));
         for (int i = 0; i < Coordinate.DIMENSION; i++) {
             this.printRowBoard(board, i);
         }
-        this.add(new JLabel(MessageView.SEPARATOR.getMessage()), new Constraints(0, 4, 1, 1));
+        this.add(new JLabel(Message.SEPARATOR.getMessage()), new Constraints(0, 4, 1, 1));
     }
 
 	private void printRowBoard(Board board, int row) {
         String boardRowToPresent = "";
-        boardRowToPresent += MessageView.VERTICAL_LINE_LEFT.getMessage();
+        boardRowToPresent += Message.VERTICAL_LINE_LEFT.getMessage();
         for (int j = 0; j < Coordinate.DIMENSION; j++) {
             boardRowToPresent += this.getSquareBoardText(board, row, j);
         }
@@ -37,12 +37,12 @@ class BoardView extends JPanel {
 	private String getSquareBoardText(Board board, int row, int column) {
         String squareBoardToPresent = "";
 		if (board.getToken(new Coordinate(row, column)) == null) {
-            squareBoardToPresent += MessageView.EMPTY.getMessage();
+            squareBoardToPresent += Message.EMPTY.getMessage();
         } else {
             Token token = board.getToken(new Coordinate(row, column));
             squareBoardToPresent += token.getChar();
         }
-        squareBoardToPresent += MessageView.VERTICAL_LINE_CENTERED.getMessage();
+        squareBoardToPresent += Message.VERTICAL_LINE_CENTERED.getMessage();
         return squareBoardToPresent;
 	}
 }

@@ -2,8 +2,6 @@ package usantatecla.tictactoe.views.graphics;
 
 import usantatecla.tictactoe.models.Coordinate;
 import usantatecla.tictactoe.models.Error;
-import usantatecla.tictactoe.models.Player;
-import usantatecla.tictactoe.views.PlayerView;
 
 class MachinePlayerView extends PlayerView {
 

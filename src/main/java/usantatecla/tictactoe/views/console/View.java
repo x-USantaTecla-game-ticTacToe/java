@@ -1,35 +1,33 @@
 package usantatecla.tictactoe.views.console;
 
 import usantatecla.tictactoe.models.Game;
-import usantatecla.tictactoe.views.View;
 
-public class ConsoleView extends View {
-    
-    private StartView startView;
+public class View extends usantatecla.tictactoe.views.View {
 
+	private StartView startView;
 	private PlayView playView;
-
 	private ResumeView resumeView;
 
-	public ConsoleView(Game game) {
+	public View(Game game) {
 		super(game);
 		this.startView = new StartView(this.game);
 		this.playView = new PlayView(this.game);
-		this.resumeView = new ResumeView(this.game);
+		this.resumeView = new ResumeView();
 	}
 
 	@Override
-	protected void start() {
+	protected void start(){
 		this.startView.interact();
 	}
 
 	@Override
-	protected boolean play() {
-		return this.playView.interact();
+	protected void play(){
+		this.playView.interact();
 	}
 
 	@Override
-	protected boolean isNewGame() {
+	protected boolean isNewGame(){
 		return this.resumeView.interact();
 	}
+
 }

@@ -5,7 +5,11 @@ public enum Error {
 	NOT_EMPTY,
 	NOT_OWNER,
 	SAME_COORDINATES,
-	USERS_ERROR,
-	WRONG_COORDINATES;
+	WRONG_COORDINATES,
+	NULL_ERROR;
+
+	public boolean isNull(){
+		return this == Error.NULL_ERROR;
+	}
 
 }

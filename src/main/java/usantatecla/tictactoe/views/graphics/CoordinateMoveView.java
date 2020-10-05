@@ -10,6 +10,7 @@ import javax.swing.JTextField;
 import usantatecla.tictactoe.models.Coordinate;
 import usantatecla.tictactoe.models.Error;
 import usantatecla.tictactoe.views.ErrorView;
+import usantatecla.tictactoe.views.Message;
 import usantatecla.tictactoe.views.MessageView;
 
 @SuppressWarnings("serial")
@@ -30,8 +31,8 @@ public class CoordinateMoveView extends CoordinateView {
         this.resetCoordinates();
         this.titleLabel = new JLabel(ENTER_COORDINATE_TO_REMOVE);
         this.titleLabelToMove = new JLabel(ENTER_COORDINATE_TO_PUT);
-        this.labelRowToMove = new JLabel(MessageView.READ_ROW.getMessage());
-        this.labelColumnToMove = new JLabel(MessageView.READ_COLUMN.getMessage());
+        this.labelRowToMove = new JLabel(Message.READ_ROW.getMessage());
+        this.labelColumnToMove = new JLabel(Message.READ_COLUMN.getMessage());
         this.textFieldRowToMove = new JTextField(1);
         this.textFieldColumnToMove = new JTextField(1);
         this.add(titleLabel, new Constraints(0, 0, 1, 1));

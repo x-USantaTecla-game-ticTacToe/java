@@ -7,11 +7,8 @@ import javax.swing.JOptionPane;
 
 import usantatecla.tictactoe.models.Coordinate;
 import usantatecla.tictactoe.models.Game;
-import usantatecla.tictactoe.models.Player;
-import usantatecla.tictactoe.models.PlayerType;
 import usantatecla.tictactoe.models.Token;
-import usantatecla.tictactoe.views.MessageView;
-import usantatecla.tictactoe.views.PlayerView;
+import usantatecla.tictactoe.views.Message;
 
 @SuppressWarnings("serial")
 class PlayView extends JFrame {
@@ -20,7 +17,7 @@ class PlayView extends JFrame {
 	private Game game;
 
 	PlayView(Game game) {
-		super(MessageView.START_GAME.getMessage());
+		super(Message.NUMBER_PLAYERS.getMessage());
 		this.game = game;
 		this.getContentPane().setLayout(new GridBagLayout());
 		this.setSize(400, 500);
@@ -61,7 +58,7 @@ class PlayView extends JFrame {
 			container.revalidate();
 			container.repaint();
 			int value = this.game.getValueFromTurn();
-			String message = Token.values()[value].getChar() + " " + MessageView.PLAYER_WIN.getMessage();
+			String message = Token.values()[value].getChar() + " " + Message.PLAYER_WIN.getMessage();
 			JOptionPane.showMessageDialog(null, message, PlayView.GAME_OVER, JOptionPane.WARNING_MESSAGE);
 			return true;
 		}

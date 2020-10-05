@@ -2,35 +2,72 @@ package usantatecla.tictactoe.views.console;
 
 import usantatecla.tictactoe.models.Coordinate;
 import usantatecla.tictactoe.models.Game;
-import usantatecla.tictactoe.models.Player;
-import usantatecla.tictactoe.models.PlayerType;
-import usantatecla.tictactoe.views.PlayerView;
+import usantatecla.tictactoe.views.Message;
+import usantatecla.tictactoe.models.Error;
 
 class PlayView {
 
-    Game game;
-    
+    private Game game;
+
     PlayView(Game game) {
         this.game = game;
     }
 
-    boolean interact() {
-        Player player = this.game.getTokenPlayerFromTurn();
-        PlayerView playerView = player.getType() == PlayerType.USER_PLAYER ? new UserPlayerView(player) : 
-                                                                             new MachinePlayerView(player);
-        if (!this.game.isBoardComplete()) {
-            Coordinate coordinate = playerView.readCoordinateToPut();
-            this.game.put(coordinate);
-        } else {
-            Coordinate[] coordinates = playerView.readCoordinatesToMove();
-            this.game.move(coordinates);
-        }
-        new BoardView(this.game.getBoard()).write();
-        if (this.game.isTicTacToe()) {
-            new ResultView().writeln(this.game.getValueFromTurn());
-            return true;
-        }
-        this.game.changeTurn();
-        return false;
+    void interact() {
+        do {
+            this.game.next();
+            if (!this.game.isBoardComplete()) {
+                this.put();
+            } else {
+                this.move();
+            }
+            new GameView(this.game).write();
+        } while (!this.game.isTicTacToe());
+        new TokenView(this.game.getToken()).write();
+        Message.PLAYER_WIN.writeln();
     }
+
+    private void put() {
+        boolean isUser = this.game.isUser();
+        Coordinate coordinate;
+        Error error;
+        do {
+            if (isUser) {
+                coordinate = new CoordinateView()
+                    .read(Message.COORDINATE_TO_PUT.toString());
+            } else {
+                coordinate = new Coordinate();
+                coordinate.random();
+            }
+            error = this.game.put(coordinate);
+            if (isUser) {
+                new ErrorView(error).writeln();
+            }
+        } while (!error.isNull());
+    }
+
+    private void move() {
+        boolean isUser = this.game.isUser();
+        Coordinate origin;
+        Coordinate target;
+        Error error;
+        do {
+            if (isUser) {
+                origin = new CoordinateView()
+                .read(Message.COORDINATE_TO_REMOVE.toString());
+                target = new CoordinateView()
+                .read(Message.COORDINATE_TO_MOVE.toString());
+            } else {
+                origin = new Coordinate();
+                origin.random();
+                target = new Coordinate();
+                target.random();
+            }
+            error = this.game.move(origin, target);
+            if (isUser) {
+                new ErrorView(error).writeln();
+            }
+        } while (!error.isNull());
+    }
+
 }

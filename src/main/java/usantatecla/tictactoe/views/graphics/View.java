@@ -1,13 +1,12 @@
 package usantatecla.tictactoe.views.graphics;
 
 import usantatecla.tictactoe.models.Game;
-import usantatecla.tictactoe.views.View;
 
-public class GraphicsView extends View {
+public class View extends usantatecla.tictactoe.views.View {
 
 	private PlayView playView;
 
-	public GraphicsView(Game game) {
+	public View(Game game) {
 		super(game);
 		this.playView = new PlayView(this.game);
 	}
@@ -18,8 +17,8 @@ public class GraphicsView extends View {
 	}
 
 	@Override
-	protected boolean play() {
-		return this.playView.play();
+	protected void play() {
+		this.playView.play();
 	}
 
 	@Override
