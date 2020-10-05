@@ -62,7 +62,7 @@
 <p><em>Interfaz: <strong>Texto</strong></em></p>
 </li>
 <li>
-<p><em>Distribución: <strong>Standalone</strong></em></p>
+<p><em>Distribución: <strong>Stand Alone</strong></em></p>
 </li>
 <li>
 <p><em>Persistencia: <strong>No</strong></em></p>
@@ -190,7 +190,7 @@
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1<br>
-Last updated 2020-10-04 17:52:28 +0200
+Last updated 2020-10-05 20:47:29 +0200
 </div>
 </div>
 </html>
