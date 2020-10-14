@@ -6,7 +6,7 @@ import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-import usantatecla.tictactoe.models.Board;
+
 import usantatecla.tictactoe.models.Coordinate;
 import usantatecla.tictactoe.models.Game;
 import usantatecla.tictactoe.models.Token;

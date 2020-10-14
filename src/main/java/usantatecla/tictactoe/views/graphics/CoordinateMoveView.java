@@ -10,7 +10,6 @@ import javax.swing.JTextField;
 import usantatecla.tictactoe.models.Coordinate;
 import usantatecla.tictactoe.models.Error;
 import usantatecla.tictactoe.views.ErrorView;
-import usantatecla.tictactoe.views.Message;
 
 
 @SuppressWarnings("serial")

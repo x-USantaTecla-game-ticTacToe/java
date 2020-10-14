@@ -1,15 +1,12 @@
 package usantatecla.tictactoe.views.graphics;
 
-import java.awt.Container;
 import java.awt.GridBagLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 
 import usantatecla.tictactoe.models.Coordinate;
 import usantatecla.tictactoe.models.Game;
-import usantatecla.tictactoe.models.Token;
 import usantatecla.tictactoe.views.ErrorView;
 import usantatecla.tictactoe.views.Message;
 import usantatecla.tictactoe.models.Error;
