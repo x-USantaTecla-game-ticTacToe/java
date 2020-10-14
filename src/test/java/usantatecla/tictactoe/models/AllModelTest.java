@@ -6,9 +6,7 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({ 
     BoardTest.class, 
-    CoordinateTest.class, 
-    PlayerTest.class,
-    TurnTest.class } )
+    CoordinateTest.class} )
 public class AllModelTest {
     
 }
