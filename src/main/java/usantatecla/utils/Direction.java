@@ -6,6 +6,6 @@ public enum Direction {
 	HORIZONTAL,
 	MAIN_DIAGONAL,
 	INVERSE_DIAGONAL,
-	NULL_DIRECTION;
+	NULL;
 
 }

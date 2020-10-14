@@ -4,12 +4,12 @@ import usantatecla.utils.ClosedInterval;
 
 public enum Token {
 
-	X_TOKEN,
-	Y_TOKEN,
-	NULL_TOKEN;
+	X,
+	O,
+	NULL;
 
 	public boolean isNull() {
-		return this.equals(Token.NULL_TOKEN);
+		return this.equals(Token.NULL);
 	}
 
 	static Token get(int ordinal){

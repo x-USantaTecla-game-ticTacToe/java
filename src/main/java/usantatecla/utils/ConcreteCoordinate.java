@@ -30,7 +30,7 @@ public class ConcreteCoordinate implements Coordinate {
 		if (this.inMainDiagonal() && coordinate.inMainDiagonal()) {
 			return Direction.MAIN_DIAGONAL;
 		}
-		return Direction.NULL_DIRECTION;
+		return Direction.NULL;
 	}
 
 	public boolean inHorizontal(Coordinate coordinate) {

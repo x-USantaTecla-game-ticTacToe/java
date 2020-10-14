@@ -6,6 +6,9 @@ class Player {
 	private Board board;
 
 	Player(Token token, Board board) {
+		assert token != null && !token.isNull();
+		assert board != null;
+		
 		this.token = token;
 		this.board = board;
 	}
