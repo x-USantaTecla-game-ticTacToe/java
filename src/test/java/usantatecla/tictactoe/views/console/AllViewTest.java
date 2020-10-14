@@ -5,8 +5,7 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    CoordinateViewTest.class,
-    MachinePlayerViewTest.class } )
+    CoordinateViewTest.class } )
 public class AllViewTest {
     
 }
