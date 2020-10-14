@@ -2,35 +2,50 @@ package usantatecla.tictactoe.models;
 
 public class Turn {
 
-	public static final int NUM_PLAYERS = 2;
-
-	private int value;
-
+	public static final int NUMBER_PLAYERS = 2;
 	private Player[] players;
+	private Board board;
+	private int active;
+	private int users;
 
-	public Turn(Player[] players) {
-		this.value = 0;
-		this.players = players;
+	Turn(Board board) {
+		assert board != null;
+
+		this.board = board;
 	}
 
-	void change() {
-		this.value = this.getOtherValue();
+	void setUsers(int users) {
+		this.users = users;
+		this.board.reset();
+		this.players = new Player[Turn.NUMBER_PLAYERS];
+		for (int i = 0; i < Turn.NUMBER_PLAYERS; i++) {
+			this.players[i] = new Player(Token.get(i), board);
+		}
+		this.active = Turn.NUMBER_PLAYERS - 1;
 	}
 
-	Player getPlayer() {
-		return this.players[this.value];
+	void next() {
+		this.active = (this.active + 1) % Turn.NUMBER_PLAYERS;
 	}
 
-	int getValue() {
-		return this.value;
+	boolean isUser() {
+		return this.users == 2 || this.users == 1 && this.active == 0;
 	}
 
-	private int getOtherValue() {
-		return (this.value + 1) % Turn.NUM_PLAYERS;
+	Error put(Coordinate coordinate) {
+		return this.getPlayer().put(coordinate);
 	}
 
-	Player getOtherPlayer() {
-		return this.players[this.getOtherValue()];
+	private Player getPlayer() {
+		return this.players[this.active];
+	}
+
+	Error move(Coordinate origin, Coordinate target) {
+		return this.getPlayer().move(origin, target);
+	}
+
+	Token getToken() {
+		return this.getPlayer().getToken();
 	}
 
 }

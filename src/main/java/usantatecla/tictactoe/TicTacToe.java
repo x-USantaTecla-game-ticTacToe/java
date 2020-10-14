@@ -7,12 +7,11 @@ import usantatecla.tictactoe.views.View;
 public abstract class TicTacToe {
 
     private Logic logic;
-
     private View view;
 
     protected TicTacToe() {
         this.logic = new Logic();
-		this.view = this.createView();
+        this.view = this.createView();
     }
 
     protected abstract View createView();
@@ -26,4 +25,5 @@ public abstract class TicTacToe {
             }
 		} while (controller != null);
     }
+
 }

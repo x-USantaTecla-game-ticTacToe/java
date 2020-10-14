@@ -4,17 +4,14 @@ import usantatecla.tictactoe.controllers.Controller;
 import usantatecla.tictactoe.controllers.PlayController;
 import usantatecla.tictactoe.controllers.ResumeController;
 import usantatecla.tictactoe.controllers.StartController;
-import usantatecla.tictactoe.views.View;
 
-public class ConsoleView extends View {
+public class View extends usantatecla.tictactoe.views.View {
 
 	private StartView startView;
-
 	private PlayView playView;
-
 	private ResumeView resumeView;
 
-	public ConsoleView() {
+	public View() {
 		this.startView = new StartView();
 		this.playView = new PlayView();
 		this.resumeView = new ResumeView();
@@ -32,4 +29,5 @@ public class ConsoleView extends View {
 			}
 		}
 	}
+
 }
