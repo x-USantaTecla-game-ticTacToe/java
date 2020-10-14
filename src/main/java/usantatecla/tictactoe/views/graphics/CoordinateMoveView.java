@@ -1,7 +1,6 @@
 package usantatecla.tictactoe.views.graphics;
 
 import java.awt.event.ActionEvent;
-
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -11,18 +10,15 @@ import usantatecla.tictactoe.models.Coordinate;
 import usantatecla.tictactoe.models.Error;
 import usantatecla.tictactoe.views.ErrorView;
 
-
 @SuppressWarnings("serial")
 public class CoordinateMoveView extends CoordinateView {
-    static final String ENTER_COORDINATE_TO_REMOVE = "Enter a coordinate to remove a token:";
 
+    static final String ENTER_COORDINATE_TO_REMOVE = "Enter a coordinate to remove a token:";
     private final JLabel labelRowToMove;
     private final JLabel labelColumnToMove;
     private final JLabel titleLabelToMove;
-
     private final JTextField textFieldRowToMove;
     private final JTextField textFieldColumnToMove;
-
     private Coordinate[] coordinates;
 
     CoordinateMoveView() {
@@ -40,7 +36,6 @@ public class CoordinateMoveView extends CoordinateView {
         this.add(textFieldRowToMove, new Constraints(0, 7, 1, 1));
         this.add(labelColumnToMove, new Constraints(0, 8, 1, 1));
         this.add(textFieldColumnToMove, new Constraints(0, 9, 1, 1));
-
         this.button = new JButton(CoordinateView.ACCEPT);
         this.add(button, new Constraints(0, 10, 1, 1));
         this.button.addActionListener(this);
@@ -60,17 +55,19 @@ public class CoordinateMoveView extends CoordinateView {
                 Integer.parseInt(this.textFieldColumn.getText()) - 1);
         Coordinate targetCoordinate = new Coordinate(Integer.parseInt(this.textFieldRowToMove.getText()) - 1,
                 Integer.parseInt(this.textFieldColumnToMove.getText()) - 1);
-        if (originCoordinate.isValid().equals(Error.NULL_ERROR) && targetCoordinate.isValid().equals(Error.NULL_ERROR)) {
+        if (originCoordinate.isValid().equals(Error.NULL_ERROR)
+                && targetCoordinate.isValid().equals(Error.NULL_ERROR)) {
             this.coordinates = new Coordinate[2];
             this.coordinates[0] = originCoordinate;
             this.coordinates[1] = targetCoordinate;
         } else {
-            JOptionPane.showMessageDialog(null, ErrorView.MESSAGES[Error.WRONG_COORDINATES.ordinal()],
-                    "ERROR", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, ErrorView.MESSAGES[Error.WRONG_COORDINATES.ordinal()], "ERROR",
+                    JOptionPane.WARNING_MESSAGE);
         }
         this.textFieldRowToMove.setText("");
         this.textFieldColumnToMove.setText("");
         this.textFieldRow.setText("");
         this.textFieldColumn.setText("");
     }
+    
 }

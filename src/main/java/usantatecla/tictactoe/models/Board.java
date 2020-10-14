@@ -33,7 +33,7 @@ public class Board {
 				}
 			}
 		}
-		return Token.NULL_TOKEN;
+		return Token.NULL;
 	}
 
 	boolean isCompleted() {
@@ -96,7 +96,7 @@ public class Board {
 	boolean isEmpty(Coordinate coordinate) {
 		assert coordinate != null && !coordinate.isNull();
 		
-		return this.isOccupied(coordinate, Token.NULL_TOKEN);
+		return this.isOccupied(coordinate, Token.NULL);
 	}
 
 	boolean isTicTacToe(Token token) {

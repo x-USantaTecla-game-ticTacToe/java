@@ -13,7 +13,7 @@ class ResumeView {
 				Message.TITTLE.getMessage(), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION);
 	}
 
-	boolean isNewGame() {
+	boolean isResumedGame() {
 		return this.newGame;
 	}
 

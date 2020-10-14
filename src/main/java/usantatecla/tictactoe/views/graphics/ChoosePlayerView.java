@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -19,13 +18,9 @@ import usantatecla.tictactoe.views.ErrorView;
 class ChoosePlayersView extends JPanel implements ActionListener, KeyListener {
 
 	private static final String ACCEPT = "Ok";
-
 	private final JLabel label;
-
 	private final JTextField textField;
-
 	private final JButton button;
-
 	private String playersNumber;
 
 	ChoosePlayersView(final JRootPane rootPane) {
@@ -56,24 +51,17 @@ class ChoosePlayersView extends JPanel implements ActionListener, KeyListener {
 		if (usersInserted >= 0 && usersInserted < 3) {
 			this.playersNumber = usersInsertedText;
 		} else {
-			JOptionPane.showMessageDialog(null, ErrorView.MESSAGES[3],
-					"ERROR", JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(null, ErrorView.MESSAGES[3], "ERROR", JOptionPane.WARNING_MESSAGE);
 		}
 		this.textField.setText("");
 	}
 
 	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-
 	}
 
 	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
-
 	}
 
 	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-
 	}
 }

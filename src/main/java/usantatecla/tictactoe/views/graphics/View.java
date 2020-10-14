@@ -6,6 +6,7 @@ public class View extends usantatecla.tictactoe.views.View {
 
 	private PlayView playView;
 	private StartView startView;
+
 	public View(Game game) {
 		super(game);
 		this.startView = new StartView(this.game);
@@ -25,15 +26,12 @@ public class View extends usantatecla.tictactoe.views.View {
 
 	@Override
 	protected boolean isNewGame() {
-		ResumeView resumeView = new ResumeView();
-		boolean newGame = resumeView.isNewGame();
-		if (newGame) {
+		if (new ResumeView().isResumedGame()) {
 			return true;
-		} else {
-			this.playView.setVisible(false);
-			System.exit(0);
-			return false;
 		}
+		this.playView.setVisible(false);
+		System.exit(0);
+		return false;
 	}
 
 }

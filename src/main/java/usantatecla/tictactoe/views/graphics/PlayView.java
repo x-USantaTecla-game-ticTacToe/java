@@ -15,25 +15,21 @@ import usantatecla.tictactoe.models.Error;
 class PlayView extends JFrame {
 
 	static final String ENTER_COORDINATE_TO_PUT = "Enter a coordinate to put a token:";
-    static final String ENTER_COORDINATE_TO_REMOVE = "Enter a coordinate to remove a token:";
-
-    CoordinatePutView coordinatePutView;
-    CoordinateMoveView coordinateMoveView;
-
-	private static final String GAME_OVER = "Game Over";
+	static final String ENTER_COORDINATE_TO_REMOVE = "Enter a coordinate to remove a token:";
+	private CoordinatePutView coordinatePutView;
+	private CoordinateMoveView coordinateMoveView;
 	private Game game;
 	private GameView gameView;
 
 	PlayView(Game game) {
-
 		super(Message.NUMBER_PLAYERS.getMessage());
 		assert game != null;
+
 		this.game = game;
 		this.getContentPane().setLayout(new GridBagLayout());
 		this.setSize(400, 500);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
 		this.gameView = new GameView(game);
 		this.getContentPane().add(this.gameView);
 		this.gameView.write();
@@ -44,49 +40,45 @@ class PlayView extends JFrame {
 		this.setVisible(true);
 	}
 
-	void interact () {
+	void interact() {
 		this.gameView.removeAll();
 		this.gameView.write();
 		this.setVisible(true);
-
 		do {
-            this.game.next();
-            if (!this.game.isBoardComplete()) {
-                this.put();
-            } else {
-                this.move();
-            }
+			this.game.next();
+			if (!this.game.isBoardComplete()) {
+				this.put();
+			} else {
+				this.move();
+			}
 			this.gameView.write();
 			this.setVisible(true);
 		} while (!this.game.isTicTacToe());
-		this.getContentPane().add(new JLabel(this.game.getToken().toString() + Message.PLAYER_WIN.getMessage()), new Constraints(0, 1, 4, 1));
+		this.getContentPane().add(new JLabel(this.game.getToken().toString() + Message.PLAYER_WIN.getMessage()),
+				new Constraints(0, 1, 4, 1));
 		this.setVisible(true);
-		// new TokenView(this.game.getToken()).write();
-        //Message.PLAYER_WIN.writeln();
 	}
+
 	private void put() {
-        boolean isUser = this.game.isUser();
+		boolean isUser = this.game.isUser();
 		Coordinate coordinate = new Coordinate();
-		
 		Error error;
 		do {
 			if (isUser) {
 				this.setVisible(true);
-				do{
-						coordinate = this.coordinatePutView.getCoordinate();
-						System.out.println("");
-				}while(this.coordinatePutView.getCoordinate() == null);
-				
-				error = this.game.put(new Coordinate(this.coordinatePutView.getCoordinate().getColumn(), this.coordinatePutView.getCoordinate().getRow()));
+				do {
+					coordinate = this.coordinatePutView.getCoordinate();
+					System.out.println("");
+				} while (this.coordinatePutView.getCoordinate() == null);
+				error = this.game.put(new Coordinate(this.coordinatePutView.getCoordinate().getColumn(),
+						this.coordinatePutView.getCoordinate().getRow()));
 				this.coordinatePutView.resetCoordinate();
 				coordinate = null;
-				
 			} else {
 				coordinate = new Coordinate();
 				coordinate.random();
 				error = this.game.put(coordinate);
 			}
-			
 			if (isUser) {
 				if (error != Error.NULL_ERROR) {
 					JOptionPane.showMessageDialog(null, ErrorView.MESSAGES[error.ordinal() - 1], "ERROR",
@@ -112,9 +104,8 @@ class PlayView extends JFrame {
 				origin.random();
 				target = new Coordinate();
 				target.random();
-				error = this.game.move(origin,target);
+				error = this.game.move(origin, target);
 			}
-			
 			if (isUser) {
 				if (error != Error.NULL_ERROR) {
 					JOptionPane.showMessageDialog(null, ErrorView.MESSAGES[error.ordinal() - 1], "ERROR",
