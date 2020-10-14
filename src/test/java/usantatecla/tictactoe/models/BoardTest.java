@@ -10,7 +10,7 @@ public class BoardTest {
     private Board board;
 
     public BoardTest() {
-        this.board = new Board(2);
+        this.board = new Board();
     }
 
     @Test
