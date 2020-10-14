@@ -1,7 +1,6 @@
 package usantatecla.tictactoe.views.console;
 
 import usantatecla.tictactoe.controllers.StartController;
-import usantatecla.tictactoe.models.Game;
 import usantatecla.tictactoe.views.Message;
 import usantatecla.utils.LimitedIntDialog;
 
