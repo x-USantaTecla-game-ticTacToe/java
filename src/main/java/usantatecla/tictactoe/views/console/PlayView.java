@@ -2,35 +2,69 @@ package usantatecla.tictactoe.views.console;
 
 import usantatecla.tictactoe.controllers.Logic;
 import usantatecla.tictactoe.models.Coordinate;
-import usantatecla.tictactoe.types.PlayerType;
-import usantatecla.tictactoe.views.PlayerView;
+import usantatecla.tictactoe.views.Message;
+import usantatecla.tictactoe.models.Error;
 
 class PlayView {
 
-    Logic logic;
+    private Logic logic;
 
     PlayView(Logic logic) {
         this.logic = logic;
     }
 
-    boolean interact() {
-        new BoardView(this.logic).write();
-        PlayerView playerView = this.logic.getTypeOfTokenPlayerFromTurn() == PlayerType.USER_PLAYER
-                ? new UserPlayerView(this.logic)
-                : new MachinePlayerView(this.logic);
-        if (!this.logic.isBoardComplete()) {
-            Coordinate coordinate = playerView.readCoordinateToPut();
-            this.logic.putTokenPlayerFromTurn(coordinate);
-        } else {
-            Coordinate[] coordinates = playerView.readCoordinatesToMove();
-            this.logic.moveTokenPlayerFromTurn(coordinates[0], coordinates[1]);
-        }
-        new BoardView(this.logic).write();
-        if (this.logic.isTicTacToe()) {
-            new ResultView().writeln(this.logic.getValueFromTurn());
-            return true;
-        }
-        this.logic.changeTurn();
-        return false;
+    void interact() {
+        do {
+            this.logic.next();
+            if (!this.logic.isBoardComplete()) {
+                this.put();
+            } else {
+                this.move();
+            }
+            new GameView(this.logic).write();
+        } while (!this.logic.isTicTacToe());
+        new TokenView(this.logic.getToken()).write();
+        Message.PLAYER_WIN.writeln();
     }
+
+    private void put() {
+        boolean isUser = this.logic.isUser();
+        Coordinate coordinate;
+        Error error;
+        do {
+            if (isUser) {
+                coordinate = new CoordinateView().read(Message.COORDINATE_TO_PUT.toString());
+            } else {
+                coordinate = new Coordinate();
+                coordinate.random();
+            }
+            error = this.logic.put(coordinate);
+            if (isUser) {
+                new ErrorView(error).writeln();
+            }
+        } while (!error.isNull());
+    }
+
+    private void move() {
+        boolean isUser = this.logic.isUser();
+        Coordinate origin;
+        Coordinate target;
+        Error error;
+        do {
+            if (isUser) {
+                origin = new CoordinateView().read(Message.COORDINATE_TO_REMOVE.toString());
+                target = new CoordinateView().read(Message.COORDINATE_TO_MOVE.toString());
+            } else {
+                origin = new Coordinate();
+                origin.random();
+                target = new Coordinate();
+                target.random();
+            }
+            error = this.logic.move(origin, target);
+            if (isUser) {
+                new ErrorView(error).writeln();
+            }
+        } while (!error.isNull());
+    }
+
 }

@@ -1,93 +1,60 @@
 package usantatecla.tictactoe.controllers;
 
 import usantatecla.tictactoe.models.Coordinate;
+import usantatecla.tictactoe.models.Error;
 import usantatecla.tictactoe.models.Game;
-import usantatecla.tictactoe.types.Error;
-import usantatecla.tictactoe.types.PlayerType;
+import usantatecla.tictactoe.models.Token;
 
 public class Logic {
-    
-    private Game game;
-	
-	private StartController startController;
 
-	private PlayController playController;
+  private Game game;
+  private StartController startController;
+  private PlayController playController;
 
-	private ResumeController resumeController;
+  public Logic() {
+    this.game = new Game();
+    this.startController = new StartController(this.game);
+    this.playController = new PlayController(this.game);
+  }
 
-	public Logic() {
-		this.game = new Game();
-		this.startController = new StartController(this.game);
-		this.playController = new PlayController(this.game);
-		this.resumeController = new ResumeController(this.game);
-    }
+  public int getMaxPlayers() {
+    return this.startController.getMaxPlayers();
+  }
 
-    public void createPlayers(int numberOfUsers) {
-		this.startController.createPlayers(numberOfUsers);
-	}
+  public void setUsers(int users) {
+    this.startController.setUsers(users);
+  }
 
-	public boolean isBoardComplete() {
-		return this.playController.isBoardComplete();
-	}
+  public Token getToken() {
+    return this.playController.getToken();
+  }
 
-	public PlayerType getTypeOfTokenPlayerFromTurn() {
-		return this.playController.getTypeOfTokenPlayerFromTurn();
-	}
+  public void next() {
+    this.playController.next();
+  }
 
-	public Error getPutCoordinateError(Coordinate coordinate) {
-		return this.playController.getPutCoordinateError(coordinate);
-	}
+  public boolean isBoardComplete() {
+    return this.playController.isBoardComplete();
+  }
 
-	public Error getMoveOriginCoordinateError(Coordinate coordinate) {
-		return this.playController.getMoveOriginCoordinateError(coordinate);
-	}
+  public boolean isTicTacToe() {
+    return this.playController.isTicTacToe();
+  }
 
-	public Error getMoveTargetCoordinateError(Coordinate originCoordinate, Coordinate targetCoordinate) {
-		return this.playController.getMoveTargetCoordinateError(originCoordinate, targetCoordinate);
-	}
+  public boolean isUser() {
+    return this.playController.isUser();
+  }
 
-	public boolean isCoordinateValid(Coordinate coordinate) {
-		return this.playController.isCoordinateValid(coordinate);
-	}
+  public Error put(Coordinate coordinate) {
+    return this.playController.put(coordinate);
+  }
 
-	public Coordinate generateRandomCoordinate() {
-		return this.playController.generateRandomCoordinate();
-	}
+  public Error move(Coordinate origin, Coordinate target) {
+    return this.playController.move(origin, target);
+  }
 
-	public void putTokenPlayerFromTurn(Coordinate coordinate) {
-		this.playController.putTokenPlayerFromTurn(coordinate);
-	}
+  public Token getToken(Coordinate coordinate) {
+    return this.playController.getToken(coordinate);
+  }
 
-	public void moveTokenPlayerFromTurn(Coordinate originCoordinate, Coordinate targetCoordinate) {
-		this.playController.moveTokenPlayerFromTurn(originCoordinate, targetCoordinate);
-	}
-
-	public void changeTurn() {
-		this.playController.changeTurn();
-	}
-
-	public char getTokenChar(Coordinate coordinate) {
-		return this.playController.getTokenChar(coordinate);
-	}
-
-	public boolean isEmptyToken(Coordinate coordinate) {
-		return this.playController.isEmptyToken(coordinate);
-	}
-
-	public int getCoordinateDimension() {
-		return this.playController.getCoordinateDimension();
-	}
-
-	public boolean isTicTacToe() {
-		return this.playController.isTicTacToe();
-    }
-    
-    public int getValueFromTurn() {
-		return this.playController.getValueFromTurn();
-	}
-
-	public void newGame() {
-		this.resumeController.newGame();
-	}
-    
 }

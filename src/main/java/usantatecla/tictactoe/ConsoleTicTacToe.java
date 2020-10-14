@@ -1,14 +1,13 @@
 package usantatecla.tictactoe;
 
 import usantatecla.tictactoe.controllers.Logic;
-import usantatecla.tictactoe.views.View;
-import usantatecla.tictactoe.views.console.ConsoleView;
+import usantatecla.tictactoe.views.console.View;
 
 class ConsoleTicTacToe extends TicTacToe {
 
 	@Override
-	protected View createView(Logic logic) {
-		return new ConsoleView(logic);
+	protected View createView(Logic logic){
+		return new View(logic);
 	}
 
 	public static void main(String[] args) {
