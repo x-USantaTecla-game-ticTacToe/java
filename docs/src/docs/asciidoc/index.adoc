@@ -72,25 +72,46 @@ tictactoe.views.graphics .down.> javax.swing
 [plantuml,version3TicTacToe,svg]
 ....
 
-class  tictactoe.ConsoleTicTacToe{
-- game: Game
-- consoleView: ConsoleView
-~ ConsoleTicTacToe()
-- play(): void
-+ main(String[]): void
+namespace usantatecla.tictactoe.views.console {
+class View
 }
-tictactoe.ConsoleTicTacToe *-down-> tictactoe.models.Game
-tictactoe.ConsoleTicTacToe *-down-> tictactoe.views.ConsoleView
 
-class  tictactoe.GraphicsTicTacToe{
-- game: Game
-- graphicsView: GraphicsView
-~ GraphicsTicTacToe()
-- play(): void
-+ main(String[]): void
+
+namespace usantatecla.tictactoe.models {
+class Game
 }
-tictactoe.GraphicsTicTacToe *-down-> tictactoe.models.Game
-tictactoe.GraphicsTicTacToe *-down-> tictactoe.views.GraphicsView
+
+namespace usantatecla.tictactoe.views.graphics {
+class View
+}
+
+
+namespace usantatecla.tictactoe {
+
+class ConsoleTicTacToe {
+	- Game game;
+	- View view;
+	ConsoleTicTacToe()
+	- void play()
+	+ {static} void main(args)
+
+}
+
+class GraphicsTicTacToe {
+	- Game game;
+	- View view;
+	- GraphicsTicTacToe() 
+	- void play()
+	+ {static} void main(Sargs)
+}
+
+}
+
+usantatecla.tictactoe.ConsoleTicTacToe *-down-> usantatecla.tictactoe.views.console.View
+usantatecla.tictactoe.GraphicsTicTacToe *-down-> usantatecla.tictactoe.views.graphics.View
+
+usantatecla.tictactoe.ConsoleTicTacToe *-down-> usantatecla.tictactoe.models.Game
+usantatecla.tictactoe.GraphicsTicTacToe *-down-> usantatecla.tictactoe.models.Game
 
 ....
 
