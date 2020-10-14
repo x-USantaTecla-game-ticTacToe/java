@@ -6,9 +6,13 @@ public class Game {
     private Turn turn;
     
     public Game() {
+        this.reset();
+    }
+
+    public void reset() {
         this.board = new Board();
         this.turn = new Turn(this.board);
-    }
+	}
 
     public void setUsers(int users) {
 		this.turn.setUsers(users);
