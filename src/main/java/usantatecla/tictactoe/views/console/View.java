@@ -12,7 +12,7 @@ public class View extends usantatecla.tictactoe.views.View {
 		super(game);
 		this.startView = new StartView(this.game);
 		this.playView = new PlayView(this.game);
-		this.resumeView = new ResumeView();
+		this.resumeView = new ResumeView(this.game);
 	}
 
 	@Override

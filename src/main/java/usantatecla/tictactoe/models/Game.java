@@ -6,11 +6,15 @@ public class Game {
     private Turn turn;
     
     public Game() {
-        this.board = new Board();
-        this.turn = new Turn(this.board);
+        this.reset();        
     }
 
+    public void reset() {
+        this.board = new Board();
+	}
+
     public void setUsers(int users) {
+        this.turn = new Turn(this.board);
 		this.turn.setUsers(users);
     }
 

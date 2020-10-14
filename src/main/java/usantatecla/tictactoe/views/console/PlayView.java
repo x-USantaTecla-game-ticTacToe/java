@@ -5,12 +5,11 @@ import usantatecla.tictactoe.models.Game;
 import usantatecla.tictactoe.views.Message;
 import usantatecla.tictactoe.models.Error;
 
-class PlayView {
+class PlayView extends SubView {
 
-    private Game game;
 
     PlayView(Game game) {
-        this.game = game;
+        super(game);
     }
 
     void interact() {
