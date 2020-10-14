@@ -4,13 +4,17 @@ public class Game {
     
     private Board board;
     private Turn turn;
-    
-    public Game() {
-        this.board = new Board();
-        this.turn = new Turn(this.board);
+
+    public Game(){
+        this.reset();
     }
+    
+    public void reset() {
+        this.board = new Board();
+	}
 
     public void setUsers(int users) {
+        this.turn = new Turn(this.board);
 		this.turn.setUsers(users);
     }
 
