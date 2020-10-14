@@ -50,4 +50,8 @@ public class Game {
 		return Turn.NUMBER_PLAYERS;
 	}
 
+	public void reset() {
+        this.board.reset();
+	}
+
 }

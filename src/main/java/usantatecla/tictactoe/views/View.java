@@ -13,7 +13,7 @@ public class View {
 		this.game = game;
 		this.startView = new StartView(this.game);
 		this.playView = new PlayView(this.game);
-		this.resumeView = new ResumeView();
+		this.resumeView = new ResumeView(this.game);
 	}
 
 	public void interact() {

@@ -4,12 +4,10 @@ import usantatecla.tictactoe.models.Coordinate;
 import usantatecla.tictactoe.models.Game;
 import usantatecla.tictactoe.models.Error;
 
-class PlayView {
-
-    private Game game;
+class PlayView extends SubView {
 
     PlayView(Game game) {
-        this.game = game;
+        super(game);
     }
 
     void interact() {

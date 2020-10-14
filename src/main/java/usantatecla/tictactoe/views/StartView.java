@@ -3,12 +3,10 @@ package usantatecla.tictactoe.views;
 import usantatecla.tictactoe.models.Game;
 import usantatecla.utils.LimitedIntDialog;
 
-class StartView {
+class  StartView extends SubView {
 
-	private Game game;
-
-	StartView(Game game) {
-		this.game = game;
+	public StartView(Game game) {
+		super(game);
 	}
 
   void interact() {
