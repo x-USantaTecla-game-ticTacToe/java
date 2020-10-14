@@ -6,6 +6,9 @@ class Player {
 	private Board board;
 
 	Player(Token token, Board board) {
+		assert token != null && !token.isNull();
+		assert board != null;
+
 		this.token = token;
 		this.board = board;
 	}
@@ -15,7 +18,7 @@ class Player {
 			return Error.NOT_OWNER;
 		}
 		this.board.put(coordinate, this.token);
-		return Error.NULL_ERROR;
+		return Error.NULL;
 	}
 
 	Error move(Coordinate origin, Coordinate target) {
@@ -28,7 +31,7 @@ class Player {
 			return Error.SAME_COORDINATES;
 		}
 		this.board.move(origin, target);
-		return Error.NULL_ERROR;
+		return Error.NULL;
 	}
 
 	Token getToken() {

@@ -55,8 +55,8 @@ public class CoordinateMoveView extends CoordinateView {
                 Integer.parseInt(this.textFieldColumn.getText()) - 1);
         Coordinate targetCoordinate = new Coordinate(Integer.parseInt(this.textFieldRowToMove.getText()) - 1,
                 Integer.parseInt(this.textFieldColumnToMove.getText()) - 1);
-        if (originCoordinate.isValid().equals(Error.NULL_ERROR)
-                && targetCoordinate.isValid().equals(Error.NULL_ERROR)) {
+        if (originCoordinate.isValid().equals(Error.NULL)
+                && targetCoordinate.isValid().equals(Error.NULL)) {
             this.coordinates = new Coordinate[2];
             this.coordinates[0] = originCoordinate;
             this.coordinates[1] = targetCoordinate;
@@ -69,5 +69,5 @@ public class CoordinateMoveView extends CoordinateView {
         this.textFieldRow.setText("");
         this.textFieldColumn.setText("");
     }
-    
+
 }

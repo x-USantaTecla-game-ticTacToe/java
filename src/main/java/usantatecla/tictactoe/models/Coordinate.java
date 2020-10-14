@@ -32,7 +32,7 @@ public class Coordinate extends ConcreteCoordinate {
 		if (!LIMITS.isIncluded(this.row) || !LIMITS.isIncluded(this.column)){
 			return Error.WRONG_COORDINATES;
 		}
-		return Error.NULL_ERROR;
+		return Error.NULL;
 	}
 	
 	@Override
@@ -40,7 +40,7 @@ public class Coordinate extends ConcreteCoordinate {
 		assert coordinate != null;
 
 		if (coordinate.isNull()){
-			return Direction.NULL_DIRECTION;
+			return Direction.NULL;
 		}
 		if (this.inInverseDiagonal() && ((Coordinate) coordinate).inInverseDiagonal()) {
 			return Direction.INVERSE_DIAGONAL;

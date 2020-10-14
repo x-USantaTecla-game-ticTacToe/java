@@ -80,7 +80,7 @@ class PlayView extends JFrame {
 				error = this.game.put(coordinate);
 			}
 			if (isUser) {
-				if (error != Error.NULL_ERROR) {
+				if (error != Error.NULL) {
 					JOptionPane.showMessageDialog(null, ErrorView.MESSAGES[error.ordinal() - 1], "ERROR",
 							JOptionPane.WARNING_MESSAGE);
 					this.coordinatePutView.resetCoordinate();
@@ -107,7 +107,7 @@ class PlayView extends JFrame {
 				error = this.game.move(origin, target);
 			}
 			if (isUser) {
-				if (error != Error.NULL_ERROR) {
+				if (error != Error.NULL) {
 					JOptionPane.showMessageDialog(null, ErrorView.MESSAGES[error.ordinal() - 1], "ERROR",
 							JOptionPane.WARNING_MESSAGE);
 					this.coordinatePutView.resetCoordinate();

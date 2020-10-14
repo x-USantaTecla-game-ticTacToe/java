@@ -6,10 +6,10 @@ public enum Error {
 	NOT_OWNER,
 	SAME_COORDINATES,
 	WRONG_COORDINATES,
-	NULL_ERROR;
+	NULL;
 
 	public boolean isNull(){
-		return this == Error.NULL_ERROR;
+		return this == Error.NULL;
 	}
 
 }

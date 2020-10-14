@@ -16,6 +16,7 @@ public class Turn {
 
 	void setUsers(int users) {
 		this.users = users;
+		this.board.reset();
 		this.players = new Player[Turn.NUMBER_PLAYERS];
 		for (int i = 0; i < Turn.NUMBER_PLAYERS; i++) {
 			this.players[i] = new Player(Token.get(i), board);

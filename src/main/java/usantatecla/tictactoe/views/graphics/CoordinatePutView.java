@@ -38,7 +38,7 @@ public class CoordinatePutView extends CoordinateView {
 	public void actionPerformed(final ActionEvent event) {
 		Coordinate coordinateInserted = new Coordinate(Integer.parseInt(this.textFieldRow.getText()) - 1,
 				Integer.parseInt(this.textFieldColumn.getText()) - 1);
-		if (coordinateInserted.isValid().equals(Error.NULL_ERROR)) {
+		if (coordinateInserted.isValid().equals(Error.NULL)) {
 			this.coordinate = new Coordinate(coordinateInserted.getColumn(), coordinateInserted.getRow());
 		} else {
 			JOptionPane.showMessageDialog(null, ErrorView.MESSAGES[Error.WRONG_COORDINATES.ordinal()], "ERROR",
