@@ -8,8 +8,6 @@ public class ResumeController extends Controller {
 		super(game);
 	}
 
-	public void newGame() {
-		this.game.newGame();
-	}
+
 
 }

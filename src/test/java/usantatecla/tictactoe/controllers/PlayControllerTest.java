@@ -22,7 +22,7 @@ public class PlayControllerTest {
 
     public PlayControllerTest() {
         this.game = new Game();
-        this.game.createPlayers(0);
+        this.game.setUsers(0);
         this.playController = new PlayController(this.game);
         this.coordinate00 = new Coordinate(0, 0);
         this.coordinate11 = new Coordinate(1, 1);

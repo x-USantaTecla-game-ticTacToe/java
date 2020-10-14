@@ -16,7 +16,7 @@ public class MachinePlayerViewTest {
 
     public MachinePlayerViewTest() {
         this.game = new Game();
-        this.game.createPlayers(0);
+        this.game.setUsers(0);
         this.machinePlayerView = new MachinePlayerView(new PlayController(this.game));
     }
 
