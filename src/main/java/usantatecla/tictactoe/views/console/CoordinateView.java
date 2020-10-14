@@ -1,24 +1,24 @@
 package usantatecla.tictactoe.views.console;
 
 import usantatecla.tictactoe.models.Coordinate;
-import usantatecla.tictactoe.views.MessageView;
-import usantatecla.utils.WithConsoleView;
 import usantatecla.tictactoe.models.Error;
+import usantatecla.utils.Console;
 
-class CoordinateView extends WithConsoleView {
+public class CoordinateView {
 
-    Coordinate read(String title) {
+    public Coordinate read(String title) {
+        Console console = Console.instance();
         Coordinate coordinate;
+        Error error;
         do {
-			this.console.writeln(title);
-            int row = this.console.readInt(MessageView.READ_ROW.getMessage()) - 1;
-            int column = this.console.readInt(MessageView.READ_COLUMN.getMessage()) - 1;
+			console.writeln(title);
+            int row = console.readInt("Row: ") - 1;
+            int column = console.readInt("Column: ") - 1;
             coordinate = new Coordinate(row, column);
-            assert coordinate.isValid();
-            if (!coordinate.isValid()) {
-                new ErrorView(Error.WRONG_COORDINATES).writeln();
-            }
-        } while (!coordinate.isValid());
+            error = coordinate.isValid();
+            new ErrorView(error).writeln();
+        } while (!error.isNull());
         return coordinate;
     }
+
 }

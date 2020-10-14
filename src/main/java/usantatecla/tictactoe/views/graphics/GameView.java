@@ -1,85 +1,58 @@
 package usantatecla.tictactoe.views.graphics;
 
-import java.awt.Container;
+import javax.swing.JPanel;
 import java.awt.GridBagLayout;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 
 import usantatecla.tictactoe.models.Coordinate;
 import usantatecla.tictactoe.models.Game;
-import usantatecla.tictactoe.models.Player;
-import usantatecla.tictactoe.models.PlayerType;
 import usantatecla.tictactoe.models.Token;
-import usantatecla.tictactoe.views.MessageView;
-import usantatecla.tictactoe.views.PlayerView;
+import usantatecla.tictactoe.views.Message;
+import usantatecla.tictactoe.views.console.TokenView;
 
 @SuppressWarnings("serial")
-class GameView extends JFrame {
+public class GameView extends JPanel {
 
-	private static final String GAME_OVER = "Game Over";
+    private Game game;
 
-	private Game game;
+    GameView(Game game) {
+        this.game = game;
+        this.setLayout(new GridBagLayout());
+        this.add(new JLabel(Message.SEPARATOR.getMessage()), new Constraints(0, 0, 1, 1));
+    }
 
-	GameView(Game game) {
-		super(MessageView.START_GAME.getMessage());
-		this.game = game;
-		this.getContentPane().setLayout(new GridBagLayout());
-		this.setSize(400, 500);
-		this.setLocationRelativeTo(null);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setVisible(true);
-	}
+    void write() {
+        this.removeAll();
+        this.setLayout(new GridBagLayout());
+        this.add(new JLabel(Message.SEPARATOR.getMessage()), new Constraints(0, 0, 1, 1));
+        for (int i = 0; i < Coordinate.DIMENSION; i++) {
+            this.printRowBoard(i);
+        }
+        this.add(new JLabel(Message.SEPARATOR.getMessage()), new Constraints(0, 4, 1, 1));
+    }
 
-	void start() {
-		ChoosePlayersView choosePlayersView = new ChoosePlayersView(this.getRootPane());
-		this.getContentPane().add(choosePlayersView, new Constraints(0, 0, 3, 1));
-		this.setVisible(true);
-		do {
-			System.out.println("");
-			if (choosePlayersView.getPlayersNumber() != null) {
-				int numberPlayers = Integer.parseInt(choosePlayersView.getPlayersNumber());
-				this.game.createPlayers(numberPlayers);
-			}
-		} while (choosePlayersView.getPlayersNumber() == null);
-	}
+    private void printRowBoard(int row) {
+        String boardRowToPresent = "";
+        boardRowToPresent += Message.VERTICAL_LINE_LEFT.getMessage();
+        for (int j = 0; j < Coordinate.DIMENSION; j++) {
+            boardRowToPresent += this.getSquareBoardText(row, j);
+        }
+        JLabel label = new JLabel(boardRowToPresent);
+        label.setHorizontalAlignment(SwingConstants.CENTER);
+        this.add(label, new Constraints(0, row + 1, 10, 1));
+    }
 
-	boolean play() {
-		this.getContentPane().removeAll();
-		Player player = this.game.getTokenPlayerFromTurn();
-		this.getContentPane().add(new BoardView(this.game.getBoard()), new Constraints(0, 0, 1, 1));
-		if (!this.game.isBoardComplete()) {
-			PlayerView playerView = player.getType() == PlayerType.USER_PLAYER
-					? new UserPlayerView(player, false, this.getContentPane())
-					: new MachinePlayerView(player);
-			this.setVisible(true);
-			Coordinate coordinate = playerView.readCoordinateToPut();
-			this.game.putTokenPlayerFromTurn(coordinate);
-		} else {
-			PlayerView playerView = player.getType() == PlayerType.USER_PLAYER
-					? new UserPlayerView(player, true, this.getContentPane())
-					: new MachinePlayerView(player);
-			this.setVisible(true);
-			Coordinate[] coordinates = playerView.readCoordinatesToMove();
-			this.game.moveTokenPlayerFromTurn(coordinates);
-		}
-		if (this.game.isTicTacToe()) {
-			this.result();
-			return true;
-		}
-		this.game.changeTurn();
-		return false;
-	}
-
-	private void result() {
-		Container container = this.getContentPane();
-		container.removeAll();
-		container.add(new BoardView(game.getBoard()), new Constraints(0, 0, 1, 1));
-		container.revalidate();
-		container.repaint();
-		int value = this.game.getValueFromTurn();
-		String message = Token.values()[value].getChar() + " "
-				+ MessageView.PLAYER_WIN.getMessage();
-		JOptionPane.showMessageDialog(null, message, GameView.GAME_OVER, JOptionPane.WARNING_MESSAGE);
-	}
+    private String getSquareBoardText(int row, int column) {
+        String squareBoardToPresent = "";
+        Token token = this.game.getToken(new Coordinate(row, column));
+        if (token == Token.NULL) {
+            squareBoardToPresent += "-";
+        } else {
+            squareBoardToPresent += TokenView.SYMBOLS[token.ordinal()];
+        }
+        squareBoardToPresent += Message.VERTICAL_LINE_CENTERED.getMessage();
+        return squareBoardToPresent;
+    }
 
 }

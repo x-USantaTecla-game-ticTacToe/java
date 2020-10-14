@@ -1,18 +1,21 @@
 package usantatecla.tictactoe.models;
 
+import usantatecla.utils.ClosedInterval;
+
 public enum Token {
 
-	TOKEN_X('X'),
-	TOKEN_O('O');
+	X,
+	Y,
+	NULL;
 
-	private char character;
-
-	Token(char character){
-		this.character = character;
+	public boolean isNull() {
+		return this.equals(Token.NULL);
 	}
 
-	public char getChar() {
-		return this.character;
+	static Token get(int ordinal){
+		assert new ClosedInterval(0, Token.values().length-2).isIncluded(ordinal);
+		
+		return Token.values()[ordinal];
 	}
 
 }
