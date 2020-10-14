@@ -1,88 +1,57 @@
 package usantatecla.tictactoe.models;
 
-import usantatecla.tictactoe.types.Error;
-import usantatecla.tictactoe.types.PlayerType;
-import usantatecla.tictactoe.types.Token;
-
 public class Game {
     
     private Board board;
-
-	private Player[] players;
-
     private Turn turn;
     
     public Game() {
-        this.newGame();
+        this.reset();
     }
-
-    public void createPlayers(int numberOfUsers) {
-		for (int i = 0; i < numberOfUsers; i++) {
-			this.players[i] = new Player(Token.values()[i], this.board, PlayerType.USER_PLAYER);
-		}
-		for (int i = numberOfUsers; i < Turn.NUM_PLAYERS; i++) {
-			this.players[i] = new Player(Token.values()[i], this.board, PlayerType.MACHINE_PLAYER);
-		}
+    
+    public void reset() {
+        this.board = new Board();
+	}
+    
+    public void setUsers(int users) {
+        this.turn = new Turn(this.board);
+		this.turn.setUsers(users);
     }
 
     public boolean isBoardComplete() {
         return this.board.isCompleted();
     }
 
-    public void putTokenPlayerFromTurn(Coordinate coordinate) {
-        this.turn.getPlayer().put(coordinate);
+    public boolean isUser() {
+		return this.turn.isUser();
+	}
+
+    public Error put(Coordinate coordinate) {
+        return this.turn.put(coordinate);
     }
 
-    public void moveTokenPlayerFromTurn(Coordinate[] coordinates) {
-        this.turn.getPlayer().move(coordinates);
+    public Error move(Coordinate origin, Coordinate target) {
+        return this.turn.move(origin, target);
     }
 
-    public PlayerType getTypeOfTokenPlayerFromTurn() {
-        return this.turn.getPlayer().getType();
-    }
-
-    public Error getPutCoordinateError(Coordinate coordinate) {
-        if (!board.isEmpty(coordinate)) {
-			return Error.NOT_OWNER;
-		}
-		return null;
-    }
-
-    public Error getMoveOriginCoordinateError(Coordinate originCoordinate) {
-        if (!board.isOccupied(originCoordinate, this.turn.getPlayer().getToken())) {
-			return Error.NOT_OWNER;
-		}
-		return null;
-    }
-
-    public Error getMoveTargetCoordinateError(Coordinate originCoordinate, Coordinate targetCoordinate) {
-        if (originCoordinate.equals(targetCoordinate)) {
-			return Error.SAME_COORDINATES;
-		} else if (!board.isEmpty(targetCoordinate)) {
-			return Error.NOT_EMPTY;
-		}
-		return null;
-    }
-
-    public Token getToken(Coordinate coordinate) {
-        return this.board.getToken(coordinate);
-    }
-
-    public void changeTurn() {
-        this.turn.change();
+    public void next() {
+        this.turn.next();
     }
 
     public boolean isTicTacToe() {
-        return this.board.isTicTacToe(this.turn.getPlayer().getToken());
+        return this.board.isTicTacToe(this.turn.getToken());
     }
 
-    public int getValueFromTurn() {
-        return this.turn.getValue();
+	public Token getToken(Coordinate coordinate) {
+		return this.board.getToken(coordinate);
     }
-
-    public void newGame() {
-		this.board = new Board();
-        this.players = new Player[Turn.NUM_PLAYERS];
-        this.turn = new Turn(this.players);
+    
+    public Token getToken() {
+		return this.turn.getToken();
 	}
+
+	public int getMaxPlayers() {
+		return Turn.NUMBER_PLAYERS;
+	}
+
 }

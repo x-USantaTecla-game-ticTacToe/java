@@ -1,24 +1,23 @@
 package usantatecla.tictactoe;
 
-import usantatecla.tictactoe.controllers.Controller;
+import usantatecla.tictactoe.controllers.UseCaseController;
 import usantatecla.tictactoe.controllers.Logic;
 import usantatecla.tictactoe.views.View;
 
 public abstract class TicTacToe {
 
     private Logic logic;
-
     private View view;
 
     protected TicTacToe() {
         this.logic = new Logic();
-		this.view = this.createView();
+        this.view = this.createView();
     }
 
     protected abstract View createView();
 
     protected void play() {
-        Controller controller;
+        UseCaseController controller;
 		do {
             controller = this.logic.getController();
             if (controller != null) {
@@ -26,4 +25,5 @@ public abstract class TicTacToe {
             }
 		} while (controller != null);
     }
+
 }
