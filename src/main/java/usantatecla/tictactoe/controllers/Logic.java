@@ -10,6 +10,7 @@ public class Logic {
   private Game game;
   private StartController startController;
   private PlayController playController;
+  private ResumeController resumeController;
 
   public Logic() {
     this.game = new Game();
@@ -55,6 +56,10 @@ public class Logic {
 
   public Token getToken(Coordinate coordinate) {
     return this.playController.getToken(coordinate);
+  }
+
+  public void resume() {
+    this.resumeController.resume();
   }
 
 }

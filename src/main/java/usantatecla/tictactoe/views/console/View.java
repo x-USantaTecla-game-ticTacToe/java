@@ -11,7 +11,7 @@ public class View extends usantatecla.tictactoe.views.View {
 	public View(Logic logic) {
 		this.startView = new StartView(logic);
 		this.playView = new PlayView(logic);
-		this.resumeView = new ResumeView();
+		this.resumeView = new ResumeView(logic);
 	}
 
 	@Override

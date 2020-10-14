@@ -5,12 +5,10 @@ import usantatecla.tictactoe.models.Coordinate;
 import usantatecla.tictactoe.views.Message;
 import usantatecla.tictactoe.models.Error;
 
-class PlayView {
-
-    private Logic logic;
+class PlayView extends SubView {
 
     PlayView(Logic logic) {
-        this.logic = logic;
+        super(logic);
     }
 
     void interact() {

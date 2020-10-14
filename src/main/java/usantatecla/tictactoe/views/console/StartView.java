@@ -4,17 +4,13 @@ import usantatecla.tictactoe.controllers.Logic;
 import usantatecla.tictactoe.views.Message;
 import usantatecla.utils.LimitedIntDialog;
 
-class StartView {
+class StartView extends SubView {
 
-	private Logic logic;
-
-	StartView(Logic logic) {
-		assert logic != null;
-		
-		this.logic = logic;
+  StartView(Logic logic) {
+		super(logic);
 	}
 
-  void interact() {
+	void interact() {
 		Message.TITTLE.writeln();
 		int users = new LimitedIntDialog(0, 
 			this.logic.getMaxPlayers()).read(Message.NUMBER_PLAYERS.toString());
