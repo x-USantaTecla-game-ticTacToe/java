@@ -3,9 +3,9 @@ package usantatecla.tictactoe.views.console;
 import usantatecla.tictactoe.models.Token;
 import usantatecla.utils.Console;
 
-class TokenView {
+public class TokenView {
 
-	private static final char[] SYMBOLS = {'X', 'O', ' ' };
+	public static final char[] SYMBOLS = {'X', 'O', ' ' };
 	private Token token;
 
 	TokenView(Token token){

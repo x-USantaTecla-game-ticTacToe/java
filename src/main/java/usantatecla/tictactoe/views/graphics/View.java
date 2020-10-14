@@ -4,21 +4,36 @@ import usantatecla.tictactoe.models.Game;
 
 public class View extends usantatecla.tictactoe.views.View {
 
+	private PlayView playView;
+	private StartView startView;
 	public View(Game game) {
 		super(game);
+		this.startView = new StartView(this.game);
+		this.playView = new PlayView(this.game);
 	}
 
 	@Override
 	protected void start() {
+		this.startView.interact();
 	}
 
 	@Override
 	protected void play() {
+		this.startView.setVisible(false);
+		this.playView.interact();
 	}
 
 	@Override
 	protected boolean isNewGame() {
-		return new ResumeDialog().isNewGame();
+		ResumeView resumeView = new ResumeView();
+		boolean newGame = resumeView.isNewGame();
+		if (newGame) {
+			return true;
+		} else {
+			this.playView.setVisible(false);
+			System.exit(0);
+			return false;
+		}
 	}
 
 }
