@@ -15,13 +15,9 @@ enum Message {
 	COORDINATE_TO_REMOVE("Origin coordinate to move"), 
 	COORDINATE_TO_MOVE("Target coordinate to move"),
 	PLAYER_WIN(" Player: You win!!! :-)"), 
-	RESUME("Do you want to continue"),
-	NULL_MESSAGE();
+	RESUME("Do you want to continue");
 
 	private String message;
-
-	private Message() {
-	}
 	
 	private Message(String message) {
 		this.message = message;
