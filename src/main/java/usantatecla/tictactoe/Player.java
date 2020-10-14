@@ -27,7 +27,7 @@ abstract class Player {
 		do {
 			coordinate = this.getCoordinate(Message.ENTER_COORDINATE_TO_PUT);
 			error = this.checkPutCoordinateError(coordinate);
-		} while (error != Error.NULL_ERROR);
+		} while (error != Error.NULL);
 		this.board.put(coordinate, this.token);
 	}
 
@@ -37,7 +37,7 @@ abstract class Player {
 		if (!this.board.isEmpty(coordinate)) {
 			return Error.NOT_EMPTY;
 		}
-		return Error.NULL_ERROR;
+		return Error.NULL;
 	}
 
 	private void move() {
@@ -46,12 +46,12 @@ abstract class Player {
 		do {
 			origin = this.getCoordinate(Message.COORDINATE_TO_REMOVE);
 			error = this.checkMoveOriginCoordinateError(origin);
-		} while (error != Error.NULL_ERROR);
+		} while (error != Error.NULL);
 		Coordinate target;
 		do {
 			target = this.getCoordinate(Message.COORDINATE_TO_MOVE);
 			error = this.checkMoveTargetCoordinateError(origin, target);
-		} while (error != Error.NULL_ERROR);
+		} while (error != Error.NULL);
 		this.board.move(origin, target);
 	}
 
@@ -61,7 +61,7 @@ abstract class Player {
 		if (!this.board.isOccupied(origin, this.token)) {
 			return Error.NOT_OWNER;
 		}
-		return Error.NULL_ERROR;
+		return Error.NULL;
 	}
 
 	protected Error checkMoveTargetCoordinateError(Coordinate origin, Coordinate targetCoordinate) {
@@ -73,12 +73,11 @@ abstract class Player {
 		if (!this.board.isEmpty(targetCoordinate)) {
 			return Error.NOT_EMPTY;
 		}
-		return Error.NULL_ERROR;
+		return Error.NULL;
 	}
 
 	void writeWinner() {
-		this.token.write();
-		Message.PLAYER_WIN.writeln();
+		Message.PLAYER_WIN.writeln(this.token.name());
 	}
 	
 	Token getToken() {

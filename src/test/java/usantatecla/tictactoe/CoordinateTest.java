@@ -60,7 +60,7 @@ public class CoordinateTest {
 
     @Test
     public void testGivenNewCoordinatesWhenCompareCoordinates00And12ThenDirectionIsNull() {
-        assertEquals(Direction.NULL_DIRECTION, this.coordinate00.getDirection(this.coordinate12));
+        assertEquals(Direction.NULL, this.coordinate00.getDirection(this.coordinate12));
     }
 
     @Test(expected = AssertionError.class)
@@ -117,17 +117,17 @@ public class CoordinateTest {
     
     @Test
     public void testGivenNewCoordinatesWhenCompareNullCoordinatehenIsFalse() {
-        assertFalse(this.coordinate00.equals(Coordinate.NULL_COORDINATE));
+        assertFalse(this.coordinate00.equals(Coordinate.NULL));
     }
     
     @Test
     public void testGivenNullCoordinatesWhenCompareNullCoordinatehenIsTrue() {
-        assertTrue(Coordinate.NULL_COORDINATE.equals(Coordinate.NULL_COORDINATE));
+        assertTrue(Coordinate.NULL.equals(Coordinate.NULL));
     }
     
     @Test
     public void testGivenNullCoordinatesWhenCompareConcreteCoordinatehenIsFalse() {
-        assertFalse(Coordinate.NULL_COORDINATE.equals(this.coordinate00));
+        assertFalse(Coordinate.NULL.equals(this.coordinate00));
     }
     
     @Test

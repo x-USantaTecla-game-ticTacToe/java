@@ -33,11 +33,11 @@ class UserPlayer extends Player {
 	}
 
 	@Override
-	protected Error checkMoveTargetCoordinateError(Coordinate origin, Coordinate targetCoordinate) {
-		assert origin != null;
-		assert targetCoordinate != null;
+	protected Error checkMoveTargetCoordinateError(Coordinate origin, Coordinate target) {
+		assert origin != null && !origin.isNull();
+		assert target != null && !target.isNull();
 		
-		Error error = super.checkMoveTargetCoordinateError(origin, targetCoordinate);
+		Error error = super.checkMoveTargetCoordinateError(origin, target);
 		error.writeln();
 		return error;
 	}

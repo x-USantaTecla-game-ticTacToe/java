@@ -14,15 +14,10 @@ enum Message {
 	COORDINATE_TO_PUT("Coordinate to put"),
 	COORDINATE_TO_REMOVE("Origin coordinate to move"), 
 	COORDINATE_TO_MOVE("Target coordinate to move"),
-	PLAYER_WIN(" Player: You win!!! :-)"), 
-	RESUME("Do you want to continue"),
-	NULL_MESSAGE();
+	PLAYER_WIN("#player player: You win!!! :-)"), 
+	RESUME("Do you want to continue");
 
 	private String message;
-
-	private Message() {
-		
-	}
 	
 	private Message(String message) {
 		this.message = message;
@@ -34,6 +29,11 @@ enum Message {
 
 	void writeln() {
 		Console.instance().writeln(this.message);
+	}
+
+	void writeln(String player) {
+		assert this == Message.PLAYER_WIN;
+		Console.instance().writeln(this.message.replaceAll("#player", "" + player));
 	}
 
 	@Override

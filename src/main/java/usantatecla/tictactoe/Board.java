@@ -1,29 +1,28 @@
 package usantatecla.tictactoe;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import usantatecla.utils.Direction;
 
 class Board {
 
-	private final int NUMBER_PLAYERS;
-	private Coordinate[][] coordinates;
+	private Token[][] tokens;
 
-	Board(int numberPlayers) {
-		assert numberPlayers > 0;
-		
-		this.NUMBER_PLAYERS = numberPlayers;
-		this.coordinates = new Coordinate[this.NUMBER_PLAYERS][Coordinate.DIMENSION];
-		for (int i = 0; i < this.NUMBER_PLAYERS; i++) {
+	Board() {
+		this.tokens = new Token[Coordinate.DIMENSION][Coordinate.DIMENSION];
+		for (int i = 0; i < Coordinate.DIMENSION; i++) {
 			for (int j = 0; j < Coordinate.DIMENSION; j++) {
-				this.coordinates[i][j] = Coordinate.NULL_COORDINATE;
+				this.tokens[i][j] = Token.NULL;
 			}
 		}
 	}
 
 	void write() {
 		Message.SEPARATOR.writeln();
-		for (int i = 0; i<Coordinate.DIMENSION; i++) {
+		for (int i = 0; i < Coordinate.DIMENSION; i++) {
 			Message.VERTICAL_LINE_LEFT.write();
-			for (int j = 0; j<Coordinate.DIMENSION; j++) {
+			for (int j = 0; j < Coordinate.DIMENSION; j++) {
 				this.getToken(new Coordinate(i, j)).write();
 				Message.VERTICAL_LINE_CENTERED.write();
 			}
@@ -34,92 +33,90 @@ class Board {
 
 	private Token getToken(Coordinate coordinate) {
 		assert coordinate != null && !coordinate.isNull();
-		
-		for (int i = 0; i < this.NUMBER_PLAYERS; i++) {
-			for (int j = 0; j < Coordinate.DIMENSION; j++) {
-				if (this.coordinates[i][j].equals(coordinate)) {
-					return Token.get(i);
-				}
-			}
-		}
-		return Token.NULL_TOKEN;
+
+		return this.tokens[coordinate.getRow()][coordinate.getColumn()];
 	}
 
 	boolean isCompleted() {
-		for (int i = 0; i < this.NUMBER_PLAYERS; i++) {
-			if (!this.isCompleted(i)) {
-				return false;
+		int tokensCount = 0;
+		for (int i = 0; i < Coordinate.DIMENSION; i++) {
+			for (int j = 0; j < Coordinate.DIMENSION; j++) {
+				if (!this.tokens[i][j].isNull()) {
+					tokensCount++;
+				}
 			}
 		}
-		return true;
-	}
-	
-	private boolean isCompleted(int player) {
-		for (int j = 0; j < Coordinate.DIMENSION; j++) {
-			if (this.coordinates[player][j].isNull()) {
-				return false;
-			}
-		}
-		return true;
+		return tokensCount == Coordinate.DIMENSION*2;
 	}
 
 	void put(Coordinate coordinate, Token token) {
 		assert coordinate != null && !coordinate.isNull();
-		assert token != null && !token.isNull();
-		
-		Coordinate[] coordinates = this.coordinates[token.ordinal()];
-		int i = 0;
-		while (!coordinates[i].isNull()) {
-			i++;
-		}
-		coordinates[i] = coordinate;
+		assert token != null;
+		assert !this.isCompleted();
+
+		this.tokens[coordinate.getRow()][coordinate.getColumn()] = token;
 	}
 
 	void move(Coordinate origin, Coordinate target) {
 		assert origin != null && !origin.isNull();
 		assert target != null && !target.isNull();
-		
+		assert !origin.equals(target);
+
 		Token token = this.getToken(origin);
 		this.remove(origin);
 		this.put(target, token);
 	}
 
 	private void remove(Coordinate coordinate) {
-		assert coordinate != null && !coordinate.isNull();
-		
-		for (int i = 0; i < this.NUMBER_PLAYERS; i++) {
-			for (int j = 0; j < Coordinate.DIMENSION; j++) {
-				if (this.coordinates[i][j].equals(coordinate)) {
-					this.coordinates[i][j] = Coordinate.NULL_COORDINATE;
-				}
-			}
-		}
+		this.put(coordinate, Token.NULL);
 	}
 
 	boolean isOccupied(Coordinate coordinate, Token token) {
 		assert coordinate != null && !coordinate.isNull();
-		
+
 		return this.getToken(coordinate) == token;
 	}
 
 	boolean isEmpty(Coordinate coordinate) {
 		assert coordinate != null && !coordinate.isNull();
-		
-		return this.isOccupied(coordinate, Token.NULL_TOKEN);
+
+		return this.isOccupied(coordinate, Token.NULL);
 	}
 
 	boolean isTicTacToe(Token token) {
 		assert token != null && !token.isNull();
-		
-		if (!this.isCompleted(token.ordinal())) {
+
+		List<Coordinate> coordinates = this.getCoordinates(token);
+		if (coordinates.size() < Coordinate.DIMENSION) {
 			return false;
 		}
-		Coordinate[] coordinates = this.coordinates[token.ordinal()];
-		Direction direction = coordinates[0].getDirection(coordinates[1]);
-		if (direction == Direction.NULL_DIRECTION){
-			return false;
+		Direction previous = null;
+		for (int i = 0; i < Coordinate.DIMENSION-1; i++) {
+			Direction actual = coordinates.get(i).getDirection(coordinates.get(i + 1));
+			if (i == 0) {
+				if (actual == Direction.NULL){
+					return false;
+				}
+			} else 
+				if (actual != previous) {
+					return false;
+			}
+			previous = actual;
 		}
-		return direction == coordinates[1].getDirection(coordinates[2]);
+		return true;
+	}
+
+	private List<Coordinate> getCoordinates(Token token) {
+		List<Coordinate> coordinates = new ArrayList<Coordinate>();
+
+		for (int i = 0; i < Coordinate.DIMENSION; i++) {
+			for (int j = 0; j < Coordinate.DIMENSION; j++) {
+				if (this.tokens[i][j] == token) {
+					coordinates.add(new Coordinate(i, j));
+				}
+			}
+		}
+		return coordinates;
 	}
 
 }

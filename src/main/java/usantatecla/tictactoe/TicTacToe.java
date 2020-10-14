@@ -14,7 +14,7 @@ class TicTacToe{
 	}
 
 	private void playGame() {
-		this.board = new Board(Turn.NUMBER_PLAYERS);
+		this.board = new Board();
 			this.turn = new Turn(this.board);
 			this.board.write();
 			do {

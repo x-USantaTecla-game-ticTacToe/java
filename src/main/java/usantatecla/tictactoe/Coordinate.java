@@ -8,7 +8,7 @@ import usantatecla.utils.ConcreteCoordinate;
 
 class Coordinate extends ConcreteCoordinate {
 
-	static final Coordinate NULL_COORDINATE = new Coordinate(); 
+	static final Coordinate NULL = new Coordinate(); 
 	static final int DIMENSION = 3;
 
 	static final ClosedInterval LIMITS = 
@@ -26,7 +26,7 @@ class Coordinate extends ConcreteCoordinate {
 
 	@Override
 	public boolean isNull() {
-		return this == Coordinate.NULL_COORDINATE;
+		return this == Coordinate.NULL;
 	}
 	
 	@Override
@@ -34,7 +34,7 @@ class Coordinate extends ConcreteCoordinate {
 		assert coordinate != null;
 
 		if (coordinate.isNull()){
-			return Direction.NULL_DIRECTION;
+			return Direction.NULL;
 		}
 		if (this.inInverseDiagonal() && ((Coordinate) coordinate).inInverseDiagonal()) {
 			return Direction.INVERSE_DIAGONAL;
