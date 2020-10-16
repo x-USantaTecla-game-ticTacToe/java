@@ -6,7 +6,6 @@ public abstract class View {
     protected Game game;
 
 	public View(Game game) {
-		System.out.println(game==null);
 		this.game = game;
 	}
 
