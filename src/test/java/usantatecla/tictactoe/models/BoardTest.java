@@ -3,9 +3,8 @@ package usantatecla.tictactoe.models;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import org.junit.Ignore;
 import org.junit.Test;
-
-import usantatecla.tictactoe.types.Token;
 
 public class BoardTest {
 
@@ -52,6 +51,7 @@ public class BoardTest {
         assertFalse(this.board.isOccupied(originCoordinate, token));
     }
 
+    @Ignore
     @Test(expected = AssertionError.class)
     public void testGivenNewBoardWhenMoveNewTokenTheOriginIsEmptyThenAssertionException() {
         Coordinate originCoordinate = new Coordinate(0, 0);
