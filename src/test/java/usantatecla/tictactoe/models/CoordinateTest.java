@@ -1,9 +1,5 @@
 package usantatecla.tictactoe.models;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -12,6 +8,8 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import usantatecla.utils.Console;
 import usantatecla.utils.Direction;
+
+import static org.junit.Assert.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CoordinateTest {
@@ -58,7 +56,7 @@ public class CoordinateTest {
 
     @Test
     public void testGivenNewCoordinatesWhenCompareCoordinates00And12ThenDirectionIsNull() {
-        assertEquals(null, this.coordinate00.getDirection(this.coordinate12));
+        assertEquals(Direction.NULL, this.coordinate00.getDirection(this.coordinate12));
     }
 
     @Test
@@ -82,5 +80,25 @@ public class CoordinateTest {
     @Test
     public void testGivenNewCoordinatesWhenCompareOneCoordinateWithAnObjectThenIsFalse() {
         assertFalse(this.coordinate00.equals(new Object()));
+    }
+
+    @Test
+    public void testGivenNewCoordinateRow0Column0ThenIsValid() {
+        assertTrue(this.coordinate00.isValid().isNull());
+    }
+
+    @Test
+    public void testGivenNewCoordinateRow2Column2ThenIsValid() {
+        assertTrue(new Coordinate(2, 2).isValid().isNull());
+    }
+
+    @Test(expected = AssertionError.class)
+    public void testGivenNewCoordinateRow3Column3ThenIsNotValid() {
+       new Coordinate(3, 3);
+    }
+
+    @Test(expected = AssertionError.class)
+    public void testGivenNewCoordinateRowNegativeColumnNegativeThenIsNotValid() {
+        new Coordinate(-1, -1);
     }
 }

@@ -5,7 +5,7 @@ import usantatecla.utils.ClosedInterval;
 public enum Token {
 
 	X,
-	Y,
+	O,
 	NULL;
 
 	public boolean isNull() {
