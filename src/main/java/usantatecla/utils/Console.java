@@ -5,21 +5,24 @@ import java.io.InputStreamReader;
 
 public class Console {
 
+	public static Console console;
+	
+	public static Console instance() {
+		if (Console.console == null) {
+			Console.console = new Console();
+		}
+		return Console.console;
+	}
+	
 	private BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 
 	public String readString(String title) {
 		String input = null;
-		boolean ok = false;
-		do {
-			this.write(title);
-			try {
-				input = this.bufferedReader.readLine();
-				ok = true;
-			} catch (Exception ex) {
-				this.writeError("characte string");
-			}
-			assert ok;
-		} while (!ok);
+		this.write(title);
+		try {
+			input = this.bufferedReader.readLine();
+		} catch (Exception ex) {
+		}
 		return input;
 	}
 

@@ -1,0 +1,19 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "CodeLens (Launch) - ConsoleTicTacToe",
+      "request": "launch",
+      "mainClass": "usantatecla.tictactoe.ConsoleTicTacToe",
+      "projectName": "asciidoctor-amazon-templates"
+    },
+    {
+      "type": "java",
+      "name": "tictactoe",
+      "request": "launch",
+      "mainClass": "ConsoleTicTacToe",
+      "projectName": "USantaTecla.tictactoe",
+      "vmArgs": "-enableassertions"
+    }
+  ]
+}

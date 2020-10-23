@@ -7,7 +7,6 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({ 
     BoardTest.class, 
     CoordinateTest.class, 
-    PlayerTest.class,
     StateTest.class,
     TurnTest.class } )
 public class AllModelTest {

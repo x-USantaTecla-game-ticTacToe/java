@@ -8,21 +8,20 @@ import usantatecla.tictactoe.types.StateValue;
 
 public class Logic {
 
-	private Session session;
-	
-	private Map<StateValue, AcceptorController> acceptorControllers;
+  private Session session;
+  private Map<StateValue, AcceptorController> controllers;
 
-	public Logic() {
-		this.session = new Session();
-		this.acceptorControllers = new HashMap<StateValue, AcceptorController>();
-		this.acceptorControllers.put(StateValue.INITIAL, new StartController(this.session));
-		this.acceptorControllers.put(StateValue.IN_GAME, new PlayController(this.session));
-		this.acceptorControllers.put(StateValue.RESUME, new ResumeController(this.session));
-		this.acceptorControllers.put(StateValue.EXIT, null);
-	}
-	
-	public AcceptorController getController() {
-		return this.acceptorControllers.get(this.session.getValueState());
-	}
-    
+  public Logic() {
+    this.session = new Session();
+    this.controllers = new HashMap<StateValue, AcceptorController>();
+    this.controllers.put(StateValue.INITIAL, new StartController(this.session));
+    this.controllers.put(StateValue.IN_GAME, new PlayController(this.session));
+    this.controllers.put(StateValue.RESUME, new ResumeController(this.session));
+    this.controllers.put(StateValue.EXIT, null);
+  }
+
+  public AcceptorController getController() {
+    return this.controllers.get(this.session.getValueState());
+  }
+
 }

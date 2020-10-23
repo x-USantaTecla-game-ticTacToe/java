@@ -58,7 +58,7 @@ public class CoordinateTest {
 
     @Test
     public void testGivenNewCoordinatesWhenCompareCoordinates00And12ThenDirectionIsNull() {
-        assertEquals(null, this.coordinate00.getDirection(this.coordinate12));
+        assertEquals(Direction.NULL, this.coordinate00.getDirection(this.coordinate12));
     }
 
     @Test

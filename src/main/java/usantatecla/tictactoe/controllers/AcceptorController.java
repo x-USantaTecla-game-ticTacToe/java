@@ -1,12 +1,7 @@
 package usantatecla.tictactoe.controllers;
 
-import usantatecla.tictactoe.models.Session;
+public interface AcceptorController {
 
-public abstract class AcceptorController extends Controller {
-    
-    AcceptorController(Session session) {
-		super(session);
-	}
+  void accept(ControllerVisitor controllerVisitor);
 
-	public abstract void accept(ControllersVisitor controllersVisitor);
 }

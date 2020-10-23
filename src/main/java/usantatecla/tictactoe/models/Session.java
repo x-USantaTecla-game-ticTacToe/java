@@ -1,104 +1,85 @@
 package usantatecla.tictactoe.models;
 
 import usantatecla.tictactoe.types.Error;
-import usantatecla.tictactoe.types.PlayerType;
 import usantatecla.tictactoe.types.StateValue;
 import usantatecla.tictactoe.types.Token;
 
 public class Session {
-    
-    private State state;
-	
-	private Game game;
-	
-    private Registry registry;
-    
-    public Session() {
-		this.state = new State();
-		this.game = new Game();
-		this.registry = new Registry(this.game);
-	}
 
-	public void next() {
-		this.state.next();		
-    }
-    
-    public boolean undoable() {
-		return this.registry.undoable();
-	}
+  private Game game;
+  private GameRegistry registry;
+  private State state;
 
-	public boolean redoable() {
-		return this.registry.redoable();
-	}
+  public Session() {
+    this.state = new State();
+    this.game = new Game();
+    this.registry = new GameRegistry(this.game);
+  }
 
-	public void undo() {
-		this.registry.undo(this.game);
-	}
+  public StateValue getValueState() {
+    return this.state.getValueState();
+  }
 
-	public void redo() {
-		this.registry.redo(this.game);
-    }
-    
-    public void createPlayers(int numberOfUsers) {
-        this.game.createPlayers(numberOfUsers);
-        this.registry.registry();
-    }
+  public Token getToken(Coordinate coordinate) {
+    return this.game.getToken(coordinate);
+  }
 
-    public PlayerType getTypeOfTokenPlayerFromTurn() {
-		return this.game.getTypeOfTokenPlayerFromTurn();
-	}
+  public void next() {
+    this.state.next();
+  }
 
-	public Error getPutCoordinateError(Coordinate coordinate) {
-		return this.game.getPutCoordinateError(coordinate);
-	}
+  public void setUsers(int users) {
+    this.game.setUsers(users);
+  }
 
-	public Error getMoveOriginCoordinateError(Coordinate originCoordinate) {
-		return this.game.getMoveOriginCoordinateError(originCoordinate);
-	}
+  public int getMaxPlayers() {
+    return this.game.getMaxPlayers();
+  }
 
-	public Error getMoveTargetCoordinateError(Coordinate originCoordinate, Coordinate targetCoordinate) {
-		return this.game.getMoveTargetCoordinateError(originCoordinate, targetCoordinate);
-	}
+  public void reset() {
+    this.game.reset();
+    this.registry.reset();
+    this.state.reset();
+  }
 
-    public boolean isBoardComplete() {
-        return this.game.isBoardComplete();
-    }
+  public boolean isBoardComplete() {
+    return this.game.isBoardComplete();
+  }
 
-    public void putTokenPlayerFromTurn(Coordinate coordinate) {
-        this.game.putTokenPlayerFromTurn(coordinate);
-        this.changeTurn();
-        this.registry.registry();
-    }
+  public boolean isTicTacToe() {
+    return this.game.isTicTacToe();
+  }
 
-    public void moveTokenPlayerFromTurn(Coordinate[] coordinates) {
-        this.game.moveTokenPlayerFromTurn(coordinates);
-        this.changeTurn();
-        this.registry.registry();
-    }
+  public Token getToken() {
+    return this.game.getToken();
+  }
 
-    public void changeTurn() {
-        this.game.changeTurn();
-    }
+  public boolean isUser() {
+    return this.game.isUser();
+  }
 
-    public Token getToken(Coordinate coordinate) {
-		return this.game.getToken(coordinate);
-	}
+  public Error put(Coordinate coordinate) {
+    return this.game.put(coordinate);
+  }
 
-    public boolean isTicTacToe() {
-        return this.game.isTicTacToe();
-    }
+  public Error move(Coordinate origin, Coordinate target) {
+    return this.game.move(origin, target);
+  }
 
-    public int getValueFromTurn() {
-        return this.game.getValueFromTurn();
-    }
+  public void undo() {
+    this.registry.undo();
+  }
 
-    public StateValue getValueState() {
-		return this.state.getValueState();
-    }
-    
-    public void newGame() {
-        this.game.newGame();
-        this.state.reset();	
-        this.registry.reset();	
-    }
+  public boolean undoable() {
+    return this.registry.undoable();
+  }
+
+  public void redo() {
+    this.registry.redo();
+  }
+
+  public boolean redoable() {
+    return this.registry.redoable();
+  }
+
 }
