@@ -1,13 +1,13 @@
 package usantatecla.tictactoe.models;
 
-class Memento {
+class GameMemento {
 
-  private Board board;
   private Turn turn;
+  private Board board;
 
-  Memento(Board board, Player[] players, Turn turn) {
+  GameMemento(Turn turn, Board board) {
     this.board = board.copy();
-    this.turn = turn.copy();
+    this.turn = turn.copy(this.board);
   }
 
   Board getBoard() {

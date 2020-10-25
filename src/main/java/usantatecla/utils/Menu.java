@@ -5,7 +5,7 @@ import java.util.List;
 
 public abstract class Menu {
 
-  private static final String OPTION = "----- Choose one option -----";
+  private static final String OPTION = "Option? [1-#size]: ";
   private List<Command> commandList;
 
   public Menu() {
@@ -25,11 +25,10 @@ public abstract class Menu {
     do {
       error = false;
       console.writeln();
-      console.writeln(Menu.OPTION);
       for (int i = 0; i < commands.size(); i++) {
         console.writeln((i + 1) + ") " + commands.get(i).getTitle());
       }
-      option = console.readInt("") - 1;
+      option = console.readInt(Menu.OPTION.replace("#size", "" + commands.size())) - 1;
       if (!new ClosedInterval(0, commands.size() - 1).isIncluded(option)) {
         error = true;
       }

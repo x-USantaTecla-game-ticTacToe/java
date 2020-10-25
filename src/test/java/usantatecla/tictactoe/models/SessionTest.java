@@ -55,7 +55,7 @@ public class SessionTest {
   }
 
   @Test
-  public void testXXX(){
+  public void testGivenSessionWhenPutMainDiagonalTokensThenTrue(){
     this.session.setUsers(0);
     assertEquals(Token.X, this.session.getToken());
     this.session.put(new Coordinate(0,0));
@@ -71,13 +71,3 @@ public class SessionTest {
     assertTrue(this.session.isTicTacToe());
   }
 }
-
-// this.session.isBoardComplete()
-// this.session.isTicTacToe()
-// this.session.isUser()
-// this.session.move(origin, target)
-// this.session.put(coordinate)
-// this.session.redo();
-// this.session.undo();
-// this.session.undoable()
-// this.session.redoable()

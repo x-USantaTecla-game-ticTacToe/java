@@ -1,5 +1,7 @@
 package usantatecla.tictactoe.models;
 
+import java.util.Arrays;
+
 import usantatecla.tictactoe.types.Error;
 import usantatecla.tictactoe.types.Token;
 
@@ -17,15 +19,18 @@ public class Turn {
 		this.board = board;
 	}
 
-	public Turn(Turn turn) {
-		this.players = turn.players;
-		this.board = turn.board;
+	public Turn(Turn turn, Board board) {
+		this.players = new Player[Turn.NUMBER_PLAYERS];
+		for (int i = 0; i < Turn.NUMBER_PLAYERS; i++) {
+			this.players[i] = turn.players[i].copy(board);
+		}
+		this.board = board;
 		this.active = turn.active;
 		this.users = turn.users;
 	}
 
-	public Turn copy() {
-		return new Turn(this);
+	public Turn copy(Board board) {
+		return new Turn(this, board);
 	}
 
 	void setUsers(int users) {
@@ -35,6 +40,10 @@ public class Turn {
 			this.players[i] = new Player(Token.get(i), board);
 		}
 		this.active = 0;
+	}
+
+	void set(int active){
+		this.active = active;
 	}
 
 	void next() {
@@ -49,7 +58,7 @@ public class Turn {
 		return this.getPlayer().put(coordinate);
 	}
 
-	private Player getPlayer() {
+	Player getPlayer() {
 		return this.players[this.active];
 	}
 
@@ -60,5 +69,30 @@ public class Turn {
 	Token getToken() {
 		return this.getPlayer().getToken();
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Turn other = (Turn) obj;
+		if (active != other.active)
+			return false;
+		if (board == null) {
+			if (other.board != null)
+				return false;
+		} else if (!board.equals(other.board))
+			return false;
+		if (!Arrays.equals(players, other.players))
+			return false;
+		if (users != other.users)
+			return false;
+		return true;
+	}
+
+	
 
 }

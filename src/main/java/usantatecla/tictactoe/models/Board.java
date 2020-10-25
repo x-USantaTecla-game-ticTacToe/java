@@ -1,16 +1,17 @@
 package usantatecla.tictactoe.models;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import usantatecla.tictactoe.types.Token;
 import usantatecla.utils.Direction;
 
 class Board {
-	
+
 	private Token[][] tokens;
-	
-	public Board(){
+
+	Board() {
 		this.tokens = new Token[Coordinate.DIMENSION][Coordinate.DIMENSION];
 		for (int i = 0; i < Coordinate.DIMENSION; i++) {
 			for (int j = 0; j < Coordinate.DIMENSION; j++) {
@@ -18,8 +19,8 @@ class Board {
 			}
 		}
 	}
-		
-	public Board(Board board) {
+
+	private Board(Board board) {
 		this();
 		assert board != null;
 
@@ -30,14 +31,24 @@ class Board {
 		}
 	}
 
-	public Board copy() {
+	Board copy() {
 		return new Board(this);
 	}
-	
+
 	Token getToken(Coordinate coordinate) {
 		assert coordinate != null && !coordinate.isNull();
 
 		return this.tokens[coordinate.getRow()][coordinate.getColumn()];
+	}
+
+	void put(Coordinate coordinate, Token token) {
+		this.tokens[coordinate.getRow()][coordinate.getColumn()] = token;
+	}
+
+	void move(Coordinate origin, Coordinate target) {
+		Token token = this.getToken(origin);
+		this.tokens[origin.getRow()][origin.getColumn()] = Token.NULL;
+		this.put(target, token);
 	}
 
 	boolean isCompleted() {
@@ -50,30 +61,6 @@ class Board {
 			}
 		}
 		return tokensCount == Coordinate.DIMENSION * 2;
-	}
-
-	void put(Coordinate coordinate, Token token) {
-		assert coordinate != null && !coordinate.isNull();
-		assert token != null;
-		assert !this.isCompleted();
-
-		this.tokens[coordinate.getRow()][coordinate.getColumn()] = token;
-	}
-
-	void move(Coordinate origin, Coordinate target) {
-		assert origin != null && !origin.isNull();
-		assert target != null && !target.isNull();
-		assert !origin.equals(target);
-		assert !this.isOccupied(origin, Token.NULL);
-		assert this.isEmpty(target);
-
-		Token token = this.getToken(origin);
-		this.remove(origin);
-		this.put(target, token);
-	}
-
-	private void remove(Coordinate coordinate) {
-		this.put(coordinate, Token.NULL);
 	}
 
 	boolean isOccupied(Coordinate coordinate, Token token) {
@@ -95,18 +82,12 @@ class Board {
 		if (coordinates.size() < Coordinate.DIMENSION) {
 			return false;
 		}
-		Direction previous = null;
-		for (int i = 0; i < Coordinate.DIMENSION-1; i++) {
-			Direction actual = coordinates.get(i).getDirection(coordinates.get(i + 1));
-			if (i == 0) {
-				if (actual == Direction.NULL){
-					return false;
-				}
-			} else 
-				if (actual != previous) {
-					return false;
+		Direction[] directions = new Direction[Coordinate.DIMENSION - 1];
+		for (int i = 0; i < Coordinate.DIMENSION - 1; i++) {
+			directions[i] = coordinates.get(i).getDirection(coordinates.get(i + 1));
+			if (directions[i] == Direction.NULL || i > 0 && directions[i - 1] != directions[i]) {
+				return false;
 			}
-			previous = actual;
 		}
 		return true;
 	}
@@ -115,7 +96,6 @@ class Board {
 		assert token != null && !token.isNull();
 
 		List<Coordinate> coordinates = new ArrayList<Coordinate>();
-
 		for (int i = 0; i < Coordinate.DIMENSION; i++) {
 			for (int j = 0; j < Coordinate.DIMENSION; j++) {
 				if (this.tokens[i][j] == token) {
@@ -125,5 +105,19 @@ class Board {
 		}
 		return coordinates;
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Board other = (Board) obj;
+		if (!Arrays.deepEquals(tokens, other.tokens))
+			return false;
+		return true;
+	}	
 
 }

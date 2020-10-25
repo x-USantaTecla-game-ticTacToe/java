@@ -18,7 +18,6 @@ class PlayCommand extends Command {
     } else {
       this.move(playController);
     }
-    new GameView(playController).write();
     if (playController.isTicTacToe()) {
       new TokenView(playController.getToken()).write();
       Message.PLAYER_WIN.writeln();

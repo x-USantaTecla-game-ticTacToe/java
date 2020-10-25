@@ -10,9 +10,9 @@ public class ResumeController extends UseCaseController implements AcceptorContr
 
   public void resume(boolean isResumed) {
     if (isResumed){
-      this.session.next();
-    } else {
       this.session.reset();
+    } else {
+      this.session.next();
     }
   }
 

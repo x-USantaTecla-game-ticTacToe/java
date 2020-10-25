@@ -31,15 +31,15 @@ public class Game {
 
     public Error put(Coordinate coordinate) {
         Error error = this.turn.put(coordinate);
-        if (!error.isNull() && !this.board.isTicTacToe(this.turn.getToken())){
-            this.turn.next();
+        if (error.isNull() && !this.board.isTicTacToe(this.turn.getToken())){
+            this.turn.next(); 
         }
         return error;
     }
 
     public Error move(Coordinate origin, Coordinate target) {
         Error error = this.turn.move(origin, target);
-        if (!error.isNull() && !this.board.isTicTacToe(this.turn.getToken())){
+        if (error.isNull() && !this.board.isTicTacToe(this.turn.getToken())){
             this.turn.next();
         }
         return error;
@@ -61,11 +61,43 @@ public class Game {
 		return Turn.NUMBER_PLAYERS;
 	}
 
-	public Memento createMemento() {
-		return null;
+	public GameMemento createMemento() {
+        return new GameMemento(this.turn, this.board);
 	}
 
-	public void set(Memento memento) {
-	}
+	public void set(GameMemento memento) {
+        this.turn.set(memento.getTurn().getToken().ordinal());
+        for(int i=0; i<Coordinate.DIMENSION; i++){
+            for(int j=0; j<Coordinate.DIMENSION; j++){
+                Coordinate coordinate = new Coordinate(i,j);
+                this.board.put(coordinate, memento.getBoard().getToken(coordinate));
+            }
+        }
+        
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Game other = (Game) obj;
+        if (board == null) {
+            if (other.board != null)
+                return false;
+        } else if (!board.equals(other.board))
+            return false;
+        if (turn == null) {
+            if (other.turn != null)
+                return false;
+        } else if (!turn.equals(other.turn))
+            return false;
+        return true;
+    }
+    
+    
 
 }

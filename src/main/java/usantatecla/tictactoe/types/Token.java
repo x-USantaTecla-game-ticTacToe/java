@@ -18,4 +18,12 @@ public enum Token {
 		return Token.values()[ordinal];
 	}
 
+	@Override
+	public String toString(){
+		if (this==Token.NULL){
+			return ".";
+		}
+		return this.name();
+	}
+
 }
